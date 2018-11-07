@@ -1,6 +1,13 @@
-@import "variables";
+$govuk-global-styles: true;
+
+@import "../../node_modules/govuk-frontend/all";
+@import "steps";
 
 body {
-    background-color: #ececec;
-    color: $red;
+    margin: 0;
+}
+
+.map {
+    width: 100%;
+    height: 500px;
 }
