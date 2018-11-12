@@ -11,6 +11,11 @@ import SiteDetails from '../views/SiteDetails.vue';
 import SignIn from '../views/SignIn.vue';
 import Accounts from '../views/Accounts.vue';
 import CreateAccount from '../views/CreateAccount.vue';
+import Applications from '../views/Applications.vue';
+import WorkStart from '../forms/works/WorkStart.vue';
+import MultipleOccupation from '../forms/works/MultipleOccupation.vue';
+import Proposal from '../forms/works/Proposal.vue';
+import AboutProposal from '../forms/works/AboutProposal.vue';
 
 export default new Router({
   mode: 'history',
@@ -42,6 +47,18 @@ export default new Router({
       path: '/sites/:siteId',
       name: 'SiteDetails',
       component: SiteDetails
+    },
+    {
+      path: '/applications',
+      name: 'Applications',
+      component: Applications,
+      children: [
+        { path: '', component: WorkStart },
+        { path: 'work-start', component: WorkStart },
+        { path: 'multiple-occupation', component: MultipleOccupation },
+        { path: 'proposal', component: Proposal },
+        { path: 'about-proposal', component: AboutProposal }
+      ]
     },
     {
       path: '/sign-in',
