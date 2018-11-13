@@ -27,6 +27,20 @@ import MaterialsStepTwo from '../forms/materials/StepTwo.vue';
 import MaterialsStepThree from '../forms/materials/StepThree.vue';
 import MaterialsStepFour from '../forms/materials/StepFour.vue';
 import MaterialsStepFive from '../forms/materials/StepFive.vue';
+import SupportingDocumentation from '../forms/documentation/SupportingDocumentation.vue';
+import LocationPlan from '../forms/documentation/LocationPlan.vue';
+import DesignAndAccessStatement from '../forms/documentation/DesignAndAccessStatement.vue';
+import HeritageStatement from '../forms/documentation/HeritageStatement.vue';
+import AdditionalPlans from '../forms/documentation/AdditionalPlans.vue';
+import DocumentsReview from '../forms/documentation/DocumentsReview.vue';
+import DocumentationChecklist from '../forms/documentation/DocumentationChecklist.vue';
+import Contact from '../forms/contact/Contact.vue';
+import ContactApplicant from '../forms/contact/ContactApplicant.vue';
+import ContactAgent from '../forms/contact/ContactAgent.vue';
+import Declarations from '../forms/declarations/Declarations.vue';
+import Declaration from '../forms/declarations/Declaration.vue';
+import DeclarationsAuthority from '../forms/declarations/DeclarationsAuthority.vue';
+import DeclarationsOwnership from '../forms/declarations/DeclarationsOwnership.vue';
 
 export default new Router({
   mode: 'history',
@@ -91,6 +105,38 @@ export default new Router({
             { path: 'steps/3', component: MaterialsStepThree },
             { path: 'steps/4', component: MaterialsStepFour },
             { path: 'steps/5', component: MaterialsStepFive }
+          ]
+        },
+        { 
+          path: 'documentation', 
+          component: SupportingDocumentation,
+          children: [
+            { path: '', component: SupportingDocumentation },
+            { path: 'location', component: LocationPlan },
+            { path: 'design-access-statement', component: DesignAndAccessStatement },
+            { path: 'heritage-statement', component: HeritageStatement },
+            { path: 'additional-plans', component: AdditionalPlans },
+            { path: 'docs-review', component: DocumentsReview },
+            { path: 'documentation-checklist', component: DocumentationChecklist }
+          ]
+        },
+        { 
+          path: 'contact', 
+          component: Contact,
+          children: [
+            { path: '', component: ContactApplicant },
+            { path: 'agent', component: ContactAgent },
+            { path: 'applicant', component: ContactApplicant }
+          ]
+        },
+        { 
+          path: 'declarations', 
+          component: Declarations,
+          children: [
+            { path: '', component: DeclarationsAuthority },
+            { path: 'authority', component: DeclarationsAuthority },
+            { path: 'ownership', component: DeclarationsOwnership },
+            { path: 'declaration', component: Declaration }
           ]
         }
       ]
