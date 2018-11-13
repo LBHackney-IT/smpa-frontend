@@ -96,12 +96,13 @@
       </fieldset>
     </div>
     
-		<v-cta name="Next" :onClick="consoleClick"></v-cta>
+		<v-cta name="Next" :onClick="navigate"></v-cta>
 	</div>
 </template>
 
 <script>
 import vCta from '../../components/Cta.vue';
+import router from '../../router';
 
 export default {
 	name: 'MaterialsStepThree',
@@ -115,8 +116,8 @@ export default {
     }
   },
 	methods: {
-    consoleClick() {
-      console.log('Button clicked');
+    navigate() {
+      router.push({ name: 'MaterialsStep4' });
     },
     materialIsChecked(selectedMaterial) {
       const result = this.windowMaterial.find(function(material) {

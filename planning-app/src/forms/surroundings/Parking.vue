@@ -54,12 +54,13 @@
         </fieldset>
       </div>
 		</div>
-		<v-cta name="Next"></v-cta>
+		<v-cta name="Next" :onClick="navigate"></v-cta>
 	</div>
 </template>
 
 <script>
 import vCta from '../../components/Cta.vue';
+import router from '../../router';
 
 export default {
 	name: 'WorkStart',
@@ -79,7 +80,12 @@ export default {
     hasTypeOfAlteration () {
 			return this.typeOfAlteration === 'car-spaces-lost';
     }
-	}
+  },
+  methods: {
+    navigate() {
+      router.push({ name: 'MaterialsStep1' });
+    }
+  }
 
 }
 </script>

@@ -79,45 +79,48 @@ export default new Router({
       component: Applications,
       children: [
         { path: '', component: WorkStart },
-        { path: 'work-start', component: WorkStart },
-        { path: 'multiple-occupation', component: MultipleOccupation },
-        { path: 'proposal', component: Proposal },
-        { path: 'about-proposal', component: AboutProposal },
-        { path: 'about-development', component: AboutDevelopment },
+        { path: 'work-start', name: 'WorkStart', component: WorkStart },
+        { path: 'multiple-occupation', name: 'MultipleOccupation', component: MultipleOccupation },
+        { path: 'proposal', name: 'Proposal', component: Proposal },
+        { path: 'about-proposal', name:'AboutProposal', component: AboutProposal },
+        { path: 'about-development', name:'AboutDevelopment', component: AboutDevelopment },
         { 
           path: 'surroundings', 
           component: Surroundings,
+          name: 'Surroundings',
           children: [
             { path: '', component: Trees },
-            { path: 'trees', component: Trees },
-            { path: 'access', component: Access },
-            { path: 'parking', component: Parking }
+            { path: 'trees', name: 'Trees', component: Trees },
+            { path: 'access', name: 'Access', component: Access },
+            { path: 'parking', name: 'Parking', component: Parking }
           ]
         },
         { 
           path: 'materials', 
           component: Materials,
+          name: 'Materials',
           children: [
             { path: '', component: MaterialsStepOne },
             { path: 'steps', component: MaterialsStepOne },
-            { path: 'steps/1', component: MaterialsStepOne },
-            { path: 'steps/2', component: MaterialsStepTwo },
-            { path: 'steps/3', component: MaterialsStepThree },
-            { path: 'steps/4', component: MaterialsStepFour },
-            { path: 'steps/5', component: MaterialsStepFive }
+            { path: 'steps/1', name: 'MaterialsStep1', component: MaterialsStepOne },
+            { path: 'steps/2', name: 'MaterialsStep2', component: MaterialsStepTwo },
+            { path: 'steps/3', name: 'MaterialsStep3', component: MaterialsStepThree },
+            { path: 'steps/4', name: 'MaterialsStep4', component: MaterialsStepFour },
+            { path: 'steps/5', name: 'MaterialsStep5', component: MaterialsStepFive }
           ]
         },
         { 
           path: 'documentation', 
           component: SupportingDocumentation,
+          name: 'Documentation',
           children: [
             { path: '', component: SupportingDocumentation },
-            { path: 'location', component: LocationPlan },
-            { path: 'design-access-statement', component: DesignAndAccessStatement },
-            { path: 'heritage-statement', component: HeritageStatement },
-            { path: 'additional-plans', component: AdditionalPlans },
-            { path: 'docs-review', component: DocumentsReview },
-            { path: 'documentation-checklist', component: DocumentationChecklist }
+            { path: 'location', name:'DocumentationLocation', component: LocationPlan },
+            { path: 'design-access-statement', name: 'DocumentationDesignAccessStatement', component: DesignAndAccessStatement },
+            { path: 'heritage-statement', name: 'DocumentationHeritageStatement', component: HeritageStatement },
+            { path: 'additional-plans', name: 'DocumentationAdditionalPlans', component: AdditionalPlans },
+            { path: 'docs-review', name: 'DocumentationDocsReview', component: DocumentsReview },
+            { path: 'documentation-checklist', name: 'DocumentationChecklist', component: DocumentationChecklist }
           ]
         },
         { 

@@ -42,13 +42,14 @@
 			isRequired="hasWorkStarted">
 		</v-text-area>
 
-		<v-cta name="Next" :onClick="consoleClick"></v-cta>
+		<v-cta name="Next" :onClick="navigate"></v-cta>
 	</div>
 </template>
 
 <script>
 import vCta from '../../components/Cta.vue';
 import vTextArea from '../../components/form/vTextArea.vue';
+import router from '../../router';
 
 export default {
 	name: 'WorkStart',
@@ -63,8 +64,8 @@ export default {
     }
   },
 	methods: {
-    consoleClick() {
-      console.log('Button clicked');
+    navigate() {
+      router.push({ name: 'MultipleOccupation' });
     }
 	},
 	computed: {

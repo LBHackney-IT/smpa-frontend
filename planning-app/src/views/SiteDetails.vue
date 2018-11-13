@@ -165,9 +165,7 @@
           </section>
         </div>
 
-        <button type="submit" class="govuk-button">
-          Continue
-        </button>
+        <v-cta name="Continue" :onClick="navigate"></v-cta>
 
         <HelpLink />
       </div>
@@ -180,6 +178,8 @@
   import { Tabs } from 'govuk-frontend';
   import HelpLink from '../components/HelpLink.vue';
   import Steps from '../components/Steps.vue';
+  import vCta from '../components/Cta.vue';
+  import router from '../router';
 
   const steps = [{
     title: "Site details",
@@ -222,7 +222,8 @@
     name: 'SiteDetails',
     components: {
       HelpLink,
-      Steps
+      Steps,
+      vCta
     },
     data() {
       return { steps };
@@ -266,6 +267,11 @@
       var $tab = document.querySelector('[data-module="tabs"]')
       if ($tab) {
         new Tabs($tab).init()
+      }
+    },
+    methods: {
+      navigate() {
+        router.push({ name: 'WorkStart' });
       }
     }
   }

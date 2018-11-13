@@ -59,12 +59,13 @@
         </fieldset>
       </div>
 		</div>
-		<v-cta name="Next"></v-cta>
+		<v-cta name="Next" :onClick="navigate"></v-cta>
 	</div>
 </template>
 
 <script>
 import vCta from '../../components/Cta.vue';
+import router from '../../router';
 
 export default {
 	name: 'WorkStart',
@@ -81,7 +82,12 @@ export default {
 		hasAlterationToAccess () {
 			return this.alterationToAccess === 'Yes';
     }
-	}
+  },
+  methods: {
+    navigate() {
+      router.push({ name: 'Parking' });
+    }
+  }
 
 }
 </script>

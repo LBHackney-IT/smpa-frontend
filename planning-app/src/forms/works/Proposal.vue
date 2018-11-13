@@ -93,13 +93,14 @@
         </div>
       </fieldset>
     </div>
-		<v-cta name="Next" :onClick="consoleClick"></v-cta>
+		<v-cta name="Next" :onClick="navigate"></v-cta>
 	</div>
 </template>
 
 <script>
 import vCta from '../../components/Cta.vue';
 import VueFormGenerator from "vue-form-generator";
+import router from '../../router';
 
 export default {
 	name: 'Proposal',
@@ -153,8 +154,8 @@ export default {
     }
   },
 	methods: {
-    consoleClick() {
-      console.log('Button clicked');
+    navigate() {
+      router.push({ name: 'AboutProposal' });
     }
   }
 }
