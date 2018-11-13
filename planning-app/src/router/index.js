@@ -21,6 +21,12 @@ import Surroundings from '../forms/surroundings/Surroundings.vue';
 import Trees from '../forms/surroundings/Trees.vue';
 import Access from '../forms/surroundings/Access.vue';
 import Parking from '../forms/surroundings/Parking.vue';
+import Materials from '../forms/materials/Materials.vue';
+import MaterialsStepOne from '../forms/materials/StepOne.vue';
+import MaterialsStepTwo from '../forms/materials/StepTwo.vue';
+import MaterialsStepThree from '../forms/materials/StepThree.vue';
+import MaterialsStepFour from '../forms/materials/StepFour.vue';
+import MaterialsStepFive from '../forms/materials/StepFive.vue';
 
 export default new Router({
   mode: 'history',
@@ -69,8 +75,22 @@ export default new Router({
           component: Surroundings,
           children: [
             { path: '', component: Trees },
+            { path: 'trees', component: Trees },
             { path: 'access', component: Access },
             { path: 'parking', component: Parking }
+          ]
+        },
+        { 
+          path: 'materials', 
+          component: Materials,
+          children: [
+            { path: '', component: MaterialsStepOne },
+            { path: 'steps', component: MaterialsStepOne },
+            { path: 'steps/1', component: MaterialsStepOne },
+            { path: 'steps/2', component: MaterialsStepTwo },
+            { path: 'steps/3', component: MaterialsStepThree },
+            { path: 'steps/4', component: MaterialsStepFour },
+            { path: 'steps/5', component: MaterialsStepFive }
           ]
         }
       ]
