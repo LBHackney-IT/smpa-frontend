@@ -16,6 +16,11 @@ import WorkStart from '../forms/works/WorkStart.vue';
 import MultipleOccupation from '../forms/works/MultipleOccupation.vue';
 import Proposal from '../forms/works/Proposal.vue';
 import AboutProposal from '../forms/works/AboutProposal.vue';
+import AboutDevelopment from '../forms/development/AboutDevelopment.vue';
+import Surroundings from '../forms/surroundings/Surroundings.vue';
+import Trees from '../forms/surroundings/Trees.vue';
+import Access from '../forms/surroundings/Access.vue';
+import Parking from '../forms/surroundings/Parking.vue';
 
 export default new Router({
   mode: 'history',
@@ -57,7 +62,17 @@ export default new Router({
         { path: 'work-start', component: WorkStart },
         { path: 'multiple-occupation', component: MultipleOccupation },
         { path: 'proposal', component: Proposal },
-        { path: 'about-proposal', component: AboutProposal }
+        { path: 'about-proposal', component: AboutProposal },
+        { path: 'about-development', component: AboutDevelopment },
+        { 
+          path: 'surroundings', 
+          component: Surroundings,
+          children: [
+            { path: '', component: Trees },
+            { path: 'access', component: Access },
+            { path: 'parking', component: Parking }
+          ]
+        }
       ]
     },
     {
