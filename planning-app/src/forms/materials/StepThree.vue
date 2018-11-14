@@ -71,24 +71,7 @@
                     Other
                   </label>
                 </div>
-
-                <div v-if="materialIsChecked('other')" class="govuk-inset-text">
-                  <div class="govuk-form-group">
-                    <label class="govuk-label" for="new-material">
-                      New material
-                    </label>
-                    <input class="govuk-input" id="new-material" name="new-material" type="text">
-                  </div>
-
-                  <div class="govuk-form-group">
-                    <label class="govuk-label" for="more-detail">
-                      Colour and type
-                    </label>
-                    <textarea class="govuk-textarea" id="more-detail" name="more-detail" rows="5" aria-describedby="more-detail-hint"></textarea>
-                  </div>
-
-                  <v-cta name="Save" :onClick="consoleClick"></v-cta>
-                </div>
+                <materials-info v-if="materialIsChecked('other')" material="other" :secondQuestion="materialsDetailsQuestion" @clicked="onClickChild"></materials-info>
               </div>
             </fieldset>
           </div>
@@ -103,16 +86,19 @@
 <script>
 import vCta from '../../components/Cta.vue';
 import router from '../../router';
+import MaterialsInfo from '../../components/form/MaterialsInfo.vue';
 
 export default {
 	name: 'MaterialsStepThree',
 	components: {
-    vCta
+    vCta,
+    MaterialsInfo
   },
   data () {
     return {
       newWindows: '',
-      windowMaterial: []
+      windowMaterial: [],
+      materialsDetailsQuestion: 'Is the proposed material and finish the same as the existing?'
     }
   },
 	methods: {
@@ -125,6 +111,9 @@ export default {
       });
       return result ? true : false;
       
+    },
+    onClickChild (value) {
+      console.log('-----VALUE', value) // someValue
     }
   },
   computed: {

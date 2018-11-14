@@ -23,6 +23,9 @@
               Interlocking tiles
             </label>
           </div>
+
+          <materials-info v-if="materialIsChecked('interlocking-tiles')" material="interlocking-tiles" :secondQuestion="materialsDetailsQuestion" @clicked="onClickChild"></materials-info>
+
           <div class="govuk-checkboxes__item">
             <input class="govuk-checkboxes__input" id="materials-2" name="materials-2" type="checkbox" value="clay-tiles" v-model="checkedMaterials">
             <label class="govuk-label govuk-checkboxes__label" for="materials-2">
@@ -30,63 +33,7 @@
             </label>
           </div>
 
-          <div v-if="materialIsChecked('clay-tiles')" class="govuk-inset-text">
-            <div class="govuk-form-group">
-              <label class="govuk-label" for="new-material">
-                New material
-              </label>
-              <input class="govuk-input" id="new-material" name="new-material" type="text">
-            </div>
-
-            <div class="govuk-form-group">
-              <label class="govuk-label" for="more-detail">
-                Colour and type
-              </label>
-              <textarea class="govuk-textarea" id="more-detail" name="more-detail" rows="5" aria-describedby="more-detail-hint"></textarea>
-            </div>
-
-            <v-cta name="Save" :onClick="consoleClick"></v-cta>
-
-            <fieldset class="govuk-fieldset" aria-describedby="trees-question-2-hint">
-              <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
-              <h4 class="govuk-heading-s">
-                Is the proposed material and finish the same as the existing doors?
-              </h4>
-              </legend>
-              <div class="govuk-radios govuk-radios--inline">
-                <div class="govuk-radios__item">
-                  <input class="govuk-radios__input" id="trees-adjacent-1" name="trees-adjacent" type="radio" value="Yes" v-model="sameMaterialAsExistingDoors">
-                  <label class="govuk-label govuk-radios__label" for="trees-adjacent-1">
-                    Yes
-                  </label>
-                </div>
-                <div class="govuk-radios__item">
-                  <input class="govuk-radios__input" id="trees-adjacent-2" name="trees-adjacent" type="radio" value="No" v-model="sameMaterialAsExistingDoors">
-                  <label class="govuk-label govuk-radios__label" for="trees-adjacent-2">
-                    No
-                  </label>
-                </div>
-              </div>
-            </fieldset>
-
-            <div v-if="hasSameMaterialAsExistingDoors" class="govuk-inset-text">
-              <div class="govuk-form-group">
-                <label class="govuk-label" for="new-material">
-                  Existing material
-                </label>
-                <input class="govuk-input" id="new-material" name="new-material" type="text">
-              </div>
-
-              <div class="govuk-form-group">
-                <label class="govuk-label" for="more-detail">
-                  Colour and type
-                </label>
-                <textarea class="govuk-textarea" id="more-detail" name="more-detail" rows="5" aria-describedby="more-detail-hint"></textarea>
-              </div>
-
-              <v-cta name="Save" :onClick="consoleClick"></v-cta>
-            </div>
-          </div>
+          <materials-info v-if="materialIsChecked('clay-tiles')" material="clay-tiles" :secondQuestion="materialsDetailsQuestion" @clicked="onClickChild"></materials-info>
 
           <div class="govuk-checkboxes__item">
             <input class="govuk-checkboxes__input" id="materials-3" name="materials-3" type="checkbox" value="stone" v-model="checkedMaterials">
@@ -94,18 +41,26 @@
               Stone
             </label>
           </div>
+
+          <materials-info v-if="materialIsChecked('stone')" material="stone" :secondQuestion="materialsDetailsQuestion" @clicked="onClickChild"></materials-info>
+
           <div class="govuk-checkboxes__item">
             <input class="govuk-checkboxes__input" id="materials-4" name="materials-4" type="checkbox" value="concrete" v-model="checkedMaterials">
             <label class="govuk-label govuk-checkboxes__label" for="materials-4">
               Concrete
             </label>
           </div>
+
+          <materials-info v-if="materialIsChecked('concrete')" material="concrete" :secondQuestion="materialsDetailsQuestion" @clicked="onClickChild"></materials-info>
+
           <div class="govuk-checkboxes__item">
             <input class="govuk-checkboxes__input" id="materials-5" name="materials-5" type="checkbox" value="slate" v-model="checkedMaterials">
             <label class="govuk-label govuk-checkboxes__label" for="materials-5">
               Slate
             </label>
           </div>
+
+          <materials-info v-if="materialIsChecked('slate')" material="slate" :secondQuestion="materialsDetailsQuestion" @clicked="onClickChild"></materials-info>
 
           <div class="govuk-checkboxes__item">
             <input class="govuk-checkboxes__input" id="materials-6" name="materials-6" type="checkbox" value="metal" v-model="checkedMaterials">
@@ -114,6 +69,8 @@
             </label>
           </div>
 
+          <materials-info v-if="materialIsChecked('metal')" material="metal" :secondQuestion="materialsDetailsQuestion" @clicked="onClickChild"></materials-info>
+
           <div class="govuk-checkboxes__item">
             <input class="govuk-checkboxes__input" id="materials-7" name="materials-7" type="checkbox" value="thatch" v-model="checkedMaterials">
             <label class="govuk-label govuk-checkboxes__label" for="materials-7">
@@ -121,12 +78,16 @@
             </label>
           </div>
 
+          <materials-info v-if="materialIsChecked('thatch')" material="thatch" :secondQuestion="materialsDetailsQuestion" @clicked="onClickChild"></materials-info>
+
           <div class="govuk-checkboxes__item">
             <input class="govuk-checkboxes__input" id="materials-8" name="materials-8" type="checkbox" value="asphalt-shingles" v-model="checkedMaterials">
             <label class="govuk-label govuk-checkboxes__label" for="materials-8">
               Asphalt shingles
             </label>
           </div>
+
+          <materials-info v-if="materialIsChecked('asphalt-shingles')" material="asphalt-shingles" :secondQuestion="materialsDetailsQuestion" @clicked="onClickChild"></materials-info>
 
           <div class="govuk-checkboxes__item">
             <input class="govuk-checkboxes__input" id="materials-9" name="materials-9" type="checkbox" value="other" v-model="checkedMaterials">
@@ -145,16 +106,19 @@
 <script>
 import vCta from '../../components/Cta.vue';
 import router from '../../router';
+import MaterialsInfo from '../../components/form/MaterialsInfo.vue';
 
 export default {
 	name: 'MaterialsStepOne',
 	components: {
-    vCta
+    vCta,
+    MaterialsInfo
   },
   data () {
     return {
       checkedMaterials: [],
-      sameMaterialAsExistingDoors: ''
+      sameMaterialAsExistingDoors: '',
+      materialsDetailsQuestion: 'Is the proposed material and finish the same as roof covering?'
     }
   },
 	methods: {
@@ -167,12 +131,10 @@ export default {
       });
       return result ? true : false;
       
+    },
+    onClickChild (value) {
+      console.log('-----VALUE', value) // someValue
     }
-  },
-  computed: {
-		hasSameMaterialAsExistingDoors () {
-			return this.sameMaterialAsExistingDoors === 'Yes';
-    }
-	}
+  }
 }
 </script>
