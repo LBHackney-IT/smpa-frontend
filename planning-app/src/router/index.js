@@ -27,6 +27,7 @@ import MaterialsStepTwo from '../forms/materials/StepTwo.vue';
 import MaterialsStepThree from '../forms/materials/StepThree.vue';
 import MaterialsStepFour from '../forms/materials/StepFour.vue';
 import MaterialsStepFive from '../forms/materials/StepFive.vue';
+import MaterialsConfirmation from '../forms/materials/Confirmation.vue';
 import SupportingDocumentation from '../forms/documentation/SupportingDocumentation.vue';
 import LocationPlan from '../forms/documentation/LocationPlan.vue';
 import DesignAndAccessStatement from '../forms/documentation/DesignAndAccessStatement.vue';
@@ -106,7 +107,8 @@ export default new Router({
             { path: 'steps/2', name: 'MaterialsStep2', component: MaterialsStepTwo },
             { path: 'steps/3', name: 'MaterialsStep3', component: MaterialsStepThree },
             { path: 'steps/4', name: 'MaterialsStep4', component: MaterialsStepFour },
-            { path: 'steps/5', name: 'MaterialsStep5', component: MaterialsStepFive }
+            { path: 'steps/5', name: 'MaterialsStep5', component: MaterialsStepFive },
+            { path: 'confirmation', name: 'MaterialsConfirmation', component: MaterialsConfirmation }
           ]
         },
         { 

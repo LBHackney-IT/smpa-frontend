@@ -46,6 +46,9 @@
                     Wood
                   </label>
                 </div>
+
+                <materials-info v-if="materialIsChecked('wood')" material="wood" :secondQuestion="materialsDetailsQuestion" @clicked="onClickChild"></materials-info>
+
                 <div class="govuk-checkboxes__item">
                   <input class="govuk-checkboxes__input" id="materials-2" name="materials-2" type="checkbox" value="vynil" v-model="windowMaterial">
                   <label class="govuk-label govuk-checkboxes__label" for="materials-2">
@@ -53,25 +56,35 @@
                   </label>
                 </div>
 
+                <materials-info v-if="materialIsChecked('vynil')" material="vynil" :secondQuestion="materialsDetailsQuestion" @clicked="onClickChild"></materials-info>
+
                 <div class="govuk-checkboxes__item">
                   <input class="govuk-checkboxes__input" id="materials-3" name="materials-3" type="checkbox" value="aluminium" v-model="windowMaterial">
                   <label class="govuk-label govuk-checkboxes__label" for="materials-3">
                     Aluminium
                   </label>
                 </div>
+
+                <materials-info v-if="materialIsChecked('aluminium')" material="aluminium" :secondQuestion="materialsDetailsQuestion" @clicked="onClickChild"></materials-info>
+
                 <div class="govuk-checkboxes__item">
                   <input class="govuk-checkboxes__input" id="materials-4" name="materials-4" type="checkbox" value="fiberglass" v-model="windowMaterial">
                   <label class="govuk-label govuk-checkboxes__label" for="materials-4">
                     Fiberglass
                   </label>
                 </div>
+
+                <materials-info v-if="materialIsChecked('fiberglass')" material="fiberglass" :secondQuestion="materialsDetailsQuestion" @clicked="onClickChild"></materials-info>
+
                 <div class="govuk-checkboxes__item">
                   <input class="govuk-checkboxes__input" id="materials-5" name="materials-5" type="checkbox" value="other" v-model="windowMaterial">
                   <label class="govuk-label govuk-checkboxes__label" for="materials-5">
                     Other
                   </label>
                 </div>
-                <materials-info v-if="materialIsChecked('other')" material="other" :secondQuestion="materialsDetailsQuestion" @clicked="onClickChild"></materials-info>
+
+                <other-material v-if="materialIsChecked('other')" material="other" :secondQuestion="otherMaterialsDetailsQuestion" @clicked="onClickChild"></other-material>
+
               </div>
             </fieldset>
           </div>
@@ -87,18 +100,21 @@
 import vCta from '../../components/Cta.vue';
 import router from '../../router';
 import MaterialsInfo from '../../components/form/MaterialsInfo.vue';
+import OtherMaterial from '../../components/form/OtherMaterial.vue';
 
 export default {
 	name: 'MaterialsStepThree',
 	components: {
     vCta,
-    MaterialsInfo
+    MaterialsInfo,
+    OtherMaterial
   },
   data () {
     return {
       newWindows: '',
       windowMaterial: [],
-      materialsDetailsQuestion: 'Is the proposed material and finish the same as the existing?'
+      materialsDetailsQuestion: 'Is the proposed material and finish the same as the existing?',
+      otherMaterialsDetailsQuestion: 'Is the proposed material and finish the same as the existing?'
     }
   },
 	methods: {

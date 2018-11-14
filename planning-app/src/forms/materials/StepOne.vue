@@ -95,6 +95,9 @@
               Other
             </label>
           </div>
+
+          <other-material v-if="materialIsChecked('other')" material="other" :secondQuestion="otherMaterialsDetailsQuestion" @clicked="onClickChild"></other-material>
+
         </div>
       </fieldset>
     </div>
@@ -107,18 +110,21 @@
 import vCta from '../../components/Cta.vue';
 import router from '../../router';
 import MaterialsInfo from '../../components/form/MaterialsInfo.vue';
+import OtherMaterial from '../../components/form/OtherMaterial.vue';
 
 export default {
 	name: 'MaterialsStepOne',
 	components: {
     vCta,
-    MaterialsInfo
+    MaterialsInfo,
+    OtherMaterial
   },
   data () {
     return {
       checkedMaterials: [],
       sameMaterialAsExistingDoors: '',
-      materialsDetailsQuestion: 'Is the proposed material and finish the same as roof covering?'
+      materialsDetailsQuestion: 'Is the proposed material and finish the same as roof covering?',
+      otherMaterialsDetailsQuestion: 'Is the proposed material and finish the same as the existing?'
     }
   },
 	methods: {
