@@ -56,11 +56,6 @@ export default new Router({
       component: Start
     },
     {
-      name: 'WhatToDo',
-      path: '/what-to-do',
-      component: WhatToDo
-    },
-    {
       path: '/sites',
       redirect: { name: 'SiteSearch' },
     },
