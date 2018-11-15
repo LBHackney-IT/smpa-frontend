@@ -397,6 +397,11 @@
     
       map.addLayer(layer_BLPU);
 
+      var treesLayer = L.tileLayer.wms('https://map.hackney.gov.uk/geoserver/wms/', {
+          layers: 'lbhdesign:Tree Preservation Orders Points',
+          transparent: true,
+          format: 'image/png'
+      }).addTo(map);
 
       var $tab = document.querySelector('[data-module="tabs"]')
       if ($tab) {
