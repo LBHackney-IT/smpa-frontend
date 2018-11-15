@@ -8,15 +8,15 @@
           <tbody class="govuk-table__body">
             <tr class="govuk-table__row">
               <th class="govuk-table__header" scope="row">Address</th>
-              <td class="govuk-table__cell">123 London Lane</td>
+              <td class="govuk-table__cell">{{site.address.result.line1}} {{site.address.result.line2}} {{site.address.result.line3}}</td>
             </tr>
             <tr class="govuk-table__row">
               <th class="govuk-table__header" scope="row">UPRN</th>
-              <td class="govuk-table__cell">123213213123</td>
+              <td class="govuk-table__cell">{{site.address.result.uprn}}</td>
             </tr>
             <tr class="govuk-table__row">
               <th class="govuk-table__header" scope="row">Easting & Northing:</th>
-              <td class="govuk-table__cell">12313123, 23232432432</td>
+              <td class="govuk-table__cell">{{site.siteInfo.eastingAndNorthing}}</td>
             </tr>
             <tr class="govuk-table__row">
               <th class="govuk-table__header" scope="row">Ward:</th>
@@ -24,11 +24,11 @@
             </tr>
             <tr class="govuk-table__row">
               <th class="govuk-table__header" scope="row">Use:</th>
-              <td class="govuk-table__cell">Residential</td>
+              <td class="govuk-table__cell">{{site.siteInfo.use}}</td>
             </tr>
             <tr class="govuk-table__row">
               <th class="govuk-table__header" scope="row">Property type:</th>
-              <td class="govuk-table__cell">Semi-detached-house</td>
+              <td class="govuk-table__cell">{{site.siteInfo.propertyType}}</td>
             </tr>
           </tbody>
         </table>
@@ -218,6 +218,94 @@
     isActive: false
   }];
 
+  const siteNoConservationArea = {
+    address: {
+      result: {
+        line1: "10D", 
+        line2: "Walford Rd", 
+        line3: "Stoke Newington", 
+        line4: null, 
+        city: "LONDON", 
+        postcode: "N16 8ED", 
+        uprn: 100023160623, 
+        addressID: "5360L000016232" 
+      }
+    },
+    siteInfo: {
+      eastingAndNorthing: '533502, 185878',
+      use: 'Residential',
+      propertyType: 'detached house'
+    },
+    siteConstraints: {
+      conservationArea: false,
+      listedBuilding: {
+        statuary: false,
+        listed: false,
+      },
+      trees: {
+        preservationOrderPoints: false,
+        preservationOrderArea: false
+      },
+      article4Directions: ['A4D Light Industrial to Res. Use', 'A4D Storage and Distribution to Res. Use'],
+      floodRiskZone: false
+    },
+    sitePlanningHistory: []
+  };
+
+  const siteConservationArea = {
+    address: {
+      result: {
+        line1: "128", 
+        line2: "Richmond Rd", 
+        line3: "London", 
+        line4: null, 
+        city: "LONDON", 
+        postcode: "E8 3HW", 
+        uprn: 10008300494, 
+        addressID: "32433435435353" 
+      }
+    },
+    siteInfo: {
+      eastingAndNorthing: '534091, 184445',
+      use: 'Residential',
+      propertyType: 'Semi-detached house'
+    },
+    siteConstraints: {
+      conservationArea: true,
+      conservationAreaName: 'Graham Road and Mapledene',
+      listedBuilding: {
+        statuary: false,
+        listed: false,
+      },
+      trees: {
+        preservationOrderPoints: false,
+        preservationOrderArea: false
+      },
+      article4Directions: ['A4D Light Industrial to Res. Use', 'A4D Storage and Distribution to Res. Use'],
+      floodRiskZone: false
+    },
+    sitePlanningHistory: [
+      {
+        id: '2013/4179',
+        status: 'FINAL DECISION',
+        title: 'Side and rear extension',
+        description: 'Demolition of part of existing boundary wall with no.126 and erection of a single storey side extension at lower ground floor level, a single storey rear extension at lower ground floor level with terrace at upper ground floor level and associated excavation of lightwell at lower ground floor level at the rear of the building.'
+      },
+      {
+        id: '2013/1651',
+        status: 'FINAL DECISION',
+        title: 'Side and rear extension',
+        description: 'Erection of a single storey ground floor side and rear extension.'
+      },
+      {
+        id: '2017/2745',
+        status: 'FINAL DECISION',
+        title: 'Trees work',
+        description: 'T1, Acer pseudoplatanus - Reduce crown back to previous points of reduction, leaving suitable furnishing growth (branch lengths of up to approximately 2m).'
+      }
+    ]
+  };
+
   export default {
     name: 'SiteDetails',
     components: {
@@ -226,17 +314,27 @@
       vCta
     },
     data() {
-      return { steps };
+      return { 
+        steps
+      };
+    },
+    props: {
+			postcode: {
+				type: String,
+				required: true
+			}
     },
     mounted() {
       const map = L.map('map', {
-        zoomControl:true, maxZoom:20, minZoom:13
-      }).fitBounds([[51.5481204892,-0.101132443234],[51.5637904091,-0.0576258819491]]);
-  
+        zoomControl: true, 
+        maxZoom:20, 
+        minZoom:1
+      });  
 
       var Mapbox_Basemap = L.tileLayer('https://api.mapbox.com/styles/v1/hackneygis/cjk8lmw5r9mlz2sohv2n6xnfq/tiles/256/{z}/{x}/{y}?access_token={accessToken}', {
-        maxZoom: 17,
+        maxZoom: 18,
         opacity: 1.0,
+        attribution: 'Contains OS data © Crown copyright and database right (2018) - Licensed under the Open Government Licence',
         accessToken: 'pk.eyJ1IjoiaGFja25leWdpcyIsImEiOiJjajh2ZGRiMDMxMzc5MndwbHBmaGtjYTAyIn0.G75YwN8Zgr8gqDJoV8XMFw'
       }).addTo(map);
 
@@ -258,11 +356,47 @@
         info_format: 'text/html',
         opacity: 1,
         identify: false,
-        minZoom: 18,
+        minZoom: 10,
         maxZoom: 20,
       });
 
       map.addLayer(overlay_OSMM_light_1);
+
+      function style_BLPU() {
+        return {
+          pane: 'pane_BLPU',
+          opacity: 0.5,
+          color: 'rgba(255,0,0,1.0)',
+          dashArray: '',
+          lineCap: 'butt',
+          lineJoin: 'miter',
+          weight: 4.0,
+          fill: true,
+          fillOpacity: 1,
+          fillColor: 'rgba(222,80,58,0.0)',
+        }
+      }
+      map.createPane('pane_BLPU');
+
+      var layer_BLPU = L.geoJson(null, {
+        attribution: '<a href=""></a>',
+        style: style_BLPU,
+        pane: 'pane_BLPU',
+      });
+
+      var geojson = {"type":"FeatureCollection","totalFeatures":1,"features":[{"type":"Feature","id":"LAND_TERRIER_BLPU_MV.56403","geometry":{"type":"Polygon","coordinates":[[[-0.07554707523183894,51.55619772166164],[-0.07556365335444343,51.556197993584185],[-0.07562205614485953,51.55619850189066],[-0.07564151742043561,51.556198821091414],[-0.07570132386090031,51.55620025163303],[-0.07572892092336307,51.55602490042486],[-0.07573777833666329,51.555951756628815],[-0.07574263387486208,51.555922160936504],[-0.0757332826512895,51.55592155794116],[-0.07566131807712186,51.55591767987012],[-0.07558286646521187,51.55591369535268],[-0.07557947135786451,51.55594286536729],[-0.07556917212282145,51.5560159855037],[-0.07554707523183894,51.55619772166164]]]},"geometry_name":"GEOLOC","properties":{"UPRN":100023160623,"UNIQUE_POLY_KEY":"25650","FLAG":null,"CONFIDENCE_LEVEL":"2","PROVENANCE_CODE":"P","POLY_VERSION_NUMBER":"V1","BLPU_CLASS":"PP","BLPU_LOGICAL_STATUS":1,"LPI_LOGICAL_STATUS":1,"ID":"8 - 10 Walford Road, Hackney,","PK":"258189","PGP_PK":"430941","CODE":"100023160623","ADDRESS":"8 - 10","STREETNAME":"Walford Road","LOCALITY":"Hackney","TOWN":"London","ADMINAREA":null,"POSTCODE":"N16 8ED","EASTING":"533502","NORTHING":"185878","SE_COUNTER":"258189","MI_STYLE":null,"MI_PRINX":56403,"bbox":[-0.07574263387486208,51.55591369535268,-0.07554707523183894,51.55620025163303]}}],"crs":{"type":"name","properties":{"name":"urn:ogc:def:crs:EPSG::4326"}},"bbox":[-0.07574263387486208,51.55591369535268,-0.07554707523183894,51.55620025163303]};
+      layer_BLPU.addData(geojson);
+
+      if (layer_BLPU.getLayers().length>0){
+        map.fitBounds(layer_BLPU.getBounds());
+        map.setZoom(19);
+      }
+      else{
+        map.setView([51.545032, -0.056434], 15);
+      }
+    
+      map.addLayer(layer_BLPU);
+
 
       var $tab = document.querySelector('[data-module="tabs"]')
       if ($tab) {
@@ -273,6 +407,17 @@
       navigate() {
         router.push({ name: 'WorkStart' });
       }
-    }
+    },
+    computed: {
+      site () {
+        let site = {};
+        if (this.postcode === 'N16 8ED') {
+          site = siteNoConservationArea;
+        } else {
+          site = siteConservationArea;
+        }
+        return site;
+      }
+    },
   }
 </script>

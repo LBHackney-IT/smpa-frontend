@@ -5,7 +5,6 @@ Vue.use(Router)
 
 import Overview from '../views/Overview.vue';
 import Start from '../views/Start.vue';
-import WhatToDo from '../views/WhatToDo.vue'; 
 import SiteSearch from '../views/SiteSearch.vue';
 import SiteDetails from '../views/SiteDetails.vue';
 import SignIn from '../views/SignIn.vue';
@@ -67,7 +66,8 @@ export default new Router({
     {
       path: '/sites/:siteId',
       name: 'SiteDetails',
-      component: SiteDetails
+      component: SiteDetails,
+      props: true
     },
     {
       path: '/applications',
