@@ -357,7 +357,7 @@
         opacity: 1,
         identify: false,
         minZoom: 10,
-        maxZoom: 20,
+        maxZoom: 20
       });
 
       map.addLayer(overlay_OSMM_light_1);
@@ -389,7 +389,6 @@
 
       if (layer_BLPU.getLayers().length>0){
         map.fitBounds(layer_BLPU.getBounds());
-        map.setZoom(19);
       }
       else{
         map.setView([51.545032, -0.056434], 15);
@@ -397,10 +396,46 @@
     
       map.addLayer(layer_BLPU);
 
-      var treesLayer = L.tileLayer.wms('https://map.hackney.gov.uk/geoserver/wms/', {
+      var treesOrdersPointsLayers = L.tileLayer.wms('https://map.hackney.gov.uk/geoserver/wms/', {
           layers: 'lbhdesign:Tree Preservation Orders Points',
           transparent: true,
-          format: 'image/png'
+          format: 'image/png',
+          maxZoom: 20
+      }).addTo(map);
+
+      var treesOrdersPointsAreas = L.tileLayer.wms('https://map.hackney.gov.uk/geoserver/wms/', {
+          layers: 'lbhdesign:Tree Preservation Orders Areas',
+          transparent: true,
+          format: 'image/png',
+          maxZoom: 20
+      }).addTo(map);
+
+      var conservationAreas = L.tileLayer.wms('https://map.hackney.gov.uk/geoserver/wms/', {
+          layers: 'lbhdesign:PLA Conservation Area',
+          transparent: true,
+          format: 'image/png',
+          maxZoom: 20
+      }).addTo(map);
+
+      var locallyListedBuildings = L.tileLayer.wms('https://map.hackney.gov.uk/geoserver/wms/', {
+          layers: 'lbhdesign:Locally Listed Building',
+          transparent: true,
+          format: 'image/png',
+          maxZoom: 20
+      }).addTo(map);
+
+      var statuaryListedBuildings = L.tileLayer.wms('https://map.hackney.gov.uk/geoserver/wms/', {
+          layers: 'lbhdesign:Statutory Listed Buildings',
+          transparent: true,
+          format: 'image/png',
+          maxZoom: 20
+      }).addTo(map);
+
+      var currentApplications = L.tileLayer.wms('https://map.hackney.gov.uk/geoserver/wms/', {
+          layers: 'lbhplanning:PLA_APPS_CURRENT_VW',
+          transparent: true,
+          format: 'image/png',
+          maxZoom: 20
       }).addTo(map);
 
       var $tab = document.querySelector('[data-module="tabs"]')
