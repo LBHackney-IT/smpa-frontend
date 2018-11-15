@@ -1,4 +1,4 @@
-let state = {
+export var state = {
   site: {},
   formResponse: {}
 }
