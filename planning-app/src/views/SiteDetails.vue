@@ -218,94 +218,6 @@
     isActive: false
   }];
 
-  const siteNoConservationArea = {
-    address: {
-      result: {
-        line1: "10D", 
-        line2: "Walford Rd", 
-        line3: "Stoke Newington", 
-        line4: null, 
-        city: "LONDON", 
-        postcode: "N16 8ED", 
-        uprn: 100023160623, 
-        addressID: "5360L000016232" 
-      }
-    },
-    siteInfo: {
-      eastingAndNorthing: '533502, 185878',
-      use: 'Residential',
-      propertyType: 'detached house'
-    },
-    siteConstraints: {
-      conservationArea: false,
-      listedBuilding: {
-        statuary: false,
-        listed: false,
-      },
-      trees: {
-        preservationOrderPoints: false,
-        preservationOrderArea: false
-      },
-      article4Directions: ['A4D Light Industrial to Res. Use', 'A4D Storage and Distribution to Res. Use'],
-      floodRiskZone: false
-    },
-    sitePlanningHistory: []
-  };
-
-  const siteConservationArea = {
-    address: {
-      result: {
-        line1: "128", 
-        line2: "Richmond Rd", 
-        line3: "London", 
-        line4: null, 
-        city: "LONDON", 
-        postcode: "E8 3HW", 
-        uprn: 10008300494, 
-        addressID: "32433435435353" 
-      }
-    },
-    siteInfo: {
-      eastingAndNorthing: '534091, 184445',
-      use: 'Residential',
-      propertyType: 'Semi-detached house'
-    },
-    siteConstraints: {
-      conservationArea: true,
-      conservationAreaName: 'Graham Road and Mapledene',
-      listedBuilding: {
-        statuary: false,
-        listed: false,
-      },
-      trees: {
-        preservationOrderPoints: false,
-        preservationOrderArea: false
-      },
-      article4Directions: ['A4D Light Industrial to Res. Use', 'A4D Storage and Distribution to Res. Use'],
-      floodRiskZone: false
-    },
-    sitePlanningHistory: [
-      {
-        id: '2013/4179',
-        status: 'FINAL DECISION',
-        title: 'Side and rear extension',
-        description: 'Demolition of part of existing boundary wall with no.126 and erection of a single storey side extension at lower ground floor level, a single storey rear extension at lower ground floor level with terrace at upper ground floor level and associated excavation of lightwell at lower ground floor level at the rear of the building.'
-      },
-      {
-        id: '2013/1651',
-        status: 'FINAL DECISION',
-        title: 'Side and rear extension',
-        description: 'Erection of a single storey ground floor side and rear extension.'
-      },
-      {
-        id: '2017/2745',
-        status: 'FINAL DECISION',
-        title: 'Trees work',
-        description: 'T1, Acer pseudoplatanus - Reduce crown back to previous points of reduction, leaving suitable furnishing growth (branch lengths of up to approximately 2m).'
-      }
-    ]
-  };
-
   export default {
     name: 'SiteDetails',
     components: {
@@ -384,13 +296,15 @@
         pane: 'pane_BLPU',
       });
 
-      var geojson = {"type":"FeatureCollection","totalFeatures":1,"features":[{"type":"Feature","id":"LAND_TERRIER_BLPU_MV.56403","geometry":{"type":"Polygon","coordinates":[[[-0.07554707523183894,51.55619772166164],[-0.07556365335444343,51.556197993584185],[-0.07562205614485953,51.55619850189066],[-0.07564151742043561,51.556198821091414],[-0.07570132386090031,51.55620025163303],[-0.07572892092336307,51.55602490042486],[-0.07573777833666329,51.555951756628815],[-0.07574263387486208,51.555922160936504],[-0.0757332826512895,51.55592155794116],[-0.07566131807712186,51.55591767987012],[-0.07558286646521187,51.55591369535268],[-0.07557947135786451,51.55594286536729],[-0.07556917212282145,51.5560159855037],[-0.07554707523183894,51.55619772166164]]]},"geometry_name":"GEOLOC","properties":{"UPRN":100023160623,"UNIQUE_POLY_KEY":"25650","FLAG":null,"CONFIDENCE_LEVEL":"2","PROVENANCE_CODE":"P","POLY_VERSION_NUMBER":"V1","BLPU_CLASS":"PP","BLPU_LOGICAL_STATUS":1,"LPI_LOGICAL_STATUS":1,"ID":"8 - 10 Walford Road, Hackney,","PK":"258189","PGP_PK":"430941","CODE":"100023160623","ADDRESS":"8 - 10","STREETNAME":"Walford Road","LOCALITY":"Hackney","TOWN":"London","ADMINAREA":null,"POSTCODE":"N16 8ED","EASTING":"533502","NORTHING":"185878","SE_COUNTER":"258189","MI_STYLE":null,"MI_PRINX":56403,"bbox":[-0.07574263387486208,51.55591369535268,-0.07554707523183894,51.55620025163303]}}],"crs":{"type":"name","properties":{"name":"urn:ogc:def:crs:EPSG::4326"}},"bbox":[-0.07574263387486208,51.55591369535268,-0.07554707523183894,51.55620025163303]};
+      
+      var geojson = this.$store.state.site.geojson;
+
       layer_BLPU.addData(geojson);
 
       if (layer_BLPU.getLayers().length>0){
         map.fitBounds(layer_BLPU.getBounds());
       }
-      else{
+      else {
         map.setView([51.545032, -0.056434], 15);
       }
     
@@ -401,42 +315,54 @@
           transparent: true,
           format: 'image/png',
           maxZoom: 20
-      }).addTo(map);
+      });
+
+      map.addLayer(treesOrdersPointsLayers);
 
       var treesOrdersPointsAreas = L.tileLayer.wms('https://map.hackney.gov.uk/geoserver/wms/', {
           layers: 'lbhdesign:Tree Preservation Orders Areas',
           transparent: true,
           format: 'image/png',
           maxZoom: 20
-      }).addTo(map);
+      });
+
+      map.addLayer(treesOrdersPointsAreas);
 
       var conservationAreas = L.tileLayer.wms('https://map.hackney.gov.uk/geoserver/wms/', {
           layers: 'lbhdesign:PLA Conservation Area',
           transparent: true,
           format: 'image/png',
           maxZoom: 20
-      }).addTo(map);
+      });
+
+      map.addLayer(conservationAreas);
 
       var locallyListedBuildings = L.tileLayer.wms('https://map.hackney.gov.uk/geoserver/wms/', {
           layers: 'lbhdesign:Locally Listed Building',
           transparent: true,
           format: 'image/png',
           maxZoom: 20
-      }).addTo(map);
+      });
+
+      map.addLayer(locallyListedBuildings);
 
       var statuaryListedBuildings = L.tileLayer.wms('https://map.hackney.gov.uk/geoserver/wms/', {
           layers: 'lbhdesign:Statutory Listed Buildings',
           transparent: true,
           format: 'image/png',
           maxZoom: 20
-      }).addTo(map);
+      });
+
+      map.addLayer(statuaryListedBuildings);
 
       var currentApplications = L.tileLayer.wms('https://map.hackney.gov.uk/geoserver/wms/', {
           layers: 'lbhplanning:PLA_APPS_CURRENT_VW',
           transparent: true,
           format: 'image/png',
           maxZoom: 20
-      }).addTo(map);
+      });
+
+      map.addLayer(currentApplications);
 
       var $tab = document.querySelector('[data-module="tabs"]')
       if ($tab) {
@@ -450,13 +376,7 @@
     },
     computed: {
       site () {
-        let site = {};
-        if (this.postcode === 'N16 8ED') {
-          site = siteNoConservationArea;
-        } else {
-          site = siteConservationArea;
-        }
-        return site;
+        return this.$store.state.site;
       }
     },
   }
