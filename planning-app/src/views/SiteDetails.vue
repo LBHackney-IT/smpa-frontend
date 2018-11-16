@@ -3,7 +3,7 @@
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">
         <h1 class="govuk-heading-xl">Site details</h1>
-        <table class="govuk-table">
+        <table class="govuk-table govuk-!-margin-bottom-9">
           <caption class="govuk-table__caption">This is the information we currently hold about the selected address:</caption>
           <tbody class="govuk-table__body">
             <tr class="govuk-table__row">
@@ -33,7 +33,7 @@
           </tbody>
         </table>
 
-        <div class="map" id="map"></div>
+        <div class="map govuk-!-margin-bottom-9" id="map"></div>
         </div>
 
         <div class="govuk-grid-column-one-third">
@@ -166,8 +166,6 @@
         </div>
 
         <v-cta name="Continue" :onClick="navigate"></v-cta>
-
-        <HelpLink />
       </div>
     </div>
   </div>

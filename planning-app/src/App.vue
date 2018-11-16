@@ -1,7 +1,7 @@
 <template>
   <div id="app" class="govuk-template__body">
     <Header msg="Header"/>
-    <div class="govuk-width-container">
+    <div class="govuk-width-container main-content-wrapper">
       <main class="govuk-main-wrapper " id="main-content" role="main">
         <router-view></router-view>
       </main>

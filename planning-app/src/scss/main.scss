@@ -34,3 +34,20 @@ fieldset {
 body:not(:-moz-handler-blocked) fieldset {
     display: table-cell;
 }
+
+.govuk-template__body {
+    // display: flex;
+    // min-height: 100vh;
+    // flex-direction: column;
+}
+
+.main-content-wrapper {
+    //flex: 1;
+
+    //todo convert this to flexbox when the width issue in main containers is fixed
+    min-height: calc(100vh - 286px);
+}
+
+.govuk-checkboxes__label {
+    padding-top: 0;
+}
