@@ -71,10 +71,9 @@ export default new Router({
     },
     {
       path: '/applications',
-      name: 'Applications',
       component: Applications,
       children: [
-        { path: '', component: WorkStart },
+        { path: '', name: 'Applications', component: WorkStart },
         { path: 'work-start', name: 'WorkStart', component: WorkStart },
         { path: 'multiple-occupation', name: 'MultipleOccupation', component: MultipleOccupation },
         { path: 'proposal', name: 'Proposal', component: Proposal },
@@ -83,9 +82,8 @@ export default new Router({
         { 
           path: 'surroundings', 
           component: Surroundings,
-          name: 'Surroundings',
           children: [
-            { path: '', component: Trees },
+            { path: '', name: 'Surroundings', component: Trees },
             { path: 'trees', name: 'Trees', component: Trees },
             { path: 'access', name: 'Access', component: Access },
             { path: 'parking', name: 'Parking', component: Parking }
@@ -94,9 +92,8 @@ export default new Router({
         { 
           path: 'materials', 
           component: Materials,
-          name: 'Materials',
           children: [
-            { path: '', component: MaterialsStepOne },
+            { path: '', name: 'Materials', component: MaterialsStepOne },
             { path: 'steps', component: MaterialsStepOne },
             { path: 'steps/1', name: 'MaterialsStep1', component: MaterialsStepOne },
             { path: 'steps/2', name: 'MaterialsStep2', component: MaterialsStepTwo },
@@ -109,9 +106,8 @@ export default new Router({
         { 
           path: 'documentation', 
           component: SupportingDocumentation,
-          name: 'Documentation',
           children: [
-            { path: '', component: SupportingDocumentation },
+            { path: '', name: 'Documentation', component: SupportingDocumentation },
             { path: 'location', name:'DocumentationLocation', component: LocationPlan },
             { path: 'design-access-statement', name: 'DocumentationDesignAccessStatement', component: DesignAndAccessStatement },
             { path: 'heritage-statement', name: 'DocumentationHeritageStatement', component: HeritageStatement },
@@ -124,19 +120,19 @@ export default new Router({
           path: 'contact', 
           component: Contact,
           children: [
-            { path: '', component: ContactApplicant },
-            { path: 'agent', component: ContactAgent },
-            { path: 'applicant', component: ContactApplicant }
+            { path: '', name: 'ApplicationContact', component: ContactApplicant },
+            { path: 'agent', name: 'ApplicationContactAgent', component: ContactAgent },
+            { path: 'applicant', name:'ApplicationContactApplicant', component: ContactApplicant }
           ]
         },
         { 
           path: 'declarations', 
           component: Declarations,
           children: [
-            { path: '', component: DeclarationsAuthority },
-            { path: 'authority', component: DeclarationsAuthority },
-            { path: 'ownership', component: DeclarationsOwnership },
-            { path: 'declaration', component: Declaration }
+            { path: '', name: 'Declarations', component: DeclarationsAuthority },
+            { path: 'authority', name:'DeclarationsAuthority', component: DeclarationsAuthority },
+            { path: 'ownership', name:'DeclarationsOwnership', component: DeclarationsOwnership },
+            { path: 'declaration', name:'DeclarationsOverview', component: Declaration }
           ]
         }
       ]

@@ -85,7 +85,7 @@ export default {
   },
 	methods: {
     navigate() {
-      router.push({ name: 'MaterialsStep5' });
+      router.push({ name: 'DeclarationsOwnership' });
     },
     onClickChild (value) {
       console.log('-----VALUE', value) // someValue

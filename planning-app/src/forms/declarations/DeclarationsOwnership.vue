@@ -155,7 +155,7 @@ export default {
   },
 	methods: {
     navigate() {
-      router.push({ name: 'MaterialsStep5' });
+      router.push({ name: 'DeclarationsOverview' });
     },
     onClickChild (value) {
       console.log('-----VALUE', value) // someValue

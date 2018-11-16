@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<div class="govuk-form-group">
-      <fieldset class="govuk-fieldset" aria-describedby="materials-hint">
+      <fieldset class="govuk-fieldset" aria-describedby="agent-contact-hint">
         <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
           <h1 class="govuk-fieldset__heading">
             About the agent
@@ -102,10 +102,10 @@ export default {
   },
 	methods: {
     navigate() {
-      router.push({ name: 'MaterialsStep2' });
+      router.push({ name: 'ApplicationContactApplicant' });
     },
     onClickChild (value) {
-      console.log('-----VALUE', value) // someValue
+      return value;
     }
   }
 }

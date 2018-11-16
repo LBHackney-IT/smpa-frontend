@@ -94,7 +94,7 @@ export default {
   },
 	methods: {
     navigate() {
-      router.push({ name: 'MaterialsStep2' });
+      router.push({ name: 'Declarations' });
     }
   },
   computed: {
