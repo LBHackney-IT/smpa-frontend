@@ -1,5 +1,5 @@
-export var state = {
+export const state = {
   site: {},
-  formResponse: {}
+  form: {}
 }
 

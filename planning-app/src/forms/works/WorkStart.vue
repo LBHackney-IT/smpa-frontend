@@ -4,7 +4,7 @@
 			<fieldset class="govuk-fieldset" aria-describedby="work-started-hint">
 				<legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
 				<h1 class="govuk-fieldset__heading">
-					Has the work already been started?
+					{{ question }}
 				</h1>
 				</legend>
 				<div class="govuk-radios govuk-radios--inline">
@@ -39,7 +39,7 @@
 			v-model="workDetails" 
 			name="more-detail" 
 			v-if="hasWorkStarted" 
-			isRequired="hasWorkStarted">
+			:isRequired="hasWorkStarted">
 		</v-text-area>
 
 		<v-cta name="Next" :onClick="navigate"></v-cta>
@@ -59,12 +59,46 @@ export default {
 	},
 	data () {
     return {
-			workStarted: '',
-			workDetails: ''
+			question: 'Has the work already been started?',
+			workStarted: undefined,
+			workDetails: undefined
     }
   },
 	methods: {
+		collectDataAndStore () {
+
+			let question = {
+				question: this.question,
+				answers: []
+			};
+
+			if (this.workStarted) {
+				let workStartedAnswers = {};
+
+				workStartedAnswers.question = this.question;
+				workStartedAnswers.answerLabel = this.workStarted;
+				workStartedAnswers.answerValue = this.workStarted === 'Yes' ? true : false;
+				workStartedAnswers.required = true;
+
+				question.answers.push(workStartedAnswers);
+			}
+
+			if (this.hasWorkStarted) {
+
+				let answerWorkDetails = {};
+
+				answerWorkDetails.question = 'Describe what you have already done';
+				answerWorkDetails.answerValue = this.workDetails;
+				answerWorkDetails.required = true;
+				
+				question.answers.push(answerWorkDetails);
+			}
+
+			this.$store.commit('addWorksAnswers', question);
+
+		},
     navigate() {
+			//this.collectDataAndStore();
       router.push({ name: 'MultipleOccupation' });
     }
 	},
