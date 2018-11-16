@@ -13,42 +13,5 @@
     </noscript>
     <div id="app"></div>
     <!-- built files will be auto injected -->
-
-    <script>
-      function style_BLPU() {
-          return {
-            pane: 'pane_BLPU',
-            opacity: 0.5,
-            color: 'rgba(0,0,0,1.0)',
-            dashArray: '',
-            lineCap: 'butt',
-            lineJoin: 'miter',
-            weight: 4.0,
-            fill: true,
-            fillOpacity: 1,
-            fillColor: 'rgba(222,80,58,0.0)',
-          }
-        }
-        map.createPane('pane_BLPU');
-
-        var layer_BLPU = L.geoJson(null, {
-          attribution: '<a href=""></a>',
-          style: style_BLPU,
-          pane: 'pane_BLPU',
-        });
-    
-        function getBLPUJson(geojson) {
-          layer_BLPU.addData(geojson);
-          if (layer_BLPU.getLayers().length>0){
-            map.fitBounds(layer_BLPU.getBounds());
-            map.setZoom(20);
-          }
-          else{
-            map.setView([51.545032, -0.056434], 15);
-          }
-        };
-
-        map.addLayer(layer_BLPU);
-    </script>
   </body>
 </html>

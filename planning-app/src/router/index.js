@@ -15,7 +15,7 @@ import WorkStart from '../forms/works/WorkStart.vue';
 import MultipleOccupation from '../forms/works/MultipleOccupation.vue';
 import Proposal from '../forms/works/Proposal.vue';
 import AboutProposal from '../forms/works/AboutProposal.vue';
-import AboutDevelopment from '../forms/development/AboutDevelopment.vue';
+import AboutDevelopment from '../forms/works/AboutDevelopment.vue';
 import Surroundings from '../forms/surroundings/Surroundings.vue';
 import Trees from '../forms/surroundings/Trees.vue';
 import Access from '../forms/surroundings/Access.vue';
