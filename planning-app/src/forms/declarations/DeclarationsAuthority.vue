@@ -73,7 +73,7 @@ import router from '../../router';
 import AuthorityRelationship from '../../components/form/AuthorityRelationship.vue';
 
 export default {
-	name: 'MaterialsStepFour',
+	name: 'DeclarationsAuthority',
 	components: {
     vCta,
     AuthorityRelationship
