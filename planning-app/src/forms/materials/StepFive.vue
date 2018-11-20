@@ -9,7 +9,7 @@
         </legend>
 
         <h4 class="govuk-heading-s">
-					Are there any other materials to be considered?
+					Are there any other external building materials that would be seen?
 				</h4>
 
         <div class="govuk-radios govuk-radios--inline">
