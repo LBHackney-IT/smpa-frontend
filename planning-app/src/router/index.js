@@ -21,6 +21,7 @@ import Trees from '../forms/surroundings/Trees.vue';
 import Access from '../forms/surroundings/Access.vue';
 import Parking from '../forms/surroundings/Parking.vue';
 import Materials from '../forms/materials/Materials.vue';
+import WhatMaterials from '../forms/materials/WhatMaterials.vue';
 import MaterialsStepOne from '../forms/materials/StepOne.vue';
 import MaterialsStepTwo from '../forms/materials/StepTwo.vue';
 import MaterialsStepThree from '../forms/materials/StepThree.vue';
@@ -94,7 +95,8 @@ export default new Router({
           component: Materials,
           children: [
             { path: '', name: 'Materials', component: MaterialsStepOne },
-            { path: 'steps', component: MaterialsStepOne },
+            { path: 'steps', component: WhatMaterials },
+            { path: 'steps/what-materials', name: 'WhatMaterials', component: WhatMaterials },
             { path: 'steps/1', name: 'MaterialsStep1', component: MaterialsStepOne },
             { path: 'steps/2', name: 'MaterialsStep2', component: MaterialsStepTwo },
             { path: 'steps/3', name: 'MaterialsStep3', component: MaterialsStepThree },

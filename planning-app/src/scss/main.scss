@@ -51,3 +51,20 @@ body:not(:-moz-handler-blocked) fieldset {
 .govuk-checkboxes__label {
     padding-top: 0;
 }
+
+.lowercase {
+    text-transform: lowercase;
+}
+
+//override icon position from the gov uk
+.govuk-inset-text.warning-message {
+    background-color: #f8f8f8;
+
+    &.alert {
+        background-color: #FAE3E3;
+        border-left: 10px solid #BC3B38;
+    }
+    div.govuk-warning-text span.govuk-warning-text__icon {
+        margin-top: -20px;
+    }
+}
