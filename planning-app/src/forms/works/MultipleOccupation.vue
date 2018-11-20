@@ -4,7 +4,7 @@
 			<fieldset class="govuk-fieldset" aria-describedby="multiple-occupation-hint">
 				<legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
 				<h1 class="govuk-fieldset__heading">
-					Is the _house type_ a house in multiple occupation (HMO)?
+					Is the <span class="lowercase">{{houseType}}</span> a house in multiple occupation (HMO)?
 				</h1>
 				</legend>
 				<div class="govuk-radios govuk-radios--inline">
@@ -45,6 +45,11 @@ export default {
     navigate() {
       router.push({ name: 'Proposal' });
     }
-  }
+	},
+	computed: {
+		houseType () {
+			return this.$store.getters.getPropertyType;
+		}
+	}
 }
 </script>
