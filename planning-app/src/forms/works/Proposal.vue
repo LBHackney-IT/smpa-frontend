@@ -62,7 +62,7 @@
             </label>
           </div>
 
-          <div  v-if="proposalIsChecked('proposal-7')" class="govuk-inset-text">
+          <div v-if="proposalIsChecked('proposal-7')" class="govuk-inset-text">
             <div class="govuk-checkboxes__item" v-if="isInConservationArea">
               <input class="govuk-checkboxes__input" id="equipment-1" name="equipment-1" type="checkbox" value="CCTV">
               <label class="govuk-label govuk-checkboxes__label" for="equipment-1">
@@ -138,12 +138,11 @@ export default {
     navigate() {
       router.push({ name: 'AboutProposal' });
     },
-    proposalIsChecked(selectedMaterial) {
-      const result = this.selectedProposal.find(function(material) {
-        return material === selectedMaterial;
+    proposalIsChecked(selectedProposal) {
+      const result = this.selectedProposal.find(function(proposal) {
+        return proposal === selectedProposal;
       });
       return result ? true : false;
-      
     }
   },
   computed: {

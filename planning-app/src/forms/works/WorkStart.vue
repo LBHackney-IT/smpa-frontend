@@ -149,7 +149,8 @@ export default {
 	name: 'WorkStart',
 	components: {
 		vCta,
-		vTextArea
+		vTextArea,
+		WarningMessage
 	},
 	data () {
     return {
