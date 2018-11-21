@@ -93,7 +93,8 @@
               <button class="govuk-button" @click="goToStepTwo()">
                 Next
               </button>
-            </slot>
+            </slot><br>
+            <button type="button" @click="$emit('close')">Close</button>
           </div>
         </div>
 
@@ -152,6 +153,8 @@
                 <input class="govuk-file-upload" id="file-upload-1" name="file-upload-1" type="file" :disabled="fileConditions.length < 4" @change="$emit('close')">
               </div>
             </slot>
+
+            <button type="button" @click="$emit('close')">Close</button>
           </div>
         </div>
       </div>
