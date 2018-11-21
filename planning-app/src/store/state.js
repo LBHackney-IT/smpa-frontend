@@ -1,5 +1,9 @@
 export const state = {
   site: {},
-  form: {}
+  workStarted: {},
+  multipleOccupation: {},
+  proposal: {},
+  aboutProposal: {},
+  aboutDevelopment: {}
 }
 

@@ -41,7 +41,7 @@
 								<label class="govuk-label govuk-date-input__label" for="dob-day">
 									Day
 								</label>
-								<input class="govuk-input govuk-date-input__input govuk-input--width-2" id="dob-day" name="dob-day" type="number" pattern="[0-9]*">
+								<input class="govuk-input govuk-date-input__input govuk-input--width-2" id="dob-day" name="dob-day" type="number" pattern="[0-9]*" v-model="dayWorkStarted">
 							</div>
 						</div>
 						<div class="govuk-date-input__item">
@@ -49,7 +49,7 @@
 								<label class="govuk-label govuk-date-input__label" for="dob-month">
 									Month
 								</label>
-								<input class="govuk-input govuk-date-input__input govuk-input--width-2" id="dob-month" name="dob-month" type="number" pattern="[0-9]*">
+								<input class="govuk-input govuk-date-input__input govuk-input--width-2" id="dob-month" name="dob-month" type="number" pattern="[0-9]*" v-model="monthWorkStarted">
 							</div>
 						</div>
 						<div class="govuk-date-input__item">
@@ -57,7 +57,7 @@
 								<label class="govuk-label govuk-date-input__label" for="dob-year">
 									Year
 								</label>
-								<input class="govuk-input govuk-date-input__input govuk-input--width-4" id="dob-year" name="dob-year" type="number" pattern="[0-9]*">
+								<input class="govuk-input govuk-date-input__input govuk-input--width-4" id="dob-year" name="dob-year" type="number" pattern="[0-9]*" v-model="yearWorkStarted">
 							</div>
 						</div>
 					</div>
@@ -103,7 +103,7 @@
 									<label class="govuk-label govuk-date-input__label" for="dob-day">
 										Day
 									</label>
-									<input class="govuk-input govuk-date-input__input govuk-input--width-2" id="dob-day" name="dob-day" type="number" pattern="[0-9]*">
+									<input class="govuk-input govuk-date-input__input govuk-input--width-2" id="dob-day" name="dob-day" type="number" pattern="[0-9]*" v-model="dayWorkFinished">
 								</div>
 							</div>
 							<div class="govuk-date-input__item">
@@ -111,7 +111,7 @@
 									<label class="govuk-label govuk-date-input__label" for="dob-month">
 										Month
 									</label>
-									<input class="govuk-input govuk-date-input__input govuk-input--width-2" id="dob-month" name="dob-month" type="number" pattern="[0-9]*">
+									<input class="govuk-input govuk-date-input__input govuk-input--width-2" id="dob-month" name="dob-month" type="number" pattern="[0-9]*" v-model="monthWorkFinished">
 								</div>
 							</div>
 							<div class="govuk-date-input__item">
@@ -119,7 +119,7 @@
 									<label class="govuk-label govuk-date-input__label" for="dob-year">
 										Year
 									</label>
-									<input class="govuk-input govuk-date-input__input govuk-input--width-4" id="dob-year" name="dob-year" type="number" pattern="[0-9]*">
+									<input class="govuk-input govuk-date-input__input govuk-input--width-4" id="dob-year" name="dob-year" type="number" pattern="[0-9]*" v-model="yearWorkFinished">
 								</div>
 							</div>
 						</div>
@@ -156,9 +156,15 @@ export default {
     return {
 			question: 'Has the work already been started?',
 			workStarted: undefined,
+			dayWorkStarted: undefined,
+			monthWorkStarted: undefined,
+			yearWorkStarted: undefined,
 			workDetails: undefined,
 			warningMessage: 'Message to applicant.',
-			workCompleted: undefined
+			workCompleted: undefined,
+			dayWorkFinished: undefined,
+			monthWorkFinished: undefined,
+			yearWorkFinished: undefined
     }
   },
 	methods: {
@@ -166,7 +172,7 @@ export default {
 
 			let question = {
 				question: this.question,
-				answers: []
+				answers: {}
 			};
 
 			if (this.workStarted) {
@@ -177,7 +183,7 @@ export default {
 				workStartedAnswers.answerValue = this.workStarted === 'Yes' ? true : false;
 				workStartedAnswers.required = true;
 
-				question.answers.push(workStartedAnswers);
+				question.answers = workStartedAnswers;
 			}
 
 			if (this.hasWorkStarted) {
@@ -187,15 +193,22 @@ export default {
 				answerWorkDetails.question = 'Describe what you have already done';
 				answerWorkDetails.answerValue = this.workDetails;
 				answerWorkDetails.required = true;
-				
-				question.answers.push(answerWorkDetails);
+				answerWorkDetails.dayWorkStarted = this.dayWorkStarted;
+				answerWorkDetails.monthWorkStarted = this.monthWorkStarted;
+				answerWorkDetails.yearWorkStarted = this.yearWorkStarted;
+
+				if (this.workCompleted) {
+					answerWorkDetails.workCompleted = this.workCompleted;
+					answerWorkDetails.dayWorkFinished = this.dayWorkFinished,
+					answerWorkDetails.monthWorkFinished = this.monthWorkFinished,
+					answerWorkDetails.yearWorkFinished = this.yearWorkFinished
+				}
+				question.answers.workDetails = answerWorkDetails;
 			}
-
-			this.$store.commit('addWorksAnswers', question);
-
+			this.$store.commit('addWorksAnswers', JSON.parse(JSON.stringify(question)));
 		},
     navigate() {
-			//this.collectDataAndStore();
+			this.collectDataAndStore();
       router.push({ name: 'MultipleOccupation' });
     }
 	},

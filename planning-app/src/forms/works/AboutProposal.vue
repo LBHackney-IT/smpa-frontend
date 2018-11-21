@@ -4,7 +4,7 @@
       <fieldset class="govuk-fieldset" aria-describedby="proposal-hint">
         <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
           <h1 class="govuk-fieldset__heading">
-            About the extension, improvement or alteration
+            {{question}}
           </h1>
         </legend>
         <span id="proposal-hint" class="govuk-hint">
@@ -13,80 +13,73 @@
 
         <div class="govuk-checkboxes">
           <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="proposal-1" name="proposal" type="checkbox" value="proposal-1" v-model="selectedProposal">
+            <input class="govuk-checkboxes__input" id="proposal-1" name="proposal" type="checkbox" value="Extension" v-model="selectedProposal">
             <label class="govuk-label govuk-checkboxes__label" for="proposal-1">
               <strong>Extension</strong>
               <p>A extension of a addition to a house a the rear, side or front including adding a new floor, basement, outbuilding or porch.</p>
             </label>
           </div>
 
-          <div class="govuk-inset-text" v-if="proposalIsChecked('proposal-1')">
+          <div class="govuk-inset-text" v-if="proposalIsChecked('Extension')">
             <div class="govuk-checkboxes__item">
-              <input class="govuk-checkboxes__input" id="proposal-5" name="proposal" type="checkbox" value="rear-extension">
+              <input class="govuk-checkboxes__input" id="proposal-5" name="proposal" type="checkbox" value="Single storey" v-model="typeOfExtension">
               <label class="govuk-label govuk-checkboxes__label" for="proposal-5">
-                Rear extension
+                Single storey
               </label>
             </div>
 
             <div class="govuk-checkboxes__item">
-              <input class="govuk-checkboxes__input" id="proposal-5" name="proposal" type="checkbox" value="side-extension">
+              <input class="govuk-checkboxes__input" id="proposal-5" name="proposal" type="checkbox" value="Two storey" v-model="typeOfExtension">
               <label class="govuk-label govuk-checkboxes__label" for="proposal-5">
-                Side extension
+                Two storey
               </label>
             </div>
 
             <div class="govuk-checkboxes__item">
-              <input class="govuk-checkboxes__input" id="proposal-5" name="proposal" type="checkbox" value="front-extension">
+              <input class="govuk-checkboxes__input" id="proposal-5" name="proposal" type="checkbox" value="Conservatory" v-model="typeOfExtension">
               <label class="govuk-label govuk-checkboxes__label" for="proposal-5">
-                Front extension
+                Conservatory
               </label>
             </div>
 
             <div class="govuk-checkboxes__item">
-              <input class="govuk-checkboxes__input" id="proposal-5" name="proposal" type="checkbox" value="addition-floor">
+              <input class="govuk-checkboxes__input" id="proposal-5" name="proposal" type="checkbox" value="Basement and/or lightwell" v-model="typeOfExtension">
               <label class="govuk-label govuk-checkboxes__label" for="proposal-5">
-                Addition of a new floor
+                Basement and/or lightwell
               </label>
             </div>
 
             <div class="govuk-checkboxes__item">
-              <input class="govuk-checkboxes__input" id="proposal-5" name="proposal" type="checkbox" value="basements">
-              <label class="govuk-label govuk-checkboxes__label" for="proposal-5">
-                Basements
-              </label>
-            </div>
-
-            <div class="govuk-checkboxes__item">
-              <input class="govuk-checkboxes__input" id="proposal-5" name="proposal" type="checkbox" value="outbuilding">
+              <input class="govuk-checkboxes__input" id="proposal-5" name="proposal" type="checkbox" value="outbuilding" v-model="typeOfExtension">
               <label class="govuk-label govuk-checkboxes__label" for="proposal-5">
                 Outbuilding
               </label>
             </div>
 
             <div class="govuk-checkboxes__item">
-              <input class="govuk-checkboxes__input" id="proposal-5" name="proposal" type="checkbox" value="porch">
+              <input class="govuk-checkboxes__input" id="proposal-5" name="proposal" type="checkbox" value="porch" v-model="typeOfExtension">
               <label class="govuk-label govuk-checkboxes__label" for="proposal-5">
                 Porch
               </label>
             </div>
 
             <div class="govuk-checkboxes__item">
-              <input class="govuk-checkboxes__input" id="proposal-5" name="proposal" type="checkbox" value="balcony">
+              <input class="govuk-checkboxes__input" id="proposal-5" name="proposal" type="checkbox" value="Balcony, decking and platforms" v-model="typeOfExtension">
               <label class="govuk-label govuk-checkboxes__label" for="proposal-5">
-                Balcony
+                Balcony, decking and platforms
               </label>
             </div>
           </div>
 
           <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="proposal-2" name="proposal" type="checkbox" value="proposal-2" v-model="selectedProposal">
+            <input class="govuk-checkboxes__input" id="proposal-2" name="proposal" type="checkbox" value="Alteration and/or addition to the existing building" v-model="selectedProposal">
             <label class="govuk-label govuk-checkboxes__label" for="proposal-2">
               <strong>Alteration and/or addition to the existing building</strong>
             </label>
           </div>
 
           <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="proposal-3" name="proposal" type="checkbox" value="proposal-3" v-model="selectedProposal">
+            <input class="govuk-checkboxes__input" id="proposal-3" name="proposal" type="checkbox" value="Alteration and/or addition to the roof" v-model="selectedProposal">
             <label class="govuk-label govuk-checkboxes__label" for="proposal-3">
               <strong>Alteration and/or addition to the roof</strong>
               <p>Additions and alterations made to a roof to enlarge or enhance a house (for example a loft conversion or addition of roof lights).</p>
@@ -94,7 +87,7 @@
           </div>
 
           <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="proposal-4" name="proposal" type="checkbox" value="proposal-4" v-model="selectedProposal">
+            <input class="govuk-checkboxes__input" id="proposal-4" name="proposal" type="checkbox" value="Gates, fences and walls" v-model="selectedProposal">
             <label class="govuk-label govuk-checkboxes__label" for="proposal-4">
               <strong>Gates, fences and walls</strong>
               <p>The maintenance, improvement or alteration of a gate, fence, wall or other means of enclosure. </p>
@@ -102,21 +95,21 @@
           </div>
 
           <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="proposal-5" name="proposal" type="checkbox" value="proposal-5" v-model="selectedProposal">
+            <input class="govuk-checkboxes__input" id="proposal-5" name="proposal" type="checkbox" value="Chimneys, flues and soil vent pipe" v-model="selectedProposal">
             <label class="govuk-label govuk-checkboxes__label" for="proposal-5">
-              <strong>Chimneys and flues</strong>
-              <p>The alteration or replacement of a chimney, flue or soil/vent pipe.</p>
+              <strong>Chimneys, flues and soil vent pipe</strong> only conversation areas
+              <p>The instalation, alteration or replacement of a chimney, flue or soil/vent pipe.</p>
             </label>
           </div>
           <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="proposal-6" name="proposal" type="checkbox" value="proposal-6" v-model="selectedProposal">
+            <input class="govuk-checkboxes__input" id="proposal-6" name="proposal" type="checkbox" value="Patios, driveways and hardstanding" v-model="selectedProposal">
             <label class="govuk-label govuk-checkboxes__label" for="proposal-6">
-              <strong>Hard surfaces</strong>
-              <p>The formation, laying out and construction of a ground surface (for example a driveway).</p>
+              <strong>Patios, driveways and hardstanding</strong>
+              <p>The formation, laying out and construction of a ground surface when not permeable materials are being used.</p>
             </label>
           </div>
           <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="proposal-7" name="proposal" type="checkbox" value="proposal-7" v-model="selectedProposal">
+            <input class="govuk-checkboxes__input" id="proposal-7" name="proposal" type="checkbox" value="Means of access to a highway" v-model="selectedProposal">
             <label class="govuk-label govuk-checkboxes__label" for="proposal-7">
               <strong>Means of access to a highway</strong>
               <p>The formation, laying out and construction of a means of access to a highway that is required in connection to the proposed development.</p>
@@ -124,15 +117,15 @@
           </div>
 
           <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="proposal-8" name="proposal" type="checkbox" value="proposal-8" v-model="selectedProposal">
+            <input class="govuk-checkboxes__input" id="proposal-8" name="proposal" type="checkbox" value="Repair or replace windows or doors" v-model="selectedProposal">
             <label class="govuk-label govuk-checkboxes__label" for="proposal-8">
-              <strong>Repair or replace windows or doors</strong>
+              <strong>Repair or replace of existing windows or doors</strong> only conservation area
               <p>Alteration or replacement to windows or doors including dormer windows and doors.</p>
             </label>
           </div>
 
           <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="proposal-9" name="proposal" type="checkbox" value="proposal-9" v-model="selectedProposal">
+            <input class="govuk-checkboxes__input" id="proposal-9" name="proposal" type="checkbox" value="Exterior painting" v-model="selectedProposal">
             <label class="govuk-label govuk-checkboxes__label" for="proposal-9">
               <strong>Exterior painting</strong>
               <p>Painting an exterior facade.</p>
@@ -142,25 +135,43 @@
       </fieldset>
     </div>
 		<v-cta name="Next" :onClick="navigate"></v-cta>
+    <!-- <review-works></review-works> -->
 	</div>
 </template>
 
 <script>
 import vCta from '../../components/Cta.vue';
 import router from '../../router';
+import reviewWorks from './reviewWorks.vue';
 
 export default {
 	name: 'AboutProposal',
 	components: {
-    vCta
+    vCta,
+    reviewWorks
   },
   data () {
     return {
-      selectedProposal: []
+      selectedProposal: [],
+      typeOfExtension: [],
+      question: 'About the extension, improvement or alteration'
     }
   },
 	methods: {
+    collectDataAndStore () {
+
+			let question = {
+				question: this.question,
+				answers: {}
+      };
+      
+      question.answers.required = true;
+      question.answers.proposal = this.selectedProposal;
+      question.answers.typeOfExtension = this.typeOfExtension;
+			this.$store.commit('addAboutProposalAnswers', JSON.parse(JSON.stringify(question)));
+		},
     navigate() {
+      this.collectDataAndStore();
       router.push({ name: 'AboutDevelopment' });
     },
     proposalIsChecked(selectedProposal) {

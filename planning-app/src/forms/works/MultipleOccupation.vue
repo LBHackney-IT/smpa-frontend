@@ -4,7 +4,7 @@
 			<fieldset class="govuk-fieldset" aria-describedby="multiple-occupation-hint">
 				<legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
 				<h1 class="govuk-fieldset__heading">
-					Is the <span class="lowercase">{{houseType}}</span> a house in multiple occupation (HMO)?
+					Has the <span class="lowercase">{{houseType}}</span> been split into flats?
 				</h1>
 				</legend>
 				<div class="govuk-radios govuk-radios--inline">
@@ -24,17 +24,21 @@
 			</fieldset>
 		</div>
 		<v-cta name="Next" :onClick="navigate"></v-cta>
+
+		<!-- <review-works></review-works> -->
 	</div>
 </template>
 
 <script>
 import vCta from '../../components/Cta.vue';
 import router from '../../router';
+import reviewWorks from './reviewWorks.vue';
 
 export default {
 	name: 'MultipleOccupation',
 	components: {
-		vCta
+		vCta,
+		reviewWorks
 	},
 	data () {
     return {
@@ -42,13 +46,39 @@ export default {
     }
   },
 	methods: {
+		collectDataAndStore () {
+
+			let question = {
+				question: 'Has the ' + this.houseType + 'been split into flats?',
+				answers: {}
+			};
+
+			let multipleOccupationAnswers = {};
+
+			multipleOccupationAnswers.question = question.question;
+			multipleOccupationAnswers.answerLabel = this.multipleOccupation;
+			multipleOccupationAnswers.answerValue = this.multipleOccupation === 'Yes' ? true : false;
+			multipleOccupationAnswers.required = true;
+
+			question.answers = multipleOccupationAnswers;
+			this.$store.commit('addMultipleOccupationAnswers', JSON.parse(JSON.stringify(question)));
+		},
     navigate() {
+			this.collectDataAndStore();
       router.push({ name: 'Proposal' });
     }
 	},
 	computed: {
 		houseType () {
-			return this.$store.getters.getPropertyType;
+			let houseType;
+
+			if (this.$store.state.site && this.$store.state.site.siteInfo && this.$store.state.site.siteInfo.propertyType) {
+				houseType = this.$store.state.site.siteInfo.propertyType;
+			} else {
+				houseType = 'house';
+			}
+		
+			return houseType
 		}
 	}
 }
