@@ -27,15 +27,9 @@
 			</fieldset>
 
       <div class="govuk-inset-text" v-if="hasTreesInsideBoundary">
-        <div class="govuk-warning-text">
-          <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-          <strong class="govuk-warning-text__text">
-            <span class="govuk-warning-text__assistive">Warning</span>
-            You need to submit a Tree Survey where the application involves works that affect any trees on teh sute that may or may not be protected by Tree Preservation Order (TPO) or Conversation Area Legislation.
-          </strong>
-        </div>
-
-        <h4 class="govuk-heading-s">Find out if you need to submit a Tree Survey</h4>
+        <warning-message :message="warningMessageOne" v-bind:typeAlert="true"></warning-message>
+        <warning-message :message="warningMessageTwo" v-bind:typeAlert="true"></warning-message>
+        <warning-message :message="warningMessageThree" v-bind:typeAlert="false"></warning-message>
 
         <details class="govuk-details">
           <summary class="govuk-details__summary">
@@ -44,32 +38,20 @@
             </span>
           </summary>
           <div class="govuk-details__text">
-            img here
+            <img class="location" src="../../assets/img/trees_explanation.png" alt="How to measure trees" />
           </div>
         </details>
-
-        <div class="govuk-form-group">
-          <label class="govuk-label" for="name">
-            Tree diameter at 1.5m
-          </label>
-          <input class="govuk-input" id="name" name="name" type="number">
-        </div>
-
-        <div class="govuk-form-group">
-          <label class="govuk-label" for="name">
-            Distance from tree to works
-          </label>
-          <input class="govuk-input" id="name" name="name" type="number">
-        </div>
-
       </div>
 
-      <fieldset class="govuk-fieldset" aria-describedby="trees-question-2-hint">
+      <fieldset class="govuk-fieldset govuk-!-margin-top-9" aria-describedby="trees-question-2-hint">
 				<legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
-				<h4 class="govuk-heading-s">
-					Are there any trees on land adjacent (10 m from your site boundary) to the proposed development?
-				</h4>
+          <h4 class="govuk-heading-s">
+            Are there any trees on land adjacent (10 m from your site boundary) to the proposed development?
+          </h4>
 				</legend>
+
+         <warning-message :message="warningMessageFour" v-bind:typeAlert="false"></warning-message>
+
 				<div class="govuk-radios govuk-radios--inline">
 					<div class="govuk-radios__item">
 						<input class="govuk-radios__input" id="trees-adjacent-1" name="trees-adjacent" type="radio" value="Yes" v-model="treesAdjacent">
@@ -88,40 +70,19 @@
 
 
       <div class="govuk-inset-text" v-if="hasTreesAdjacent">
-        <div class="govuk-warning-text">
-          <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-          <strong class="govuk-warning-text__text">
-            <span class="govuk-warning-text__assistive">Warning</span>
-            You need to submit a Tree Survey where the application involves works that affect any trees on teh sute that may or may not be protected by Tree Preservation Order (TPO) or Conversation Area Legislation.
-          </strong>
-        </div>
-
-        <h4 class="govuk-heading-s">Find out if you need to submit a Tree Survey</h4>
+        <warning-message :message="warningMessageTwo" v-bind:typeAlert="true"></warning-message>
+        <warning-message :message="warningMessageThree" v-bind:typeAlert="false"></warning-message>
 
         <details class="govuk-details">
           <summary class="govuk-details__summary">
             <span class="govuk-details__summary-text">
-              How to mesure a tree
+              How to measure a tree
             </span>
           </summary>
           <div class="govuk-details__text">
-            img here
+            <img class="location" src="../../assets/img/trees_explanation.png" alt="How to measure trees" />
           </div>
         </details>
-
-        <div class="govuk-form-group">
-          <label class="govuk-label" for="name">
-            Tree diameter at 1.5m
-          </label>
-          <input class="govuk-input" id="name" name="name" type="number">
-        </div>
-
-        <div class="govuk-form-group">
-          <label class="govuk-label" for="name">
-            Distance from tree to works
-          </label>
-          <input class="govuk-input" id="name" name="name" type="number">
-        </div>
       </div>
 
 		</div>
@@ -132,16 +93,22 @@
 <script>
 import vCta from '../../components/Cta.vue';
 import router from '../../router';
+import WarningMessage from '../../components/WarningMessage.vue';
 
 export default {
 	name: 'WorkStart',
 	components: {
-		vCta
+    vCta,
+    WarningMessage
 	},
 	data () {
     return {
 			treesInsideBoundary: '',
-			treesAdjacent: ''
+      treesAdjacent: '',
+      warningMessageOne: 'You must mark trees position on a scaled plan',
+      warningMessageTwo: 'You might need to submit a Tree Survey',
+      warningMessageThree: 'In conservation areas, notice is required for works to trees that have a trunk diameter of more than 75mm when measured at 1.5m from the ground level (or more than 100mm if reducing the number of trees to benefit the growth of other trees).',
+      warningMessageFour: 'There might be trees on land adjacent to your site that could be impacted by the works. A planner will need to visit and assess if you need to submit a tree assessment.'
     }
   },
   computed: {

@@ -15,6 +15,11 @@
       </div>
     </details>
 
+    <div v-if="hasPostcode">
+      <img class="location" v-if="hasPostcode === 'N16 8ED'" src="../../assets/img/not_conservation_area.png" alt="Map view of the site" />
+      <img class="location" v-if="hasPostcode === 'E8 3HW'" src="../../assets/img/conservation_area.png" alt="Map view of the site" />
+    </div>
+
     <div class="govuk-form-group">
 			<fieldset class="govuk-fieldset" aria-describedby="location-map-hint">
 				<div class="govuk-radios govuk-radios--inline">
@@ -52,7 +57,6 @@
 import vCta from '../../components/Cta.vue';
 import WarningMessage from '../../components/WarningMessage.vue';
 import router from '../../router';
-
 export default {
 	name: 'LocationPlan',
 	components: {
@@ -69,6 +73,15 @@ export default {
     navigate() {
       router.push({ name: 'DocumentationDesignAccessStatement' });
     }
+  },
+  computed: {
+		hasPostcode () {
+      if (this.$store.state.site && this.$store.state.site.address && this.$store.state.site.address.result && this.$store.state.site.address.result.postcode) {
+        return this.$store.state.site.address.result.postcode;
+      } else {
+        return false;
+      }
+		}
 	}
 }
 </script>
