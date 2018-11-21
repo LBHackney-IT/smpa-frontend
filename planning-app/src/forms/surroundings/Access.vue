@@ -27,13 +27,7 @@
 			</fieldset>
 
       <div class="govuk-inset-text" v-if="hasAlterationToAccess">
-        <div class="govuk-warning-text">
-          <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-          <strong class="govuk-warning-text__text">
-            <span class="govuk-warning-text__assistive">Warning</span>
-              Any public footpath that crosses or adjoins the site or is affected must be shown clearly on the plans, including any proposals that may require a closure or diversion.
-          </strong>
-        </div>
+        <warning-message :message="warningMessage" v-bind:typeAlert="false"></warning-message>
 
         <fieldset class="govuk-fieldset">
           <div class="govuk-radios govuk-radios--inline">
@@ -66,16 +60,19 @@
 <script>
 import vCta from '../../components/Cta.vue';
 import router from '../../router';
+import WarningMessage from '../../components/WarningMessage.vue';
 
 export default {
 	name: 'WorkStart',
 	components: {
-		vCta
+    vCta,
+    WarningMessage
 	},
 	data () {
     return {
       alterationToAccess: '',
-      typeOfAlteration: ''
+      typeOfAlteration: '',
+      warningMessage: 'Any public footpath that crosses or adjoins the site or is affected must be shown clearly on the plans, including any proposals that may require a closure or diversion.'
     }
   },
   computed: {

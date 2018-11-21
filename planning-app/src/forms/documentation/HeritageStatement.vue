@@ -31,7 +31,7 @@
 
     <v-cta name="Next" :onClick="navigate"></v-cta>
     <br>
-    <router-link :to="{ name: 'DocumentationHeritageStatement' }">Continue without adding a file</router-link>
+    <router-link :to="{ name: 'DocumentationAdditionalPlans' }">Continue without adding a file</router-link>
 	</div>
 </template>
 

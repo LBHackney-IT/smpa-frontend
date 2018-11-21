@@ -63,7 +63,7 @@ You should include elevations for all sides of the proposal.</p>
 
     <v-cta name="Next" :onClick="navigate"></v-cta>
     <br>
-    <router-link :to="{ name: 'DocumentationHeritageStatement' }">Continue without adding a file</router-link>
+    <router-link :to="{ name: 'DocumentationDocsReview' }">Continue without adding a file</router-link>
 	</div>
 </template>
 

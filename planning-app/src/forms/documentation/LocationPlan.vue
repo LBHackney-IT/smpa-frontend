@@ -15,7 +15,7 @@
       </div>
     </details>
 
-    <div v-if="hasPostcode">
+    <div v-if="hasPostcode" class="govuk-!-margin-bottom-9">
       <img class="location" v-if="hasPostcode === 'N16 8ED'" src="../../assets/img/not_conservation_area.png" alt="Map view of the site" />
       <img class="location" v-if="hasPostcode === 'E8 3HW'" src="../../assets/img/conservation_area.png" alt="Map view of the site" />
     </div>
@@ -49,7 +49,9 @@
 
     <v-cta name="Next" :onClick="navigate"></v-cta>
     <br>
-    <router-link :to="{ name: 'DocumentationDesignAccessStatement' }">Continue without adding a file</router-link>
+
+    <router-link v-if="isInConservationArea" :to="{ name: 'DocumentationDesignAccessStatement' }">Continue without adding a file</router-link>
+    <router-link v-if="!isInConservationArea" :to="{ name: 'DocumentationAdditionalPlans' }">Continue without adding a file</router-link>
 	</div>
 </template>
 
@@ -71,7 +73,11 @@ export default {
   },
 	methods: {
     navigate() {
-      router.push({ name: 'DocumentationDesignAccessStatement' });
+      if (this.isInConservationArea) {
+        router.push({ name: 'DocumentationDesignAccessStatement' });
+      } else {
+        router.push({ name: 'DocumentationAdditionalPlans' });
+      }
     }
   },
   computed: {
@@ -81,7 +87,14 @@ export default {
       } else {
         return false;
       }
-		}
+    },
+    isInConservationArea () {
+      if (this.$store.state.site && this.$store.state.site.siteConstraints && this.$store.state.site.siteConstraints.conservationArea) {
+        return this.$store.state.site.siteConstraints.conservationArea;
+      } else {
+        return false;
+      }
+    }
 	}
 }
 </script>
