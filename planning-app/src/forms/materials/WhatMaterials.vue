@@ -55,7 +55,7 @@ export default {
 	methods: {
     navigate() {
       if (this.materials === 'Yes') {
-        router.push({ name: 'Surroundings' });
+        router.push({ name: 'SupportingDocumentation' });
       } else {
         router.push({ name: 'MaterialsStep1' });
       }
