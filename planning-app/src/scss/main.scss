@@ -2,6 +2,7 @@ $govuk-global-styles: true;
 
 @import "../../node_modules/govuk-frontend/all";
 @import "steps";
+@import "modal";
 
 body {
     margin: 0;

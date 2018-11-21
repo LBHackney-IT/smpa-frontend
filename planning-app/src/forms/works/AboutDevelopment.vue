@@ -8,45 +8,50 @@
           </h1>
         </legend>
 
-        <p>The floor area is:</p>
+        <h4 class="govuk-heading-s">
+					The floor area is:
+				</h4>
+
+        <warning-message :message="floorAreaMessage" v-bind:typeAlert="false"></warning-message>
 
         <div class="govuk-form-group">
           <label class="govuk-label" for="name">
-            Area
+            Floor area added
           </label>
-          <input class="govuk-input" id="name" name="name" type="number">
+          <span class="govuk-hint">
+            Enter floor area added in sq.m
+          </span>
+          <input class="govuk-input govuk-!-width-one-quarter" id="name" name="name" type="number">
         </div>
 
-        <div class="govuk-form-group">
-          <label class="govuk-label" for="sort">
-            Choose
-          </label>
-          <select class="govuk-select" id="sort" name="sort">
-            <option value="published" selected>Choose</option>
-            <option value="updated">Recently updated</option>
-            <option value="views">Most views</option>
-            <option value="comments">Most comments</option>
-          </select>
-        </div>
+        <h4 class="govuk-heading-s">
+					The number of bedrooms added is:
+				</h4>
 
+        <warning-message :message="numberBedroomsMessage" v-bind:typeAlert="false"></warning-message>
 
-        <p>The number of stories proposed is:</p>
         <div class="govuk-form-group">
           <label class="govuk-label" for="name">
-            Number of stories
+            Number of bedrooms added
           </label>
-          <input class="govuk-input" id="name" name="name" type="number">
+          <span class="govuk-hint">
+            Enter 0 if no bedrooms are added
+          </span>
+          <input class="govuk-input govuk-!-width-one-quarter" id="name" name="name" type="number">
         </div>
 
-
-        <p>The number of bedrooms gained are:</p>
+        <h4 class="govuk-heading-s">
+					The number of new additional storeys added is:
+				</h4>
         <div class="govuk-form-group">
           <label class="govuk-label" for="name">
-            Number of bedrooms
+            Number of new storeys added
           </label>
-          <input class="govuk-input" id="name" name="name" type="number">
+          <span class="govuk-hint">
+            Enter 0 if no new storeys are added
+          </span>
+          <input class="govuk-input govuk-!-width-one-quarter" id="name" name="name" type="number">
         </div>
-
       </fieldset>
     </div>
 		<v-cta name="Next" :onClick="navigate"></v-cta>
@@ -56,14 +61,19 @@
 <script>
 import vCta from '../../components/Cta.vue';
 import router from '../../router';
+import WarningMessage from '../../components/WarningMessage.vue';
 
 export default {
 	name: 'AboutDevelopment',
 	components: {
-    vCta
+    vCta,
+    WarningMessage
   },
   data () {
-    return {}
+    return {
+      floorAreaMessage: 'Floor area is measured as GIA (gross internal area). Broadly speaking the whole enclosed area of a building within the external walls taking each floor into account and excluding the thickness of the external walls.',
+      numberBedroomsMessage: 'A single bedroom must have a floor area of at least 7.5 sqm and be at least 2.15m wide. A double (or twin) bedroom must have a floor area of at least 11.5 sqm.'
+    }
   },
 	methods: {
     navigate() {

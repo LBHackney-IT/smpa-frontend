@@ -28,13 +28,13 @@ import MaterialsStepThree from '../forms/materials/StepThree.vue';
 import MaterialsStepFour from '../forms/materials/StepFour.vue';
 import MaterialsStepFive from '../forms/materials/StepFive.vue';
 import MaterialsConfirmation from '../forms/materials/Confirmation.vue';
+import Documentation from '../forms/documentation/Documentation.vue';
 import SupportingDocumentation from '../forms/documentation/SupportingDocumentation.vue';
 import LocationPlan from '../forms/documentation/LocationPlan.vue';
 import DesignAndAccessStatement from '../forms/documentation/DesignAndAccessStatement.vue';
 import HeritageStatement from '../forms/documentation/HeritageStatement.vue';
 import AdditionalPlans from '../forms/documentation/AdditionalPlans.vue';
 import DocumentsReview from '../forms/documentation/DocumentsReview.vue';
-import DocumentationChecklist from '../forms/documentation/DocumentationChecklist.vue';
 import Contact from '../forms/contact/Contact.vue';
 import ContactApplicant from '../forms/contact/ContactApplicant.vue';
 import ContactAgent from '../forms/contact/ContactAgent.vue';
@@ -107,22 +107,21 @@ export default new Router({
         },
         { 
           path: 'documentation', 
-          component: SupportingDocumentation,
+          component: Documentation,
           children: [
-            { path: '', name: 'Documentation', component: SupportingDocumentation },
+            { path: '', name: 'SupportingDocumentation', component: SupportingDocumentation },
             { path: 'location', name:'DocumentationLocation', component: LocationPlan },
             { path: 'design-access-statement', name: 'DocumentationDesignAccessStatement', component: DesignAndAccessStatement },
             { path: 'heritage-statement', name: 'DocumentationHeritageStatement', component: HeritageStatement },
             { path: 'additional-plans', name: 'DocumentationAdditionalPlans', component: AdditionalPlans },
-            { path: 'docs-review', name: 'DocumentationDocsReview', component: DocumentsReview },
-            { path: 'documentation-checklist', name: 'DocumentationChecklist', component: DocumentationChecklist }
+            { path: 'docs-review', name: 'DocumentationDocsReview', component: DocumentsReview }
           ]
         },
         { 
           path: 'contact', 
           component: Contact,
           children: [
-            { path: '', name: 'ApplicationContact', component: ContactApplicant },
+            { path: '', name: 'ApplicationContact', component: ContactAgent },
             { path: 'agent', name: 'ApplicationContactAgent', component: ContactAgent },
             { path: 'applicant', name:'ApplicationContactApplicant', component: ContactApplicant }
           ]
