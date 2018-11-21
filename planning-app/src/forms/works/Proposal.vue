@@ -148,7 +148,6 @@ export default {
 		},
     navigate() {
       this.collectDataAndStore();
-      console.log('----state', this.$store.state);
       router.push({ name: 'AboutProposal' });
     },
     proposalIsChecked(selectedProposal) {

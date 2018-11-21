@@ -38,14 +38,12 @@
 
 <script>
 import vCta from '../../components/Cta.vue';
-import WarningMessage from '../../components/WarningMessage.vue';
 import router from '../../router';
 
 export default {
 	name: 'DesignAndAccessStatement',
 	components: {
-    vCta,
-    WarningMessage
+    vCta
 	},
 	data () {
     return {}

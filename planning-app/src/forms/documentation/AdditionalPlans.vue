@@ -69,7 +69,6 @@ You should include elevations for all sides of the proposal.</p>
 
 <script>
 import vCta from '../../components/Cta.vue';
-import WarningMessage from '../../components/WarningMessage.vue';
 import Modal from '../../components/form/DocumentsCheckModal.vue';
 import router from '../../router';
 
@@ -77,7 +76,6 @@ export default {
 	name: 'AdditionalPlans',
 	components: {
     vCta,
-    WarningMessage,
     Modal
 	},
 	data () {
