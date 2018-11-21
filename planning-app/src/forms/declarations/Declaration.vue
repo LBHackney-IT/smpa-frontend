@@ -82,7 +82,7 @@ export default {
   },
 	methods: {
     navigate() {
-      router.push({ name: 'AboutDevelopment' });
+      router.push({ name: 'Success' });
     }
   }
 }

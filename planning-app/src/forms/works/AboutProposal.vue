@@ -94,10 +94,10 @@
             </label>
           </div>
 
-          <div class="govuk-checkboxes__item">
+          <div class="govuk-checkboxes__item" v-if="isInConservationArea">
             <input class="govuk-checkboxes__input" id="proposal-5" name="proposal" type="checkbox" value="Chimneys, flues and soil vent pipe" v-model="selectedProposal">
             <label class="govuk-label govuk-checkboxes__label" for="proposal-5">
-              <strong>Chimneys, flues and soil vent pipe</strong> only conversation areas
+              <strong>Chimneys, flues and soil vent pipe</strong>
               <p>The instalation, alteration or replacement of a chimney, flue or soil/vent pipe.</p>
             </label>
           </div>
@@ -116,10 +116,10 @@
             </label>
           </div>
 
-          <div class="govuk-checkboxes__item">
+          <div class="govuk-checkboxes__item" v-if="isInConservationArea">
             <input class="govuk-checkboxes__input" id="proposal-8" name="proposal" type="checkbox" value="Repair or replace windows or doors" v-model="selectedProposal">
             <label class="govuk-label govuk-checkboxes__label" for="proposal-8">
-              <strong>Repair or replace of existing windows or doors</strong> only conservation area
+              <strong>Repair or replace of existing windows or doors</strong>
               <p>Alteration or replacement to windows or doors including dormer windows and doors.</p>
             </label>
           </div>
@@ -180,6 +180,15 @@ export default {
       });
       return result ? true : false;
     }
-  }
+  },
+  computed: {
+		isInConservationArea () {
+      if (this.$store.state.site && this.$store.state.site.siteConstraints && this.$store.state.site.siteConstraints.conservationArea) {
+        return this.$store.state.site.siteConstraints.conservationArea;
+      } else {
+        return false;
+      }
+		}
+	}
 }
 </script>

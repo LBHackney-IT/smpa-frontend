@@ -42,6 +42,7 @@ import Declarations from '../forms/declarations/Declarations.vue';
 import Declaration from '../forms/declarations/Declaration.vue';
 import DeclarationsAuthority from '../forms/declarations/DeclarationsAuthority.vue';
 import DeclarationsOwnership from '../forms/declarations/DeclarationsOwnership.vue';
+import Success from '../forms/declarations/Success.vue';
 
 export default new Router({
   mode: 'history',
@@ -133,7 +134,8 @@ export default new Router({
             { path: '', name: 'Declarations', component: DeclarationsAuthority },
             { path: 'authority', name:'DeclarationsAuthority', component: DeclarationsAuthority },
             { path: 'ownership', name:'DeclarationsOwnership', component: DeclarationsOwnership },
-            { path: 'declaration', name:'DeclarationsOverview', component: Declaration }
+            { path: 'declaration', name:'DeclarationsOverview', component: Declaration },
+            { path: 'success', name:'Success', component: Success },
           ]
         }
       ]
