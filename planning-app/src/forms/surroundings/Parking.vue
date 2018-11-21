@@ -83,7 +83,7 @@ export default {
   },
   methods: {
     navigate() {
-      router.push({ name: 'MaterialsStep1' });
+      router.push({ name: 'WhatMaterials' });
     }
   }
 
