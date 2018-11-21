@@ -73,7 +73,7 @@ export default {
   },
 	methods: {
     navigate() {
-      router.push({ name: 'Documentation' });
+      router.push({ name: 'SupportingDocumentation' });
     }
   },
   computed: {
