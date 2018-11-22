@@ -1,6 +1,6 @@
 <template>
     <div class="steps govuk-body">
-			<div v-for="(step, index) in steps" v-bind:key="step" class="steps__single-step">
+			<div v-for="(step, index) in steps" v-bind:key="index" class="steps__single-step">
 				<div class="steps__step-guide">
 					<div class="steps__step-number" v-bind:class="[(currentRoute === step.name || step.isActive) ? 'steps--current-step' : '']">
 						{{index + 1}}

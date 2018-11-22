@@ -12,7 +12,7 @@ export default {
   props: {
     content: {
       type: String,
-      required: true
+      required: false
     },
     active: {
       type: Boolean,

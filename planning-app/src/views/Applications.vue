@@ -16,37 +16,37 @@
   const steps = [{
     title: "Site details",
     name: "SiteDetails",
-    content: '<p>Enter your site address</p>',
+    content: '<p>View the geographic information related to your site.</p>',
     isActive: false
   },
   {
     title: "Description of the works",
     name: "FormWorkDescription",
-    content: '<p>Describe your proposal.</p><ul><li>Development</li><li>Materials</li><li>Surroundings</li></ul>',
+    content: '<p>Supply relevant information to describe your proposal.</p>',
     isActive: false
   },
   {
     title: "Supporting documentation",
     name: "FormDocumentation",
-    content: '<p>Hello Step 2!!</p>',
+    content: '<p>Supply documentation to describe your proposal.</p>',
     isActive: false
   },
   {
     title: "Declarations", 
     name: "FormDeclarations",
-    content: '<p>Hello Step 2!!</p>',
+    content: '<p>Make the necessary legal declarations.</p>',
     isActive: false
   },
   {
     title: "Contact details",
     name: "FormContact",
-    content: '<p>Hello Step 2!!</p>',
+    content: '<p>Supply your details/details of the applicant so the local authority can contact you. </p>',
     isActive: false
   },
   {
     title: "Pay and submit",
     name: "FormPaySubmit",
-    content: '<p>Hello Step 2!!</p>',
+    content: '<p>Payment of the correct fee is required at the point of submission. If you don’t supply the correct fee you risk your application being invalid. You can pay for your application as part of this service using credit or debit card. <a target="_blank" href="https://hackney.gov.uk/planning-guidance#Back%20to%20top">Read more information</a> on current planning fees.</p>',
     isActive: false
   }];
 

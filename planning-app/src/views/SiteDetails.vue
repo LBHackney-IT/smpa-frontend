@@ -55,7 +55,7 @@
             </li>
             <li class="govuk-tabs__list-item">
               <a class="govuk-tabs__tab" href="#site-planning-history">
-                Site Planning History <strong>2</strong>
+                Site Planning History <strong>{{amountPlanningHistory}}</strong>
               </a>
             </li>
           </ul>
@@ -66,7 +66,8 @@
               <tbody class="govuk-table__body">
                 <tr class="govuk-table__row">
                   <td class="govuk-table__cell">Conservation area</td>
-                  <td class="govuk-table__cell">Road name and Name of conservation area</td>
+                  <td class="govuk-table__cell" v-if="!site.siteConstraints.conservationAreaName">{{site.siteConstraints.conservationArea}}</td>
+                  <td class="govuk-table__cell" v-if="site.siteConstraints.conservationAreaName">{{site.siteConstraints.conservationAreaName}}</td>
                   <td class="govuk-table__cell">View on map</td>
                 </tr>
               </tbody>
@@ -81,7 +82,7 @@
               <tbody class="govuk-table__body">
                 <tr class="govuk-table__row">
                   <td class="govuk-table__cell">Statuary</td>
-                  <td class="govuk-table__cell">No</td>
+                  <td class="govuk-table__cell">No</td> 
                 </tr>
                 <tr class="govuk-table__row">
                   <td class="govuk-table__cell">Local</td>
@@ -94,12 +95,12 @@
               <tbody class="govuk-table__body">
                 <tr class="govuk-table__row">
                   <td class="govuk-table__cell">Flood zone</td>
-                  <td class="govuk-table__cell">2B</td>
+                  <td class="govuk-table__cell">No</td>
                   <td class="govuk-table__cell">Find out more</td>
                 </tr>
                 <tr class="govuk-table__row">
                   <td class="govuk-table__cell">Trees Preservation Orders</td>
-                  <td class="govuk-table__cell">Yes</td>
+                  <td class="govuk-table__cell">No</td>
                   <td class="govuk-table__cell">Find out more</td>
                 </tr>
 
@@ -125,7 +126,8 @@
 
           <section class="govuk-tabs__panel govuk-tabs__panel--hidden" id="site-planning-history">
             <h2 class="govuk-heading-l">Site Planning History</h2>
-            <table class="govuk-table">
+            <p v-if="amountPlanningHistory === 0">There are no previous planning applications in this site.</p>
+            <table class="govuk-table" v-if="amountPlanningHistory > 0">
               <thead class="govuk-table__head">
                 <tr class="govuk-table__row">
                   <th class="govuk-table__header" scope="col">Application</th>
@@ -133,35 +135,19 @@
                 </tr>
               </thead>
               <tbody class="govuk-table__body">
-                <tr class="govuk-table__row">
+                <tr class="govuk-table__row" v-for="(planning, index) in site.sitePlanningHistory" v-bind:key="index">
                   <td class="govuk-table__cell">
-                    <p>31st July</p>
-                    <p>2015</p>
-                    <strong>Rejected</strong>
+                    <strong>{{planning.status}}</strong>
                   </td>
                   <td class="govuk-table__cell">
-                    <p>Roof Extension</p>
-                    <p>WR - 21432434</p>
-                    <p>Proposed a roof extension in the rear of an existing property</p>
-                    <p>View documents attached</p>
-                  </td>
-                </tr>
-                <tr class="govuk-table__row">
-                  <td class="govuk-table__cell">
-                    <p>31st July</p>
-                    <p>2015</p>
-                    <strong>Rejected</strong>
-                  </td>
-                  <td class="govuk-table__cell">
-                    <p>Roof Extension</p>
-                    <p>WR - 21432434</p>
-                    <p>Proposed a roof extension in the rear of an existing property</p>
-                    <p>View documents attached</p>
+                    <p>{{planning.title}}</p>
+                    <p>{{planning.id}}</p>
+                    <p>{{planning.description}}</p>
                   </td>
                 </tr>
               </tbody>
             </table>
-            <p>These are all the planning applications for this site.</p>
+            <p v-if="amountPlanningHistory > 0">These are all the planning applications for this site.</p>
           </section>
         </div>
 
@@ -182,37 +168,37 @@
   const steps = [{
     title: "Site details",
     name: "SiteDetails",
-    content: '<p>Enter your site address</p>',
+    content: '<p>View the geographic information related to your site.</p>',
     isActive: false
   },
   {
     title: "Description of the works",
     name: "FormWorkDescription",
-    content: '<p>Describe your proposal.</p><ul><li>Development</li><li>Materials</li><li>Surroundings</li></ul>',
+    content: '<p>Supply relevant information to describe your proposal.</p>',
     isActive: false
   },
   {
     title: "Supporting documentation",
     name: "FormDocumentation",
-    content: '<p>Hello Step 2!!</p>',
+    content: '<p>Supply documentation to describe your proposal.</p>',
     isActive: false
   },
   {
     title: "Declarations", 
     name: "FormDeclarations",
-    content: '<p>Hello Step 2!!</p>',
+    content: '<p>Make the necessary legal declarations.</p>',
     isActive: false
   },
   {
     title: "Contact details",
     name: "FormContact",
-    content: '<p>Hello Step 2!!</p>',
+    content: '<p>Supply your details/details of the applicant so the local authority can contact you. </p>',
     isActive: false
   },
   {
     title: "Pay and submit",
     name: "FormPaySubmit",
-    content: '<p>Hello Step 2!!</p>',
+    content: '<p>Payment of the correct fee is required at the point of submission. If you don’t supply the correct fee you risk your application being invalid. You can pay for your application as part of this service using credit or debit card. <a target="_blank" href="https://hackney.gov.uk/planning-guidance#Back%20to%20top">Read more information</a> on current planning fees.</p>',
     isActive: false
   }];
 
@@ -375,6 +361,9 @@
     computed: {
       site () {
         return this.$store.state.site;
+      },
+      amountPlanningHistory () {
+        return this.$store.state.site.sitePlanningHistory.length;
       }
     },
   }
