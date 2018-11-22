@@ -128,9 +128,7 @@ export default {
       return result ? true : false;
       
     },
-    onClickChild (value) {
-      console.log('-----VALUE', value) // someValue
-    }
+    onClickChild () {}
   },
   computed: {
 		hasNewWindows () {

@@ -157,9 +157,7 @@ export default {
     navigate() {
       router.push({ name: 'DeclarationsOverview' });
     },
-    onClickChild (value) {
-      console.log('-----VALUE', value) // someValue
-    }
+    onClickChild () {}
   }
 }
 </script>

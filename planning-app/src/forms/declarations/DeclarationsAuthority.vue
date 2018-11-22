@@ -87,9 +87,7 @@ export default {
     navigate() {
       router.push({ name: 'DeclarationsOwnership' });
     },
-    onClickChild (value) {
-      console.log('-----VALUE', value) // someValue
-    }
+    onClickChild () {}
   }
 }
 </script>

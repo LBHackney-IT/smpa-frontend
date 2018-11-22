@@ -146,9 +146,7 @@ export default {
     navigate() {
       router.push({ name: 'MaterialsStep3' });
     },
-    onClickChild (value) {
-      console.log('-----VALUE', value) // someValue
-    }
+    onClickChild () {}
   }
 }
 </script>
