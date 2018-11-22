@@ -1,21 +1,38 @@
 <template>
-  <div id="app">
+  <div id="app" class="govuk-template__body">
     <Header msg="Header"/>
-    <router-view></router-view>
+    <div class="govuk-width-container main-content-wrapper">
+      <main class="govuk-main-wrapper " id="main-content" role="main">
+        <router-view></router-view>
+      </main>
+    </div>
+
     <Footer msg="Footer"/>
   </div>
 </template>
 
-<script>
-import Header from './components/Header.vue'
-import Footer from './components/Footer.vue'
+<style>
+  @import "https://unpkg.com/leaflet@1.3.4/dist/leaflet.css";
+</style>
 
-export default {
-  name: 'app',
-  components: {
-    Header,
-    Footer
+<script>
+  import Header from './components/Header.vue'
+  import Footer from './components/Footer.vue'
+  // import { initAll } from 'govuk-frontend';
+
+  const el = document.body;
+  el.classList.add('js-enabled');
+  // setTimeout(() =>{
+
+  //   initAll();
+  // },1000)
+
+  export default {
+    name: 'app',
+    components: {
+      Header,
+      Footer
+    }
   }
-}
 </script>
 
