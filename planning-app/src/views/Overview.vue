@@ -29,6 +29,7 @@
             </div>
           </div>
         </div>
+
         <div class="steps__single-step">
           <div class="steps__step-guide">
             <div class="steps__step-number">
@@ -38,20 +39,16 @@
           </div>
           
           <div class="steps__step-info">
-            <h4>Check if you need planning permission</h4>
+            <h4>Submit a pre-application</h4>
             <a class="govuk-link" href="#hide" v-if="isShown2" v-on:click="isShown2=false">Hide</a>
             <a class="govuk-link" href="#show" v-if="!isShown2" v-on:click="isShown2=true">Show</a>
             <div v-if="isShown2">
-              <p>View the property and planning details related to a site address. You can find out which planning designations and local policies apply to your site, as well as your site planning history and previous applications nearby.</p>
-              <p>This information will tell you:</p>
+              <p>Prospective applicants can seek pre-application advice from the local authority to improve the quality of the planning application by submitting a pre-application. Submission of a pre-application requires submission of required documents and relevant information to describe the proposal.</p>
+              <p>There are three different types of pre-application service at Hackney:</p>
               <ul>
-                <li>If you site address is in a conservation area</li>
-                <li>If your site address includes listed buildings</li>
-                <li>The location of trees with protected orders</li>
-                <li>If your site address is in a floodrisk area</li>
-                <li>If your site address is affected by Article 4</li>
-                <li>The planning history of your site address</li>
-                <li>Nearby planning applications to your site address</li>
+                <li><strong>For free</strong> you can speak with the <strong>Duty Planner</strong> and receive non-site specific verbal advice</li>
+                <li><strong>For a fee</strong> you can use the <strong>15 day pre-application service</strong>. This is suitable for householder and small-scale development </li>
+                <li><strong>For a fee</strong> you can use the <strong>30 day pre-application service</strong> for a more comprehensive, written response. This is only available for specific proposals. </li>
               </ul>
             </div>
           </div>
@@ -65,16 +62,21 @@
           </div>
           
           <div class="steps__step-info">
-            <h4>Prepare your application</h4>
+            <h4>Understand planning considerations relevant to your site</h4>
             <a class="govuk-link" href="#hide" v-if="isShown3" v-on:click="isShown3=false">Hide</a>
             <a class="govuk-link" href="#show" v-if="!isShown3" v-on:click="isShown3=true">Show</a>
             <div v-if="isShown3">
-              <p>Prepare your planning application for submission to the relevant local authority. By using this service you will be asked to supply relevant information to describe your proposal. This will include:</p>
+              <p>View the property and planning details related to a site address. You can find out which planning designations and local policies apply to your site, as well as your site planning history and previous applications nearby.</p>
+              <p>This information will tell you:</p>
               <ul>
-                <li>Description of works</li>
-                <li>Documents and plans needed to support your application. Use the validation checklist to make sure you provide all information needed</li>
+                <li>If you site address is in a conservation area</li>
+                <li>If your site address includes listed buildings</li>
+                <li>The location of trees with protected orders</li>
+                <li>If your site address is in a floodrisk area</li>
+                <li>If your site address is affected by Article 4</li>
+                <li>The planning history of your site address</li>
+                <li>Nearby planning applications to your site address</li>
               </ul>
-              <p>You will also be asked to submit relevant documentation to support your proposal. This service will inform you which documents are required based on your site address.</p>
               <a class="govuk-button" href="/sites/search">Find about your site</a>
             </div>
           </div>
@@ -88,12 +90,16 @@
           </div>
           
           <div class="steps__step-info">
-            <h4>Submit a planning application</h4>
+            <h4>Prepare your application</h4>
             <a class="govuk-link" href="#hide" v-if="isShown4" v-on:click="isShown4=false">Hide</a>
             <a class="govuk-link" href="#show" v-if="!isShown4" v-on:click="isShown4=true">Show</a>
             <div v-if="isShown4">
-              <p>Submit your application directly to Hackney Council through “Submit a planning application’.</p>
-              <a class="govuk-button" href="/sites/search">Apply for planning permission</a>
+              <p>Prepare your planning application for submission to the relevant local authority. By using this service you will be asked to supply relevant information to describe your proposal. This will include:</p>
+              <ul>
+                <li>Description of works</li>
+                <li>Documents and plans needed to support your application. Use the validation checklist to make sure you provide all information needed</li>
+              </ul>
+              <p>You will also be asked to submit relevant documentation to support your proposal. This service will inform you which documents are required based on your site address.</p>
             </div>
           </div>
         </div>
@@ -103,14 +109,32 @@
               5
             </div>
             <div class="steps__line-guide"></div>
+          </div>
+          
+          <div class="steps__step-info">
+            <h4>Submit a planning application</h4>
+            <a class="govuk-link" href="#hide" v-if="isShown5" v-on:click="isShown5=false">Hide</a>
+            <a class="govuk-link" href="#show" v-if="!isShown5" v-on:click="isShown5=true">Show</a>
+            <div v-if="isShown5">
+              <p>Submit your application directly to Hackney Council through “Submit a planning application’.</p>
+              <a class="govuk-button" href="/sites/search">Apply for planning permission</a>
+            </div>
+          </div>
+        </div>
+        <div class="steps__single-step">
+          <div class="steps__step-guide">
+            <div class="steps__step-number">
+              6
+            </div>
+            <div class="steps__line-guide"></div>
             <div class="steps__line-end"></div>
           </div>
           
           <div class="steps__step-info">
             <h4>What's next</h4>
-            <a class="govuk-link" href="#hide" v-if="isShown5" v-on:click="isShown5=false">Hide</a>
-            <a class="govuk-link" href="#show" v-if="!isShown5" v-on:click="isShown5=true">Show</a>
-            <div v-if="isShown5">
+            <a class="govuk-link" href="#hide" v-if="isShown6" v-on:click="isShown6=false">Hide</a>
+            <a class="govuk-link" href="#show" v-if="!isShown6" v-on:click="isShown6=true">Show</a>
+            <div v-if="isShown6">
               <h4 class="govuk-heading-s">Having your application accepted</h4>
               <p>After your application has been received, it will be checked to ensure that all the required information and documentation has been provided. This is known as the 'validation' process. If your application is missing required information or documentation, it will be invalidated and you will be contacted within 5 days for the additional information required. Your application will be returned if you do not supply the required information within 28 days.</p>
               
@@ -162,7 +186,8 @@
         isShown2: false,
         isShown3: false,
         isShown4: false,
-        isShown5: false
+        isShown5: false,
+        isShown6: false
       }
     }
   }

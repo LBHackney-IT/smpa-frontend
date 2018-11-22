@@ -46,6 +46,7 @@ import Success from '../forms/declarations/Success.vue';
 
 export default new Router({
   mode: 'history',
+  base: '/',
   routes: [
     {
       path: '/',
