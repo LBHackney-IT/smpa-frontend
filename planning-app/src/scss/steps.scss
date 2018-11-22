@@ -1,0 +1,38 @@
+.steps {
+	.steps__single-step {
+		display: flex;
+	}
+	
+	.steps__step-number {
+		border-radius: 50%;
+		border: 2px solid grey;
+		width: 20px;
+		height: 20px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.steps__line-guide {
+		border-right: 2px solid;
+		width: 10px;
+		height: calc(100% - 24px);
+		margin-right: 10px;
+		border-color: grey;
+	}
+
+	.steps__line-end {
+		border-bottom: 2px solid grey;
+	}
+
+	.steps__step-info {
+		margin-left: 20px;
+		h4 {
+			margin: 0; 
+		}
+	}
+
+	.steps--current-step {
+		border-color: black;
+	}
+}
