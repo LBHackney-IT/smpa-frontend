@@ -78,5 +78,9 @@ body:not(:-moz-handler-blocked) fieldset {
     background-color: #0072CE;
     color: #ffffff;
     text-align: left;
+}
 
+//overide header colour
+.govuk-header__container {
+    border-bottom: 10px solid #00664F;
 }

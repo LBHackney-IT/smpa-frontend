@@ -8,7 +8,7 @@
       </p>
 
       <div class="govuk-inset-text">
-        You can only use this service if you are undertaking extensions of modifications to a house.
+        You can only use this service if you are undertaking extensions of modifications to a house. For now, the prototype only works with postcodes E8 3HW or N16 8ED Please note it doesn’t save your answers yet so you’ll have to go through all in one go.
       </div>
 
       <div class="steps govuk-body">

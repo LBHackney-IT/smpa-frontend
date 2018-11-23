@@ -120,21 +120,22 @@
 		},
 		methods: {
 			navigate() {
-				if (this.postcode === 'N16 8ED' || this.postcode === 'E8 3HW') {
+        let transformedPostcode = this.postcode.replace(/\s/g, '').toLowerCase();
+				if (transformedPostcode === 'n168ed' || transformedPostcode === 'e83hw') {
 
-					let site = {};
-					if (this.postcode === 'N16 8ED') {
-						site = siteNoConservationArea;
-					} else {
-						site = siteConservationArea;
-					}
+        let site = {};
+        if (transformedPostcode === 'n168ed') {
+          site = siteNoConservationArea;
+        } else {
+          site = siteConservationArea;
+        }
 
-					this.$store.commit('setSite', JSON.parse(JSON.stringify(site)));
+        this.$store.commit('setSite', JSON.parse(JSON.stringify(site)));
 
-					//todo check if site id is still necessary at this point. random number for mocking purposes
-					const randomNumber = parseInt((Math.random() * 10000000) + 1);
+        //todo check if site id is still necessary at this point. random number for mocking purposes
+        const randomNumber = parseInt((Math.random() * 10000000) + 1);
 
-					router.push({ name: 'SiteDetails', params: { siteId: randomNumber, postcode: this.postcode} });
+        router.push({ name: 'SiteDetails', params: { siteId: randomNumber, postcode: this.postcode} });
 				}
 			}
 		}
