@@ -23,7 +23,7 @@
               <td class="govuk-table__cell">Hoxton East and Shoreditch</td>
             </tr>
             <tr class="govuk-table__row">
-              <th class="govuk-table__header" scope="row">Use:</th>
+              <th class="govuk-table__header" scope="row">BPLU use:</th>
               <td class="govuk-table__cell">{{site.siteInfo.use}}</td>
             </tr>
             <tr class="govuk-table__row">
@@ -50,7 +50,7 @@
           <ul class="govuk-tabs__list">
             <li class="govuk-tabs__list-item">
               <a class="govuk-tabs__tab govuk-tabs__tab--selected" href="#constraints">
-                Constraints
+                Planning considerations
               </a>
             </li>
             <li class="govuk-tabs__list-item">

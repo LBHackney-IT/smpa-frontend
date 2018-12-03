@@ -16,7 +16,7 @@
             <input class="govuk-checkboxes__input" id="proposal-1" name="proposal" type="checkbox" value="Extension" v-model="selectedProposal">
             <label class="govuk-label govuk-checkboxes__label" for="proposal-1">
               <strong>Extension</strong>
-              <p>A extension of a addition to a house a the rear, side or front including adding a new floor, basement, outbuilding or porch.</p>
+              <p>An extension or an addition to a house a the rear, side or front including adding a new floor, basement, outbuilding or porch.</p>
             </label>
           </div>
 

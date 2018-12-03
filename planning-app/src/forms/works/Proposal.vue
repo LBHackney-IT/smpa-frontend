@@ -23,7 +23,7 @@
             <input class="govuk-checkboxes__input" id="proposal-3" name="proposal" type="checkbox" value="Change of use" v-model="selectedProposal">
             <label class="govuk-label govuk-checkboxes__label" for="proposal-3">
               <strong>Change of use</strong>
-              <p>The Town and Country Planning (Use Classes) Order 1987 (as amended) puts uses of land and buildings into various categories known as 'Use Classes'. It is generally the case that you will need planning permission to change from one use class to another, although there are exceptions where the legislation does allow some changes between uses.</p>
+              <p>The Town and Country Planning puts uses of land and buildings into various categories known as 'Use Classes'. It is generally the case that you will need planning permission to change from one use class to another, although there are exceptions where the legislation does allow some changes between uses.</p>
             </label>
           </div>
           <div class="govuk-checkboxes__item">

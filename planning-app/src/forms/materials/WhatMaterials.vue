@@ -18,7 +18,7 @@
 					<div class="govuk-radios__item">
 						<input class="govuk-radios__input" id="work-started-1" name="work-started" type="radio" value="Yes" v-model="materials">
 						<label class="govuk-label govuk-radios__label" for="work-started-1">
-							You define existing and proposed materials and additional documentation, detailing colour and type.
+							You define existing and proposed materials in additional documentation (detailing colour and type).
 						</label>
 					</div>
 					<div class="govuk-radios__item">
