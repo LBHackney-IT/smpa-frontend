@@ -77,7 +77,7 @@
                 <li>The planning history of your site address</li>
                 <li>Nearby planning applications to your site address</li>
               </ul>
-              <a class="govuk-button" href="/sites/search">Find about your site</a>
+              <a class="govuk-button" href="/start">Find about your site</a>
             </div>
           </div>
         </div>
@@ -117,7 +117,7 @@
             <a class="govuk-link" href="#show" v-if="!isShown5" v-on:click="isShown5=true">Show</a>
             <div v-if="isShown5">
               <p>Submit your application directly to Hackney Council through “Submit a planning application’.</p>
-              <a class="govuk-button" href="/sites/search">Apply for planning permission</a>
+              <a class="govuk-button" href="/start">Apply for planning permission</a>
             </div>
           </div>
         </div>

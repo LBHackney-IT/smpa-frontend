@@ -4,7 +4,7 @@ import Router from 'vue-router'
 Vue.use(Router)
 
 import Overview from '../views/Overview.vue';
-import Start from '../views/Start.vue';
+import PlanningApplicationSteps from '../views/PlanningApplicationSteps.vue';
 import SiteSearch from '../views/SiteSearch.vue';
 import SiteDetails from '../views/SiteDetails.vue';
 import SignIn from '../views/SignIn.vue';
@@ -55,7 +55,7 @@ export default new Router({
     {
       name: 'Start',
       path: '/start',
-      component: Start
+      component: PlanningApplicationSteps
     },
     {
       path: '/sites',
