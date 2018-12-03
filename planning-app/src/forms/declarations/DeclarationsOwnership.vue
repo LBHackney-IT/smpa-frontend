@@ -34,7 +34,7 @@
       </div>
     </div>
 
-    <div class="govuk-inset-text govuk-!-margin-bottom-9" v-if="this.doesApplicantOwnTheLand === 'Yes'">
+    <div class="govuk-inset-text govuk-!-margin-bottom-9" v-if="this.doesApplicantOwnTheLand === 'Yes' || this.doesApplicantOwnTheLand === 'No'">
       <div class="govuk-form-group">
         <fieldset class="govuk-fieldset govuk-!-margin-bottom-5" aria-describedby="owner-statements">
           <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
@@ -44,7 +44,7 @@
           </legend>
         </fieldset>
 
-        <div class="govuk-radios__item">
+        <div class="govuk-radios__item" v-if="this.doesApplicantOwnTheLand === 'Yes'">
           <input class="govuk-radios__input" id="applicant-ownership-1" name="applicant-ownership-1" type="radio" value="applicant-ownership-1" v-model="applicantOwnership">
           <label class="govuk-label govuk-radios__label" for="applicant-ownership-1">
             You have no agricultural tenants
