@@ -3,12 +3,15 @@
     <label class="govuk-label" :for="name">
       {{ label }}
     </label>
+    <span id="hint" class="govuk-hint">
+      Do not include personal or financial information, like your National Insurance number or credit card details.
+    </span>
     <textarea 
       class="govuk-textarea" 
       :id="name" 
       :name="name" 
       rows="5" 
-      :aria-describedby="name-hint" 
+      aria-describedby="hint" 
       :value="content" 
       :required="isRequired"
       @input="updateSelf($event.target.value)">
