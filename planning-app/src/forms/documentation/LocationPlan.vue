@@ -56,7 +56,7 @@
 </template>
 
 <script>
-import vCta from '../../components/Cta.vue';
+import vCta from '../../components/form-elements/Cta.vue';
 import WarningMessage from '../../components/WarningMessage.vue';
 import router from '../../router';
 export default {

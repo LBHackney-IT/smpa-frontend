@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import vCta from '../../components/Cta.vue';
+import vCta from '../../components/form-elements/Cta.vue';
 import router from '../../router';
 import Modal from '../../components/form/DocumentsCheckModal.vue';
 

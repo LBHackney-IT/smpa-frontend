@@ -1,28 +1,6 @@
 <template>
 	<div>
-		<div class="govuk-form-group">
-			<fieldset class="govuk-fieldset" aria-describedby="work-started-hint">
-				<legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
-				<h1 class="govuk-fieldset__heading">
-					{{ question }}
-				</h1>
-				</legend>
-				<div class="govuk-radios govuk-radios--inline">
-					<div class="govuk-radios__item">
-						<input class="govuk-radios__input" id="work-started-1" name="work-started" type="radio" value="Yes" v-model="workStarted">
-						<label class="govuk-label govuk-radios__label" for="work-started-1">
-							Yes
-						</label>
-					</div>
-					<div class="govuk-radios__item">
-						<input class="govuk-radios__input" id="work-started-2" name="work-started" type="radio" value="No" v-model="workStarted">
-						<label class="govuk-label govuk-radios__label" for="work-started-2">
-							No
-						</label>
-					</div>
-				</div>
-			</fieldset>
-		</div>
+		<Radios v-for="(q, index) in questions" :key="index" :question="q"></Radios>
 
 		<div v-if="hasWorkStarted" class="govuk-inset-text">
 			<warning-message :message="warningMessage" v-bind:typeAlert="false"></warning-message>
@@ -140,15 +118,17 @@
 </template>
 
 <script>
-import vCta from '../../components/Cta.vue';
-import vTextArea from '../../components/form/vTextArea.vue';
+import vCta from '../../components/form-elements/Cta.vue';
+import vTextArea from '../../components/form-elements/vTextArea.vue';
 import router from '../../router';
 import WarningMessage from '../../components/WarningMessage.vue';
+import Radios from '../../components/forms/Radios.vue';
 
 export default {
 	name: 'WorkStart',
 	components: {
 		vCta,
+		Radios,
 		vTextArea,
 		WarningMessage
 	},
@@ -164,7 +144,44 @@ export default {
 			workCompleted: undefined,
 			dayWorkFinished: undefined,
 			monthWorkFinished: undefined,
-			yearWorkFinished: undefined
+			yearWorkFinished: undefined,
+			questions:[
+				{
+					caption: "Has the work already been started?",
+					key: "hasStarted",
+					type: "boolean",
+					subQuestions: {
+						isVisible: answer => answer === true,
+						questions: [
+							{
+								caption: "When did the work start?",
+								key: "dateStarted",
+								type: "date",
+							},
+							{
+								caption: "Has the work already been completed?",
+								key: "isCompleted",
+								type: "boolean",
+								subQuestions: {
+									isVisible: answer => answer === true,
+									questions: [
+										{
+											caption: "When did the work finish?",
+											key: "dateFinished",
+											type: "date",
+										}
+									]
+								}
+							}
+						]
+					}
+				},
+				{
+					caption: "Testing?",
+					key: "hasStarted",
+					type: "boolean"
+				}
+			]
     }
   },
 	methods: {

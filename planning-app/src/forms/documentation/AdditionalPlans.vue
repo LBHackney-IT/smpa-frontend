@@ -68,7 +68,7 @@ You should include elevations for all sides of the proposal.</p>
 </template>
 
 <script>
-import vCta from '../../components/Cta.vue';
+import vCta from '../../components/form-elements/Cta.vue';
 import Modal from '../../components/form/DocumentsCheckModal.vue';
 import router from '../../router';
 

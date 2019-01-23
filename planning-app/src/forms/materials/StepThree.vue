@@ -97,7 +97,7 @@
 </template>
 
 <script>
-import vCta from '../../components/Cta.vue';
+import vCta from '../../components/form-elements/Cta.vue';
 import router from '../../router';
 import MaterialsInfo from '../../components/form/MaterialsInfo.vue';
 import OtherMaterial from '../../components/form/OtherMaterial.vue';

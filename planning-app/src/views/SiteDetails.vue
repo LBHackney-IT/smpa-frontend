@@ -162,7 +162,7 @@
   import { Tabs } from 'govuk-frontend';
   import HelpLink from '../components/HelpLink.vue';
   import Steps from '../components/Steps.vue';
-  import vCta from '../components/Cta.vue';
+  import vCta from '../components/form-elements/Cta.vue';
   import router from '../router';
 
   const steps = [{

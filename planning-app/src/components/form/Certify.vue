@@ -55,7 +55,7 @@
 </template>
 
 <script>
-import vCta from '../Cta.vue';
+import vCta from '../form-elements/Cta.vue';
 export default {
   name: 'Certify',
   components: {
