@@ -2,12 +2,12 @@
   <div class="govuk-form-group">
     <fieldset class="govuk-fieldset" aria-describedby="work-started-hint">
       <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
-        <h1 class="govuk-fieldset__heading">
-          {{ question.caption }}
-        </h1>
+        <h2 class="govuk-fieldset__heading">
+          {{ question.question }}
+        </h2>
       </legend>
-      <div class="govuk-radios govuk-radios--inline">
-        <vRadioButton></vRadioButton>
+      <div class="govuk-radios">
+        <vRadioButton :option="option" v-for="(option, index) in question.fields" :key="index"></vRadioButton>
       </div>
     </fieldset>
   </div>

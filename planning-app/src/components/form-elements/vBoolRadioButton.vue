@@ -1,13 +1,13 @@
 <template>
-  <div class="govuk-radios__item">
+  <div class="">
     <input 
-      class="govuk-radios__input" 
+      class="" 
       :id="option.id" 
       :name="option.name"  
       type="radio" 
       :value="option.value">
     <label 
-      class="govuk-label govuk-radios__label" 
+      class="" 
       :for="option.value">
         {{ option.label }}
     </label>
@@ -16,7 +16,7 @@
 
 <script>
   export default {
-    name: 'RadioButton',
+    name: 'BoolRadioButton',
     props: {
       option: {
         type: Object,
