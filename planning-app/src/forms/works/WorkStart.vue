@@ -1,119 +1,6 @@
 <template>
 	<div>
-		<Radios v-for="(q, index) in questions" :key="index" :question="q"></Radios>
-
-		<div v-if="hasWorkStarted" class="govuk-inset-text">
-			<warning-message :message="warningMessage" v-bind:typeAlert="false"></warning-message>
-
-			<legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
-				<h4 class="govuk-heading-s">
-					When did the work start?
-				</h4>
-			</legend>
-
-			<div class="govuk-form-group">
-				<fieldset class="govuk-fieldset" aria-describedby="dob-hint" role="group">
-					<div class="govuk-date-input" id="dob">
-						<div class="govuk-date-input__item">
-							<div class="govuk-form-group">
-								<label class="govuk-label govuk-date-input__label" for="dob-day">
-									Day
-								</label>
-								<input class="govuk-input govuk-date-input__input govuk-input--width-2" id="dob-day" name="dob-day" type="number" pattern="[0-9]*" v-model="dayWorkStarted">
-							</div>
-						</div>
-						<div class="govuk-date-input__item">
-							<div class="govuk-form-group">
-								<label class="govuk-label govuk-date-input__label" for="dob-month">
-									Month
-								</label>
-								<input class="govuk-input govuk-date-input__input govuk-input--width-2" id="dob-month" name="dob-month" type="number" pattern="[0-9]*" v-model="monthWorkStarted">
-							</div>
-						</div>
-						<div class="govuk-date-input__item">
-							<div class="govuk-form-group">
-								<label class="govuk-label govuk-date-input__label" for="dob-year">
-									Year
-								</label>
-								<input class="govuk-input govuk-date-input__input govuk-input--width-4" id="dob-year" name="dob-year" type="number" pattern="[0-9]*" v-model="yearWorkStarted">
-							</div>
-						</div>
-					</div>
-				</fieldset>
-			</div>
-
-			<div class="govuk-form-group">
-				<fieldset class="govuk-fieldset" aria-describedby="work-completed-hint">
-					<legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
-					<h4 class="govuk-heading-s">
-						Has the work already been completed?
-					</h4>
-					</legend>
-					<div class="govuk-radios govuk-radios--inline">
-						<div class="govuk-radios__item">
-							<input class="govuk-radios__input" id="work-completed-1" name="work-completed" type="radio" value="Yes" v-model="workCompleted">
-							<label class="govuk-label govuk-radios__label" for="work-completed-1">
-								Yes
-							</label>
-						</div>
-						<div class="govuk-radios__item">
-							<input class="govuk-radios__input" id="work-completed-2" name="work-completed" type="radio" value="No" v-model="workCompleted">
-							<label class="govuk-label govuk-radios__label" for="work-completed-2">
-								No
-							</label>
-						</div>
-					</div>
-				</fieldset>
-			</div>
-
-			<div v-if="isWorkComplete" class="govuk-inset-text">
-				<legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
-					<h4 class="govuk-heading-s">
-						When did the work finish?
-					</h4>
-				</legend>
-
-				<div class="govuk-form-group">
-					<fieldset class="govuk-fieldset" aria-describedby="dob-hint" role="group">
-						<div class="govuk-date-input" id="dob">
-							<div class="govuk-date-input__item">
-								<div class="govuk-form-group">
-									<label class="govuk-label govuk-date-input__label" for="dob-day">
-										Day
-									</label>
-									<input class="govuk-input govuk-date-input__input govuk-input--width-2" id="dob-day" name="dob-day" type="number" pattern="[0-9]*" v-model="dayWorkFinished">
-								</div>
-							</div>
-							<div class="govuk-date-input__item">
-								<div class="govuk-form-group">
-									<label class="govuk-label govuk-date-input__label" for="dob-month">
-										Month
-									</label>
-									<input class="govuk-input govuk-date-input__input govuk-input--width-2" id="dob-month" name="dob-month" type="number" pattern="[0-9]*" v-model="monthWorkFinished">
-								</div>
-							</div>
-							<div class="govuk-date-input__item">
-								<div class="govuk-form-group">
-									<label class="govuk-label govuk-date-input__label" for="dob-year">
-										Year
-									</label>
-									<input class="govuk-input govuk-date-input__input govuk-input--width-4" id="dob-year" name="dob-year" type="number" pattern="[0-9]*" v-model="yearWorkFinished">
-								</div>
-							</div>
-						</div>
-					</fieldset>
-				</div>
-			</div>
-
-			<v-text-area 
-				label="Describe what you have already done" 
-				v-model="workDetails" 
-				name="more-detail" 
-				:isRequired="hasWorkStarted">
-			</v-text-area>
-		</div>
-
-		<v-cta name="Next" :onClick="navigate"></v-cta>
+		<question-generator :questions="questions"></question-generator>
 	</div>
 </template>
 
@@ -124,17 +11,19 @@ import router from '../../router';
 import WarningMessage from '../../components/WarningMessage.vue';
 import Radios from '../../components/forms/Radios.vue';
 
+import QuestionGenerator from '../../components/form/QuestionGenerator.vue';
+
 export default {
 	name: 'WorkStart',
 	components: {
 		vCta,
 		Radios,
 		vTextArea,
-		WarningMessage
+		WarningMessage,
+		QuestionGenerator
 	},
 	data () {
     return {
-			question: 'Has the work already been started?',
 			workStarted: undefined,
 			dayWorkStarted: undefined,
 			monthWorkStarted: undefined,
@@ -145,41 +34,52 @@ export default {
 			dayWorkFinished: undefined,
 			monthWorkFinished: undefined,
 			yearWorkFinished: undefined,
-			questions:[
+			questions: [
 				{
 					caption: "Has the work already been started?",
 					key: "hasStarted",
-					type: "boolean",
-					subQuestions: {
-						isVisible: answer => answer === true,
-						questions: [
-							{
-								caption: "When did the work start?",
-								key: "dateStarted",
-								type: "date",
-							},
-							{
-								caption: "Has the work already been completed?",
-								key: "isCompleted",
-								type: "boolean",
-								subQuestions: {
-									isVisible: answer => answer === true,
-									questions: [
-										{
-											caption: "When did the work finish?",
-											key: "dateFinished",
-											type: "date",
-										}
-									]
+					id: 1,
+					skip: {
+						canSkip: true,
+						text: "This is optional."
+					},
+					captionDescription: [],
+					captionInsetText: [],
+					captionWarningText: [],
+					captionInformationMessage: [],
+					captionGuide: {
+						show: true,
+						text: "Select all that apply"
+					},
+					captionDetails: [],
+					form: [
+						{
+							question: 'Question',
+							questioInsetText: [],
+							questionWarningMessage: [],
+							questionDescription: [],
+							questionInformationMessage: [],
+							type: "boolean",
+							fields: [
+								{
+									name: 'work-started',
+									id: 'work-started-1',
+									label: 'Yes',
+									value: true,
+									required: true
+								},
+								{
+									name: 'work-started',
+									id: 'work-started-2',
+									label: 'No',
+									value: false
 								}
+							],
+							subQuestions: {
+								isVisible: answer => answer === true,
 							}
-						]
-					}
-				},
-				{
-					caption: "Testing?",
-					key: "hasStarted",
-					type: "boolean"
+						}
+					]
 				}
 			]
     }
