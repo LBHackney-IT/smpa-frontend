@@ -17,7 +17,7 @@
         </div>
 
         <div v-else-if="singleQuestion.type === 'textinput'">
-          text input
+          <TextInput :question="singleQuestion"></TextInput>
         </div>
 
         <div v-else-if="singleQuestion.type === 'radio'">
@@ -25,7 +25,7 @@
         </div>
 
         <div v-else-if="singleQuestion.type === 'date'">
-          date
+          <Date :question="singleQuestion"></Date>
         </div>
 
         <div v-else-if="singleQuestion.type === 'select'">
@@ -58,7 +58,8 @@ import WarningMessage from '../../components/WarningMessage.vue';
 import DetailsComponent from '../../components/Details.vue';
 import QuestionCaption from '../../components/QuestionCaption.vue';
 import Radios from '../../components/forms/Radios.vue';
-
+import TextInput from '../../components/forms/TextInput.vue';
+import Date from '../../components/forms/Date.vue';
 
 export default {
   name: 'QuestionGenerator',
@@ -69,7 +70,9 @@ export default {
     WarningMessage,
     DetailsComponent,
     QuestionCaption,
-    Radios
+    Radios,
+    TextInput,
+    Date
   },
   props: {
     questions: {
