@@ -1,12 +1,18 @@
 <template>
 	<div>
+		<h1 class="govuk-heading-xl">
+			{{ question }}
+		</h1>
 		<div class="govuk-form-group">
 			<fieldset class="govuk-fieldset" aria-describedby="work-started-hint">
 				<legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
-				<h1 class="govuk-fieldset__heading">
-					{{ question }}
-				</h1>
+					<h2 class="govuk-heading-m">Have the works already started?</h2>
 				</legend>
+
+				<div class="govuk-inset-text">
+					If you have made a change to your property that requires planning permission and you have not had approval, Hackney Council can request that you submit a retrospective planning application for the work that you have already carried out.
+					Although a planning application is asked to be submitted, it does not mean that planning permission will automatically be granted and the application will be treated in the usual way. 
+				</div>
 				<div class="govuk-radios govuk-radios--inline">
 					<div class="govuk-radios__item">
 						<input class="govuk-radios__input" id="work-started-1" name="work-started" type="radio" value="Yes" v-model="workStarted">
@@ -25,8 +31,6 @@
 		</div>
 
 		<div v-if="hasWorkStarted" class="govuk-inset-text">
-			<warning-message :message="warningMessage" v-bind:typeAlert="false"></warning-message>
-
 			<legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
 				<h4 class="govuk-heading-s">
 					When did the work start?
@@ -154,7 +158,7 @@ export default {
 	},
 	data () {
     return {
-			question: 'Has the work already been started?',
+			question: 'Starting the works',
 			workStarted: undefined,
 			dayWorkStarted: undefined,
 			monthWorkStarted: undefined,
