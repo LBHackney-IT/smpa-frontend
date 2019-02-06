@@ -16,6 +16,7 @@ import MultipleOccupation from '../forms/works/MultipleOccupation.vue';
 import Proposal from '../forms/works/Proposal.vue';
 import AboutProposal from '../forms/works/AboutProposal.vue';
 import AboutDevelopment from '../forms/works/AboutDevelopment.vue';
+import AboutChangesToOriginalHouse from '../forms/works/AboutChangesToOriginalHouse.vue';
 import Surroundings from '../forms/surroundings/Surroundings.vue';
 import Trees from '../forms/surroundings/Trees.vue';
 import Access from '../forms/surroundings/Access.vue';
@@ -48,6 +49,8 @@ import Parking from '../forms/parking/Parking.vue';
 import CarParkingSpaces from '../forms/parking/CarParkingSpaces.vue';
 import BikeParkingSpaces from '../forms/parking/BikeParkingSpaces.vue';
 import EVChargingPoints from '../forms/parking/ElectricalVehicles.vue';
+import Basement from '../forms/basement/Basement.vue';
+import AboutBasement from '../forms/basement/AboutBasement.vue';
 
 export default new Router({
   mode: 'history',
@@ -86,8 +89,16 @@ export default new Router({
         { path: 'multiple-occupation', name: 'MultipleOccupation', component: MultipleOccupation },
         { path: 'proposal', name: 'Proposal', component: Proposal },
         { path: 'about-proposal', name:'AboutProposal', component: AboutProposal },
+        { path: 'about-changes-to-original-house', name:'AboutChangesToOriginalHouse', component: AboutChangesToOriginalHouse },
         { path: 'about-development', name:'AboutDevelopment', component: AboutDevelopment },
         { path: 'about-equipment', name:'AboutEquipment', component: AboutEquipment },
+        { 
+          path: 'basement', 
+          component: Basement,
+          children: [
+            { path: '', name: 'Basement', component: AboutBasement }
+          ]
+        },
         { 
           path: 'surroundings', 
           component: Surroundings,
