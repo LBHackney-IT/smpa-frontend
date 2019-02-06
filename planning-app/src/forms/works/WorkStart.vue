@@ -54,11 +54,12 @@ export default {
 					captionDetails: [],
 					form: [
 						{
-							question: 'Question',
+							question: 'Has the work already been started?',
 							questioInsetText: [],
 							questionWarningMessage: [],
 							questionDescription: [],
 							questionInformationMessage: [],
+							questionHint: [],
 							type: "boolean",
 							fields: [
 								{
@@ -73,6 +74,71 @@ export default {
 									id: 'work-started-2',
 									label: 'No',
 									value: false
+								}
+							],
+							subQuestions: {
+								isVisible: answer => answer === true,
+							}
+						},
+						{
+							question: 'New Material',
+							questioInsetText: [],
+							questionWarningMessage: [],
+							questionDescription: [],
+							questionInformationMessage: [],
+							questionHint: [],
+							type: "textinput",
+							fields: [
+								{
+									name: 'second-question',
+									id: 'second-question-1',
+									label: 'Yes',
+									value: true,
+									required: true
+								}
+							],
+							subQuestions: {
+								isVisible: answer => answer === true,
+							}
+						},
+						{
+							question: 'On what date did you publish the notice?',
+							questioInsetText: [],
+							questionWarningMessage: [],
+							questionDescription: [],
+							questionInformationMessage: [],
+							questionHint: [],
+							type: "date",
+							fields: [
+								{
+									name: 'date-of-birth',
+									id: 'date-of-birth',
+									label: 'Yes',
+									value: null,
+									required: null,
+									group: [
+										{
+											name: 'dob-day',
+											id: 'dob-day',
+											label: 'Day',
+											value: null,
+											required: true
+										},
+										{
+											name: 'dob-month',
+											id: 'dob-month',
+											label: 'Month',
+											value: null,
+											required: true
+										},
+										{
+											name: 'dob-year',
+											id: 'dob-year',
+											label: 'Year',
+											value: null,
+											required: true
+										}
+									]
 								}
 							],
 							subQuestions: {
