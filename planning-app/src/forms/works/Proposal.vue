@@ -1,11 +1,14 @@
 <template>
 	<div>
+    <h1 class="govuk-heading-xl">
+			{{ question }}
+		</h1>
 		<div class="govuk-form-group">
       <fieldset class="govuk-fieldset" aria-describedby="proposal-hint">
         <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
-          <h1 class="govuk-fieldset__heading">
-            {{question}}
-          </h1>
+          <h2 class="govuk-heading-m">
+            What type of works are you proposing?
+          </h2>
         </legend>
         <span id="proposal-hint" class="govuk-hint">
           Select all that apply.
@@ -16,35 +19,23 @@
             <input class="govuk-checkboxes__input" id="proposal-1" name="proposal" type="checkbox" value="Extension, improvement or alteration" v-model="selectedProposal">
             <label class="govuk-label govuk-checkboxes__label" for="proposal-1">
               <strong>Extension, improvement or alteration</strong>
-              <p>Extension, improvement or alteration to any aspect of a dwelling house, such as extensions or outbuildings as well as all general alterations like rooflights or the replacement of windows and doors. </p>
+              <p>Enlarging, changing or adding to any aspect of a house, such as an extension or an outbuilding. This also includes all general alterations like rooflights or new windows.</p>
+              <div class="govuk-inset-text">
+                <p class="govuk-body govuk-!-font-weight-bold">Example</p>
+                A single-storey, ground floor, rear extension.
+              </div>
             </label>
           </div>
-          <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="proposal-3" name="proposal" type="checkbox" value="Change of use" v-model="selectedProposal">
-            <label class="govuk-label govuk-checkboxes__label" for="proposal-3">
-              <strong>Change of use</strong>
-              <p>The Town and Country Planning puts uses of land and buildings into various categories known as 'Use Classes'. It is generally the case that you will need planning permission to change from one use class to another, although there are exceptions where the legislation does allow some changes between uses.</p>
-            </label>
-          </div>
+
           <div class="govuk-checkboxes__item">
             <input class="govuk-checkboxes__input" id="proposal-4" name="proposal" type="checkbox" value="Confirmation of use" v-model="selectedProposal">
             <label class="govuk-label govuk-checkboxes__label" for="proposal-4">
               <strong>Confirmation of use</strong>
-              <p>If you want to be certain that the existing use of a building is lawful for planning purposes or that your proposal does not require planning permission, you can apply for a 'Lawful Development Certificate' (LDC).</p>
-            </label>
-          </div>
-          <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="proposal-5" name="proposal" type="checkbox" value="Demolition" v-model="selectedProposal">
-            <label class="govuk-label govuk-checkboxes__label" for="proposal-5">
-              <strong>Demolition</strong>
-              <p>Any building operation consisting of the demolition of a building or part of it.</p>
-            </label>
-          </div>
-          <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="proposal-6" name="proposal" type="checkbox" value="Tree works" v-model="selectedProposal">
-            <label class="govuk-label govuk-checkboxes__label" for="proposal-6">
-              <strong>Tree works</strong>
-              <p>Common tree work operations include crown thinning, crown lifting, crown reduction.</p>
+              <p>If you want to be certain that the existing use of a building is lawful for planning purposes (according to The Town and Country Planning Act), you need to submit evidence of use over a certain time period via a Certificate of lawful use.</p>
+               <div class="govuk-inset-text">
+                <p class="govuk-body govuk-!-font-weight-bold">Example</p>
+                This may be useful when you discover planning permission has never been granted. You may need to prove to prospective buyers that the development or land use is lawful.
+              </div>
             </label>
           </div>
 
@@ -52,7 +43,7 @@
             <input class="govuk-checkboxes__input" id="proposal-7" name="proposal" type="checkbox" value="Equipment" v-model="selectedProposal">
             <label class="govuk-label govuk-checkboxes__label" for="proposal-7">
               <strong>Equipment</strong>
-              <p>The installation, alteration or replacement of an equipment on a dwellinghouse or within the curtilage of a dwellinghouse.</p>
+              <p>The installation, alteration or replacement of equipment on a house or within the curtilage of a house. This may include an antenna, CCTV or a solar panel.</p>
             </label>
           </div>
 
@@ -128,7 +119,7 @@ export default {
   },
   data () {
     return {
-      question: 'What is your proposal?',
+      question: 'About the works',
       selectedProposal: [],
       selectedEquipment: []
     }
