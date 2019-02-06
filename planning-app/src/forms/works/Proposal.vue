@@ -32,7 +32,7 @@
             <label class="govuk-label govuk-checkboxes__label" for="proposal-4">
               <strong>Confirmation of use</strong>
               <p>If you want to be certain that the existing use of a building is lawful for planning purposes (according to The Town and Country Planning Act), you need to submit evidence of use over a certain time period via a Certificate of lawful use.</p>
-               <div class="govuk-inset-text">
+              <div class="govuk-inset-text">
                 <p class="govuk-body govuk-!-font-weight-bold">Example</p>
                 This may be useful when you discover planning permission has never been granted. You may need to prove to prospective buyers that the development or land use is lawful.
               </div>

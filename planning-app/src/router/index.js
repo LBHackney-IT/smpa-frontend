@@ -19,7 +19,6 @@ import AboutDevelopment from '../forms/works/AboutDevelopment.vue';
 import Surroundings from '../forms/surroundings/Surroundings.vue';
 import Trees from '../forms/surroundings/Trees.vue';
 import Access from '../forms/surroundings/Access.vue';
-import Parking from '../forms/surroundings/Parking.vue';
 import Materials from '../forms/materials/Materials.vue';
 import WhatMaterials from '../forms/materials/WhatMaterials.vue';
 import MaterialsStepOne from '../forms/materials/StepOne.vue';
@@ -43,6 +42,12 @@ import Declaration from '../forms/declarations/Declaration.vue';
 import DeclarationsAuthority from '../forms/declarations/DeclarationsAuthority.vue';
 import DeclarationsOwnership from '../forms/declarations/DeclarationsOwnership.vue';
 import Success from '../forms/declarations/Success.vue';
+import AboutEquipment from '../forms/equipment/AboutEquipment.vue';
+import AboutParking from '../forms/parking/About.vue';
+import Parking from '../forms/parking/Parking.vue';
+import CarParkingSpaces from '../forms/parking/CarParkingSpaces.vue';
+import BikeParkingSpaces from '../forms/parking/BikeParkingSpaces.vue';
+import EVChargingPoints from '../forms/parking/ElectricalVehicles.vue';
 
 export default new Router({
   mode: 'history',
@@ -82,14 +87,24 @@ export default new Router({
         { path: 'proposal', name: 'Proposal', component: Proposal },
         { path: 'about-proposal', name:'AboutProposal', component: AboutProposal },
         { path: 'about-development', name:'AboutDevelopment', component: AboutDevelopment },
+        { path: 'about-equipment', name:'AboutEquipment', component: AboutEquipment },
         { 
           path: 'surroundings', 
           component: Surroundings,
           children: [
             { path: '', name: 'Surroundings', component: Trees },
             { path: 'trees', name: 'Trees', component: Trees },
-            { path: 'access', name: 'Access', component: Access },
-            { path: 'parking', name: 'Parking', component: Parking }
+            { path: 'access', name: 'Access', component: Access }
+          ]
+        },
+        { 
+          path: 'parking', 
+          component: Parking,
+          children: [
+            { path: '', name: 'Parking', component: AboutParking },
+            { path: 'cars', name: 'CarParkingSpaces', component: CarParkingSpaces },
+            { path: 'bikes', name: 'BikeParkingSpaces', component: BikeParkingSpaces },
+            { path: 'ev-charging-points', name: 'EVChargingPoints', component: EVChargingPoints }
           ]
         },
         { 

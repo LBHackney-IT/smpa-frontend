@@ -1,12 +1,24 @@
 <template>
 	<div>
+    <h1 class="govuk-heading-xl">
+      About the extension, improvement or alteration
+    </h1>
 		<div class="govuk-form-group">
       <fieldset class="govuk-fieldset" aria-describedby="proposal-hint">
         <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
-          <h1 class="govuk-fieldset__heading">
-            {{question}}
-          </h1>
+          <h2 class="govuk-heading-m">
+            What are you making changes to?
+          </h2>
         </legend>
+
+        <div class="govuk-warning-text">
+          <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+          <strong class="govuk-warning-text__text">
+            <span class="govuk-warning-text__assistive">Warning</span>
+            You must describe all permitted developments that require planning permission.
+          </strong>
+        </div>
+
         <span id="proposal-hint" class="govuk-hint">
           Select all that apply.
         </span>
@@ -15,12 +27,15 @@
           <div class="govuk-checkboxes__item">
             <input class="govuk-checkboxes__input" id="proposal-1" name="proposal" type="checkbox" value="Extension" v-model="selectedProposal">
             <label class="govuk-label govuk-checkboxes__label" for="proposal-1">
-              <strong>Extension</strong>
-              <p>An extension or an addition to a house a the rear, side or front including adding a new floor, basement, outbuilding or porch.</p>
+              <strong>To the original house</strong>
+              <div class="govuk-inset-text">
+                <p class="govuk-body govuk-!-font-weight-bold">Example</p>
+                Erection of a rear roof extension, installation of 2 front rooflights and re-rendering of front porch.
+              </div>
             </label>
           </div>
 
-          <div class="govuk-inset-text" v-if="proposalIsChecked('Extension')">
+          <!-- <div class="govuk-inset-text" v-if="proposalIsChecked('Extension')">
             <div class="govuk-checkboxes__item">
               <input class="govuk-checkboxes__input" id="proposal-5" name="proposal" type="checkbox" value="Single storey" v-model="typeOfExtension">
               <label class="govuk-label govuk-checkboxes__label" for="proposal-5">
@@ -69,72 +84,56 @@
                 Balcony, decking and platforms
               </label>
             </div>
-          </div>
+          </div> -->
 
           <div class="govuk-checkboxes__item">
             <input class="govuk-checkboxes__input" id="proposal-2" name="proposal" type="checkbox" value="Alteration and/or addition to the existing building" v-model="selectedProposal">
             <label class="govuk-label govuk-checkboxes__label" for="proposal-2">
-              <strong>Alteration and/or addition to the existing building</strong>
-            </label>
-          </div>
-
-          <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="proposal-3" name="proposal" type="checkbox" value="Alteration and/or addition to the roof" v-model="selectedProposal">
-            <label class="govuk-label govuk-checkboxes__label" for="proposal-3">
-              <strong>Alteration and/or addition to the roof</strong>
-              <p>Additions and alterations made to a roof to enlarge or enhance a house (for example a loft conversion or addition of roof lights).</p>
+              <strong>To any incidental buildings</strong>
+              <p>Incidental building include garages, sheds, summerhouses and similar outbuildings, which are more than 5m away from the existing building.</p>
+              <div class="govuk-inset-text">
+                <p class="govuk-body govuk-!-font-weight-bold">Example</p>
+                Erection of garden store in the rear garden and removal of an existing shed in rear garden.
+              </div>
             </label>
           </div>
 
           <div class="govuk-checkboxes__item">
             <input class="govuk-checkboxes__input" id="proposal-4" name="proposal" type="checkbox" value="Gates, fences and walls" v-model="selectedProposal">
             <label class="govuk-label govuk-checkboxes__label" for="proposal-4">
-              <strong>Gates, fences and walls</strong>
-              <p>The maintenance, improvement or alteration of a gate, fence, wall or other means of enclosure. </p>
+              <strong>To gates, fences or garden walls</strong>
+              <div class="govuk-inset-text">
+                <p class="govuk-body govuk-!-font-weight-bold">Example</p>
+                Installation of gate and railings atop a brick, front and side boundary wall.
+              </div>
             </label>
           </div>
 
-          <div class="govuk-checkboxes__item" v-if="isInConservationArea">
-            <input class="govuk-checkboxes__input" id="proposal-5" name="proposal" type="checkbox" value="Chimneys, flues and soil vent pipe" v-model="selectedProposal">
-            <label class="govuk-label govuk-checkboxes__label" for="proposal-5">
-              <strong>Chimneys, flues and soil vent pipe</strong>
-              <p>The instalation, alteration or replacement of a chimney, flue or soil/vent pipe.</p>
-            </label>
-          </div>
-          <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="proposal-6" name="proposal" type="checkbox" value="Patios, driveways and hardstanding" v-model="selectedProposal">
-            <label class="govuk-label govuk-checkboxes__label" for="proposal-6">
-              <strong>Patios, driveways and hardstanding</strong>
-              <p>The formation, laying out and construction of a ground surface when not permeable materials are being used.</p>
-            </label>
-          </div>
           <div class="govuk-checkboxes__item">
             <input class="govuk-checkboxes__input" id="proposal-7" name="proposal" type="checkbox" value="Means of access to a highway" v-model="selectedProposal">
             <label class="govuk-label govuk-checkboxes__label" for="proposal-7">
-              <strong>Means of access to a highway</strong>
-              <p>The formation, laying out and construction of a means of access to a highway that is required in connection to the proposed development.</p>
-            </label>
-          </div>
-
-          <div class="govuk-checkboxes__item" v-if="isInConservationArea">
-            <input class="govuk-checkboxes__input" id="proposal-8" name="proposal" type="checkbox" value="Repair or replace windows or doors" v-model="selectedProposal">
-            <label class="govuk-label govuk-checkboxes__label" for="proposal-8">
-              <strong>Repair or replace of existing windows or doors</strong>
-              <p>Alteration or replacement to windows or doors including dormer windows and doors.</p>
+              <strong>To means of access to the site</strong>
+              <p>Any works that involve alteration to or creation of a new access to the public road.</p>
+              <p>
+                That applies to any proposal that may require a closure or diversion as well.
+              </p>
+              <div class="govuk-inset-text">
+                <p class="govuk-body govuk-!-font-weight-bold">Example</p>
+                Proposed dropped kerb & formation of vehicule access (the installation of hardstanding to provide car-parking spaces).
+              </div>
             </label>
           </div>
 
           <div class="govuk-checkboxes__item">
             <input class="govuk-checkboxes__input" id="proposal-9" name="proposal" type="checkbox" value="Exterior painting" v-model="selectedProposal">
             <label class="govuk-label govuk-checkboxes__label" for="proposal-9">
-              <strong>Exterior painting</strong>
-              <p>Painting an exterior facade.</p>
+              <strong>Car and/or bike parking spaces</strong>
             </label>
           </div>
         </div>
       </fieldset>
     </div>
-		<v-cta name="Next" :onClick="navigate"></v-cta>
+		<v-cta name="Continue" :onClick="navigate"></v-cta>
     <!-- <review-works></review-works> -->
 	</div>
 </template>
