@@ -1,30 +1,36 @@
 <template>
 	<div>
+    <h1 class="govuk-heading-xl">
+      Materials
+    </h1>
 		<div class="govuk-form-group">
       <fieldset class="govuk-fieldset" aria-describedby="materials-hint">
         <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
-          <h1 class="govuk-fieldset__heading">
-            Materials
-          </h1>
+          <h2 class="govuk-heading-m">
+            Define the existing and proposed materials to be used for the works
+          </h2>
         </legend>
 
-        <h4 class="govuk-heading-s">
-					What are the materials to be used in the proposal?
-				</h4>
+        <div class="purpose-message">
+          <p>Materials information (materials, decoration, lightning, colour and texture) is one of those aspects of a proposed development which an applicant can choose not to submit details of with an outline planning application, (i.e. they can be 'reserved' for later determination).</p>
+          <p>You can submit an <a href="#">Approval of conditions</a> later on when you define the materials of your proposal. That will require the applicant to submit a new planning application and to pay a fee.</p>
+        </div>
 
-        <warning-message :message="warningMessage" v-bind:typeAlert="false"></warning-message>
+        <span id="proposal-hint" class="govuk-hint">
+          Select one.
+        </span>
 
 				<div class="govuk-radios govuk-radios--inline">
 					<div class="govuk-radios__item">
 						<input class="govuk-radios__input" id="work-started-1" name="work-started" type="radio" value="Yes" v-model="materials">
 						<label class="govuk-label govuk-radios__label" for="work-started-1">
-							You define existing and proposed materials in additional documentation (detailing colour and type).
+							You define existing and proposed materials on supporting documentation
 						</label>
 					</div>
 					<div class="govuk-radios__item">
 						<input class="govuk-radios__input" id="work-started-2" name="work-started" type="radio" value="No" v-model="materials">
 						<label class="govuk-label govuk-radios__label" for="work-started-2">
-							You define existing and proposed materials using this service.
+							You define existing and proposed materials here.
 						</label>
 					</div>
 				</div>
