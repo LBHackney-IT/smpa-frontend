@@ -51,6 +51,10 @@ import BikeParkingSpaces from '../forms/parking/BikeParkingSpaces.vue';
 import EVChargingPoints from '../forms/parking/ElectricalVehicles.vue';
 import Basement from '../forms/basement/Basement.vue';
 import AboutBasement from '../forms/basement/AboutBasement.vue';
+import WorksFloorArea from '../forms/works/WorksFloorArea.vue';
+import WorksData from '../forms/works/WorksData.vue';
+import WorksXLocation from '../forms/works/WorksXLocation.vue';
+import WorksYLocation from '../forms/works/WorksYLocation.vue';
 
 export default new Router({
   mode: 'history',
@@ -92,6 +96,10 @@ export default new Router({
         { path: 'about-changes-to-original-house', name:'AboutChangesToOriginalHouse', component: AboutChangesToOriginalHouse },
         { path: 'about-development', name:'AboutDevelopment', component: AboutDevelopment },
         { path: 'about-equipment', name:'AboutEquipment', component: AboutEquipment },
+        { path: 'works-floor-area', name:'WorksFloorArea', component: WorksFloorArea },
+        { path: 'works-data', name:'WorksData', component: WorksData },
+        { path: 'works-x-location', name:'WorksXLocation', component: WorksXLocation },
+        { path: 'works-y-location', name:'WorksYLocation', component: WorksYLocation },
         { 
           path: 'basement', 
           component: Basement,
