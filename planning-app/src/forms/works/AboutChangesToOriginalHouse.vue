@@ -135,7 +135,11 @@ export default {
 
         var currentLevelInfo = this.$store.state.state.proposalFlow[currentLevelInMap + 1];
 
-        router.push({ name: this.$store.state.state.proposalFlow[currentLevelInMap + 1].goTo, params: {currentLevelInfo }});
+        console.log('-----currentLevelInfo', currentLevelInfo);
+
+        currentLevelInfo = JSON.parse(JSON.stringify(currentLevelInfo));
+
+        router.push({ name: this.$store.state.state.proposalFlow[currentLevelInMap + 1].goTo[0], params: {currentLevelInfo }});
       });
     },
 
