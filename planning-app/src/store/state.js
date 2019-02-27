@@ -20,27 +20,27 @@ export const state = {
       {
         proposalName: "To the original house",
         proposalId: "extension_original_house",
-        goTo: "AboutChangesToOriginalHouse"
+        goTo: ["AboutChangesToOriginalHouse"]
       },
       {
         proposalName: "To any incidental buildings",
         proposalId: "extension_incidental_buildings",
-        goTo: "proposedWorks"
+        goTo: ["proposedWorks"]
       },
       {
         proposalName: "To gates, fences, garden walls, etc",
         proposalId: "extension_gates_fences_etc",
-        goTo: "proposedWorks"
+        goTo: ["proposedWorks"]
       },
       {
         proposalName: "To means of access to the site",
         proposalId: "extension_means_of_access_to_site",
-        goTo: "proposedWorks"
+        goTo: ["proposedWorks"]
       },
       {
         proposalName: "Car and/or bike parking spaces",
         proposalId: "extension_car_bike_spaces",
-        goTo: "proposedWorks"
+        goTo: ["Parking"]
       }
     ],
     extension_original_house: [
@@ -104,17 +104,17 @@ export const state = {
       {
         proposalName: "Only for pedestrian access",
         proposalId: "extension_car_bike_spaces_only_pedestrian_access",
-        goTo: "proposedWorks"
+        goTo: ["proposedWorks"]
       },
       {
         proposalName: "Only for vehicle access",
         proposalId: "extension_car_bike_spaces_only_vehicle_access",
-        goTo: "proposedWorks"
+        goTo: ["proposedWorks"]
       },
       {
         proposalName: "For vehicle and pedestrian access",
         proposalId: "extension_car_bike_spaces_for_vehicle_and_pedestrian_access",
-        goTo: "proposedWorks"
+        goTo: ["proposedWorks"]
       }
     ]
   },
