@@ -100,8 +100,7 @@ export default new Router({
         { path: 'about-equipment', name:'AboutEquipment', component: AboutEquipment },
         { path: 'works-floor-area', name:'WorksFloorArea', component: WorksFloorArea },
         { path: 'works-data', name:'WorksData', component: WorksData },
-        { path: 'works-x-location', name:'WorksXLocation', component: WorksXLocation },
-        { path: 'works-y-location', name:'WorksYLocation', component: WorksYLocation },
+        { path: 'works-x-location/:id', name:'WorksXLocation', component: WorksXLocation },
         { 
           path: 'basement', 
           component: Basement,
