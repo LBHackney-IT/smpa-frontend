@@ -1,13 +1,13 @@
 <template>
 	<div>
     <h1 class="govuk-heading-xl">
-      About the improvement or alteration to means of access to the site
+      About the alteration of pedestrian access
     </h1>
 		<div class="govuk-form-group">
 			<fieldset class="govuk-fieldset" aria-describedby="trees-question-1-hint">
 				<legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
 				<h2 class="govuk-heading-m">
-					Would the proposed works affect access to the site for vehicles, cycles and/or pedestrians?
+					What are the proposed works about?
 				</h2>
 				</legend>
 
@@ -18,21 +18,21 @@
         </span>
 
 				<div class="govuk-radios__item">
-          <input class="govuk-radios__input" id="access-only-pedestrian" name="access-only-pedestrian" type="radio" value="pedestrian" v-model="typeOfAlteration">
+          <input class="govuk-radios__input" id="access-only-pedestrian" name="access-only-pedestrian" type="radio" value="addition" v-model="typeOfAlteration">
           <label class="govuk-label govuk-radios__label" for="access-only-pedestrian">
-            Only for pedestrian access
+            Addition of a new entrance
           </label>
         </div>
         <div class="govuk-radios__item">
-          <input class="govuk-radios__input" id="access-only-vehicle" name="access-only-vehicle" type="radio" value="vehicle" v-model="typeOfAlteration">
+          <input class="govuk-radios__input" id="access-only-vehicle" name="access-only-vehicle" type="radio" value="removal" v-model="typeOfAlteration">
           <label class="govuk-label govuk-radios__label" for="access-only-vehicle">
-            Only for vehicle access
+            Removal of an entrance
           </label>
         </div>
         <div class="govuk-radios__item">
-          <input class="govuk-radios__input" id="access-both" name="access-both" type="radio" value="both" v-model="typeOfAlteration">
+          <input class="govuk-radios__input" id="access-both" name="access-both" type="radio" value="improve" v-model="typeOfAlteration">
           <label class="govuk-label govuk-radios__label" for="access-both">
-            For vehicle and pedestrian access
+            Improve disabled access
           </label>
         </div>
 			</fieldset>
@@ -47,7 +47,7 @@ import router from '../../router';
 import WarningMessage from '../../components/WarningMessage.vue';
 
 export default {
-	name: 'Access',
+	name: 'PedestrianAccess',
 	components: {
     vCta,
     WarningMessage

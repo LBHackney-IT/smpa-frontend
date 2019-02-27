@@ -19,6 +19,7 @@ import AboutDevelopment from '../forms/works/AboutDevelopment.vue';
 import AboutChangesToOriginalHouse from '../forms/works/AboutChangesToOriginalHouse.vue';
 import Surroundings from '../forms/surroundings/Surroundings.vue';
 import Trees from '../forms/surroundings/Trees.vue';
+import PedestrianAccess from '../forms/surroundings/PedestrianAccess.vue';
 import Access from '../forms/surroundings/Access.vue';
 import Materials from '../forms/materials/Materials.vue';
 import WhatMaterials from '../forms/materials/WhatMaterials.vue';
@@ -54,9 +55,11 @@ import AboutBasement from '../forms/basement/AboutBasement.vue';
 import WorksFloorArea from '../forms/works/WorksFloorArea.vue';
 import WorksData from '../forms/works/WorksData.vue';
 import WorksXLocation from '../forms/works/WorksXLocation.vue';
-import WorksYLocation from '../forms/works/WorksYLocation.vue';
 import Roofs from '../forms/roofs/Roofs.vue';
 import AboutRoofs from '../forms/roofs/AboutRoofs.vue';
+import GatesFencesWalls from '../forms/gates-fences-walls/AboutGatesFencesWalls.vue';
+import FreeTextForm from '../forms/works/FreeTextForm.vue';
+import DescriptionOfTheWorks from '../forms/works/DescriptionOfTheWorks.vue';
 
 export default new Router({
   mode: 'history',
@@ -101,11 +104,20 @@ export default new Router({
         { path: 'works-floor-area', name:'WorksFloorArea', component: WorksFloorArea },
         { path: 'works-data', name:'WorksData', component: WorksData },
         { path: 'works-x-location/:id', name:'WorksXLocation', component: WorksXLocation },
+        { path: 'free-text-form', name:'FreeTextForm', component: FreeTextForm },
+        { path: 'description-of-the-works', name:'DescriptionOfTheWorks', component: DescriptionOfTheWorks },
         { 
           path: 'basement', 
           component: Basement,
           children: [
             { path: '', name: 'Basement', component: AboutBasement }
+          ]
+        },
+        { 
+          path: 'gates-fence-walls', 
+          component: GatesFencesWalls,
+          children: [
+            { path: '', name: 'GatesFencesWalls', component: GatesFencesWalls }
           ]
         },
         { 
@@ -121,7 +133,8 @@ export default new Router({
           children: [
             { path: '', name: 'Surroundings', component: Trees },
             { path: 'trees', name: 'Trees', component: Trees },
-            { path: 'access', name: 'Access', component: Access }
+            { path: 'access', name: 'Access', component: Access },
+            { path: 'pedestrian-access', name: 'PedestrianAccess', component: PedestrianAccess }
           ]
         },
         { 
