@@ -25,7 +25,7 @@
 
         <div class="govuk-checkboxes">
           <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="proposal-1" name="proposal" type="checkbox" value="Extension" v-model="selectedProposal">
+            <input class="govuk-checkboxes__input" id="proposal-1" name="proposal" type="checkbox" value="extension_original_house" v-model="selectedProposal">
             <label class="govuk-label govuk-checkboxes__label" for="proposal-1">
               <strong>To the original house</strong>
               <div class="govuk-inset-text">
@@ -87,7 +87,7 @@
           </div> -->
 
           <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="proposal-2" name="proposal" type="checkbox" value="Alteration and/or addition to the existing building" v-model="selectedProposal">
+            <input class="govuk-checkboxes__input" id="proposal-2" name="proposal" type="checkbox" value="extension_incidental_buildings" v-model="selectedProposal">
             <label class="govuk-label govuk-checkboxes__label" for="proposal-2">
               <strong>To any incidental buildings</strong>
               <p>Incidental building include garages, sheds, summerhouses and similar outbuildings, which are more than 5m away from the existing building.</p>
@@ -99,7 +99,7 @@
           </div>
 
           <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="proposal-4" name="proposal" type="checkbox" value="Gates, fences and walls" v-model="selectedProposal">
+            <input class="govuk-checkboxes__input" id="proposal-4" name="proposal" type="checkbox" value="extension_gates_fences_etc" v-model="selectedProposal">
             <label class="govuk-label govuk-checkboxes__label" for="proposal-4">
               <strong>To gates, fences or garden walls</strong>
               <div class="govuk-inset-text">
@@ -110,7 +110,7 @@
           </div>
 
           <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="proposal-7" name="proposal" type="checkbox" value="Means of access to a highway" v-model="selectedProposal">
+            <input class="govuk-checkboxes__input" id="proposal-7" name="proposal" type="checkbox" value="extension_means_of_access_to_site" v-model="selectedProposal">
             <label class="govuk-label govuk-checkboxes__label" for="proposal-7">
               <strong>To means of access to the site</strong>
               <p>Any works that involve alteration to or creation of a new access to the public road.</p>
@@ -125,7 +125,7 @@
           </div>
 
           <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="proposal-9" name="proposal" type="checkbox" value="Exterior painting" v-model="selectedProposal">
+            <input class="govuk-checkboxes__input" id="proposal-9" name="proposal" type="checkbox" value="extension_car_bike_spaces" v-model="selectedProposal">
             <label class="govuk-label govuk-checkboxes__label" for="proposal-9">
               <strong>Car and/or bike parking spaces</strong>
             </label>
@@ -168,10 +168,26 @@ export default {
       question.answers.proposal = this.selectedProposal;
       question.answers.typeOfExtension = this.typeOfExtension;
 			this.$store.commit('addAboutProposalAnswers', JSON.parse(JSON.stringify(question)));
-		},
+    },
+    
+    updateNavigation () {
+      var navigationInfo = {
+        currentLevel: 'proposal_extension',
+        selectedProposal: this.selectedProposal
+      }
+
+      this.$store.dispatch('updateFlow', JSON.parse(JSON.stringify(navigationInfo))).then(() => {
+
+        var currentLevelInMap = this.$store.state.state.proposalFlow.findIndex(function(element) {
+          return element.proposalId === 'proposal_extension';
+        });
+
+        router.push({ name: this.$store.state.state.proposalFlow[currentLevelInMap + 1].goTo });
+      });
+    },
     navigate() {
-      this.collectDataAndStore();
-      router.push({ name: 'AboutDevelopment' });
+      //this.collectDataAndStore();
+      this.updateNavigation();
     },
     proposalIsChecked(selectedProposal) {
       const result = this.selectedProposal.find(function(proposal) {

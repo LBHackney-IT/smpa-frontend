@@ -16,7 +16,7 @@
 
         <div class="govuk-checkboxes">
           <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="proposal-1" name="proposal" type="checkbox" value="Extension, improvement or alteration" v-model="selectedProposal">
+            <input class="govuk-checkboxes__input" id="proposal-1" name="proposal" type="checkbox" value="proposal_extension" v-model="selectedProposal">
             <label class="govuk-label govuk-checkboxes__label" for="proposal-1">
               <strong>Extension, improvement or alteration</strong>
               <p>Enlarging, changing or adding to any aspect of a house, such as an extension or an outbuilding. This also includes all general alterations like rooflights or new windows.</p>
@@ -28,75 +28,11 @@
           </div>
 
           <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="proposal-4" name="proposal" type="checkbox" value="Confirmation of use" v-model="selectedProposal">
-            <label class="govuk-label govuk-checkboxes__label" for="proposal-4">
-              <strong>Confirmation of use</strong>
-              <p>If you want to be certain that the existing use of a building is lawful for planning purposes (according to The Town and Country Planning Act), you need to submit evidence of use over a certain time period via a Certificate of lawful use.</p>
-              <div class="govuk-inset-text">
-                <p class="govuk-body govuk-!-font-weight-bold">Example</p>
-                This may be useful when you discover planning permission has never been granted. You may need to prove to prospective buyers that the development or land use is lawful.
-              </div>
-            </label>
-          </div>
-
-          <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="proposal-7" name="proposal" type="checkbox" value="Equipment" v-model="selectedProposal">
+            <input class="govuk-checkboxes__input" id="proposal-7" name="proposal" type="checkbox" value="proposal_equipment" v-model="selectedProposal">
             <label class="govuk-label govuk-checkboxes__label" for="proposal-7">
               <strong>Equipment</strong>
               <p>The installation, alteration or replacement of equipment on a house or within the curtilage of a house. This may include an antenna, CCTV or a solar panel.</p>
             </label>
-          </div>
-
-          <div v-if="proposalIsChecked('Equipment')" class="govuk-inset-text">
-            <div class="govuk-checkboxes__item" v-if="isInConservationArea">
-              <input class="govuk-checkboxes__input" id="equipment-1" name="equipment-1" type="checkbox" value="CCTV" v-model="selectedEquipment">
-              <label class="govuk-label govuk-checkboxes__label" for="equipment-1">
-                CCTV
-              </label>
-            </div>
-
-            <div class="govuk-checkboxes__item">
-              <input class="govuk-checkboxes__input" id="equipment-2" name="equipment-2" type="checkbox" value="Satellite dish or atenna" v-model="selectedEquipment">
-              <label class="govuk-label govuk-checkboxes__label" for="equipment-2">
-                Satellite dish or antenna
-              </label>
-            </div>
-
-            <div class="govuk-checkboxes__item" v-if="isInConservationArea">
-              <input class="govuk-checkboxes__input" id="equipment-3" name="equipment-3" type="checkbox" value="Solar panel" v-model="selectedEquipment">
-              <label class="govuk-label govuk-checkboxes__label" for="equipment-3">
-                Solar panel or other sustainable energy equipment
-              </label>
-            </div>
-
-            <div class="govuk-checkboxes__item" v-if="isInConservationArea">
-              <input class="govuk-checkboxes__input" id="equipment-4" name="equipment-4" type="checkbox" value="Security alarm" v-model="selectedEquipment">
-              <label class="govuk-label govuk-checkboxes__label" for="equipment-4">
-                Security alarm
-              </label>
-            </div>
-
-            <div class="govuk-checkboxes__item">
-              <input class="govuk-checkboxes__input" id="equipment-4" name="equipment-4" type="checkbox" value="Air conditioning unit" v-model="selectedEquipment">
-              <label class="govuk-label govuk-checkboxes__label" for="equipment-4">
-                Air conditioning unit
-              </label>
-            </div>
-
-            <div class="govuk-checkboxes__item">
-              <input class="govuk-checkboxes__input" id="equipment-6" name="equipment-6" type="checkbox" value="Tank or fuel containers" v-model="selectedEquipment">
-              <label class="govuk-label govuk-checkboxes__label" for="equipment-6">
-                Tank or fuel containers
-              </label>
-            </div>
-
-            <div class="govuk-checkboxes__item">
-              <input class="govuk-checkboxes__input" id="equipment-6" name="equipment-6" type="checkbox" value="Other" v-model="selectedEquipment">
-              <label class="govuk-label govuk-checkboxes__label" for="equipment-6">
-                Other
-              </label>
-            </div>
-
           </div>
         </div>
       </fieldset>
@@ -136,10 +72,20 @@ export default {
       question.answers.proposal = this.selectedProposal;
       question.answers.equipments = this.selectedEquipment;
 			this.$store.commit('addProposalAnswers', JSON.parse(JSON.stringify(question)));
-		},
+    },
+    updateNavigation () {
+      var navigationInfo = {
+        currentLevel: 'proposal',
+        selectedProposal: this.selectedProposal
+      }
+
+      this.$store.dispatch('createFirstFlow', JSON.parse(JSON.stringify(navigationInfo))).then(() => {
+        router.push({ name: this.$store.state.state.proposalFlow[0].goTo });
+      });
+    },
     navigate() {
       this.collectDataAndStore();
-      router.push({ name: 'AboutProposal' });
+      this.updateNavigation();
     },
     proposalIsChecked(selectedProposal) {
       const result = this.selectedProposal.find(function(proposal) {

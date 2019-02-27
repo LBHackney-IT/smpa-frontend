@@ -1,7 +1,7 @@
 <template>
 	<div>
     <h1 class="govuk-heading-xl">
-      About the [single storey extension]
+      About the {{ worksName.proposalName }}
     </h1>
 		<div class="govuk-form-group">
       <fieldset class="govuk-fieldset" aria-describedby="proposal-hint">
@@ -37,6 +37,14 @@
               <strong>Front</strong>
             </label>
           </div>
+
+          Do not show in basements
+          <div class="govuk-checkboxes__item">
+            <input class="govuk-checkboxes__input" id="proposal-4" name="proposal" type="checkbox" value="Wrap-around" v-model="selectedProposal">
+            <label class="govuk-label govuk-checkboxes__label" for="proposal-4">
+              <strong>Rear / side wrap-around</strong>
+            </label>
+          </div>
         </div>
       </fieldset>
     </div>
@@ -56,8 +64,12 @@ export default {
   },
   data () {
     return {
-      selectedProposal: []
+      selectedProposal: [],
+      worksName: ''
     }
+  },
+  created() {
+      this.worksName = this.$route.params.currentLevelInfo;
   },
 	methods: {},
   computed: {
