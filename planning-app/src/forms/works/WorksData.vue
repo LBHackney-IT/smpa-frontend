@@ -105,6 +105,7 @@
 
 <script>
 import vCta from '../../components/Cta.vue';
+import router from '../../router';
 
 export default {
 	name: 'WorksData',
@@ -114,10 +115,50 @@ export default {
   data () {
     return {
       newStories: '',
-      newBedroom: ''
+      newBedroom: '',
+      currentWorks: undefined
     }
   },
-	methods: {},
+  created () {
+      this.fetchData();
+  },
+	methods: {
+    fetchData () {
+      this.currentWorks = this.$route.params.currentLevelInfo;
+    },
+    calculateNavigation () {
+      console.log('CURRENT LEVEL IN MAP ---- CONTENT', this.$store.state.state.proposalFlow);
+
+      console.log('-----currentLevelInfo', this.currentWorks);
+
+      debugger;
+
+      //find WorksData in the current level
+      var WorksXLocationIndex = this.currentWorks.goTo.findIndex(function(element) {
+        return element === 'WorksData';
+      });
+
+      if (this.currentWorks.goTo.length > 1 && this.currentWorks.goTo.length < WorksXLocationIndex + 1) {
+        router.push({ name: this.currentWorks.goTo[WorksXLocationIndex + 1], params: {currentLevelInfo: this.currentWorks }});
+      } else {
+        //check if it is the last item inside current flow.
+
+        var currentWorkIndexInFlow = this.$store.state.state.proposalFlow.findIndex(element => 
+          element.proposalId === this.currentWorks.proposalId
+        );
+
+        if (this.$store.state.state.proposalFlow.length === currentWorkIndexInFlow) {
+          //go to trees
+          console.log('---WorksData-------GO TO TREES');
+        } else {
+          router.push({ name: this.$store.state.state.proposalFlow[currentWorkIndexInFlow + 1].goTo[0], params: {currentLevelInfo: this.$store.state.state.proposalFlow[currentWorkIndexInFlow + 1], id: this.$store.state.state.proposalFlow[currentWorkIndexInFlow + 1].proposalId }});
+        }
+      }
+    },
+    navigate() {
+      this.calculateNavigation();
+    }
+  },
   computed: {
 		isInConservationArea () {
       if (this.$store.state.site && this.$store.state.site.siteConstraints && this.$store.state.site.siteConstraints.conservationArea) {
