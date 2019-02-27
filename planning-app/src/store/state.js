@@ -25,17 +25,17 @@ export const state = {
       {
         proposalName: "To any incidental buildings",
         proposalId: "extension_incidental_buildings",
-        goTo: ["proposedWorks"]
+        goTo: ["WorksXLocation"]
       },
       {
         proposalName: "To gates, fences, garden walls, etc",
         proposalId: "extension_gates_fences_etc",
-        goTo: ["proposedWorks"]
+        goTo: ["GatesFencesWalls", "WorksXLocation"]
       },
       {
         proposalName: "To means of access to the site",
         proposalId: "extension_means_of_access_to_site",
-        goTo: ["proposedWorks"]
+        goTo: ["Access"]
       },
       {
         proposalName: "Car and/or bike parking spaces",
@@ -72,12 +72,12 @@ export const state = {
       {
         proposalName: "Outbuilding",
         proposalId: "extension_original_house_outbuilding",
-        goTo: ["WorksXLocation", "WorksData"]
+        goTo: ["WorksXLocation", "WorksFloorArea"]
       },
       {
         proposalName: "Porch",
         proposalId: "extension_original_house_porch",
-        goTo: ["WorksXLocation", "WorksData"]
+        goTo: ["WorksXLocation", "WorksFloorArea"]
       },
       {
         proposalName: "Balcony or terrace",
