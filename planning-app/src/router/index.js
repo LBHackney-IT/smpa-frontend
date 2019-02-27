@@ -55,6 +55,8 @@ import WorksFloorArea from '../forms/works/WorksFloorArea.vue';
 import WorksData from '../forms/works/WorksData.vue';
 import WorksXLocation from '../forms/works/WorksXLocation.vue';
 import WorksYLocation from '../forms/works/WorksYLocation.vue';
+import Roofs from '../forms/roofs/Roofs.vue';
+import AboutRoofs from '../forms/roofs/AboutRoofs.vue';
 
 export default new Router({
   mode: 'history',
@@ -105,6 +107,13 @@ export default new Router({
           component: Basement,
           children: [
             { path: '', name: 'Basement', component: AboutBasement }
+          ]
+        },
+        { 
+          path: 'roofs', 
+          component: Roofs,
+          children: [
+            { path: '', name: 'Roofs', component: AboutRoofs }
           ]
         },
         { 
