@@ -19,7 +19,7 @@ import AboutDevelopment from '../forms/works/AboutDevelopment.vue';
 import AboutChangesToOriginalHouse from '../forms/works/AboutChangesToOriginalHouse.vue';
 import Surroundings from '../forms/surroundings/Surroundings.vue';
 import Trees from '../forms/surroundings/Trees.vue';
-import PedestrianAccess from '../forms/surroundings/PedestrianAccess.vue';
+import MoreAboutAccess from '../forms/surroundings/MoreAboutAccess.vue';
 import Access from '../forms/surroundings/Access.vue';
 import Materials from '../forms/materials/Materials.vue';
 import WhatMaterials from '../forms/materials/WhatMaterials.vue';
@@ -136,7 +136,7 @@ export default new Router({
             { path: '', name: 'Surroundings', component: Trees },
             { path: 'trees', name: 'Trees', component: Trees },
             { path: 'access', name: 'Access', component: Access },
-            { path: 'pedestrian-access', name: 'PedestrianAccess', component: PedestrianAccess }
+            { path: 'more-about-access', name: 'MoreAboutAccess', component: MoreAboutAccess }
           ]
         },
         { 

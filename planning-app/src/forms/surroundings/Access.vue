@@ -45,6 +45,7 @@
 import vCta from '../../components/Cta.vue';
 import router from '../../router';
 import WarningMessage from '../../components/WarningMessage.vue';
+import Navigate from '../../common/navigate';
 
 export default {
 	name: 'Access',
@@ -56,17 +57,26 @@ export default {
     return {
       alterationToAccess: '',
       typeOfAlteration: '',
+      currentWorks: undefined,
       warningMessage: 'Any public footpath that crosses or adjoins the site, or is affected, must be shown clearly on the plans. This includes any proposals that may require a closure or diversion.'
     }
   },
-  computed: {
-		hasAlterationToAccess () {
-			return this.alterationToAccess === 'Yes';
-    }
+  created () {
+    this.fetchData();
+  },
+  watch: {
+    '$route': 'fetchData'
   },
   methods: {
+    fetchData () {
+      this.typeOfAlteration = undefined;
+      this.currentWorks = this.$route.params.currentLevelInfo;
+    },
     navigate() {
-      router.push({ name: 'Parking' });
+
+      console.log('----------TYPE', this.typeOfAlteration);
+      console.log('------this.currentWorks', this.currentWorks);
+      router.push({ name: 'MoreAboutAccess', params: { type: this.typeOfAlteration, currentLevelInfo: this.currentWorks} });
     }
   }
 

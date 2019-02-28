@@ -35,7 +35,7 @@ export const state = {
       {
         proposalName: "To means of access to the site",
         proposalId: "extension_means_of_access_to_site",
-        goTo: ["Access"]
+        goTo: ["Access", "MoreAboutAccess"]
       },
       {
         proposalName: "Car and/or bike parking spaces",
