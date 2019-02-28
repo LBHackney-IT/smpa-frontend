@@ -55,6 +55,7 @@
 <script>
 import vCta from '../../components/Cta.vue';
 import router from '../../router';
+import Navigate from '../../common/navigate';
 
 export default {
 	name: 'AboutGatesFencesWalls',
@@ -63,12 +64,24 @@ export default {
   },
   data () {
     return {
-      selectedProposal: []
+      selectedProposal: [],
+      currentWorks: undefined
     }
   },
+  created () {
+    this.fetchData();
+  },
+  watch: {
+    '$route': 'fetchData'
+  },
 	methods: {
+    fetchData () {
+      this.selectedProposal = [];
+      this.currentWorks = this.$route.params.currentLevelInfo;
+    },
     navigate() {
-      //router.push({ name: 'AboutProposal' });
+      var routerParams = Navigate.calculateNavigation(this.$store.state.state.proposalFlow, this.currentWorks, 'GatesFencesWalls');
+      router.push(routerParams);
     },
     proposalIsChecked(selectedProposal) {
       const result = this.selectedProposal.find(function(proposal) {

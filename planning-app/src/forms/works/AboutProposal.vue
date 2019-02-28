@@ -182,7 +182,7 @@ export default {
           return element.proposalId === 'proposal_extension';
         });
 
-        router.push({ name: this.$store.state.state.proposalFlow[currentLevelInMap + 1].goTo });
+        router.push({ name: this.$store.state.state.proposalFlow[currentLevelInMap + 1].goTo[0], params: {currentLevelInfo: this.$store.state.state.proposalFlow[currentLevelInMap + 1], id: this.$store.state.state.proposalFlow[currentLevelInMap + 1].proposalId } });
       });
     },
     navigate() {
