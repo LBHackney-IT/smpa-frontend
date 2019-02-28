@@ -89,7 +89,7 @@
 <script>
 import vCta from '../../components/Cta.vue';
 import router from '../../router';
-
+import Navigate from '../../common/navigate';
 
 export default {
 	name: 'AboutRoofs',
@@ -101,7 +101,21 @@ export default {
       selectedProposal: []
     }
   },
-	methods: {},
+  created () {
+    this.fetchData();
+  },
+  watch: {
+    '$route': 'fetchData'
+  },
+	methods: {
+    fetchData () {
+      this.currentWorks = this.$route.params.currentLevelInfo;
+    },
+    navigate() {
+      var routerParams = Navigate.calculateNavigation(this.$store.state.state.proposalFlow, this.currentWorks, 'Roofs');
+      router.push(routerParams);
+    }
+  },
   computed: {
 		isInConservationArea () {
       if (this.$store.state.site && this.$store.state.site.siteConstraints && this.$store.state.site.siteConstraints.conservationArea) {

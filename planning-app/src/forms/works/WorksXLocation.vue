@@ -55,6 +55,7 @@
 <script>
 import vCta from '../../components/Cta.vue';
 import router from '../../router';
+import Navigate from '../../common/navigate';
 
 
 export default {
@@ -69,46 +70,19 @@ export default {
     }
   },
   created () {
-      this.fetchData();
+    this.fetchData();
   },
   watch: {
     '$route': 'fetchData'
   },
 	methods: {
     fetchData () {
+      this.selectedProposal = [];
       this.currentWorks = this.$route.params.currentLevelInfo;
     },
-    calculateNavigation () {
-      console.log('CURRENT LEVEL IN MAP ---- CONTENT', this.$store.state.state.proposalFlow);
-
-      console.log('-----currentLevelInfo', this.currentWorks);
-
-      if (this.currentWorks.goTo.length > 1) {
-        //find WorksXLocation in the current level
-        var WorksXLocationIndex = this.currentWorks.goTo.findIndex(function(element) {
-          return element === 'WorksXLocation';
-        });
-        
-        router.push({ name: this.currentWorks.goTo[WorksXLocationIndex + 1], params: {currentLevelInfo: this.currentWorks }});
-
-      } else {
-        //check if it is the last item inside current flow.
-
-        var currentWorkIndexInFlow = this.$store.state.state.proposalFlow.findIndex(element => 
-          element.proposalId === this.currentWorks.proposalId
-        );
-
-        if (this.$store.state.state.proposalFlow.length === currentWorkIndexInFlow) {
-          //go to trees
-          console.log('---WorksXLocation-------GO TO TREES');
-        } else {
-          //todo maybe fix this check WorksData.vue
-          router.push({ name: this.$store.state.state.proposalFlow[currentWorkIndexInFlow + 1].goTo[0], params: {currentLevelInfo: this.currentWorks, id: this.currentWorks.proposalId }});
-        }
-      }
-    },
     navigate() {
-      this.calculateNavigation();
+      var routerParams = Navigate.calculateNavigation(this.$store.state.state.proposalFlow, this.currentWorks, 'WorksXLocation');
+      router.push(routerParams);
     }
   },
   computed: {

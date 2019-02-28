@@ -87,55 +87,15 @@ export default {
   },
   data () {
     return {
-      selectedProposal: [],
-      currentWorks: undefined
+      selectedProposal: []
     }
   },
   created () {
       this.fetchData();
   },
 	methods: {
-    fetchData () {
-      this.currentWorks = this.$route.params.currentLevelInfo;
-    },
-    calculateNavigation () {
-      console.log('CURRENT LEVEL IN MAP ---- CONTENT----WorksFloorArea', this.$store.state.state.proposalFlow);
-
-      console.log('-----currentLevelInfo-----WorksFloorArea', this.currentWorks);
-
-      debugger;
-
-      //find WorksFloorArea in the current level
-      var WorksXLocationIndex = this.currentWorks.goTo.findIndex(function(element) {
-        return element === 'WorksFloorArea';
-      });
-
-      if (this.currentWorks.goTo.length > 1 && this.currentWorks.goTo.length < WorksXLocationIndex + 1) {
-
-        router.push({ name: this.currentWorks.goTo[WorksXLocationIndex + 1], params: {currentLevelInfo: this.currentWorks }});
-
-      } else {
-        //check if it is the last item inside current flow.
-
-        var currentWorkIndexInFlow = this.$store.state.state.proposalFlow.findIndex(element => 
-          element.proposalId === this.currentWorks.proposalId
-        );
-
-        if (this.$store.state.state.proposalFlow.length === currentWorkIndexInFlow) {
-          //go to trees
-
-          console.log('---WorksFloorArea-------GO TO TREES');
-        } else {
-
-          var currentLevelInfo = this.$store.state.state.proposalFlow[currentWorkIndexInFlow + 1];
-          var params = JSON.parse(JSON.stringify(currentLevelInfo));
-          router.push({ name: this.$store.state.state.proposalFlow[currentWorkIndexInFlow + 1].goTo[0], params: {currentLevelInfo: params, id: params.proposalId }});
-
-        }
-      }
-    },
     navigate() {
-      this.calculateNavigation();
+      router.push({ name: 'WorksData' });
     }
   },
   computed: {

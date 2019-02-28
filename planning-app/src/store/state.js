@@ -47,37 +47,37 @@ export const state = {
       {
         proposalName: "Single storey extension",
         proposalId: "extension_original_house_single_storey_extension",
-        goTo: ["WorksXLocation", "WorksFloorArea", "WorksData"]
+        goTo: ["WorksXLocation"]
       },
       {
         proposalName: "Two storey extension",
         proposalId: "extension_original_house_two_storey_extension",
-        goTo: ["WorksXLocation", "WorksFloorArea", "WorksData"]
+        goTo: ["WorksXLocation"]
       },
       {
         proposalName: "Part single / Part two storey extension",
         proposalId: "extension_original_house_part_single_part_two_storey_extension",
-        goTo: ["WorksXLocation", "WorksFloorArea", "WorksData"]
+        goTo: ["WorksXLocation"]
       },
       {
         proposalName: "Basement",
         proposalId: "extension_original_house_basement",
-        goTo: ["Basement", "WorksXLocation", "WorksData"]
+        goTo: ["Basement", "WorksXLocation"]
       },
       {
         proposalName: "Roof works",
         proposalId: "extension_original_house_roof_works",
-        goTo: ["Roofs", "WorksXLocation", "WorksData"]
+        goTo: ["Roofs", "WorksXLocation"]
       },
       {
         proposalName: "Outbuilding",
         proposalId: "extension_original_house_outbuilding",
-        goTo: ["WorksXLocation", "WorksFloorArea"]
+        goTo: ["WorksXLocation"]
       },
       {
         proposalName: "Porch",
         proposalId: "extension_original_house_porch",
-        goTo: ["WorksXLocation", "WorksFloorArea"]
+        goTo: ["WorksXLocation"]
       },
       {
         proposalName: "Balcony or terrace",
