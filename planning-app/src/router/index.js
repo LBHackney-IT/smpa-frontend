@@ -60,6 +60,7 @@ import AboutRoofs from '../forms/roofs/AboutRoofs.vue';
 import GatesFencesWalls from '../forms/gates-fences-walls/AboutGatesFencesWalls.vue';
 import FreeTextForm from '../forms/works/FreeTextForm.vue';
 import DescriptionOfTheWorks from '../forms/works/DescriptionOfTheWorks.vue';
+import Outbuilding from '../forms/works/Outbuilding.vue';
 
 export default new Router({
   mode: 'history',
@@ -106,6 +107,7 @@ export default new Router({
         { path: 'works-x-location/:id', name:'WorksXLocation', component: WorksXLocation },
         { path: 'free-text-form', name:'FreeTextForm', component: FreeTextForm },
         { path: 'description-of-the-works', name:'DescriptionOfTheWorks', component: DescriptionOfTheWorks },
+        { path: 'outbuilding', name:'Outbuilding', component: Outbuilding },
         { 
           path: 'basement', 
           component: Basement,

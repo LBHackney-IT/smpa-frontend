@@ -25,7 +25,7 @@ export const state = {
       {
         proposalName: "To any incidental buildings",
         proposalId: "extension_incidental_buildings",
-        goTo: ["WorksXLocation"]
+        goTo: ["WorksXLocation", "Outbuilding"]
       },
       {
         proposalName: "To gates, fences, garden walls, etc",
