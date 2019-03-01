@@ -38,8 +38,7 @@
             </label>
           </div>
 
-          Do not show in basements
-          <div class="govuk-checkboxes__item">
+          <div class="govuk-checkboxes__item" v-if="this.currentWorks.proposalName !== 'Basement'">
             <input class="govuk-checkboxes__input" id="proposal-4" name="proposal" type="checkbox" value="Wrap-around" v-model="selectedProposal">
             <label class="govuk-label govuk-checkboxes__label" for="proposal-4">
               <strong>Rear / side wrap-around</strong>
