@@ -77,6 +77,7 @@
 <script>
 import vCta from '../../components/Cta.vue';
 import router from '../../router';
+import Navigate from '../../common/navigate';
 
 export default {
 	name: 'AboutEquipment',
@@ -87,8 +88,15 @@ export default {
     return {
       question: 'About the works',
       selectedProposal: [],
-      selectedEquipment: []
+      selectedEquipment: [],
+      currentWorks: undefined
     }
+  },
+  created () {
+    this.fetchData();
+  },
+    watch: {
+    '$route': 'fetchData'
   },
 	methods: {
     collectDataAndStore () {
@@ -102,10 +110,14 @@ export default {
       question.answers.proposal = this.selectedProposal;
       question.answers.equipments = this.selectedEquipment;
 			this.$store.commit('addProposalAnswers', JSON.parse(JSON.stringify(question)));
-		},
+    },
+    fetchData () {
+      this.currentWorks = this.$route.params.currentLevelInfo;
+    },
     navigate() {
-      this.collectDataAndStore();
-      router.push({ name: 'AboutProposal' });
+      // this.collectDataAndStore();
+      var routerParams = Navigate.calculateNavigation(this.$store.state.state.proposalFlow, this.currentWorks, 'AboutEquipment');
+      router.push(routerParams);
     },
     proposalIsChecked(selectedProposal) {
       const result = this.selectedProposal.find(function(proposal) {
