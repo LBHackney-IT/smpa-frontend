@@ -37,7 +37,7 @@
         </div>
 
         <div class="govuk-grid-column-one-third">
-          <Steps v-bind:steps="steps" />
+          <!-- <Steps v-bind:steps="steps" /> -->
         </div>
     </div>
     <div class="govuk-grid-row">

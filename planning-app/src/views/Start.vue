@@ -42,7 +42,7 @@
         </aside>
       </div>
 
-      <Steps v-bind:steps="steps" />
+      <!-- <Steps v-bind:steps="steps" /> -->
     </div>
   </div>
 </template>
