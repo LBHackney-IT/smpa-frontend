@@ -187,7 +187,7 @@ export default {
   },
   methods: {
     navigate() {
-      router.push({ name: 'Access' });
+      router.push({ name: 'Materials' });
     }
   }
 
