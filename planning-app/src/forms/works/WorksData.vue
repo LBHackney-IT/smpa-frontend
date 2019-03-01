@@ -4,7 +4,7 @@
       About the size
     </h1>
 
-    <div class="purpose-message">
+    <div class="purpose-message govuk-body">
       <strong>Purpose message</strong>. This data is being collected to inform and monitor London wide development. Your responses will not influence the decision making process.
     </div>
     

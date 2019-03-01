@@ -6,7 +6,7 @@
 
     <p class="govuk-body govuk-!-font-size-36">You must consider the protection and planting of trees when applying for planning permission.</p>
 
-    <div class="purpose-message" v-if="isInConservationArea">
+    <div class="purpose-message govuk-body" v-if="isInConservationArea">
       There is one protected tree in the selected location.
     </div>
 
@@ -80,7 +80,7 @@
           </strong>
         </div>
 
-        <div class="purpose-message" v-if="isInConservationArea">
+        <div class="purpose-message govuk-body" v-if="isInConservationArea">
           You might need to submit a <a href="#">Tree Survey</a>
         </div>
 

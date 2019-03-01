@@ -11,7 +11,7 @@
           </h2>
         </legend>
 
-        <div class="purpose-message">
+        <div class="purpose-message govuk-body">
           <p>Materials information (materials, decoration, lightning, colour and texture) is one of those aspects of a proposed development which an applicant can choose not to submit details of with an outline planning application, (i.e. they can be 'reserved' for later determination).</p>
           <p>You can submit an <a href="#">Approval of conditions</a> later on when you define the materials of your proposal. That will require the applicant to submit a new planning application and to pay a fee.</p>
         </div>
