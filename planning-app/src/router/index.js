@@ -3,7 +3,6 @@ import Router from 'vue-router'
 
 Vue.use(Router)
 
-import Overview from '../views/Overview.vue';
 import PlanningApplicationSteps from '../views/PlanningApplicationSteps.vue';
 import SiteSearch from '../views/SiteSearch.vue';
 import SiteDetails from '../views/SiteDetails.vue';
@@ -68,11 +67,6 @@ export default new Router({
   routes: [
     {
       path: '/',
-      component: Overview
-    },
-    {
-      name: 'Start',
-      path: '/start',
       component: PlanningApplicationSteps
     },
     {

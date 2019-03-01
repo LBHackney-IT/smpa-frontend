@@ -2,6 +2,14 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <h1 class="govuk-heading-xl">Submit a Planning Application</h1>
+
+      <p class="govuk-body">
+        View spacial information about your site and submit your planning application to Hackney Council.
+      </p>
+
+      <div class="govuk-inset-text">
+        You can only use this service if you are undertaking extensions of modifications to a house. For now, the prototype only works with postcodes E8 3HW or N16 8ED Please note it doesn’t save your answers yet so you’ll have to go through all in one go.
+      </div>
       <Steps v-bind:steps="steps" />
     </div>
   </div>
