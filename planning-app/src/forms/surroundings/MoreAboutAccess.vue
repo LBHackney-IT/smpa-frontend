@@ -37,6 +37,13 @@
               <strong>Improve disabled access</strong>
             </label>
           </div>
+
+          <div class="govuk-checkboxes__item" v-if="this.type === 'vehicle' || this.type === 'both'">
+            <input class="govuk-checkboxes__input" id="proposal-4" name="proposal" type="checkbox" value="Improve disabled access" v-model="selectedProposal">
+            <label class="govuk-label govuk-checkboxes__label" for="proposal-4">
+              <strong>Dropped kerb and formation of vehicular access</strong>
+            </label>
+          </div>
         </div>
       </fieldset>
     </div>
