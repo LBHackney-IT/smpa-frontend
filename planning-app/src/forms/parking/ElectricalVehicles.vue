@@ -48,21 +48,32 @@
 <script>
 import vCta from '../../components/Cta.vue';
 import router from '../../router';
+import Navigate from '../../common/navigate';
 
 export default {
-	name: 'BikeParkingSpaces',
+	name: 'EVChargingPoints',
 	components: {
     vCta
 	},
 	data () {
     return {
-      electricalVehical: ''
+      electricalVehical: '',
+      currentWorks: undefined
     }
   },
-  computed: {},
+  created () {
+    this.fetchData();
+  },
+  watch: {
+    '$route': 'fetchData'
+  },
   methods: {
+    fetchData () {
+      this.currentWorks = this.$route.params.currentLevelInfo;
+    },
     navigate() {
-      router.push({ name: 'Parking' });
+      var routerParams = Navigate.calculateNavigation(this.$store.state.state.proposalFlow, this.currentWorks, 'Parking');
+      router.push(routerParams);
     }
   }
 

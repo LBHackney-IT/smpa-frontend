@@ -73,9 +73,6 @@ export default {
       this.currentWorks = this.$route.params.currentLevelInfo;
     },
     navigate() {
-
-      console.log('----------TYPE', this.typeOfAlteration);
-      console.log('------this.currentWorks', this.currentWorks);
       router.push({ name: 'MoreAboutAccess', params: { type: this.typeOfAlteration, currentLevelInfo: this.currentWorks} });
     }
   }

@@ -34,6 +34,7 @@
 import vCta from '../../components/Cta.vue';
 import router from '../../router';
 import WarningMessage from '../../components/WarningMessage.vue';
+import Navigate from '../../common/navigate';
 
 export default {
 	name: 'BikeParkingSpaces',
@@ -45,7 +46,9 @@ export default {
     return {
       alterationToAccess: '',
       typeOfAlteration: '',
-      warningMessage: 'Any public footpath that crosses or adjoins the site, or is affected, must be shown clearly on the plans. This includes any proposals that may require a closure or diversion.'
+      warningMessage: 'Any public footpath that crosses or adjoins the site, or is affected, must be shown clearly on the plans. This includes any proposals that may require a closure or diversion.',
+      currentWorks: undefined,
+      type: undefined
     }
   },
   computed: {
@@ -53,9 +56,24 @@ export default {
 			return this.alterationToAccess === 'Yes';
     }
   },
+  created () {
+    this.fetchData();
+  },
+  watch: {
+    '$route': 'fetchData'
+  },
   methods: {
+    fetchData () {
+      this.currentWorks = this.$route.params.currentLevelInfo;
+      this.type = this.$route.params.type;
+    },
     navigate() {
-      router.push({ name: 'Parking' });
+      if (this.type === 'car-and-bike-parking-spaces') {
+        router.push({ name: 'EVChargingPoints', params: { type: this.type, currentLevelInfo: this.currentWorks } });
+      } else {
+        var routerParams = Navigate.calculateNavigation(this.$store.state.state.proposalFlow, this.currentWorks, 'Parking');
+        router.push(routerParams);
+      }
     }
   }
 

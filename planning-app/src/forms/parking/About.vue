@@ -16,19 +16,19 @@
         </span>
 
 				<div class="govuk-radios__item">
-          <input class="govuk-radios__input" id="access-only-pedestrian" name="access-only-pedestrian" type="radio" value="pedestrian" v-model="typeOfAlteration">
+          <input class="govuk-radios__input" id="access-only-pedestrian" name="access-only-pedestrian" type="radio" value="car-parking-spaces" v-model="typeOfAlteration">
           <label class="govuk-label govuk-radios__label" for="access-only-pedestrian">
             Only car parking spaces
           </label>
         </div>
         <div class="govuk-radios__item">
-          <input class="govuk-radios__input" id="access-only-vehicle" name="access-only-vehicle" type="radio" value="vehicle" v-model="typeOfAlteration">
+          <input class="govuk-radios__input" id="access-only-vehicle" name="access-only-vehicle" type="radio" value="cycle-parking-spaces" v-model="typeOfAlteration">
           <label class="govuk-label govuk-radios__label" for="access-only-vehicle">
             Only cycle parking spaces
           </label>
         </div>
         <div class="govuk-radios__item">
-          <input class="govuk-radios__input" id="access-both" name="access-both" type="radio" value="both" v-model="typeOfAlteration">
+          <input class="govuk-radios__input" id="access-both" name="access-both" type="radio" value="car-and-bike-parking-spaces" v-model="typeOfAlteration">
           <label class="govuk-label govuk-radios__label" for="access-both">
             Both, car and bike parking spaces
           </label>
@@ -54,6 +54,7 @@ export default {
     return {
       alterationToAccess: '',
       typeOfAlteration: '',
+      currentWorks: undefined,
       warningMessage: 'Any public footpath that crosses or adjoins the site, or is affected, must be shown clearly on the plans. This includes any proposals that may require a closure or diversion.'
     }
   },
@@ -62,9 +63,28 @@ export default {
 			return this.alterationToAccess === 'Yes';
     }
   },
+  created () {
+    this.fetchData();
+  },
+  watch: {
+    '$route': 'fetchData'
+  },
   methods: {
+    fetchData () {
+      this.currentWorks = this.$route.params.currentLevelInfo;
+    },
     navigate() {
-      router.push({ name: 'Parking' });
+      if (this.typeOfAlteration === 'car-parking-spaces' || this.typeOfAlteration === 'car-and-bike-parking-spaces') {
+        
+        router.push({ name: 'CarParkingSpaces', params: { type: this.typeOfAlteration, currentLevelInfo: this.currentWorks } });
+
+      } else if (this.typeOfAlteration === 'cycle-parking-spaces') {
+
+        router.push({ name: 'BikeParkingSpaces', params: { type: this.typeOfAlteration, currentLevelInfo: this.currentWorks } });
+
+      } else {
+        return;
+      }
     }
   }
 

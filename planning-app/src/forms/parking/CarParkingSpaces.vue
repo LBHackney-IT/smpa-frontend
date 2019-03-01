@@ -57,17 +57,34 @@ export default {
     return {
       alterationToAccess: '',
       typeOfAlteration: '',
-      warningMessage: 'Any public footpath that crosses or adjoins the site, or is affected, must be shown clearly on the plans. This includes any proposals that may require a closure or diversion.'
+      warningMessage: 'Any public footpath that crosses or adjoins the site, or is affected, must be shown clearly on the plans. This includes any proposals that may require a closure or diversion.',
+      type: undefined,
+      currentWorks: undefined
     }
   },
-  computed: {
-		hasAlterationToAccess () {
-			return this.alterationToAccess === 'Yes';
-    }
+  created () {
+    this.fetchData();
+  },
+  watch: {
+    '$route': 'fetchData'
   },
   methods: {
+    fetchData () {
+      this.type = this.$route.params.type;
+      this.currentWorks = this.$route.params.currentLevelInfo;
+    },
     navigate() {
-      router.push({ name: 'Parking' });
+      if (this.type === 'car-parking-spaces') {
+        
+        router.push({ name: 'EVChargingPoints', params: { type: this.type, currentLevelInfo: this.currentWorks } });
+
+      } else if (this.type === 'cycle-parking-spaces' || this.type === 'car-and-bike-parking-spaces') {
+
+        router.push({ name: 'BikeParkingSpaces', params: { type: this.type, currentLevelInfo: this.currentWorks } });
+
+      } else {
+        return;
+      }
     }
   }
 
