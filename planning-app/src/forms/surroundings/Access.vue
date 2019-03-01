@@ -45,7 +45,6 @@
 import vCta from '../../components/Cta.vue';
 import router from '../../router';
 import WarningMessage from '../../components/WarningMessage.vue';
-import Navigate from '../../common/navigate';
 
 export default {
 	name: 'Access',
