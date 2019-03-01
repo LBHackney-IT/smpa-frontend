@@ -5,8 +5,6 @@ export default {
     console.log('currentWorks', currentWorks);
     console.log('currentLevel', currentLevel);
 
-    debugger;
-
     //find currentLevel in the current proposal
     var currentLevelIndex = currentWorks.goTo.findIndex(function(element) {
       return element === currentLevel;
