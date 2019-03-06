@@ -6,7 +6,9 @@
 
 3) Run `pipenv shell` to activate the python env
 
-4) Run `fab prod deploy`
+4) Run `goenv`
+
+5) Run `fab prod deploy`
 
 
 # Force deploying
