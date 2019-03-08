@@ -16,12 +16,12 @@
 
     <div class="govuk-form-group">
       <label class="govuk-label" v-bind:for="relationship + '-relationship'">
-        Relationship
+        Define relationship
       </label>
       <textarea class="govuk-textarea" v-bind:id="relationship + '-relationship'" v-bind:name="relationship + '-relationship'" rows="5" aria-describedby="more-detail-hint" v-model="relationshipDescription"></textarea>
     </div>
 
-    <v-cta name="Save" :onClick="saveAndReturn"></v-cta>
+    <v-cta name="Continue" :onClick="saveAndReturn"></v-cta>
   </div>
 </template>
 

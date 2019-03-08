@@ -1,20 +1,23 @@
 <template>
 	<div>
     <h1 class="govuk-heading-xl">
-      Materials
+      Define materials
     </h1>
 		<div class="govuk-form-group">
+      <p class="govuk-body govuk-!-font-size-36">
+        You need to describe what materials are going to be used.
+      </p>
+      <div class="govuk-inset-text">
+        <p>Materials information (materials, decoration, lightning, colour and texture) is one of those aspects of a proposed development which an applicant can choose not to submit details of with an outline planning application, (i.e. they can be 'reserved' for later determination).</p>
+        <p>You can submit an <a href="#">Approval of conditions</a> later on when you define the materials of your proposal. That will require the applicant to submit a new planning application and to pay a fee.</p>
+      </div>
+
       <fieldset class="govuk-fieldset" aria-describedby="materials-hint">
         <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
-          <h2 class="govuk-heading-m">
-            Define the existing and proposed materials to be used for the works
-          </h2>
+          <h4 class="govuk-heading-s">
+					  How would you like to describe proposed materials to be used for the works?
+				  </h4>
         </legend>
-
-        <div class="purpose-message govuk-body">
-          <p>Materials information (materials, decoration, lightning, colour and texture) is one of those aspects of a proposed development which an applicant can choose not to submit details of with an outline planning application, (i.e. they can be 'reserved' for later determination).</p>
-          <p>You can submit an <a href="#">Approval of conditions</a> later on when you define the materials of your proposal. That will require the applicant to submit a new planning application and to pay a fee.</p>
-        </div>
 
         <span id="proposal-hint" class="govuk-hint">
           Select one.
@@ -24,13 +27,20 @@
 					<div class="govuk-radios__item">
 						<input class="govuk-radios__input" id="work-started-1" name="work-started" type="radio" value="Yes" v-model="materials">
 						<label class="govuk-label govuk-radios__label" for="work-started-1">
-							You define existing and proposed materials on supporting documentation
+							You define proposed materials on supporting documentation
 						</label>
 					</div>
 					<div class="govuk-radios__item">
 						<input class="govuk-radios__input" id="work-started-2" name="work-started" type="radio" value="No" v-model="materials">
 						<label class="govuk-label govuk-radios__label" for="work-started-2">
 							You define existing and proposed materials here.
+						</label>
+					</div>
+
+          <div class="govuk-radios__item">
+						<input class="govuk-radios__input" id="work-started-3" name="work-started" type="radio" value="test" v-model="materials">
+						<label class="govuk-label govuk-radios__label" for="work-started-3">
+							You don’t know yet which materials are going to be used. You will submit an Approval of conditions later on.
 						</label>
 					</div>
 				</div>

@@ -1,19 +1,23 @@
 <template>
 	<div>
-    <h2 class="govuk-heading-l">Location plan</h2>
-    <h4 class="govuk-heading-s">Add location plan</h4>
-    <warning-message :message="locationPlanMessage" v-bind:typeAlert="false"></warning-message>
+    <h1 class="govuk-heading-xl">
+      Location plan
+    </h1>
+    <h2 class="govuk-heading-l govuk-!-font-size-24">Upload a location plan</h2>
 
-    <details class="govuk-details">
-      <summary class="govuk-details__summary">
-        <span class="govuk-details__summary-text">
-          What is on a location plan?
-        </span>
-      </summary>
-      <div class="govuk-details__text">
-        A location plan should be based on an up-to-date OS map. A location plan should show roads and/or buildings on adjoining land to ensure that the exact location of the application site is clear. The application site should be edged clearly with a red line including all land necessary to carry out the proposed development.
+    <div class="govuk-inset-text">
+      You are required to upload a new Location plan if your proposal affects the site boundary.
+
+      <div class="govuk-warning-text">
+        <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+        <strong class="govuk-warning-text__text">
+          <span class="govuk-warning-text__assistive">Warning</span>
+            If the proposed works affect any of your site boundaries, neighbours should be notified.
+        </strong>
       </div>
-    </details>
+
+    </div>
+    <!-- <warning-message :message="locationPlanMessage" v-bind:typeAlert="false"></warning-message> -->
 
     <div v-if="hasPostcode" class="govuk-!-margin-bottom-9">
       <img class="location" v-if="hasPostcode === 'N16 8ED'" src="../../assets/img/not_conservation_area.png" alt="Map view of the site" />
@@ -21,18 +25,21 @@
     </div>
 
     <div class="govuk-form-group">
+      <span id="proposal-hint" class="govuk-hint">
+          Select one
+      </span>
 			<fieldset class="govuk-fieldset" aria-describedby="location-map-hint">
 				<div class="govuk-radios govuk-radios--inline">
 					<div class="govuk-radios__item">
 						<input class="govuk-radios__input" id="location-map-1" name="location-map" type="radio" value="Yes" v-model="useMapDisplayed">
 						<label class="govuk-label govuk-radios__label" for="location-map-1">
-							Use map displayed as location map
+							Use the map displayed above as a location plan
 						</label>
 					</div>
 					<div class="govuk-radios__item">
 						<input class="govuk-radios__input" id="location-map-2" name="location-map" type="radio" value="No" v-model="useMapDisplayed">
 						<label class="govuk-label govuk-radios__label" for="location-map-2">
-							Upload location map
+							Upload a new location map
 						</label>
 					</div>
 				</div>
@@ -47,11 +54,24 @@
 			</fieldset>
 		</div>
 
-    <v-cta name="Next" :onClick="navigate"></v-cta>
+    <v-cta name="Continue" :onClick="navigate"></v-cta>
     <br>
 
     <router-link v-if="isInConservationArea" :to="{ name: 'DocumentationDesignAccessStatement' }">Continue without adding a file</router-link>
     <router-link v-if="!isInConservationArea" :to="{ name: 'DocumentationAdditionalPlans' }">Continue without adding a file</router-link>
+    
+    <br><br><br><br><br><br>
+    
+    <details class="govuk-details">
+      <summary class="govuk-details__summary">
+        <span class="govuk-details__summary-text">
+          What is on a location plan?
+        </span>
+      </summary>
+      <div class="govuk-details__text">
+        A location plan should be based on an up-to-date OS map. A location plan should show roads and/or buildings on adjoining land to ensure that the exact location of the application site is clear. The application site should be edged clearly with a red line including all land necessary to carry out the proposed development.
+      </div>
+    </details>
 	</div>
 </template>
 

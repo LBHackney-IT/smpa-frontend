@@ -75,9 +75,13 @@ body:not(:-moz-handler-blocked) fieldset {
 }
 
 .planning-panel--information {
-    background-color: #0072CE;
-    color: #ffffff;
+    background-color:rgba(0, 100, 53, 0.1);
+    color: black;
     text-align: left;
+
+    ul {
+        line-height: 1.5;
+    }
 }
 
 //overide header colour

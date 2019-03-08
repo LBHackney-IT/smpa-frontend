@@ -1,7 +1,7 @@
 <template>
 	<div>
     <h1 class="govuk-heading-xl">
-      About the extension, improvement or alteration
+      About the extension or alteration
     </h1>
 		<div class="govuk-form-group">
       <fieldset class="govuk-fieldset" aria-describedby="proposal-hint">
@@ -27,7 +27,7 @@
           <div class="govuk-checkboxes__item">
             <input class="govuk-checkboxes__input" id="proposal-1" name="proposal" type="checkbox" value="extension_original_house" v-model="selectedProposal">
             <label class="govuk-label govuk-checkboxes__label" for="proposal-1">
-              <strong>To the original house</strong>
+              <strong>You are making changes to the original house</strong>
               <div class="govuk-inset-text">
                 <p class="govuk-body govuk-!-font-weight-bold">Example</p>
                 Erection of a rear roof extension, installation of 2 front rooflights and re-rendering of front porch.
@@ -35,61 +35,10 @@
             </label>
           </div>
 
-          <!-- <div class="govuk-inset-text" v-if="proposalIsChecked('Extension')">
-            <div class="govuk-checkboxes__item">
-              <input class="govuk-checkboxes__input" id="proposal-5" name="proposal" type="checkbox" value="Single storey" v-model="typeOfExtension">
-              <label class="govuk-label govuk-checkboxes__label" for="proposal-5">
-                Single storey
-              </label>
-            </div>
-
-            <div class="govuk-checkboxes__item">
-              <input class="govuk-checkboxes__input" id="proposal-5" name="proposal" type="checkbox" value="Two storey" v-model="typeOfExtension">
-              <label class="govuk-label govuk-checkboxes__label" for="proposal-5">
-                Two storey
-              </label>
-            </div>
-
-            <div class="govuk-checkboxes__item">
-              <input class="govuk-checkboxes__input" id="proposal-5" name="proposal" type="checkbox" value="Conservatory" v-model="typeOfExtension">
-              <label class="govuk-label govuk-checkboxes__label" for="proposal-5">
-                Conservatory
-              </label>
-            </div>
-
-            <div class="govuk-checkboxes__item">
-              <input class="govuk-checkboxes__input" id="proposal-5" name="proposal" type="checkbox" value="Basement and/or lightwell" v-model="typeOfExtension">
-              <label class="govuk-label govuk-checkboxes__label" for="proposal-5">
-                Basement and/or lightwell
-              </label>
-            </div>
-
-            <div class="govuk-checkboxes__item">
-              <input class="govuk-checkboxes__input" id="proposal-5" name="proposal" type="checkbox" value="outbuilding" v-model="typeOfExtension">
-              <label class="govuk-label govuk-checkboxes__label" for="proposal-5">
-                Outbuilding
-              </label>
-            </div>
-
-            <div class="govuk-checkboxes__item">
-              <input class="govuk-checkboxes__input" id="proposal-5" name="proposal" type="checkbox" value="porch" v-model="typeOfExtension">
-              <label class="govuk-label govuk-checkboxes__label" for="proposal-5">
-                Porch
-              </label>
-            </div>
-
-            <div class="govuk-checkboxes__item">
-              <input class="govuk-checkboxes__input" id="proposal-5" name="proposal" type="checkbox" value="Balcony, decking and platforms" v-model="typeOfExtension">
-              <label class="govuk-label govuk-checkboxes__label" for="proposal-5">
-                Balcony, decking and platforms
-              </label>
-            </div>
-          </div> -->
-
           <div class="govuk-checkboxes__item">
             <input class="govuk-checkboxes__input" id="proposal-2" name="proposal" type="checkbox" value="extension_incidental_buildings" v-model="selectedProposal">
             <label class="govuk-label govuk-checkboxes__label" for="proposal-2">
-              <strong>To any incidental buildings</strong>
+              <strong>You are building, replacing or removing an outbuilding</strong>
               <p>Incidental building include garages, sheds, summerhouses and similar outbuildings, which are more than 5m away from the existing building.</p>
               <div class="govuk-inset-text">
                 <p class="govuk-body govuk-!-font-weight-bold">Example</p>
@@ -101,7 +50,7 @@
           <div class="govuk-checkboxes__item">
             <input class="govuk-checkboxes__input" id="proposal-4" name="proposal" type="checkbox" value="extension_gates_fences_etc" v-model="selectedProposal">
             <label class="govuk-label govuk-checkboxes__label" for="proposal-4">
-              <strong>To gates, fences or garden walls</strong>
+              <strong>You are making changes to gates, fences, garden walls, etc.</strong>
               <div class="govuk-inset-text">
                 <p class="govuk-body govuk-!-font-weight-bold">Example</p>
                 Installation of gate and railings atop a brick, front and side boundary wall.
@@ -112,7 +61,7 @@
           <div class="govuk-checkboxes__item">
             <input class="govuk-checkboxes__input" id="proposal-7" name="proposal" type="checkbox" value="extension_means_of_access_to_site" v-model="selectedProposal">
             <label class="govuk-label govuk-checkboxes__label" for="proposal-7">
-              <strong>To means of access to the site</strong>
+              <strong>You are making changes to means of access to the site</strong>
               <p>Any works that involve alteration to or creation of a new access to the public road.</p>
               <p>
                 That applies to any proposal that may require a closure or diversion as well.
@@ -127,7 +76,7 @@
           <div class="govuk-checkboxes__item">
             <input class="govuk-checkboxes__input" id="proposal-9" name="proposal" type="checkbox" value="extension_car_bike_spaces" v-model="selectedProposal">
             <label class="govuk-label govuk-checkboxes__label" for="proposal-9">
-              <strong>Car and/or bike parking spaces</strong>
+              <strong>You are affecting car and/or bike parking spaces</strong>
             </label>
           </div>
         </div>

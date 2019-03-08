@@ -4,16 +4,18 @@
       <fieldset class="govuk-fieldset" aria-describedby="materials-hint">
         <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
           <h1 class="govuk-fieldset__heading">
-            Authority member / employee
+            Declaration of interest
           </h1>
         </legend>
 
         <h4 class="govuk-heading-s">
-					With respect to the authority, does any of the following statements apply to you and / or the applicant?
+					With respect to Hackney Council, does any of the following statements apply to you and/or the applicant?
 				</h4>
 
         <div class="govuk-inset-text">
-          It is an important principle of decision making that the process is open and transparent.
+          <p>It is an important principle of decision-making that the process is open and transparent.</p>
+
+          <p>For the purposes of this question, "related to" means related, by birth or otherwise, closely enough that a fair-minded and informed observer, having considered the facts, would conclude that there was bias on the part of the decision-maker in Hackney Council.</p>
         </div>
       </fieldset>
     </div>
@@ -58,7 +60,7 @@
       <div class="govuk-radios__item">
         <input class="govuk-radios__input" id="applicant-authority-relation" name="applicant-authority-relation-5" type="radio" value="applicant-authority-relation-5" v-model="applicantAuthorityRelation">
         <label class="govuk-label govuk-radios__label" for="applicant-authority-relation-5">
-          Any of the above
+          None of the above
         </label>
       </div>
     </div>

@@ -4,23 +4,10 @@
 			<fieldset class="govuk-fieldset" aria-describedby="work-started-hint">
 				<legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
 				<h1 class="govuk-fieldset__heading">
-          Do you want to add more files?
+          Files Uploaded
 				</h1>
 				</legend>
-				<div class="govuk-radios govuk-radios--inline">
-					<div class="govuk-radios__item">
-						<input class="govuk-radios__input" id="work-started-1" name="work-started" type="radio" value="Yes" v-model="uploadMore">
-						<label class="govuk-label govuk-radios__label" for="work-started-1">
-							Yes
-						</label>
-					</div>
-					<div class="govuk-radios__item">
-						<input class="govuk-radios__input" id="work-started-2" name="work-started" type="radio" value="No" v-model="uploadMore">
-						<label class="govuk-label govuk-radios__label" for="work-started-2">
-							No
-						</label>
-					</div>
-				</div>
+
 			</fieldset>
 		</div>
     <modal v-if="showModal" @close="showModal = false"></modal>

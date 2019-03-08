@@ -8,28 +8,48 @@
           </h1>
         </legend>
 
-        <h4 class="govuk-heading-s">
-					Does the applicant own the land?
+        <h4 class="govuk-heading-m">
+					Which of the following statements apply to the applicant?
+          <!-- if agent above -->
+          <!-- if member of the public: Which of the following statements apply to you? -->
 				</h4>
 
         <div class="govuk-inset-text">
-          Owner is a person with a freehold interest or leasehold interest with at least 7 years left to run.
+          An ‘owner’ is anyone with a freehold interest, or leasehold interest the unexpired term of which is not less than 7 years.
         </div>
       </fieldset>
     </div>
 
-    <div class="govuk-radios govuk-radios--inline">
+    <span class="govuk-hint">
+      Select one
+    </span>
+
+    <div class="govuk-radios">
       <div class="govuk-radios__item">
         <input class="govuk-radios__input" id="owner-yes" name="owner-yes" type="radio" value="Yes" v-model="doesApplicantOwnTheLand">
         <label class="govuk-label govuk-radios__label" for="owner-yes">
-          Yes
+          The applicant is the sole owner of the land
         </label>
       </div>
 
       <div class="govuk-radios__item">
         <input class="govuk-radios__input" id="owner-no" name="owner-no" type="radio" value="No" v-model="doesApplicantOwnTheLand">
         <label class="govuk-label govuk-radios__label" for="owner-no">
-          No
+          The applicant does not own all of the land and has been able to notify all the other owners
+        </label>
+      </div>
+
+      <div class="govuk-radios__item">
+        <input class="govuk-radios__input" id="owner-no" name="owner-no" type="radio" value="No1" v-model="doesApplicantOwnTheLand">
+        <label class="govuk-label govuk-radios__label" for="owner-no">
+          The applicant does not own all of the land and haven’t been able to notify all the owners about the works
+        </label>
+      </div>
+
+      <div class="govuk-radios__item">
+        <input class="govuk-radios__input" id="owner-no" name="owner-no" type="radio" value="No2" v-model="doesApplicantOwnTheLand">
+        <label class="govuk-label govuk-radios__label" for="owner-no">
+          The applicant does not own all of the land and does not know the names and addresses of any of the owners/agricultural tenants
         </label>
       </div>
     </div>

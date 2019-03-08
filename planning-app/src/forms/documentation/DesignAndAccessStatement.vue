@@ -1,10 +1,31 @@
 <template>
 	<div>
-    <h2 class="govuk-heading-l">Design and Access Statement</h2>
-    <h4 class="govuk-heading-s">Add design and access statement</h4>
+    <h2 class="govuk-heading-xl">Design and Access Statement</h2>
+    <h4 class="govuk-heading-m">Upload design and access statement</h4>
 
-    <p>You are required to submit a Design in Access statement because your site is in a conservation area and is over 100sq.m.</p>
+    <div class="govuk-inset-text">You are required to submit a Design and Access Statement because your site is in a conservation area and the floor area to be created is more than 100 sqm.</div>
 
+    <div class="govuk-form-group">
+      <label class="govuk-label" for="file-upload-1">
+        Upload a file
+      </label>
+      <input class="govuk-file-upload" id="file-upload-1" name="file-upload-1" type="file">
+
+      <br><br>
+      <div class="govuk-checkboxes">
+        <div class="govuk-checkboxes__item">
+          <input class="govuk-checkboxes__input" id="waste-1" name="waste" type="checkbox" value="carcasses">
+          <label class="govuk-label govuk-checkboxes__label" for="waste-1">
+            The Design and Access Statement is covered in another document
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <v-cta name="Continue" :onClick="navigate"></v-cta>
+    <br>
+    <router-link :to="{ name: 'DocumentationHeritageStatement' }">Continue without adding a file</router-link>
+    <br><br><br><br>
     <details class="govuk-details">
       <summary class="govuk-details__summary">
         <span class="govuk-details__summary-text">
@@ -22,17 +43,6 @@
         </ul>
       </div>
     </details>
-
-    <div class="govuk-form-group">
-      <label class="govuk-label" for="file-upload-1">
-        Upload a file
-      </label>
-      <input class="govuk-file-upload" id="file-upload-1" name="file-upload-1" type="file">
-    </div>
-
-    <v-cta name="Next" :onClick="navigate"></v-cta>
-    <br>
-    <router-link :to="{ name: 'DocumentationHeritageStatement' }">Continue without adding a file</router-link>
 	</div>
 </template>
 

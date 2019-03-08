@@ -1,54 +1,42 @@
 <template>
 	<div>
     <h1 class="govuk-heading-xl">
-      About the surroundings: Trees
+      About the surroundings: Trees and hedges
     </h1>
 
-    <p class="govuk-body govuk-!-font-size-36">You must consider the protection and planting of trees when applying for planning permission.</p>
-
-    <div class="purpose-message govuk-body" v-if="isInConservationArea">
-      There is one protected tree in the selected location.
-    </div>
-
-    <div class="govuk-warning-text">
-      <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-      <strong class="govuk-warning-text__text">
-        <span class="govuk-warning-text__assistive">Warning</span>
-        All development including works that involve the loss of or harm of trees covered by Tree Preservation Orders, or trees of significant amenity or biodiversity value, will be refused.
-      </strong>
-    </div>
-
-    <div class="govuk-warning-text">
-      <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-      <strong class="govuk-warning-text__text">
-        <span class="govuk-warning-text__assistive">Warning</span>
-        It is a criminal offence to prune, fell, damage or harm a protected tree, unless the works are exempt. You must get our permission before carrying out any works to a protected tree, or receive an unlimited fine or criminal conviction.
-      </strong>
+    <div class="govuk-body">
+      Notice is required for works to trees that have a trunk diameter of more than 75mm when measured at 1.5m from ground level (or more than 100mm if reducing the number of trees to benefit growth of other trees).
     </div>
 
     <details class="govuk-details">
       <summary class="govuk-details__summary">
         <span class="govuk-details__summary-text">
-          Good practise for the retention and protection of trees
+          See example
         </span>
       </summary>
       <div class="govuk-details__text">
-        <p>All development and demolition must comply with established good practise, guidelines and legislation for the retention and protection of trees.</p>
-        <p>Proposals must:</p>
-        <ul>
-          <li>Retain and protect trees of amenity and biodiversity value on the site and in adjacent sites that may be affected by the proposals;</li>
-          <li>Ensure that the future long term health and amenity value of the trees is not harmed;</li>
-          <li>Provide adequate separation between the built form and the trees including having regard to shading caused by trees and buildings;</li>
-        </ul>
-
+        <img class="location" src="../../assets/img/trees_explanation.png" alt="How to measure trees" />
       </div>
     </details>
+
+
+    <div class="govuk-warning-text">
+      <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+      <strong class="govuk-warning-text__text">
+        <span class="govuk-warning-text__assistive">Warning</span>
+        It is a criminal offence to prune, fell, damage or harm a protected tree. You must get our permission before carrying out any works to a protected tree, or risk receiving an unlimited fine or criminal conviction.
+      </strong>
+    </div>
+
+    <div class="purpose-message govuk-body" v-if="isInConservationArea">
+      There is one protected tree in the selected location.
+    </div>
 
 		<div class="govuk-form-group">
 			<fieldset class="govuk-fieldset" aria-describedby="trees-question-1-hint">
 				<legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
 				<h4 class="govuk-heading-s">
-					Are there any other (no protected) trees inside the boundary of the site?
+					Considering the requirements mentioned above, are there any trees or hedges inside the boundary of the site?
 				</h4>
 				</legend>
 				<div class="govuk-radios govuk-radios--inline">
@@ -76,34 +64,19 @@
           <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
           <strong class="govuk-warning-text__text">
             <span class="govuk-warning-text__assistive">Warning</span>
-            You must mark all trees position on a scaled plan
+            You must mark the position of all trees on a scaled plan
           </strong>
         </div>
 
-        <div class="purpose-message govuk-body" v-if="isInConservationArea">
+        <div class="purpose-message govuk-body">
           You might need to submit a <a href="#">Tree Survey</a>
         </div>
-
-        <div class="govuk-inset-text" v-if="isInConservationArea">
-          As your site is in a conversation area, notice is required for works to trees that have a trunk diameter of more than 75mm when measured at 1.5m from ground level (or more than 100mm if reducing the number of trees to benefit growth of other trees).
-        </div>
-
-        <details class="govuk-details">
-          <summary class="govuk-details__summary">
-            <span class="govuk-details__summary-text">
-              When is a tree survey/arboricultural statement or landscaping scheme required?
-            </span>
-          </summary>
-          <div class="govuk-details__text">
-            <img class="location" src="../../assets/img/trees_explanation.png" alt="How to measure trees" />
-          </div>
-        </details>
       </div>
 
       <fieldset class="govuk-fieldset govuk-!-margin-top-9" aria-describedby="trees-question-2-hint">
 				<legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
           <h4 class="govuk-heading-s">
-            Are there any other (no protected) trees within 10 meters (10m) from the site boundary to the proposed works?
+            Will any trees or hedges need to be removed or pruned in order to carry out your proposal?
           </h4>
 				</legend>
 
@@ -127,22 +100,42 @@
 				</div>
 			</fieldset>
 
- <!-- 
       <div class="govuk-inset-text" v-if="hasTreesAdjacent">
-        <warning-message :message="warningMessageTwo" v-bind:typeAlert="true"></warning-message>
-        <warning-message :message="warningMessageThree" v-bind:typeAlert="false"></warning-message>
+        <div class="govuk-warning-text">
+          <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+          <strong class="govuk-warning-text__text">
+            <span class="govuk-warning-text__assistive">Warning</span>
+            You must show on your plans which trees need to be removed or pruned
+          </strong>
+        </div>
+      </div>
 
-        <details class="govuk-details">
-          <summary class="govuk-details__summary">
-            <span class="govuk-details__summary-text">
-              How to measure a tree
-            </span>
-          </summary>
-          <div class="govuk-details__text">
-            <img class="location" src="../../assets/img/trees_explanation.png" alt="How to measure trees" />
-          </div>
-        </details>
-      </div>-->
+      <fieldset class="govuk-fieldset govuk-!-margin-top-9" aria-describedby="trees-question-2-hint">
+				<legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+          <h4 class="govuk-heading-s">
+            Are there any other trees or hedges within 5 metres (5m) from the site boundary to the proposed works?
+          </h4>
+				</legend>
+
+        <div class="govuk-inset-text">
+          There might be trees on land adjacent to your site that could be impacted by the works. A planner will need to visit and assess if you need to submit a tree assessment.
+        </div>
+
+				<div class="govuk-radios govuk-radios--inline">
+					<div class="govuk-radios__item">
+						<input class="govuk-radios__input" id="trees-adjacent-1" name="trees-adjacent" type="radio" value="Yes" v-model="questionThree">
+						<label class="govuk-label govuk-radios__label" for="trees-adjacent-1">
+							Yes
+						</label>
+					</div>
+					<div class="govuk-radios__item">
+						<input class="govuk-radios__input" id="trees-adjacent-2" name="trees-adjacent" type="radio" value="No" v-model="questionThree">
+						<label class="govuk-label govuk-radios__label" for="trees-adjacent-2">
+							No
+						</label>
+					</div>
+				</div>
+			</fieldset>
 
 		</div>
 		<v-cta name="Next" :onClick="navigate"></v-cta>
@@ -164,6 +157,7 @@ export default {
     return {
 			treesInsideBoundary: '',
       treesAdjacent: '',
+      questionThree: '',
       warningMessageOne: 'You must mark trees position on a scaled plan',
       warningMessageTwo: 'You might need to submit a Tree Survey',
       warningMessageThree: 'In conservation areas, notice is required for works to trees that have a trunk diameter of more than 75mm when measured at 1.5m from the ground level (or more than 100mm if reducing the number of trees to benefit the growth of other trees).',
@@ -183,11 +177,14 @@ export default {
     },
     hasTreesAdjacent () {
 			return this.treesAdjacent === 'Yes';
+    },
+    hasQuestionThree () {
+			return this.questionThree === 'Yes';
 		}
   },
   methods: {
     navigate() {
-      router.push({ name: 'Materials' });
+      router.push({ name: 'WhatMaterials' });
     }
   }
 
