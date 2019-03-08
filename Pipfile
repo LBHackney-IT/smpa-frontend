@@ -1,13 +1,24 @@
 [[source]]
+
 url = "https://pypi.python.org/simple"
 verify_ssl = true
 name = "pypi"
 
+
 [packages]
+
 "fabric3" = "*"
 "boto3" = "*"
+"urllib3" = "*"
+"enum34" = "*"
+ipaddress = "*"
+futures = "*"
+
 
 [dev-packages]
 
+
+
 [requires]
+
 python_version = "3.7"
