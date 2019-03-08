@@ -8,7 +8,9 @@
 
 4) Run `goenv`
 
-5) Run `fab prod deploy`
+5) Make sure you have a newly generated /dist
+
+6) Run `fab prod deploy`
 
 
 # Force deploying
