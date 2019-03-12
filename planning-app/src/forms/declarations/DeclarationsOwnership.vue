@@ -54,7 +54,7 @@
       </div>
     </div>
 
-    <div class="govuk-inset-text govuk-!-margin-bottom-9" v-if="this.doesApplicantOwnTheLand === 'Yes' || this.doesApplicantOwnTheLand === 'No'">
+    <div class="govuk-inset-text govuk-!-margin-bottom-9" v-if="this.doesApplicantOwnTheLand === 'No1' || this.doesApplicantOwnTheLand === 'No2'">
       <div class="govuk-form-group">
         <fieldset class="govuk-fieldset govuk-!-margin-bottom-5" aria-describedby="owner-statements">
           <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
