@@ -213,7 +213,7 @@ export default {
 		},
     navigate() {
 			this.collectDataAndStore();
-      router.push({ name: 'MultipleOccupation' });
+      router.push({ name: 'Proposal' });
     }
 	},
 	computed: {
