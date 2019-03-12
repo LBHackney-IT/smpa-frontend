@@ -11,22 +11,6 @@
           </h2>
         </legend>
 
-        <div class="govuk-warning-text">
-          <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-          <strong class="govuk-warning-text__text">
-            <span class="govuk-warning-text__assistive">Warning</span>
-            This is only needed if the proposed conservatory is forming an integral part of the habitable space
-          </strong>
-        </div>
-
-        <div class="govuk-warning-text">
-          <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-          <strong class="govuk-warning-text__text">
-            <span class="govuk-warning-text__assistive">Warning</span>
-            Only if the proposed porch is forming an integral part of the habitable space
-          </strong>
-        </div>
-
         <div class="govuk-inset-text">
           <p class="govuk-body govuk-!-font-weight-bold">Definition</p>
           <p>Gross internal area (GIA) is the area of a building. Broadly speaking it includes the whole enclosed area of a building within the external walls taking each floor into account and excluding the thickness of the external walls. Measurement should be in accordance with the RICS Code of Practice.</p>

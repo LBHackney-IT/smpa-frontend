@@ -30,9 +30,6 @@
         <label class="govuk-label" for="more-detail">
           Can you provide more detail?
         </label>
-        <span id="more-detail-hint" class="govuk-hint">
-          Do not include personal or financial information, like your National Insurance number or credit card details.
-        </span>
         <textarea class="govuk-textarea" id="more-detail" name="more-detail" rows="5" aria-describedby="more-detail-hint"></textarea>
       </div>
     </div>
