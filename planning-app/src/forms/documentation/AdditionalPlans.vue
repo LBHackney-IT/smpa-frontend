@@ -77,42 +77,42 @@ You should include elevations for all sides of the proposal.</p>
         <p>Existing</p>
         <div class="govuk-checkboxes">
           <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="file-includes-1" name="file-includes-1" type="checkbox" value="site-layout-plan" v-model="fileIncludes" >
-            <label class="govuk-label govuk-checkboxes__label" for="file-includes-1">
+            <input class="govuk-checkboxes__input" id="existing-1" name="existing-1" type="checkbox" value="existing-1" v-model="fileIncludes" >
+            <label class="govuk-label govuk-checkboxes__label" for="existing-1">
               Site layout plan
             </label>
           </div>
 
           <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="file-includes-2" name="file-includes-2" type="checkbox" value="existing-elevations" v-model="fileIncludes" >
-            <label class="govuk-label govuk-checkboxes__label" for="file-includes-2">
+            <input class="govuk-checkboxes__input" id="existing-2" name="existing-2" type="checkbox" value="existing-2" v-model="fileIncludes" >
+            <label class="govuk-label govuk-checkboxes__label" for="existing-2">
               Elevations
             </label>
           </div>
 
           <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="file-includes-3" name="file-includes-3" type="checkbox" value="existing-floor-plans" v-model="fileIncludes" >
-            <label class="govuk-label govuk-checkboxes__label" for="file-includes-3">
+            <input class="govuk-checkboxes__input" id="existing-3" name="existing-3" type="checkbox" value="existing-3" v-model="fileIncludes" >
+            <label class="govuk-label govuk-checkboxes__label" for="existing-3">
               Roof plans
             </label>
           </div>
 
           <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="file-includes-4" name="file-includes-4" type="checkbox" value="existing-sections" v-model="fileIncludes" >
-            <label class="govuk-label govuk-checkboxes__label" for="file-includes-4">
+            <input class="govuk-checkboxes__input" id="existing-4" name="existing-4" type="checkbox" value="existing-4" v-model="fileIncludes" >
+            <label class="govuk-label govuk-checkboxes__label" for="existing-4">
               Floor plans
             </label>
           </div>
 
           <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="file-includes-5" name="file-includes-5" type="checkbox" value="other" v-model="fileIncludes" >
-            <label class="govuk-label govuk-checkboxes__label" for="file-includes-5">
+            <input class="govuk-checkboxes__input" id="existing-5" name="existing-5" type="checkbox" value="existing-5" v-model="fileIncludes" >
+            <label class="govuk-label govuk-checkboxes__label" for="existing-5">
               Sections
             </label>
           </div>
           <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="file-includes-5" name="file-includes-5" type="checkbox" value="other" v-model="fileIncludes" >
-            <label class="govuk-label govuk-checkboxes__label" for="file-includes-5">
+            <input class="govuk-checkboxes__input" id="existing-6" name="existing-6" type="checkbox" value="existing-6" v-model="fileIncludes" >
+            <label class="govuk-label govuk-checkboxes__label" for="existing-6">
               Other
             </label>
           </div>
@@ -123,42 +123,42 @@ You should include elevations for all sides of the proposal.</p>
         <!-- if works already started changed to "consented" if works already finished "as built" -->
         <div class="govuk-checkboxes">
           <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="file-includes-1" name="file-includes-1" type="checkbox" value="site-layout-plan" v-model="fileIncludes" >
-            <label class="govuk-label govuk-checkboxes__label" for="file-includes-1">
+            <input class="govuk-checkboxes__input" id="proposed-1" name="proposed-1" type="checkbox" value="proposed-1" v-model="fileIncludes" >
+            <label class="govuk-label govuk-checkboxes__label" for="proposed-1">
               Site layout plan
             </label>
           </div>
 
           <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="file-includes-2" name="file-includes-2" type="checkbox" value="existing-elevations" v-model="fileIncludes" >
-            <label class="govuk-label govuk-checkboxes__label" for="file-includes-2">
+            <input class="govuk-checkboxes__input" id="proposed-2" name="proposed-2" type="checkbox" value="proposed-2" v-model="fileIncludes" >
+            <label class="govuk-label govuk-checkboxes__label" for="proposed-2">
               Elevations
             </label>
           </div>
 
           <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="file-includes-3" name="file-includes-3" type="checkbox" value="existing-floor-plans" v-model="fileIncludes" >
-            <label class="govuk-label govuk-checkboxes__label" for="file-includes-3">
+            <input class="govuk-checkboxes__input" id="proposed-3" name="proposed-3" type="checkbox" value="proposed-3" v-model="fileIncludes" >
+            <label class="govuk-label govuk-checkboxes__label" for="proposed-3">
               Roof plans
             </label>
           </div>
 
           <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="file-includes-4" name="file-includes-4" type="checkbox" value="existing-sections" v-model="fileIncludes" >
-            <label class="govuk-label govuk-checkboxes__label" for="file-includes-4">
+            <input class="govuk-checkboxes__input" id="proposed-4" name="proposed-4" type="checkbox" value="proposed-4" v-model="fileIncludes" >
+            <label class="govuk-label govuk-checkboxes__label" for="proposed-4">
               Floor plans
             </label>
           </div>
 
           <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="file-includes-5" name="file-includes-5" type="checkbox" value="other" v-model="fileIncludes" >
-            <label class="govuk-label govuk-checkboxes__label" for="file-includes-5">
+            <input class="govuk-checkboxes__input" id="proposed-5" name="proposed-5" type="checkbox" value="proposed-5" v-model="fileIncludes" >
+            <label class="govuk-label govuk-checkboxes__label" for="proposed-5">
               Sections
             </label>
           </div>
           <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="file-includes-5" name="file-includes-5" type="checkbox" value="other" v-model="fileIncludes" >
-            <label class="govuk-label govuk-checkboxes__label" for="file-includes-5">
+            <input class="govuk-checkboxes__input" id="proposed-6" name="proposed-6" type="checkbox" value="proposed-6" v-model="fileIncludes" >
+            <label class="govuk-label govuk-checkboxes__label" for="proposed-6">
               Other
             </label>
           </div>
@@ -199,7 +199,7 @@ export default {
 	data () {
     return {
       showModal: false,
-      fileIncludes: undefined
+      fileIncludes: []
     }
   },
 	methods: {
