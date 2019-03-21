@@ -1,13 +1,13 @@
 <template>
 	<div>
     <h1 class="govuk-heading-xl">
-      About the size
+      About the floor area added
     </h1>
 		<div class="govuk-form-group">
       <fieldset class="govuk-fieldset" aria-describedby="proposal-hint">
         <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
           <h2 class="govuk-heading-m">
-            How much floor area (GIA) is being added?
+            How much floor area is being added?
           </h2>
         </legend>
 
@@ -50,8 +50,8 @@
           </label>
           <input class="govuk-input govuk-!-width-one-quarter" id="one-quarter" name="one-quarter" type="number">
           <select class="govuk-select" id="sort" name="sort">
-            <option value="sqm">sqm</option>
-            <option value="sqft" selected>sqft</option>
+            <option value="sqm" selected>sqm</option>
+            <option value="sqft">sqft</option>
           </select>
         </div>
       </fieldset>

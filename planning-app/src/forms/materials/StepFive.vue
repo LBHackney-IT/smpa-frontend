@@ -4,13 +4,17 @@
       <fieldset class="govuk-fieldset" aria-describedby="materials-hint">
         <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
           <h1 class="govuk-fieldset__heading">
-            Materials
+            Other materials
           </h1>
         </legend>
 
         <h4 class="govuk-heading-s">
-					Are there any other external building materials that would be seen?
+					Are there any other external materials to be considered?
 				</h4>
+
+        <div class="govuk-inset-text">
+          You might need to describe proposed materials for other elements such as chimneys, rainwater goods, boundary treatments (fences, railings, etc.), vehicle access and hard standing, lighting or others.
+        </div>
 
         <div class="govuk-radios govuk-radios--inline">
 					<div class="govuk-radios__item">
@@ -29,25 +33,17 @@
 
         <div v-if="hasOtherMaterials" class="govuk-inset-text">
           <div class="govuk-form-group">
-            <label class="govuk-label" for="element">
-              Element
-            </label>
-            <input class="govuk-input" id="element" name="element" type="text">
-
-            <label class="govuk-label" for="proposed-material">
-              Proposed Material
-            </label>
-            <input class="govuk-input" id="proposed-material" name="proposed-material" type="text">
-          </div>
-
-          <div class="govuk-form-group">
             <label class="govuk-label" for="more-detail">
-              Colour and type
+              Proposed material
             </label>
+            <span id="more-detail-hint" class="govuk-hint">
+              Include type, colour and name.
+            </span>
             <textarea class="govuk-textarea" id="more-detail" name="more-detail" rows="5" aria-describedby="more-detail-hint"></textarea>
           </div>
 
-          <v-cta name="Save" :onClick="consoleClick"></v-cta>
+          <button>Add another material</button>
+
         </div>
       </fieldset>
     </div>

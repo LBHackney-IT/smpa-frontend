@@ -4,11 +4,11 @@
       Define materials
     </h1>
 		<div class="govuk-form-group">
-      <p class="govuk-body govuk-!-font-size-36">
+      <p class="govuk-body govuk-!-font-size-27">
         You need to describe what materials are going to be used.
       </p>
       <div class="govuk-inset-text">
-        <p>Materials information (materials, decoration, lightning, colour and texture) is one of those aspects of a proposed development which an applicant can choose not to submit details of with an outline planning application, (i.e. they can be 'reserved' for later determination).</p>
+        <p>Materials information (materials, decoration, lightning, colour and texture) is one of those aspects of a proposed development which an applicant can choose not to submit details of with an planning application, (i.e. they can be 'reserved' for later determination).</p>
         <p>You can submit an <a href="#">Approval of conditions</a> later on when you define the materials of your proposal. That will require the applicant to submit a new planning application and to pay a fee.</p>
       </div>
 
@@ -38,7 +38,7 @@
 					</div>
 
           <div class="govuk-radios__item">
-						<input class="govuk-radios__input" id="work-started-3" name="work-started" type="radio" value="test" v-model="materials">
+						<input class="govuk-radios__input" id="work-started-3" name="work-started" type="radio" value="dont-know" v-model="materials">
 						<label class="govuk-label govuk-radios__label" for="work-started-3">
 							You don’t know yet which materials are going to be used. You will submit an Approval of conditions later on.
 						</label>
@@ -70,7 +70,7 @@ export default {
   },
 	methods: {
     navigate() {
-      if (this.materials === 'Yes') {
+      if (this.materials === 'Yes' || this.materials === 'dont-know') {
         router.push({ name: 'SupportingDocumentation' });
       } else {
         router.push({ name: 'MaterialsStep1' });

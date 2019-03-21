@@ -16,53 +16,45 @@
 
         <div class="govuk-checkboxes">
           <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="proposal-1" name="proposal" type="checkbox" value="Satellite dish or antenna" v-model="selectedProposal">
-            <label class="govuk-label govuk-checkboxes__label" for="proposal-1">
+            <input class="govuk-checkboxes__input" id="equipment-1" name="equipment-1" type="checkbox" value="Satellite dish or antenna" v-model="selectedProposal">
+            <label class="govuk-label govuk-checkboxes__label" for="equipment-1">
               <strong>Satellite dish or antenna</strong>
             </label>
           </div>
 
           <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="proposal-4" name="proposal" type="checkbox" value="Confirmation of use" v-model="selectedProposal">
-            <label class="govuk-label govuk-checkboxes__label" for="proposal-4">
+            <input class="govuk-checkboxes__input" id="equipment-2" name="equipment-2" type="checkbox" value="Confirmation of use" v-model="selectedProposal">
+            <label class="govuk-label govuk-checkboxes__label" for="equipment-2">
               <strong>Air conditioning unit</strong>
             </label>
           </div>
 
           <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="proposal-7" name="proposal" type="checkbox" value="Tank" v-model="selectedProposal">
-            <label class="govuk-label govuk-checkboxes__label" for="proposal-7">
+            <input class="govuk-checkboxes__input" id="equipment-3" name="equipment-3" type="checkbox" value="Tank" v-model="selectedProposal">
+            <label class="govuk-label govuk-checkboxes__label" for="equipment-3">
               <strong>Tank</strong>
             </label>
           </div>
 
 
           <div v-if="isInConservationArea">
-            <div class="govuk-warning-text">
-              <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-              <strong class="govuk-warning-text__text">
-                <span class="govuk-warning-text__assistive">Warning</span>
-                Because your site is in a conservation area, the following equipment installation, replacement or alteration also requires planning permission.
-              </strong>
-            </div>
-
             <div class="govuk-checkboxes__item" v-if="isInConservationArea">
-              <input class="govuk-checkboxes__input" id="equipment-1" name="equipment-1" type="checkbox" value="CCTV" v-model="selectedEquipment">
-              <label class="govuk-label govuk-checkboxes__label" for="equipment-1">
+              <input class="govuk-checkboxes__input" id="equipment-4" name="equipment-4" type="checkbox" value="CCTV" v-model="selectedEquipment">
+              <label class="govuk-label govuk-checkboxes__label" for="equipment-4">
                 CCTV
               </label>
             </div>
 
             <div class="govuk-checkboxes__item" v-if="isInConservationArea">
-              <input class="govuk-checkboxes__input" id="equipment-4" name="equipment-4" type="checkbox" value="Security alarm" v-model="selectedEquipment">
-              <label class="govuk-label govuk-checkboxes__label" for="equipment-4">
+              <input class="govuk-checkboxes__input" id="equipment-5" name="equipment-5" type="checkbox" value="Security alarm" v-model="selectedEquipment">
+              <label class="govuk-label govuk-checkboxes__label" for="equipment-5">
                 Security alarm
               </label>
             </div>
 
             <div class="govuk-checkboxes__item" v-if="isInConservationArea">
-              <input class="govuk-checkboxes__input" id="equipment-3" name="equipment-3" type="checkbox" value="Solar panel" v-model="selectedEquipment">
-              <label class="govuk-label govuk-checkboxes__label" for="equipment-3">
+              <input class="govuk-checkboxes__input" id="equipment-6" name="equipment-6" type="checkbox" value="Solar panel" v-model="selectedEquipment">
+              <label class="govuk-label govuk-checkboxes__label" for="equipment-6">
                 Solar panel or other sustainable energy equipment
               </label>
             </div>

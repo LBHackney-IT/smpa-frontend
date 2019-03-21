@@ -11,14 +11,6 @@
           </h2>
         </legend>
 
-        <div class="govuk-warning-text">
-          <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-          <strong class="govuk-warning-text__text">
-            <span class="govuk-warning-text__assistive">Warning</span>
-            You must describe all permitted developments that require planning permission.
-          </strong>
-        </div>
-
         <span id="proposal-hint" class="govuk-hint">
           Select all that apply.
         </span>
@@ -50,7 +42,7 @@
           <div class="govuk-checkboxes__item">
             <input class="govuk-checkboxes__input" id="proposal-4" name="proposal" type="checkbox" value="extension_gates_fences_etc" v-model="selectedProposal">
             <label class="govuk-label govuk-checkboxes__label" for="proposal-4">
-              <strong>You are making changes to gates, fences, garden walls, etc.</strong>
+              <strong>You are making changes to gates, fences, garden walls, boundary treatments etc.</strong>
               <div class="govuk-inset-text">
                 <p class="govuk-body govuk-!-font-weight-bold">Example</p>
                 Installation of gate and railings atop a brick, front and side boundary wall.
