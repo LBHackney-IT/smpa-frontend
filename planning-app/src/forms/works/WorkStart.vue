@@ -138,7 +138,6 @@
 				:isRequired="hasWorkStarted">
 			</v-text-area>
 		</div>
-
 		<v-cta name="Next" :onClick="navigate"></v-cta>
 	</div>
 </template>

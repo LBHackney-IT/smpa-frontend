@@ -33,6 +33,7 @@
         <textarea class="govuk-textarea" id="more-detail" name="more-detail" rows="5" aria-describedby="more-detail-hint"></textarea>
       </div>
     </div>
+    <free-description></free-description>
 		<v-cta name="Continue" :onClick="navigate"></v-cta>
 	</div>
 </template>
@@ -41,11 +42,13 @@
 import vCta from '../../components/Cta.vue';
 import router from '../../router';
 import Navigate from '../../common/navigate';
+import FreeDescription from '../../components/FreeDescription.vue';
 
 export default {
 	name: 'Outbuilding',
 	components: {
-    vCta
+    vCta,
+    FreeDescription
   },
   created () {
     this.fetchData();

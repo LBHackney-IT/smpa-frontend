@@ -26,6 +26,7 @@
         </div>
 			</fieldset>
 		</div>
+    <free-description></free-description>
 		<v-cta name="Continue" :onClick="navigate"></v-cta>
 	</div>
 </template>
@@ -35,12 +36,14 @@ import vCta from '../../components/Cta.vue';
 import router from '../../router';
 import WarningMessage from '../../components/WarningMessage.vue';
 import Navigate from '../../common/navigate';
+import FreeDescription from '../../components/FreeDescription.vue';
 
 export default {
 	name: 'BikeParkingSpaces',
 	components: {
     vCta,
-    WarningMessage
+    WarningMessage,
+    FreeDescription
 	},
 	data () {
     return {

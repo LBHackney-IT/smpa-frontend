@@ -54,6 +54,7 @@
         </div>
       </fieldset>
     </div>
+    <free-description></free-description>
 		<v-cta name="Next" :onClick="navigate"></v-cta>
     <!-- <review-works></review-works> -->
 	</div>
@@ -64,13 +65,15 @@ import vCta from '../../components/Cta.vue';
 import router from '../../router';
 import WarningMessage from '../../components/WarningMessage.vue';
 import reviewWorks from './reviewWorks.vue';
+import FreeDescription from '../../components/FreeDescription.vue';
 
 export default {
 	name: 'AboutDevelopment',
 	components: {
     vCta,
     WarningMessage,
-    reviewWorks
+    reviewWorks,
+    FreeDescription
   },
   data () {
     return {

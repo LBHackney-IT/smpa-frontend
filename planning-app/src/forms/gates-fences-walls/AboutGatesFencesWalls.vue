@@ -48,6 +48,7 @@
         </div>
       </fieldset>
     </div>
+    <free-description></free-description>
 		<v-cta name="Continue" :onClick="navigate"></v-cta>
 	</div>
 </template>
@@ -56,11 +57,13 @@
 import vCta from '../../components/Cta.vue';
 import router from '../../router';
 import Navigate from '../../common/navigate';
+import FreeDescription from '../../components/FreeDescription.vue';
 
 export default {
 	name: 'AboutGatesFencesWalls',
 	components: {
-    vCta
+    vCta,
+    FreeDescription
   },
   data () {
     return {

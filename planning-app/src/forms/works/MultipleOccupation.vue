@@ -23,6 +23,7 @@
 				</div>
 			</fieldset>
 		</div>
+		<free-description></free-description>
 		<v-cta name="Next" :onClick="navigate"></v-cta>
 
 		<!-- <review-works></review-works> -->
@@ -33,12 +34,14 @@
 import vCta from '../../components/Cta.vue';
 import router from '../../router';
 import reviewWorks from './reviewWorks.vue';
+import FreeDescription from '../../components/FreeDescription.vue';
 
 export default {
 	name: 'MultipleOccupation',
 	components: {
 		vCta,
-		reviewWorks
+		reviewWorks,
+		FreeDescription
 	},
 	data () {
     return {

@@ -74,6 +74,7 @@
         </div>
       </fieldset>
     </div>
+    <free-description></free-description>
 		<v-cta name="Continue" :onClick="navigate"></v-cta>
     <!-- <review-works></review-works> -->
 	</div>
@@ -83,12 +84,14 @@
 import vCta from '../../components/Cta.vue';
 import router from '../../router';
 import reviewWorks from './reviewWorks.vue';
+import FreeDescription from '../../components/FreeDescription.vue';
 
 export default {
 	name: 'AboutProposal',
 	components: {
     vCta,
-    reviewWorks
+    reviewWorks,
+    FreeDescription
   },
   data () {
     return {
