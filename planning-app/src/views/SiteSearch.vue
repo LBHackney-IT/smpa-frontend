@@ -122,7 +122,6 @@
         })
       },
 			navigate() {
-        debugger;
         if (this.selected.usageClassCode == 'RD02' || this.selected.usageClassCode == 'RD03' || this.selected.usageClassCode == 'RD04' || this.selected.usageClassCode == 'RD') {
           this.$store.commit('setSite', JSON.parse(JSON.stringify(this.selected)));
           router.push({ name: 'SiteDetails', params: { selectedAddress: this.selected} });
