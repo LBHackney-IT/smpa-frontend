@@ -1,49 +1,50 @@
 <template>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <h1 class="govuk-heading-xl">Search site</h1>
+      <h1 class="govuk-heading-xl" v-if="serviceAvailable">Search site</h1>
+      <h1 class="govuk-heading-xl" v-if="!serviceAvailable">Sorry, this service is not available for this property</h1>
 
 			<div class="govuk-form-group" v-if="!hasResults && !loading">
-				<label class="govuk-label" for="postcode">
+				<label class="govuk-label govuk-!-font-weight-bold" for="postcode">
 					Enter postcode
 				</label>
-				<input class="govuk-input govuk-!-width-one-quarter govuk-radios--inline" id="postcode" name="postcode" type="text" v-model="postcode">
+				<input class="govuk-input govuk-!-width-one-quarter govuk-radios--inline govuk-!-margin-right-5" id="postcode" name="postcode" type="text" v-model="postcode" v-on:input="reset">
         <v-cta name="Find address" :onClick="getPostcode"></v-cta>
 
-        <div v-if="error && !loading">
-          There has been an error. Please try again.
+        <div v-if="error && !loading" class="govuk-inset-text govuk-inset-text--error ">
+          {{ errorMessage }}
         </div>
 			</div>
 
-
-      <div v-if="hasZeroResults && !loading">
+      <div v-if="hasZeroResults && !loading" class="govuk-inset-text govuk-inset-text--error ">
         There are no results matching your search term. Please try again.
       </div>
 
 
-      <div v-if="loading">
-        <p>Postcode</p>
-        <p>{{postcode}}</p>
 
-        <p>Loading results...</p>
+      <div v-if="hasResults && !loading || loading">
+        <p class="govuk-!-font-weight-bold">Postcode</p>
+        <p class="govuk-!-font-weight-bold">
+          <span>{{postcode}}</span>
+          <button class="govuk-link govuk-!-margin-left-5" v-on:click="reset">Change</button>
+        </p>
       </div>
 
-      <div v-if="hasResults && !loading">
-        <p>Postcode</p>
-        <p>{{postcode}}</p>
+      <p v-if="loading">Loading results...</p>
 
-        <label class="govuk-label" for="address">
-          Select an address
-        </label>
+      <p v-if="!loading && !serviceAvailable">If you are proposing works to a flat you need to apply for full planning permission. This service is still in development. Please submit your application using <a href="https://www.planningportal.co.uk/">Planning Portal</a>.</p>
 
-        <select v-model="selected" id="address">
-          <option v-for="address in this.addressesResponse.address" v-bind:value="address" v-bind:key="address.uprn">
-            {{ address.line1 }} {{ address.line2 }} {{ address.line3 }}
-          </option>
-        </select>
-
-        <br/>
-
+      <div v-if="hasResults && !loading && serviceAvailable">
+        <div class="govuk-form-group">
+          <label class="govuk-label" for="address">
+            Select an address
+          </label>
+          <select class="govuk-select" name="address" v-model="selected" id="address">
+            <option v-for="address in this.addressesResponse.address" v-bind:value="address" v-bind:key="address.uprn">
+              {{ address.line1 }} {{ address.line2 }} {{ address.line3 }}
+            </option>
+          </select>
+        </div>
         <v-cta name="Continue" :onClick="navigate"></v-cta>
       </div>
     
@@ -56,6 +57,9 @@
   import router from '../router';
   import axios from 'axios';
 
+  const CancelToken = axios.CancelToken;
+  let cancel;
+
 	export default {
 		name: 'SiteSearch',
 		components: {
@@ -67,11 +71,28 @@
         loading: false,
         addressesResponse: {},
         error: false,
-        selected: ''
+        errorMessage: '',
+        selected: '',
+        serviceAvailable: true
 			}
 		},
 		methods: {
+      reset() {
+        if (this.loading) {
+          cancel();
+        }
+        this.error = false;
+        this.addressesResponse = {};
+        this.serviceAvailable = true;
+        this.selected = {};
+      },
       getPostcode() {
+        if (this.postcode.trim() === '') {
+          this.error = true;
+          this.errorMessage = 'Postcode is empty. Please try again.';
+          return;  
+        }
+
         this.loading = true;
         const api = "https://g6bw0g0ojk.execute-api.eu-west-2.amazonaws.com/staging/address/api/v1/addresses/";
         const token = process.env.VUE_APP_ADDRESSAPITOKEN;
@@ -82,7 +103,11 @@
           params: {
             'PostCode': this.postcode,
             'Format': 'Detailed'
-          }
+          },
+          cancelToken: new CancelToken(function executor(c) {
+            // An executor function receives a cancel function as a parameter
+            cancel = c;
+          })
         })
         .then(response => {
           this.loading = false;
@@ -90,20 +115,21 @@
         })
         .catch(error => {
           this.error = true;
-          console.log('error', error);
+          this.errorMessage = 'There has been an error. Please try again.';
         })
         .finally(() => { 
           this.loading = false
         })
       },
 			navigate() {
-        this.$store.commit('setSite', JSON.parse(JSON.stringify(this.selected)));
-
-        //todo check if site id is still necessary at this point. random number for mocking purposes
-        const randomNumber = parseInt((Math.random() * 10000000) + 1);
-
-        router.push({ name: 'SiteDetails', params: { siteId: randomNumber, selectedAddress: this.selected} });
-				}
+        debugger;
+        if (this.selected.usageClassCode == 'RD02' || this.selected.usageClassCode == 'RD03' || this.selected.usageClassCode == 'RD04' || this.selected.usageClassCode == 'RD') {
+          this.$store.commit('setSite', JSON.parse(JSON.stringify(this.selected)));
+          router.push({ name: 'SiteDetails', params: { selectedAddress: this.selected} });
+        } else {
+          this.serviceAvailable = false;
+        }
+      }
     },
     computed: {
       hasZeroResults () {
