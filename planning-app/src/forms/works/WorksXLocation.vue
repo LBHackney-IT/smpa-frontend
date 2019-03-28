@@ -38,7 +38,7 @@
             </label>
           </div>
 
-          <div class="govuk-checkboxes__item" v-if="this.currentWorks.proposalName !== 'Basement'">
+          <div class="govuk-checkboxes__item" v-if="this.currentWorks.proposalId === 'extension_original_house_single_storey_extension' || this.currentWorks.proposalId === 'extension_original_house_two_storey_extension' || this.currentWorks.proposalId === 'extension_original_house_part_single_part_two_storey_extension'">
             <input class="govuk-checkboxes__input" id="proposal-4" name="proposal" type="checkbox" value="Wrap-around" v-model="selectedProposal">
             <label class="govuk-label govuk-checkboxes__label" for="proposal-4">
               <strong>Rear / side wrap-around</strong>

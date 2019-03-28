@@ -1,7 +1,7 @@
 <template>
 	<div>
     <h1 class="govuk-heading-xl">
-      About the surroundings: Trees and hedges
+      About the trees and hedges
     </h1>
 
     <div class="govuk-body">
@@ -23,7 +23,7 @@
 			<fieldset class="govuk-fieldset" aria-describedby="trees-question-1-hint">
 				<legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
 				<h4 class="govuk-heading-s">
-					Considering the requirements mentioned above, are there any trees or hedges inside the boundary of the site?
+					Considering the requirements mentioned above, are there any trees or hedges inside the site boundary?
 				</h4>
 				</legend>
 				<div class="govuk-radios govuk-radios--inline">
@@ -78,7 +78,7 @@
       <fieldset class="govuk-fieldset govuk-!-margin-top-9" aria-describedby="trees-question-2-hint">
 				<legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
           <h4 class="govuk-heading-s">
-            Are there any other trees or hedges within 5 metres (5m) from the site boundary to the proposed works?
+            Are there any other trees or hedges within 5 metres of the site boundary to the proposed works?
           </h4>
 				</legend>
 
@@ -101,16 +101,10 @@
 					</div>
 				</div>
 
-        <div class="govuk-inset-text" v-if="questionThree">
-          <p>
-            You might need to submit a <a href="#">Tree Survey</a>
-          </p>
-      </div>
-
 			</fieldset>
 
 		</div>
-		<v-cta name="Next" :onClick="navigate"></v-cta>
+		<v-cta name="Continue" :onClick="navigate"></v-cta>
 	</div>
 </template>
 

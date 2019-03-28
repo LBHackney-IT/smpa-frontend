@@ -1,7 +1,7 @@
 <template>
 	<div>
     <h1 class="govuk-heading-xl">
-      About the improvement or alteration to means of access to the site
+      About the site access
     </h1>
 		<div class="govuk-form-group">
 			<fieldset class="govuk-fieldset" aria-describedby="trees-question-1-hint">
@@ -57,7 +57,7 @@ export default {
       alterationToAccess: '',
       typeOfAlteration: '',
       currentWorks: undefined,
-      warningMessage: 'Any public footpath that crosses or adjoins the site, or is affected, must be shown clearly on the plans. This includes any proposals that may require a closure or diversion.'
+      warningMessage: 'Any public footpath affected by the site must be shown on the plans. This includes temporary closures or diversions.'
     }
   },
   created () {

@@ -19,10 +19,10 @@
             <input class="govuk-checkboxes__input" id="proposal-1" name="proposal" type="checkbox" value="proposal_extension" v-model="selectedProposal">
             <label class="govuk-label govuk-checkboxes__label" for="proposal-1">
               <strong>You are doing an extension or alteration</strong>
-              <p>Enlarging, changing or adding to any aspect of a house, such as an extension or an outbuilding. This also includes all general alterations like rooflights or new windows.</p>
+              <p>Enlarging, changing or adding to any aspect of a house, such as an extension or building an outbuilding. This also includes all general alterations like rooflights, gates or new windows.</p>
               <div class="govuk-inset-text">
                 <p class="govuk-body govuk-!-font-weight-bold">Example</p>
-                A single-storey, ground floor, rear extension.
+                A single-storey ground floor rear extension.
               </div>
             </label>
           </div>
@@ -31,14 +31,14 @@
             <input class="govuk-checkboxes__input" id="proposal-7" name="proposal" type="checkbox" value="proposal_equipment" v-model="selectedProposal">
             <label class="govuk-label govuk-checkboxes__label" for="proposal-7">
               <strong>You are installing or replacing an equipment</strong>
-              <p>The installation, alteration or replacement of equipment on a house or within the curtilage of a house. This may include an satellite dish, CCTV or a solar panel.</p>
+              <p>The installation, alteration or replacement of equipment on a house or within the curtilage of a house. This may include a satellite dish, CCTV or a solar panel.</p>
             </label>
           </div>
         </div>
       </fieldset>
     </div>
     <free-description></free-description>
-		<v-cta name="Next" :onClick="navigate"></v-cta>
+		<v-cta name="Continue" :onClick="navigate"></v-cta>
     <!-- <review-works></review-works> -->
 	</div>
 </template>

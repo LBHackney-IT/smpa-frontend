@@ -34,7 +34,7 @@
           <div class="govuk-checkboxes__item">
             <input class="govuk-checkboxes__input" id="proposal-3" name="proposal" type="checkbox" value="Creation of a mansard styled roof extension" v-model="selectedProposal">
             <label class="govuk-label govuk-checkboxes__label" for="proposal-3">
-              <strong>Creation of a mansard styled roof extension</strong>
+              <strong>Addition of a mansard styled roof extension</strong>
             </label>
           </div>
 
@@ -55,14 +55,14 @@
           <div class="govuk-checkboxes__item">
             <input class="govuk-checkboxes__input" id="proposal-6" name="proposal" type="checkbox" value="Alteration of a roof slope" v-model="selectedProposal">
             <label class="govuk-label govuk-checkboxes__label" for="proposal-6">
-              <strong>Alteration of a roof slope</strong>
+              <strong>Alteration of a roof slope or roof structure</strong>
             </label>
           </div>
 
           <div class="govuk-checkboxes__item">
             <input class="govuk-checkboxes__input" id="proposal-7" name="proposal" type="checkbox" value="Replacement of a roof structure and/or covering" v-model="selectedProposal">
             <label class="govuk-label govuk-checkboxes__label" for="proposal-7">
-              <strong>Replacement of a roof structure and/or covering</strong>
+              <strong>Replacement of a roof covering</strong>
             </label>
           </div>
 

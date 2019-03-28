@@ -1,7 +1,7 @@
 <template>
 	<div>
     <h1 class="govuk-heading-xl">
-      About adding or removing bike parking spaces
+      About bike parking spaces
     </h1>
 		<div class="govuk-form-group">
 			<fieldset class="govuk-fieldset" aria-describedby="trees-question-1-hint">
@@ -13,14 +13,14 @@
 
 				<div class="govuk-form-group">
           <label class="govuk-label" for="name">
-            Current number of bike parking spaces.
+            Current number of bike parking spaces
           </label>
           <input class="govuk-input" id="name" name="name" type="number">
         </div>
 
         <div class="govuk-form-group">
           <label class="govuk-label" for="name">
-            Total number of bike parking spaces after completion.
+            Total number of bike parking spaces after completion
           </label>
           <input class="govuk-input" id="name" name="name" type="number">
         </div>

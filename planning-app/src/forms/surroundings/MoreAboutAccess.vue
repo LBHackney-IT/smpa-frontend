@@ -1,13 +1,17 @@
 <template>
 	<div>
-    <h1 class="govuk-heading-xl">
-      About the {{ type }}
+    <h1 class="govuk-heading-xl" v-if="this.type === 'vehicle' || this.type === 'pedestrian'">
+      About the {{ type }} access
+    </h1>
+
+    <h1 class="govuk-heading-xl" v-if="this.type === 'both'">
+      About the vehicle and pedestrian access
     </h1>
 		<div class="govuk-form-group">
       <fieldset class="govuk-fieldset" aria-describedby="proposal-hint">
         <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
           <h2 class="govuk-heading-m">
-            Would the proposed works affect access to the site for vehicles, cycles, and/or pedestrians?
+            What changes are you proposing?
           </h2>
         </legend>
 
@@ -34,14 +38,14 @@
           <div class="govuk-checkboxes__item">
             <input class="govuk-checkboxes__input" id="proposal-3" name="proposal" type="checkbox" value="Improve disabled access" v-model="selectedProposal">
             <label class="govuk-label govuk-checkboxes__label" for="proposal-3">
-              <strong>Improve disabled access</strong>
+              <strong>Addition of disabled access</strong>
             </label>
           </div>
 
           <div class="govuk-checkboxes__item" v-if="this.type === 'vehicle' || this.type === 'both'">
-            <input class="govuk-checkboxes__input" id="proposal-4" name="proposal" type="checkbox" value="Improve disabled access" v-model="selectedProposal">
+            <input class="govuk-checkboxes__input" id="proposal-4" name="proposal" type="checkbox" value="Vehicle access" v-model="selectedProposal">
             <label class="govuk-label govuk-checkboxes__label" for="proposal-4">
-              <strong>Dropped kerb and formation of vehicular access</strong>
+              <strong>Dropped kerb and formation of vehicle access</strong>
             </label>
           </div>
         </div>

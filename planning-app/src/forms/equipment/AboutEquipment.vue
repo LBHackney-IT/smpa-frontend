@@ -6,9 +6,9 @@
 		<div class="govuk-form-group">
       <fieldset class="govuk-fieldset" aria-describedby="proposal-hint">
         <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
-          <p class="govuk-body govuk-!-font-size-27">
-            You need to specify what equipment you are installing.
-          </p>
+          <h2 class="govuk-heading-m">
+            What changes are you proposing?
+          </h2>
         </legend>
         <span id="proposal-hint" class="govuk-hint">
           Select all that apply.
@@ -18,7 +18,7 @@
           <div class="govuk-checkboxes__item">
             <input class="govuk-checkboxes__input" id="equipment-1" name="equipment-1" type="checkbox" value="Satellite dish or antenna" v-model="selectedProposal">
             <label class="govuk-label govuk-checkboxes__label" for="equipment-1">
-              <strong>Satellite dish or antenna</strong>
+              <strong>Satellite dish</strong>
             </label>
           </div>
 
@@ -41,21 +41,21 @@
             <div class="govuk-checkboxes__item" v-if="isInConservationArea">
               <input class="govuk-checkboxes__input" id="equipment-4" name="equipment-4" type="checkbox" value="CCTV" v-model="selectedEquipment">
               <label class="govuk-label govuk-checkboxes__label" for="equipment-4">
-                CCTV
+                <strong>CCTV</strong>
               </label>
             </div>
 
             <div class="govuk-checkboxes__item" v-if="isInConservationArea">
               <input class="govuk-checkboxes__input" id="equipment-5" name="equipment-5" type="checkbox" value="Security alarm" v-model="selectedEquipment">
               <label class="govuk-label govuk-checkboxes__label" for="equipment-5">
-                Security alarm
+                <strong>Security alarm</strong>
               </label>
             </div>
 
             <div class="govuk-checkboxes__item" v-if="isInConservationArea">
               <input class="govuk-checkboxes__input" id="equipment-6" name="equipment-6" type="checkbox" value="Solar panel" v-model="selectedEquipment">
               <label class="govuk-label govuk-checkboxes__label" for="equipment-6">
-                Solar panel or other sustainable energy equipment
+                <strong>Solar panel or other sustainable energy equipment</strong>
               </label>
             </div>
           </div>

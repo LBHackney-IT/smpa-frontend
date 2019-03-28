@@ -1,13 +1,13 @@
 <template>
 	<div>
     <h1 class="govuk-heading-xl">
-      About electrical vehicles (EV) charging points
+      About electrical vehicles charging points
     </h1>
 		<div class="govuk-form-group">
 			<fieldset class="govuk-fieldset" aria-describedby="trees-question-1-hint">
 
         <div class="purpose-message govuk-body">
-          <strong>Purpose message</strong>. Explanation on what we are collecting this data. Reminder that this is not bidding
+          This data is being collected to inform and monitor London wide development. Your responses will not influence the decision making process.
         </div>
 				<legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
           <h2 class="govuk-heading-m">

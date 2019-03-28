@@ -10,8 +10,7 @@
 				</legend>
 
 				<div class="govuk-inset-text">
-					If you have made a change to your property that requires planning permission and you have not had approval, Hackney Council can request that you submit a retrospective planning application for the work that you have already carried out.
-					Although a planning application is asked to be submitted, it does not mean that planning permission will automatically be granted and the application will be treated in the usual way. 
+					If you have made a change to your property that requires planning permission and you have not had approval, Hackney Council can request that you submit a retrospective application. This does not mean that planning permission will automatically be granted and the application will be treated in the usual way.
 				</div>
 				<div class="govuk-radios govuk-radios--inline">
 					<div class="govuk-radios__item">
@@ -138,7 +137,7 @@
 				:isRequired="hasWorkStarted">
 			</v-text-area>
 		</div>
-		<v-cta name="Next" :onClick="navigate"></v-cta>
+		<v-cta name="Continue" :onClick="navigate"></v-cta>
 	</div>
 </template>
 

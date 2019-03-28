@@ -6,7 +6,7 @@ export const state = {
   proposalMap: {
     proposal: [
       {
-        proposalName: "Extension, improvement or alteration",
+        proposalName: "Extension or alteration",
         proposalId: "proposal_extension",
         goTo: ["AboutProposal"]
       },
@@ -23,7 +23,7 @@ export const state = {
         goTo: ["AboutChangesToOriginalHouse"]
       },
       {
-        proposalName: "To any incidental buildings",
+        proposalName: "Outbuilding",
         proposalId: "extension_incidental_buildings",
         goTo: ["WorksXLocation", "Outbuilding"]
       },
