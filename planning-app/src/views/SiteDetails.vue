@@ -4,7 +4,9 @@
       <div class="govuk-grid-column-two-thirds">
         <h1 class="govuk-heading-xl">Your site details</h1>
 
-        <table class="govuk-table govuk-!-margin-bottom-9">
+        <p v-if="loading">Loading...</p>
+
+        <table class="govuk-table govuk-!-margin-bottom-9" v-if="!loading && selectedAddress">
           <caption class="govuk-table__caption">This is the information we currently hold about the selected address:</caption>
           <tbody class="govuk-table__body">
             <tr class="govuk-table__row">
@@ -20,56 +22,57 @@
               <td class="govuk-table__cell">{{selectedAddress.easting}}, {{selectedAddress.northing}}</td>
             </tr>
             <tr class="govuk-table__row">
-              <th class="govuk-table__header" scope="row">Property type:</th>
+              <th class="govuk-table__header" scope="row">Property type</th>
               <td class="govuk-table__cell">{{selectedAddress.usageClassDescription}}</td>
             </tr>
             <tr class="govuk-table__row">
-              <th class="govuk-table__header" scope="row">Use class:</th>
+              <th class="govuk-table__header" scope="row">BLPU classification</th>
               <td class="govuk-table__cell">{{selectedAddress.usageClassCode}}</td>
             </tr>
           </tbody>
         </table>
 
+
         <div class="map govuk-!-margin-bottom-9" id="map"></div>
 
-        <table class="govuk-table govuk-!-margin-bottom-9">
-          <caption class="govuk-table__caption">The following are particular planning considerations that you might want to know to carry on with your proposal</caption>
+        <table class="govuk-table govuk-!-margin-bottom-9" v-if="!loading && site">
+          <caption class="govuk-table__caption govuk-!-font-weight-regular">The following are particular planning considerations that you might want to know to carry on with your proposal</caption>
           <tbody class="govuk-table__body">
             <tr class="govuk-table__row">
               <th class="govuk-table__header" scope="row">Conservation area</th>
               <td class="govuk-table__cell">
-                <span v-if="this.geoJson.features[0].properties.nb_conarea > 0">{{this.geoJson.features[0].properties.conarea_name }}</span>
+                <span v-if="site.properties.nb_conarea > 0">{{site.properties.conarea_name }}</span>
               </td>
             </tr>
             <tr class="govuk-table__row">
               <th class="govuk-table__header" scope="row">Listed building</th>
               <td class="govuk-table__cell">
-                <span v-if="parseInt(this.geoJson.features[0].properties.is_listed_building) > 0">Yes</span>
-                <span v-if="parseInt(this.geoJson.features[0].properties.is_listed_building) === 0">No</span>
+                <span v-if="parseInt(site.properties.is_listed_building) > 0">Yes</span>
+                <span v-if="parseInt(site.properties.is_listed_building) === 0">No</span>
               </td>
             </tr>
             <tr class="govuk-table__row">
-              <th class="govuk-table__header" scope="row">Article 4 Directions:</th>
+              <th class="govuk-table__header" scope="row">Article 4 Directions</th>
               <td class="govuk-table__cell">
-                <span v-if="this.geoJson.features[0].properties.nb_a4d > 0">{{this.geoJson.features[0].properties.a4d_name }}</span>
+                <span v-if="site.properties.nb_a4d > 0">{{site.properties.a4d_name }}</span>
               </td>
             </tr>
-            <tr class="govuk-table__row">
-              <th class="govuk-table__header" scope="row">Climate change and environmental sustainability:</th>
+            <tr class="govuk-table__row" v-if="parseInt(site.properties.is_floodzone_2) > 0 || parseInt(site.properties.is_floodzone_3a) > 0 || parseInt(site.properties.is_floodzone_3b) > 0 ">
+              <th class="govuk-table__header" scope="row">Climate change and environmental sustainability</th>
               <td class="govuk-table__cell">
-                <span v-if="parseInt(this.geoJson.features[0].properties.is_floodzone_2) > 0">Flood Zone 2</span>
-                <span v-if="parseInt(this.geoJson.features[0].properties.is_floodzone_3a) > 0">Flood Zone 3a</span>
-                <span v-if="parseInt(this.geoJson.features[0].properties.is_floodzone_3b) > 0">Flood Zone 3b</span>
-                <span v-if="parseInt(this.geoJson.features[0].properties.is_floodzone_2) === 0 && parseInt(this.geoJson.features[0].properties.is_floodzone_3a) === 0 && parseInt(this.geoJson.features[0].properties.is_floodzone_3b) === 0 ">None</span>
+                <span v-if="parseInt(site.properties.is_floodzone_2) > 0">Flood Zone 2</span>
+                <span v-if="parseInt(site.properties.is_floodzone_3a) > 0">Flood Zone 3a</span>
+                <span v-if="parseInt(site.properties.is_floodzone_3b) > 0">Flood Zone 3b</span>
               </td>
             </tr>
           </tbody>
         </table>
 
-        </div>
+        <v-cta name="Continue" :onClick="navigate" v-if="!loading"></v-cta>
+      </div>
 
-        <div class="govuk-grid-column-one-third">
-        </div>
+      <div class="govuk-grid-column-one-third">
+      </div>
     </div>
   </div>
 </template>
@@ -93,6 +96,7 @@
     data() {
       return { 
         loading: false,
+        loadingMap: false,
         geoJson: {}
       };
     },
@@ -104,6 +108,7 @@
     },
     mounted() {
         this.loading = true;
+
         const api = "https://map.hackney.gov.uk/geoserver/wfs?REQUEST=GetFeature&TYPENAME=llpg:lu_blpu_planning_constraint&SRSNAME=EPSG:4326&outputFormat=json&cql_filter=uprn=" + this.selectedAddress.uprn;
         axios.get(api , {})
         .then(response => {
@@ -243,14 +248,14 @@
 
         map.addLayer(statuaryListedBuildings);
 
-        var currentApplications = L.tileLayer.wms('https://map.hackney.gov.uk/geoserver/wms/', {
-            layers: 'lbhplanning:PLA_APPS_CURRENT_VW',
-            transparent: true,
-            format: 'image/png',
-            maxZoom: 20
-        });
+        // var currentApplications = L.tileLayer.wms('https://map.hackney.gov.uk/geoserver/wms/', {
+        //     layers: 'lbhplanning:PLA_APPS_CURRENT_VW',
+        //     transparent: true,
+        //     format: 'image/png',
+        //     maxZoom: 20
+        // });
 
-        map.addLayer(currentApplications);
+        // map.addLayer(currentApplications);
       },
       
       navigate() {
@@ -259,7 +264,7 @@
     },
     computed: {
       site () {
-        return this.$store.state.site;
+        return this.geoJson ? this.geoJson.features[0] : undefined;
       }
     },
   }
