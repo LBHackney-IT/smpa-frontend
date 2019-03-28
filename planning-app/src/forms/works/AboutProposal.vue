@@ -22,7 +22,7 @@
               <strong>You are making changes to the original house</strong>
               <div class="govuk-inset-text">
                 <p class="govuk-body govuk-!-font-weight-bold">Example</p>
-                Erection of a rear roof extension, installation of 2 front rooflights and re-rendering of front porch.
+                Erection of a rear roof extension, installation of a front rooflights and re-rendering of front porch.
               </div>
             </label>
           </div>
@@ -31,7 +31,7 @@
             <input class="govuk-checkboxes__input" id="proposal-2" name="proposal" type="checkbox" value="extension_incidental_buildings" v-model="selectedProposal">
             <label class="govuk-label govuk-checkboxes__label" for="proposal-2">
               <strong>You are building, replacing or removing an outbuilding</strong>
-              <p>Incidental building include garages, sheds, summerhouses and similar outbuildings, which are more than 5m away from the existing building.</p>
+              <p>Incidental building include garages, sheds, summerhouses and similar outbuildings.</p>
               <div class="govuk-inset-text">
                 <p class="govuk-body govuk-!-font-weight-bold">Example</p>
                 Erection of garden store in the rear garden and removal of an existing shed in rear garden.
@@ -45,7 +45,7 @@
               <strong>You are making changes to gates, fences, garden walls, boundary treatments etc.</strong>
               <div class="govuk-inset-text">
                 <p class="govuk-body govuk-!-font-weight-bold">Example</p>
-                Installation of gate and railings atop a brick, front and side boundary wall.
+                  Installation of a gate and railings as a side boundary wall.
               </div>
             </label>
           </div>
@@ -53,14 +53,11 @@
           <div class="govuk-checkboxes__item">
             <input class="govuk-checkboxes__input" id="proposal-7" name="proposal" type="checkbox" value="extension_means_of_access_to_site" v-model="selectedProposal">
             <label class="govuk-label govuk-checkboxes__label" for="proposal-7">
-              <strong>You are making changes to means of access to the site</strong>
-              <p>Any works that involve alteration to or creation of a new access to the public road.</p>
-              <p>
-                That applies to any proposal that may require a closure or diversion as well.
-              </p>
+              <strong>You are making changes to the site access</strong>
+              <p>Any works that involve alteration to or creation of a new access to the public road (not including temporary closures or diversions).</p>
               <div class="govuk-inset-text">
                 <p class="govuk-body govuk-!-font-weight-bold">Example</p>
-                Proposed dropped kerb & formation of vehicule access (the installation of hardstanding to provide car-parking spaces).
+                Proposed dropped kerb and formation of vehicle access.
               </div>
             </label>
           </div>
@@ -68,7 +65,7 @@
           <div class="govuk-checkboxes__item">
             <input class="govuk-checkboxes__input" id="proposal-9" name="proposal" type="checkbox" value="extension_car_bike_spaces" v-model="selectedProposal">
             <label class="govuk-label govuk-checkboxes__label" for="proposal-9">
-              <strong>You are affecting car and/or bike parking spaces</strong>
+              <strong>You are making changes to car and/or bike parking spaces</strong>
             </label>
           </div>
         </div>

@@ -5,19 +5,17 @@
     </h1>
     <h2 class="govuk-heading-l govuk-!-font-size-24">Upload a location plan</h2>
 
-    <div class="govuk-inset-text">
-      You are required to upload a new Location plan if your proposal affects the site boundary.
-
-      <div class="govuk-warning-text">
-        <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-        <strong class="govuk-warning-text__text">
-          <span class="govuk-warning-text__assistive">Warning</span>
-            If the proposed works affect any of your site boundaries, neighbours should be notified.
-        </strong>
-      </div>
-
+    <div class="govuk-warning-text">
+      <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+      <strong class="govuk-warning-text__text">
+      <span class="govuk-warning-text__assistive">Warning</span>
+        You are required to upload a new location plan if your proposal affects the site boundary or there are significant changes to the layout of the site.
+      </strong>
     </div>
     <!-- <warning-message :message="locationPlanMessage" v-bind:typeAlert="false"></warning-message> -->
+
+
+    <p class=" govuk-!-font-size-19">This is the location plan we currently hold about the selected address:</p>
 
     <div v-if="hasPostcode" class="govuk-!-margin-bottom-9">
       <img class="location" v-if="hasPostcode === 'N16 8ED'" src="../../assets/img/not_conservation_area.png" alt="Map view of the site" />
@@ -33,20 +31,20 @@
 					<div class="govuk-radios__item">
 						<input class="govuk-radios__input" id="location-map-1" name="location-map" type="radio" value="Yes" v-model="useMapDisplayed">
 						<label class="govuk-label govuk-radios__label" for="location-map-1">
-							Use the map displayed above as a location plan
+							The location plan above reflects your proposed works
 						</label>
 					</div>
 					<div class="govuk-radios__item">
 						<input class="govuk-radios__input" id="location-map-2" name="location-map" type="radio" value="No" v-model="useMapDisplayed">
 						<label class="govuk-label govuk-radios__label" for="location-map-2">
-							Upload a new location map
+							Upload your new location plan
 						</label>
 					</div>
 				</div>
         <div class="govuk-inset-text" v-if="useMapDisplayed === 'No'">
           <div class="govuk-form-group">
             <label class="govuk-label" for="file-upload-1">
-              Add a location plan
+              Upload a location plan
             </label>
             <input class="govuk-file-upload" id="file-upload-1" name="file-upload-1" type="file">
           </div>

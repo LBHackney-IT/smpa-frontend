@@ -1,12 +1,10 @@
 <template>
 	<div>
     <h1 class="govuk-heading-xl">
-      More about the floor area added
+      About the bedrooms
     </h1>
 
-    <p class="govuk-body govuk-!-font-size-27 govuk-!-margin-bottom-8 govuk-!-margin-top-8">This step is optional, you can <router-link :to="{ name: 'Trees'}">skip it</router-link>.</p>
-
-    <p>This data is being collected to inform and monitor London wide development. Your responses will not influence the decision making process.</p>
+    <div class="purpose-message govuk-body">This data is being collected to inform and monitor London wide development. Your responses will not influence the decision making process.</div>
 
 		<div class="govuk-form-group">
       <fieldset class="govuk-fieldset" aria-describedby="proposal-hint">
@@ -17,17 +15,18 @@
         </legend>
 
         <div class="govuk-inset-text">
-          <p class="govuk-body govuk-!-font-weight-bold">Definition</p>
-          <p>According to the Policy D4 Housing quality and standards of the London Plan for the Greater London area:</p>
-          
+          <p class="govuk-body govuk-!-font-weight-bold">Definition*</p>
           <ul>
             <li>
-              A one bedspace single bedroom must have a floor area of at least 7.5 sqm and be at least 2.15m wide.
+              A single bedroom must have a floor area of at least 7.5 sqm and be at least 2.15m wide.
             </li>
+            <br>
             <li>
-              A two bedspace double (or twin) bedroom must have a floor area of at least 11.5 sqm.
+              A double (or twin) bedroom must have a floor area of at least 11.5 sqm.
             </li>
           </ul>
+          <p>*According to the <a href="https://www.london.gov.uk/what-we-do/planning/london-plan/new-london-plan/draft-new-london-plan/chapter-3-design/policy-d4-housing-quality-and-standards">Policy D4 Housing quality and standards</a> of the London Plan.</p>
+          
         </div>
 
         <div class="govuk-radios govuk-radios--inline">
@@ -50,16 +49,13 @@
             <label class="govuk-label" for="name">
               How many new single bedrooms are gained?
             </label>
-            <input class="govuk-input" id="name" name="name" type="number">
+            <input class="govuk-input govuk-!-width-one-quarter" id="name" name="name" type="number">
           </div>
-        </div>
-
-        <div class="govuk-inset-text" v-if="newBedroom === 'Yes'">
           <div class="govuk-form-group">
             <label class="govuk-label" for="name">
               How many new double bedrooms are gained?
             </label>
-            <input class="govuk-input" id="name" name="name" type="number">
+            <input class="govuk-input govuk-!-width-one-quarter" id="name" name="name" type="number">
           </div>
         </div>
       </fieldset>

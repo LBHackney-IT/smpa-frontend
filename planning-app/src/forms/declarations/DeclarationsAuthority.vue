@@ -8,14 +8,14 @@
           </h1>
         </legend>
 
-        <h4 class="govuk-heading-s">
-					With respect to Hackney Council, does any of the following statements apply to you and/or the applicant?
-				</h4>
+        <p class="govuk-body govuk-!-font-size-24">
+					Do any of the following statements apply to you and/or the applicant?
+				</p>
 
         <div class="govuk-inset-text">
           <p>It is an important principle of decision-making that the process is open and transparent.</p>
 
-          <p>For the purposes of this question, "related to" means related, by birth or otherwise, closely enough that a fair-minded and informed observer, having considered the facts, would conclude that there was bias on the part of the decision-maker in Hackney Council.</p>
+          <p>For the purposes of this question, "related to" means related, by birth or closely enough that there could be a bias on the part of the decision-maker in Hackney Council.</p>
         </div>
       </fieldset>
     </div>
@@ -24,7 +24,7 @@
       <div class="govuk-radios__item">
         <input class="govuk-radios__input" id="applicant-authority-relation" name="applicant-authority-relation-1" type="radio" value="applicant-authority-relation-1" v-model="applicantAuthorityRelation">
         <label class="govuk-label govuk-radios__label" for="applicant-authority-relation-1">
-          You are a member of staff 
+          You are a Hackney Council member of staff
         </label>
       </div>
 
@@ -33,7 +33,7 @@
       <div class="govuk-radios__item">
         <input class="govuk-radios__input" id="applicant-authority-relation" name="applicant-authority-relation-2" type="radio" value="applicant-authority-relation-2" v-model="applicantAuthorityRelation">
         <label class="govuk-label govuk-radios__label" for="applicant-authority-relation-2">
-          You are an elected member
+          You are an elected member in Hackney
         </label>
       </div>
 
@@ -42,7 +42,7 @@
       <div class="govuk-radios__item">
         <input class="govuk-radios__input" id="applicant-authority-relation" name="applicant-authority-relation-3" type="radio" value="applicant-authority-relation-3" v-model="applicantAuthorityRelation">
         <label class="govuk-label govuk-radios__label" for="applicant-authority-relation-3">
-          You are related to a member of the staff
+          You are related to a Hackney Council member of staff
         </label>
       </div>
 
@@ -51,7 +51,7 @@
       <div class="govuk-radios__item">
         <input class="govuk-radios__input" id="applicant-authority-relation" name="applicant-authority-relation-4" type="radio" value="applicant-authority-relation-4" v-model="applicantAuthorityRelation">
         <label class="govuk-label govuk-radios__label" for="applicant-authority-relation-4">
-          You are related to an elected member
+          You are related to an elected member in Hackney
         </label>
       </div>
 
@@ -65,7 +65,7 @@
       </div>
     </div>
 
-		<v-cta name="Next" :onClick="navigate"></v-cta>
+		<v-cta name="Continue" :onClick="navigate"></v-cta>
 	</div>
 </template>
 

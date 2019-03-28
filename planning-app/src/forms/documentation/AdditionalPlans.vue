@@ -1,25 +1,23 @@
 <template>
 	<div>
-    <h2 class="govuk-heading-xl">Supporting documentation</h2>
+    <h2 class="govuk-heading-xl">Supporting documents</h2>
+    
+    <div class="purpose-message govuk-body">
+      <p class="govuk-!-font-weight-bold">All supporting documentation must:</p>
+      <ul>
+        <li>Be A3 or smaller</li>
+        <li>Have a scale 1:50 or 1:100</li>
+        <li>Show the direction of north</li>
+        <li>Have a visual scale bar showing 1m and 10m</li>
+        <li>Display key dimensions of the proposal</li>
+        <li>Show the position of all trees on the site, and those on adjacent land that could influence or be affected by the proposed works</li>
+      </ul>
+    </div>
+
     <h4 class="govuk-heading-m">Uploading aditional documents</h4>
 
     <p>You must submit enough documentation to understand your proposal, including information about the existing property. </p>
-    
-    <div class="govuk-warning-text">
-      <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-      <strong class="govuk-warning-text__text">
-        <span class="govuk-warning-text__assistive">Warning</span>
-        You can’t upload multiples files at a time
-      </strong>
-    </div>
 
-    <div class="govuk-warning-text">
-      <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-      <strong class="govuk-warning-text__text">
-        <span class="govuk-warning-text__assistive">Warning</span>
-        You can’t upload one single document with all the files in it.
-      </strong>
-    </div>
 
     <details class="govuk-details">
       <summary class="govuk-details__summary">
@@ -54,27 +52,40 @@ You should include elevations for all sides of the proposal.</p>
       </div>
     </details>
 
-    <div class="purpose-message govuk-body">
-      <p class="govuk-!-font-weight-bold">All supporting documentation must:</p>
-      <ul>
-        <li>Be A3 or smaller</li>
-        <li>Have a scale 1:50 or 1:100</li>
-        <li>Show the direction of North</li>
-        <li>Have a visual scale bar showing 1m and 10m</li>
-        <li>Display key dimensions of the proposal</li>
-        <li>Show the position of all trees on the site, and those on adjacent land that could influence or be affected by the development</li>
-      </ul>
+    <div class="govuk-warning-text">
+      <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+      <strong class="govuk-warning-text__text">
+        <span class="govuk-warning-text__assistive">Warning</span>
+        You must upload single page documents only
+      </strong>
+    </div> 
+    
+    <!-- <div class="govuk-warning-text">
+      <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+      <strong class="govuk-warning-text__text">
+        <span class="govuk-warning-text__assistive">Warning</span>
+        You can’t upload multiples files at a time
+      </strong>
     </div>
 
-    <p class="govuk-!-font-size-36 govuk-!-font-weight-bold">This file include:</p>
+    <div class="govuk-warning-text">
+      <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+      <strong class="govuk-warning-text__text">
+        <span class="govuk-warning-text__assistive">Warning</span>
+        You can’t upload one single document with all the files in it.
+      </strong>
+    </div> -->
+    <p>
+      Select what this document includes.
+    </p>
 
     <span id="modal-hint" class="govuk-hint">
-      Select all that apply
+      Select all that apply.
     </span>
 
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-one-half">
-        <p>Existing</p>
+        <p class="govuk-body govuk-!-font-weight-bold">Existing</p>
         <div class="govuk-checkboxes">
           <div class="govuk-checkboxes__item">
             <input class="govuk-checkboxes__input" id="existing-1" name="existing-1" type="checkbox" value="existing-1" v-model="fileIncludes" >
@@ -119,7 +130,7 @@ You should include elevations for all sides of the proposal.</p>
         </div>
       </div>
       <div class="govuk-grid-column-one-half">
-        <p>Proposed</p>
+        <p class="govuk-body govuk-!-font-weight-bold">Proposed</p>
         <!-- if works already started changed to "consented" if works already finished "as built" -->
         <div class="govuk-checkboxes">
           <div class="govuk-checkboxes__item">

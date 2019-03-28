@@ -1,7 +1,7 @@
 <template>
 	<div>
     <h1 class="govuk-heading-xl">
-      About adding or removing car and/or bike parking spaces
+      About parking spaces
     </h1>
 		<div class="govuk-form-group">
 			<fieldset class="govuk-fieldset" aria-describedby="trees-question-1-hint">
@@ -24,7 +24,7 @@
         <div class="govuk-radios__item">
           <input class="govuk-radios__input" id="access-only-vehicle" name="access-only-vehicle" type="radio" value="cycle-parking-spaces" v-model="typeOfAlteration">
           <label class="govuk-label govuk-radios__label" for="access-only-vehicle">
-            Only cycle parking spaces
+            Only bike parking spaces
           </label>
         </div>
         <div class="govuk-radios__item">

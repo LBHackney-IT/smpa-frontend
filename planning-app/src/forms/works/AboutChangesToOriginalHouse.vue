@@ -34,28 +34,21 @@
           <div class="govuk-checkboxes__item">
             <input class="govuk-checkboxes__input" id="proposal-3" name="proposal" type="checkbox" value="extension_original_house_part_single_part_two_storey_extension" v-model="selectedProposal">
             <label class="govuk-label govuk-checkboxes__label" for="proposal-3">
-              <strong>Part single / Part two storey extension</strong>
+              <strong>Part single/part two storey extension</strong>
             </label>
           </div>
 
           <div class="govuk-checkboxes__item">
             <input class="govuk-checkboxes__input" id="proposal-4" name="proposal" type="checkbox" value="extension_original_house_basement" v-model="selectedProposal">
             <label class="govuk-label govuk-checkboxes__label" for="proposal-4">
-              <strong>Basement works (including light wells)</strong>
+              <strong>Bellow ground level basement works (including lightwells)</strong>
             </label>
           </div>
 
           <div class="govuk-checkboxes__item">
             <input class="govuk-checkboxes__input" id="proposal-5" name="proposal" type="checkbox" value="extension_original_house_roof_works" v-model="selectedProposal">
             <label class="govuk-label govuk-checkboxes__label" for="proposal-5">
-              <strong>Roof works (including roof extensions)</strong>
-            </label>
-          </div>
-
-          <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="proposal-6" name="proposal" type="checkbox" value="extension_original_house_outbuilding" v-model="selectedProposal">
-            <label class="govuk-label govuk-checkboxes__label" for="proposal-6">
-              <strong>Outbuilding</strong>
+              <strong>Works to roof pitch (including roof extensions)</strong>
             </label>
           </div>
 
@@ -76,7 +69,7 @@
           <div class="govuk-checkboxes__item">
             <input class="govuk-checkboxes__input" id="proposal-9" name="proposal" type="checkbox" value="extension_original_house_staircase" v-model="selectedProposal">
             <label class="govuk-label govuk-checkboxes__label" for="proposal-9">
-              <strong>Installation of a staircase</strong>
+              <strong>Alteration or installation of an external staircase</strong>
             </label>
           </div>
 
@@ -91,7 +84,7 @@
           <div class="govuk-checkboxes__item" v-if="isInConservationArea">
             <input class="govuk-checkboxes__input" id="proposal-11" name="proposal" type="checkbox" value="extension_original_house_cladding" v-model="selectedProposal">
             <label class="govuk-label govuk-checkboxes__label" for="proposal-11">
-              <strong>Changing and/or adding cladding</strong>
+              <strong>Changing the external finish of the existing house</strong>
             </label>
           </div>
   
