@@ -36,7 +36,7 @@
         <div class="map govuk-!-margin-bottom-9" id="map"></div>
 
         <table class="govuk-table govuk-!-margin-bottom-9" v-if="!loading && site">
-          <caption class="govuk-table__caption govuk-!-font-weight-regular govuk-!-margin-bottom-8">The following are particular planning considerations that you might want to know to carry on with your proposal</caption>
+          <caption class="govuk-table__caption govuk-!-font-weight-regular govuk-!-margin-bottom-8">The following planning considerations are relevant to your planning application.</caption>
           <tbody class="govuk-table__body">
             <tr class="govuk-table__row">
               <th class="govuk-table__header" scope="row">Conservation area</th>

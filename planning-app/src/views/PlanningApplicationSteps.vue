@@ -1,67 +1,68 @@
 <template>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <h1 class="govuk-heading-xl">Submit a Planning Application</h1>
+      <h1 class="govuk-heading-xl">Submit my Planning Application</h1>
 
       <p class="govuk-body">
-        View spacial information about your site and submit your planning application to Hackney Council.
+        This service is still in development.
       </p>
 
+      <h2 class="govuk-heading-l">Check planning considerations for your site</h2>
+
+      <p>You can use this service to find out about the planning considerations that affect your site. For example, is your site in a conservation area.</p>
+
+      <a class="govuk-body govuk-link" href="/sites/search">Find out about your site</a>
+
+      <h2 class="govuk-heading-l govuk-!-margin-top-9">Apply online for planning permission</h2>
+
+      <p>You can only use this service if you are proposing works to a house, such as:</p>
+
+      <ul class="govuk-body">
+        <li>Extensions</li>
+        <li>Conservatories</li>
+        <li>Loft conversions</li>
+        <li>Dormer windows</li>
+        <li>Garages and outbuildings</li>
+      </ul>
+
       <div class="govuk-inset-text">
-        You can only use this service if you are undertaking extensions of modifications to a house. For now, the prototype only works with postcodes E8 3HW or N16 8ED Please note it doesn’t save your answers yet so you’ll have to go through all in one go.
+        <p>Please note that planning permission is not needed for all household building works. Under permitted development rules you can carry out a number of household building work projects, provided they meet certain limits and conditions.</p>
+        <p><a href="https://hackney.gov.uk/stage1-pre-application">Find out if you need planning permission</a></p>
       </div>
-      <Steps v-bind:steps="steps" />
+
+      <a class="govuk-button" href="/sites/search">Start now</a>
+
+      <h3 class="govuk-heading-m govuk-!-margin-top-5">Get help</h3>
+
+      <div class="govuk-body">
+        <p>Contact us if you need to speak to someone about you planning application.<br>
+
+        <span class="govuk-!-margin-top-2 display-block"> Planning duty desk:</span>
+        <span class="govuk-!-font-weight-bold govuk-!-margin-bottom-5">Hackney Service Centre, 1 Hillman Street E8 1DY</span><br>
+
+        <span class="govuk-!-margin-top-2 display-block">Email:</span>
+        <a class="govuk-!-margin-bottom-5" href="planning@hackney.gov.uk">planning@hackney.gov.uk</a><br>
+
+        <span class="govuk-!-margin-top-2 display-block">Telephone:</span>
+        <span class="govuk-!-margin-bottom-5 govuk-!-font-weight-bold ">020 8356 8062</span><br>
+
+        <span class="govuk-!-margin-top-2 display-block">Opening times planning duty desk:</span>
+        <span class="govuk-!-font-weight-bold">Monday to Friday: 10am - 12 noon, 2pm - 4pm, in person</span> <br>
+        <span class="govuk-!-font-weight-bold">Monday to Friday: 9am - 5pm, on the phone</span></p>
+
+      </div>
+
+
+
     </div>
   </div>
 </template>
 
 <script>
-  import Steps from '../components/Steps.vue';
-
-  const steps = [{
-    title: "Site details",
-    name: "SiteDetails",
-    content: '<p>View the geographic information related to your site.</p><a class="govuk-button" href="/sites/search">Start your application</a>',
-    isActive: true
-  },
-  {
-    title: "Description of the works",
-    name: "FormWorkDescription",
-    content: '<p>Supply relevant information to describe your proposal.</p>',
-    isActive: true
-  },
-  {
-    title: "Supporting documentation",
-    name: "FormDocumentation",
-    content: '<p>Supply documentation to describe your proposal.</p>',
-    isActive: true
-  },
-  {
-    title: "Declarations", 
-    name: "FormDeclarations",
-    content: '<p>Make the necessary legal declarations.</p>',
-    isActive: true
-  },
-  {
-    title: "Contact details",
-    name: "FormContact",
-    content: '<p>Supply your details/details of the applicant so the local authority can contact you. </p>',
-    isActive: true
-  },
-  {
-    title: "Pay and submit",
-    name: "FormPaySubmit",
-    content: '<p>Payment of the correct fee is required at the point of submission. If you don’t supply the correct fee you risk your application being invalid. You can pay for your application as part of this service using credit or debit card. <a target="_blank" href="https://hackney.gov.uk/planning-guidance#Back%20to%20top">Read more information</a> on current planning fees.</p>',
-    isActive: true
-  }];
-
   export default {
     name: 'PlanningApplicationsSteps',
     components: {
-      Steps
-    },
-    data() {
-      return { steps };
     }
+
   }
 </script>
