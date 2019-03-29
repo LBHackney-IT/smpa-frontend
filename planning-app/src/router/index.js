@@ -210,7 +210,7 @@ export default new Router({
     },
     {
       name: 'create',
-      path: '/accounts/create',
+      path: '/create-account',
       component: CreateAccount
     },
     {
