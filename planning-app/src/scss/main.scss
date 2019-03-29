@@ -4,6 +4,8 @@ $govuk-global-styles: true;
 @import "steps";
 @import "modal";
 
+$govuk-assets-path: '/assets';
+
 body {
     margin: 0;
 }

@@ -13,7 +13,7 @@
 
       <a class="govuk-body govuk-link" href="/sites/search">Find out about your site</a>
 
-      <h2 class="govuk-heading-l govuk-!-margin-top-9">Apply online for planning permission</h2>
+      <h2 class="govuk-heading-l govuk-!-margin-top-9">Apply for planning permission</h2>
 
       <p>You can only use this service if you are proposing works to a house, such as:</p>
 
@@ -30,7 +30,7 @@
         <p><a href="https://hackney.gov.uk/stage1-pre-application">Find out if you need planning permission</a></p>
       </div>
 
-      <a class="govuk-button" href="/sites/search">Start now</a>
+      <a class="govuk-button govuk-button--start" href="/sites/search" role="button">Start now</a>
 
       <h3 class="govuk-heading-m govuk-!-margin-top-5">Get help</h3>
 

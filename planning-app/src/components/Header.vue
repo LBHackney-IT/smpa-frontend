@@ -3,7 +3,7 @@
     <div class="govuk-header__container govuk-width-container">
       <div class="govuk-header__logo">
         <a href="/" class="govuk-header__link govuk-header__link--homepage">
-            Submit a planning application
+            Submit my planning application
         </a>
       </div>
     </div>
