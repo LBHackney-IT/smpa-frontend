@@ -7,6 +7,7 @@ import PlanningApplicationSteps from '../views/PlanningApplicationSteps.vue';
 import SiteSearch from '../views/SiteSearch.vue';
 import SiteDetails from '../views/SiteDetails.vue';
 import SignIn from '../views/SignIn.vue';
+import ResetPassword from '../views/ResetPassword.vue';
 import Accounts from '../views/Accounts.vue';
 import CreateAccount from '../views/CreateAccount.vue';
 import Applications from '../views/Applications.vue';
@@ -191,6 +192,11 @@ export default new Router({
           ]
         }
       ]
+    },
+    {
+      path: '/reset-password',
+      name: 'ResetPassword',
+      component: ResetPassword
     },
     {
       path: '/sign-in',
