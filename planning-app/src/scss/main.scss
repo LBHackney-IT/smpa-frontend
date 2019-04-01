@@ -1,10 +1,12 @@
 $govuk-global-styles: true;
 
+
+$govuk-assets-path: '/img/';
+
 @import "../../node_modules/govuk-frontend/all";
 @import "steps";
 @import "modal";
 
-$govuk-assets-path: '/assets';
 
 body {
     margin: 0;
