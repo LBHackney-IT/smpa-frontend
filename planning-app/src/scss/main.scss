@@ -1,7 +1,7 @@
 $govuk-global-styles: true;
 
 
-$govuk-assets-path: '/img/';
+$govuk-assets-path: '~@/static/';
 
 @import "../../node_modules/govuk-frontend/all";
 @import "steps";
