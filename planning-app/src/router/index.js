@@ -61,6 +61,10 @@ import GatesFencesWalls from '../forms/gates-fences-walls/AboutGatesFencesWalls.
 import FreeTextForm from '../forms/works/FreeTextForm.vue';
 import DescriptionOfTheWorks from '../forms/works/DescriptionOfTheWorks.vue';
 import Outbuilding from '../forms/works/Outbuilding.vue';
+import Payment from '../forms/payment/Payment.vue';
+import Eligibility from '../forms/payment/Eligibility.vue';
+import Pay from '../forms/payment/Pay.vue';
+import PaymentSuccessful from '../forms/payment/PaymentSuccessful.vue';
 
 export default new Router({
   mode: 'history',
@@ -189,6 +193,16 @@ export default new Router({
             { path: 'ownership', name:'DeclarationsOwnership', component: DeclarationsOwnership },
             { path: 'declaration', name:'DeclarationsOverview', component: Declaration },
             { path: 'success', name:'Success', component: Success },
+          ]
+        },
+        { 
+          path: 'payment', 
+          component: Payment,
+          children: [
+            { path: '', name: 'Payment', component: Eligibility },
+            { path: 'eligibility', name:'Eligibility', component: Eligibility },
+            { path: 'pay', name:'Pay', component: Pay },
+            { path: 'success', name:'PaymentSuccessful', component: PaymentSuccessful }
           ]
         }
       ]
