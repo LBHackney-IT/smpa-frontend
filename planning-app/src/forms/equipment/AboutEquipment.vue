@@ -16,21 +16,21 @@
 
         <div class="govuk-checkboxes">
           <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="equipment-1" name="equipment-1" type="checkbox" value="Satellite dish or antenna" v-model="selectedProposal">
+            <input class="govuk-checkboxes__input" id="equipment-1" name="equipment-1" type="checkbox" value="proposal_equipment_satellite_dish" v-model="selectedProposal">
             <label class="govuk-label govuk-checkboxes__label" for="equipment-1">
               <strong>Satellite dish</strong>
             </label>
           </div>
 
           <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="equipment-2" name="equipment-2" type="checkbox" value="Confirmation of use" v-model="selectedProposal">
+            <input class="govuk-checkboxes__input" id="equipment-2" name="equipment-2" type="checkbox" value="proposal_equipment_air_con" v-model="selectedProposal">
             <label class="govuk-label govuk-checkboxes__label" for="equipment-2">
               <strong>Air conditioning unit</strong>
             </label>
           </div>
 
           <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="equipment-3" name="equipment-3" type="checkbox" value="Tank" v-model="selectedProposal">
+            <input class="govuk-checkboxes__input" id="equipment-3" name="equipment-3" type="checkbox" value="proposal_equipment_tank" v-model="selectedProposal">
             <label class="govuk-label govuk-checkboxes__label" for="equipment-3">
               <strong>Tank</strong>
             </label>
@@ -39,21 +39,21 @@
 
           <div v-if="isInConservationArea">
             <div class="govuk-checkboxes__item" v-if="isInConservationArea">
-              <input class="govuk-checkboxes__input" id="equipment-4" name="equipment-4" type="checkbox" value="CCTV" v-model="selectedEquipment">
+              <input class="govuk-checkboxes__input" id="equipment-4" name="equipment-4" type="checkbox" value="proposal_equipment_cctv" v-model="selectedEquipment">
               <label class="govuk-label govuk-checkboxes__label" for="equipment-4">
                 <strong>CCTV</strong>
               </label>
             </div>
 
             <div class="govuk-checkboxes__item" v-if="isInConservationArea">
-              <input class="govuk-checkboxes__input" id="equipment-5" name="equipment-5" type="checkbox" value="Security alarm" v-model="selectedEquipment">
+              <input class="govuk-checkboxes__input" id="equipment-5" name="equipment-5" type="checkbox" value="proposal_equipment_security_alarm" v-model="selectedEquipment">
               <label class="govuk-label govuk-checkboxes__label" for="equipment-5">
                 <strong>Security alarm</strong>
               </label>
             </div>
 
             <div class="govuk-checkboxes__item" v-if="isInConservationArea">
-              <input class="govuk-checkboxes__input" id="equipment-6" name="equipment-6" type="checkbox" value="Solar panel" v-model="selectedEquipment">
+              <input class="govuk-checkboxes__input" id="equipment-6" name="equipment-6" type="checkbox" value="proposal_equipment_sustainable_energy" v-model="selectedEquipment">
               <label class="govuk-label govuk-checkboxes__label" for="equipment-6">
                 <strong>Solar panel or other sustainable energy equipment</strong>
               </label>
@@ -70,7 +70,6 @@
 <script>
 import vCta from '../../components/Cta.vue';
 import router from '../../router';
-import Navigate from '../../common/navigate';
 import FreeDescription from '../../components/FreeDescription.vue';
 
 export default {
@@ -109,10 +108,23 @@ export default {
     fetchData () {
       this.currentWorks = this.$route.params.currentLevelInfo;
     },
+    updateNavigation () {
+      var navigationInfo = {
+        currentLevel: 'proposal_equipment',
+        selectedProposal: this.selectedProposal
+      }
+
+      this.$store.dispatch('updateFlow', JSON.parse(JSON.stringify(navigationInfo))).then(() => {
+
+        var currentLevelInMap = this.$store.state.state.proposalFlow.findIndex(function(element) {
+          return element.proposalId === 'proposal_equipment';
+        });
+
+        router.push({ name: this.$store.state.state.proposalFlow[currentLevelInMap + 1].goTo[0], params: {currentLevelInfo: this.$store.state.state.proposalFlow[currentLevelInMap + 1], id: this.$store.state.state.proposalFlow[currentLevelInMap + 1].proposalId } });
+      });
+    },
     navigate() {
-      // this.collectDataAndStore();
-      var routerParams = Navigate.calculateNavigation(this.$store.state.state.proposalFlow, this.currentWorks, 'AboutEquipment');
-      router.push(routerParams);
+      this.updateNavigation();
     },
     proposalIsChecked(selectedProposal) {
       const result = this.selectedProposal.find(function(proposal) {

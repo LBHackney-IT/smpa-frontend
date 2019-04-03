@@ -43,6 +43,38 @@ export const state = {
         goTo: ["Parking"]
       }
     ],
+    proposal_equipment: [
+      {
+        proposalName: "Satellite dish",
+        proposalId: "proposal_equipment_satellite_dish",
+        goTo: ["WorksXLocation"]
+      },
+      {
+        proposalName: "Air conditioning unit",
+        proposalId: "proposal_equipment_air_con",
+        goTo: ["WorksXLocation"]
+      },
+      {
+        proposalName: "Tank",
+        proposalId: "proposal_equipment_tank",
+        goTo: ["WorksXLocation"]
+      },
+      {
+        proposalName: "CCTV",
+        proposalId: "proposal_equipment_cctv",
+        goTo: ["WorksXLocation"]
+      },
+      {
+        proposalName: "Security alarm",
+        proposalId: "proposal_equipment_security_alarm",
+        goTo: ["WorksXLocation"]
+      },
+      {
+        proposalName: "Solar panel or other sustainable energy equipment",
+        proposalId: "proposal_equipment_sustainable_energy",
+        goTo: ["WorksXLocation"]
+      }
+    ],
     extension_original_house: [
       {
         proposalName: "Single storey extension",
