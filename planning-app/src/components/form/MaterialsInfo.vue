@@ -1,6 +1,6 @@
 <template>
   <div class="govuk-inset-text">
-    <div class="govuk-form-group">
+    <div class="govuk-form-group govuk-!-margin-bottom-6">
       <label class="govuk-label" v-bind:for="material + '-colour-and-type'">
         Colour and type
       </label>
@@ -15,32 +15,7 @@
       </textarea>
     </div>
 
-    <fieldset class="govuk-fieldset" aria-describedby="trees-question-2-hint">
-      <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
-      
-        <h4 class="govuk-heading-s">
-          {{ secondQuestion }}
-        </h4>
-      
-      </legend>
-
-      <div class="govuk-radios govuk-radios--inline">
-        <div class="govuk-radios__item">
-          <input class="govuk-radios__input" v-bind:id="material + '-same-material-yes'" v-bind:name="material + '-same-material-yes'" type="radio" value="Yes" v-model="sameMaterialAsExisting">
-          <label class="govuk-label govuk-radios__label" v-bind:for="material + '-same-material-yes'">
-            Yes
-          </label>
-        </div>
-        <div class="govuk-radios__item">
-          <input class="govuk-radios__input" v-bind:id="material + '-same-material-no'" v-bind:name="material + '-same-material-no'" type="radio" value="No" v-model="sameMaterialAsExisting">
-          <label class="govuk-label govuk-radios__label" v-bind:for="material + '-same-material-no'">
-            No
-          </label>
-        </div>
-      </div>
-    </fieldset>
-
-    <div v-if="hasSameMaterialAsExisting" class="govuk-inset-text">
+    <div v-if="hasSameMaterialAsExisting" class="govuk-inset-text govuk-!-margin-bottom-6">
       <div class="govuk-form-group">
         <label class="govuk-label" v-bind:for="material + '-existing-material'">
           Existing material
