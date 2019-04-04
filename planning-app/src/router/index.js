@@ -40,10 +40,9 @@ import Contact from '../forms/contact/Contact.vue';
 import ContactApplicant from '../forms/contact/ContactApplicant.vue';
 import ContactAgent from '../forms/contact/ContactAgent.vue';
 import Declarations from '../forms/declarations/Declarations.vue';
-import Declaration from '../forms/declarations/Declaration.vue';
 import DeclarationsAuthority from '../forms/declarations/DeclarationsAuthority.vue';
 import DeclarationsOwnership from '../forms/declarations/DeclarationsOwnership.vue';
-import Success from '../forms/declarations/Success.vue';
+import OwnershipCertificateDeclaration from '../forms/declarations/OwnershipCertificateDeclaration.vue';
 import AboutEquipment from '../forms/equipment/AboutEquipment.vue';
 import AboutParking from '../forms/parking/About.vue';
 import Parking from '../forms/parking/Parking.vue';
@@ -191,8 +190,7 @@ export default new Router({
             { path: '', name: 'Declarations', component: DeclarationsAuthority },
             { path: 'authority', name:'DeclarationsAuthority', component: DeclarationsAuthority },
             { path: 'ownership', name:'DeclarationsOwnership', component: DeclarationsOwnership },
-            { path: 'declaration', name:'DeclarationsOverview', component: Declaration },
-            { path: 'success', name:'Success', component: Success },
+            { path: 'certificate', name: 'OwnershipCertificateDeclaration', component: OwnershipCertificateDeclaration }
           ]
         },
         { 
