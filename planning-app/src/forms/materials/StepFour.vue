@@ -51,13 +51,13 @@
 
           <div class="govuk-checkboxes">
             <div class="govuk-checkboxes__item">
-              <input class="govuk-checkboxes__input" id="materials-1" name="materials-1" type="checkbox" value="wood" v-model="doorMaterial" >
+              <input class="govuk-checkboxes__input" id="materials-1" name="materials-1" type="checkbox" value="timber-framed" v-model="doorMaterial" >
               <label class="govuk-label govuk-checkboxes__label" for="materials-1">
-                Wood
+                Timber framed
               </label>
             </div>
 
-            <materials-info v-if="materialIsChecked('wood')" material="wood" :secondQuestion="materialsDetailsQuestion" @clicked="onClickChild"></materials-info>
+            <materials-info v-if="materialIsChecked('timber-framed')" material="timber-framed" :secondQuestion="materialsDetailsQuestion" @clicked="onClickChild"></materials-info>
 
             <div class="govuk-checkboxes__item">
               <input class="govuk-checkboxes__input" id="materials-2" name="materials-2" type="checkbox" value="steel" v-model="doorMaterial">
@@ -69,13 +69,13 @@
             <materials-info v-if="materialIsChecked('steel')" material="steel" :secondQuestion="materialsDetailsQuestion" @clicked="onClickChild"></materials-info>
 
             <div class="govuk-checkboxes__item">
-              <input class="govuk-checkboxes__input" id="materials-3" name="materials-3" type="checkbox" value="fiberglass" v-model="doorMaterial">
+              <input class="govuk-checkboxes__input" id="materials-3" name="materials-3" type="checkbox" value="pvc" v-model="doorMaterial">
               <label class="govuk-label govuk-checkboxes__label" for="materials-3">
-                Fiberglass
+                PVC
               </label>
             </div>
 
-            <materials-info v-if="materialIsChecked('fiberglass')" material="fiberglass" :secondQuestion="materialsDetailsQuestion" @clicked="onClickChild"></materials-info>
+            <materials-info v-if="materialIsChecked('pvc')" material="pvc" :secondQuestion="materialsDetailsQuestion" @clicked="onClickChild"></materials-info>
 
             <div class="govuk-checkboxes__item">
               <input class="govuk-checkboxes__input" id="materials-4" name="materials-4" type="checkbox" value="glass" v-model="doorMaterial">
@@ -85,6 +85,15 @@
             </div>
 
             <materials-info v-if="materialIsChecked('glass')" material="glass" :secondQuestion="materialsDetailsQuestion" @clicked="onClickChild"></materials-info>
+
+            <div class="govuk-checkboxes__item">
+              <input class="govuk-checkboxes__input" id="materials-4" name="materials-4" type="checkbox" value="aluminium" v-model="doorMaterial">
+              <label class="govuk-label govuk-checkboxes__label" for="materials-4">
+                Aluminium
+              </label>
+            </div>
+
+            <materials-info v-if="materialIsChecked('aluminium')" material="aluminium" :secondQuestion="materialsDetailsQuestion" @clicked="onClickChild"></materials-info>
 
             <div class="govuk-checkboxes__item">
               <input class="govuk-checkboxes__input" id="materials-5" name="materials-5" type="checkbox" value="other" v-model="doorMaterial">
@@ -99,7 +108,7 @@
       </div>
     </div>
     
-		<v-cta name="Next" :onClick="navigate"></v-cta>
+		<v-cta name="Continue" :onClick="navigate"></v-cta>
 	</div>
 </template>
 

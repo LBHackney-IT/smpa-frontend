@@ -107,11 +107,14 @@
             <materials-info v-if="materialIsChecked('asphalt-shingles')" material="asphalt-shingles" :secondQuestion="materialsDetailsQuestion" @clicked="onClickChild"></materials-info>
 
             <div class="govuk-checkboxes__item">
-              <input class="govuk-checkboxes__input" id="materials-10" name="materials-10" type="checkbox" value="unknown" v-model="checkedMaterials">
-              <label class="govuk-label govuk-checkboxes__label" for="materials-10">
-                Unknown
+              <input class="govuk-checkboxes__input" id="materials-6" name="materials-6" type="checkbox" value="flat-roof" v-model="checkedMaterials">
+              <label class="govuk-label govuk-checkboxes__label" for="materials-6">
+                Flat Roof
               </label>
             </div>
+
+            <materials-info v-if="materialIsChecked('flat-roof')" material="flat-roof" :secondQuestion="materialsDetailsQuestion" @clicked="onClickChild"></materials-info>
+
 
             <div class="govuk-checkboxes__item">
               <input class="govuk-checkboxes__input" id="materials-10" name="materials-10" type="checkbox" value="other" v-model="checkedMaterials">

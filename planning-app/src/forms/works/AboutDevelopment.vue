@@ -55,7 +55,7 @@
       </fieldset>
     </div>
     <free-description></free-description>
-		<v-cta name="Next" :onClick="navigate"></v-cta>
+		<v-cta name="Continue" :onClick="navigate"></v-cta>
     <!-- <review-works></review-works> -->
 	</div>
 </template>
