@@ -23,11 +23,15 @@
             </tr>
             <tr class="govuk-table__row">
               <th class="govuk-table__header" scope="row">Property type</th>
-              <td class="govuk-table__cell">{{selectedAddress.usageClassDescription}}</td>
+              <td class="govuk-table__cell">{{selectedAddress.usageDescription}}</td>
             </tr>
             <tr class="govuk-table__row">
               <th class="govuk-table__header" scope="row">BLPU classification</th>
-              <td class="govuk-table__cell">{{selectedAddress.usageClassCode}}</td>
+              <td class="govuk-table__cell">{{selectedAddress.usageCode}}</td>
+            </tr>
+            <tr class="govuk-table__row">
+              <th class="govuk-table__header" scope="row">Use class</th>
+              <td class="govuk-table__cell">{{selectedAddress.planningUseClass}}</td>
             </tr>
           </tbody>
         </table>
