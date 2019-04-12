@@ -9,6 +9,7 @@ import SiteDetails from '../views/SiteDetails.vue';
 import SignIn from '../views/SignIn.vue';
 import ResetPassword from '../views/ResetPassword.vue';
 import Accounts from '../views/Accounts.vue';
+import Overview from '../views/Overview.vue';
 import CreateAccount from '../views/CreateAccount.vue';
 import Applications from '../views/Applications.vue';
 import WorkStart from '../forms/works/WorkStart.vue';
@@ -39,6 +40,7 @@ import DocumentsReview from '../forms/documentation/DocumentsReview.vue';
 import Contact from '../forms/contact/Contact.vue';
 import ContactApplicant from '../forms/contact/ContactApplicant.vue';
 import ContactAgent from '../forms/contact/ContactAgent.vue';
+import AboutApplicant from '../forms/contact/AboutApplicant.vue';
 import Declarations from '../forms/declarations/Declarations.vue';
 import DeclarationsAuthority from '../forms/declarations/DeclarationsAuthority.vue';
 import DeclarationsOwnership from '../forms/declarations/DeclarationsOwnership.vue';
@@ -106,6 +108,7 @@ export default new Router({
         { path: 'free-text-form', name:'FreeTextForm', component: FreeTextForm },
         { path: 'description-of-the-works', name:'DescriptionOfTheWorks', component: DescriptionOfTheWorks },
         { path: 'outbuilding', name:'Outbuilding', component: Outbuilding },
+        { path: 'overview', name:'Overview', component: Overview },
         { 
           path: 'basement', 
           component: Basement,
@@ -180,7 +183,8 @@ export default new Router({
           children: [
             { path: '', name: 'ApplicationContact', component: ContactAgent },
             { path: 'agent', name: 'ApplicationContactAgent', component: ContactAgent },
-            { path: 'applicant', name:'ApplicationContactApplicant', component: ContactApplicant }
+            { path: 'applicant', name:'ApplicationContactApplicant', component: ContactApplicant },
+            { path: 'about-applicant', name:'AboutApplicant', component: AboutApplicant }
           ]
         },
         { 
