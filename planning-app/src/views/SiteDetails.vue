@@ -84,9 +84,7 @@
 
 <script>
   import L from 'leaflet';
-  import { Tabs } from 'govuk-frontend';
   import HelpLink from '../components/HelpLink.vue';
-  import Steps from '../components/Steps.vue';
   import vCta from '../components/Cta.vue';
   import router from '../router';
   import axios from 'axios';
@@ -95,7 +93,6 @@
     name: 'SiteDetails',
     components: {
       HelpLink,
-      Steps,
       vCta
     },
     data() {
@@ -262,7 +259,26 @@
       },
       
       navigate() {
-        router.push({ name: 'WorkStart' });
+        var siteInfo = {}
+        var siteConstraints = {};
+
+        var siteLocation = {
+          'buildingNumber': this.selectedAddress.buildingNumber,
+          'street': this.selectedAddress.street,
+          'postcode': this.selectedAddress.postcode,
+          'locality': this.selectedAddress.locality
+        };
+        
+        siteConstraints.conservationArea = this.site.properties.nb_conarea > 0 ? true : false;
+        siteConstraints.listedBuilding = this.site.properties.is_listed_building > 0 ? true : false;
+        siteInfo.siteConstraints = siteConstraints;
+
+        siteInfo.siteLocation = siteLocation;
+
+        siteInfo.geoJson = this.geoJson;
+  
+        this.$store.commit('setSite', JSON.parse(JSON.stringify(siteInfo)));
+        router.push({ name: 'Overview' });
       }
     },
     computed: {
