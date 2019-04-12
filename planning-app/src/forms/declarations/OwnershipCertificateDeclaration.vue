@@ -8,10 +8,10 @@
       <p class="govuk-body" v-if="this.doesApplicantOwnTheLand === 'ownership-01'">
         {{declarationATitle}}
       </p>
-      <p class="govuk-body" v-if="this.doesApplicantOwnTheLand === 'ownership-02' || this.doesApplicantOwnTheLand === 'ownership-03'">
+      <p class="govuk-body" v-if="this.doesApplicantOwnTheLand === 'ownership-02'">
         {{declarationBTitle}}
       </p>
-      <p class="govuk-body" v-if="this.doesApplicantOwnTheLand === 'ownership-04'">
+      <p class="govuk-body" v-if="this.doesApplicantOwnTheLand === 'ownership-03' || this.doesApplicantOwnTheLand === 'ownership-04'">
         {{declarationCTitle}}
       </p>
     </div>
@@ -22,11 +22,11 @@
       <li v-for="(item, index) in this.declarationADescription" v-bind:key="index">{{item}}</li>
     </ul>
     
-    <ul class="govuk-list govuk-list--bullet" v-if="this.doesApplicantOwnTheLand === 'ownership-02' || this.doesApplicantOwnTheLand === 'ownership-03'">
+    <ul class="govuk-list govuk-list--bullet" v-if="this.doesApplicantOwnTheLand === 'ownership-02'">
       <li v-for="(item, index) in this.declarationBDescription" v-bind:key="index">{{item}}</li>
     </ul>
     
-    <ul class="govuk-list govuk-list--bullet" v-if="this.doesApplicantOwnTheLand === 'ownership-04'">
+    <ul class="govuk-list govuk-list--bullet" v-if="this.doesApplicantOwnTheLand === 'ownership-03' || this.doesApplicantOwnTheLand === 'ownership-04'">
       <li v-for="(item, index) in this.declarationCDescription" v-bind:key="index">{{item}}</li>
     </ul>
 
