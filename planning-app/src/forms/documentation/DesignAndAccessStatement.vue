@@ -61,7 +61,13 @@ export default {
   },
 	methods: {
     navigate() {
-      router.push({ name: 'DocumentationHeritageStatement' });
+
+      if (this.$store.state.site.siteConstraints.listedBuilding) {
+        router.push({ name: 'DocumentationHeritageStatement' });
+      } else {
+        router.push({ name: 'DocumentationAdditionalPlans' });
+      }
+      
     }
 	}
 }
