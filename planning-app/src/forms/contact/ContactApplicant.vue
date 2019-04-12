@@ -15,17 +15,6 @@
     </div>
 
     <div class="govuk-form-group">
-      <label class="govuk-label" for="sort">
-        Title (optional)
-      </label>
-      <select class="govuk-select" id="sort" name="sort">
-        <option value="published">Mr</option>
-        <option value="updated" selected>Mrs</option>
-        <option value="views">Miss</option>
-      </select>
-    </div>
-
-    <div class="govuk-form-group">
       <label class="govuk-label" for="name">
         Full name
       </label>

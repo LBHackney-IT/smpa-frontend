@@ -84,15 +84,6 @@ export default {
       var routerParams = Navigate.calculateNavigation(this.$store.state.state.proposalFlow, this.currentWorks, 'Basement');
       router.push(routerParams);
     }
-  },
-  computed: {
-		isInConservationArea () {
-      if (this.$store.state.site && this.$store.state.site.siteConstraints && this.$store.state.site.siteConstraints.conservationArea) {
-        return this.$store.state.site.siteConstraints.conservationArea;
-      } else {
-        return false;
-      }
-		}
-	}
+  }
 }
 </script>
