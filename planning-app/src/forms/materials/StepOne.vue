@@ -130,7 +130,7 @@
       </div>
     </div>
 
-		<v-cta name="Next" :onClick="navigate"></v-cta>
+		<v-cta name="Continue" :onClick="navigate"></v-cta>
 	</div>
 </template>
 

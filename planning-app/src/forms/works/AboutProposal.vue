@@ -22,7 +22,7 @@
               <strong>You are making changes to the original house</strong>
               <div class="govuk-inset-text">
                 <p class="govuk-body govuk-!-font-weight-bold">Example</p>
-                Erection of a rear roof extension, installation of a front rooflights and re-rendering of front porch.
+                Erection of a rear roof extension, installation of a front rooflight and re-rendering of front porch.
               </div>
             </label>
           </div>
@@ -34,7 +34,7 @@
               <p>Incidental building include garages, sheds, summerhouses and similar outbuildings.</p>
               <div class="govuk-inset-text">
                 <p class="govuk-body govuk-!-font-weight-bold">Example</p>
-                Erection of garden store in the rear garden and removal of an existing shed in rear garden.
+                Erection of a garden store in the rear garden and removal of an existing shed in rear garden.
               </div>
             </label>
           </div>

@@ -41,7 +41,7 @@
           <div class="govuk-checkboxes__item">
             <input class="govuk-checkboxes__input" id="proposal-4" name="proposal" type="checkbox" value="extension_original_house_basement" v-model="selectedProposal">
             <label class="govuk-label govuk-checkboxes__label" for="proposal-4">
-              <strong>Bellow ground level basement works (including lightwells)</strong>
+              <strong>Below ground level basement works (including lightwells)</strong>
             </label>
           </div>
 

@@ -3,7 +3,7 @@
     <div class="govuk-grid-column-two-thirds">
       <h1 class="govuk-heading-xl">Reset your password</h1>
 
-      <p>Enter your email address bellow. If there's an account associated with the email address, we'll send you a link to reset your password.</p>
+      <p>Enter your email address below. If there's an account associated with the email address, we'll send you a link to reset your password.</p>
 
       <div class="govuk-form-group">
         <label class="govuk-label" for="email">

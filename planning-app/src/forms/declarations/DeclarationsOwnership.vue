@@ -14,7 +14,7 @@
       </h4>
 
       <div class="govuk-inset-text">
-        An ‘owner’ is anyone with a freehold or leasehold interest for now fewer than 7 years.
+        An ‘owner’ is anyone with a freehold or leasehold interest for no fewer than 7 years.
       </div>
     </fieldset>
 

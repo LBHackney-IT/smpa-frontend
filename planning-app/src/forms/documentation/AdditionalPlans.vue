@@ -44,10 +44,6 @@ You should include elevations for all sides of the proposal.</p>
             <strong>Roof plans</strong>
             <p>Roof plans are used to show the shape of the roof when development includes changes to its appearance and shape. You should show the position of all ridges, valleys, dormer windows, roof lights and other features, such as chimneys or raised parapets.</p>
           </li>
-          <li>
-            <strong>Roof plans</strong>
-            <p>Roof plans are used to show the shape of the roof when development includes changes to its appearance and shape. You should show the position of all ridges, valleys, dormer windows, roof lights and other features, such as chimneys or raised parapets.</p>
-          </li>
         </ul>
       </div>
     </details>

@@ -30,7 +30,7 @@
           <div class="govuk-checkboxes__item">
             <input class="govuk-checkboxes__input" id="proposal-7" name="proposal" type="checkbox" value="proposal_equipment" v-model="selectedProposal">
             <label class="govuk-label govuk-checkboxes__label" for="proposal-7">
-              <strong>You are installing or replacing an equipment</strong>
+              <strong>You are installing or replacing equipment</strong>
               <p>The installation, alteration or replacement of equipment on a house or within the curtilage of a house. This may include a satellite dish, CCTV or a solar panel.</p>
             </label>
           </div>

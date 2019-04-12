@@ -6,7 +6,7 @@
 		<div class="govuk-form-group">
 			<fieldset class="govuk-fieldset" aria-describedby="improve-accessibility-hint">
 				<legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
-					<h2 class="govuk-heading-m">Is the proposal [PROPOSAL NAME HERE] to a disabled person's dwelling house to improve access, safety, comfort etc?</h2>
+					<h2 class="govuk-heading-m">Is the proposal to a disabled person's dwelling house to improve access, safety, comfort etc?</h2>
 				</legend>
 
 				<div class="govuk-radios govuk-radios--inline">
