@@ -33,7 +33,7 @@ export default {
         });
 
         if (needsFloorArea) {
-          return {name: 'WorksFloorArea'}
+          return {name: 'DescriptionOfTheWorks'}
         } else {
           return {name: 'Trees'}
         }
