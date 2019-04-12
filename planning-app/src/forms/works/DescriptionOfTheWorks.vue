@@ -3,20 +3,13 @@
     <h1 class="govuk-heading-xl">
       Description of the works
     </h1>
-		<div class="govuk-form-group">
-      <fieldset class="govuk-fieldset" aria-describedby="proposal-hint">
-        <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
-          <h2 class="govuk-heading-m">
-            Based on your answers, you are applying for the following works:
-          </h2>
-        </legend>
-      </fieldset>
-      <div class="govuk-form-group">
-        <label class="govuk-label" for="more-detail">
-          Can you provide more detail?
-        </label>
-        <textarea class="govuk-textarea" id="more-detail" name="more-detail" rows="5" aria-describedby="more-detail-hint"></textarea>
-      </div>
+
+    <p>Based on your answers, you are applying for the following works:</p>
+	
+    <div class="govuk-inset-text">
+      <ul>
+        <li v-for="(item, index) in this.proposal" v-bind:key="index">{{item.proposalName}}</li>
+      </ul>
     </div>
 		<v-cta name="Continue" :onClick="navigate"></v-cta>
 	</div>
@@ -24,10 +17,11 @@
 
 <script>
 import vCta from '../../components/Cta.vue';
+import router from '../../router';
 
 
 export default {
-	name: 'FreeTextForm',
+	name: 'DescriptionOfTheWorks',
 	components: {
     vCta
   },
@@ -36,6 +30,17 @@ export default {
       selectedProposal: []
     }
   },
-	methods: {}
+	methods: {
+    navigate() {
+      router.push({ name: 'WorksFloorArea' });
+    }
+  },
+  computed: {
+		proposal () {
+      if (this.$store.state) {
+        return this.$store.state.state.proposalFlow;
+      }
+		}
+	}
 }
 </script>
