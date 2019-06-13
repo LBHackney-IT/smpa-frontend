@@ -1,7 +1,6 @@
+// all applications inside an account should go inside "applications". Each application will have the "proposal flow" saved inside it.
 export const state = {
-  site: {},
-  workStarted: {},
-  proposal: {},
+  applications: [],
   proposalFlow: [],
   proposalMap: {
     proposal: [

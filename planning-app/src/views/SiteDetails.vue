@@ -99,7 +99,8 @@
       return { 
         loading: false,
         loadingMap: false,
-        geoJson: {}
+        geoJson: {},
+        application: {}
       };
     },
     props: {
@@ -122,7 +123,6 @@
         })
         .catch(error => {
           this.error = true;
-          console.log('error', error);
         })
         .finally(() => { 
           this.loading = false;
@@ -259,26 +259,30 @@
       },
       
       navigate() {
-        var siteInfo = {}
-        var siteConstraints = {};
+        const api = process.env.VUE_APP_BACKEND_BASE_URL + '/api/v1/applications';
+        const token = 'jwt ' + process.env.VUE_APP_TEMP_AUTH_TOKEN;
 
-        var siteLocation = {
-          'buildingNumber': this.selectedAddress.buildingNumber,
-          'street': this.selectedAddress.street,
-          'postcode': this.selectedAddress.postcode,
-          'locality': this.selectedAddress.locality
-        };
-        
-        siteConstraints.conservationArea = this.site.properties.nb_conarea > 0 ? true : false;
-        siteConstraints.listedBuilding = this.site.properties.is_listed_building > 0 ? true : false;
-        siteInfo.siteConstraints = siteConstraints;
-
-        siteInfo.siteLocation = siteLocation;
-
-        siteInfo.geoJson = this.geoJson;
-  
-        this.$store.commit('setSite', JSON.parse(JSON.stringify(siteInfo)));
-        router.push({ name: 'Overview' });
+        //todo move to lib
+        axios.post(api , {}, {
+          headers: {
+            'Content-Type': 'application/json; charset=UTF-8',
+            'Authorization': token
+          }  
+        })
+        .then(response => {
+          this.application.data = response.data;
+          this.application.selectedAddress = this.selectedAddress;
+          this.application.siteGeoJson = this.geoJson;
+        })
+        .catch(error => {
+          //todo do something with this error
+          this.error = true;
+        })
+        .finally(() => { 
+          this.$store.dispatch('createApplication', this.application).then(() => {
+            router.push({ name: 'Overview' });
+          })
+        })
       }
     },
     computed: {

@@ -1,25 +1,8 @@
-export function setSite (state, data) {
-  state.site = data;
-}
-
-export function addWorksAnswers (state, data) {
-  state.workStarted = data;
-}
-
-export function addMultipleOccupationAnswers (state, data) {
-  state.multipleOccupation = data;
-}
-
-export function addProposalAnswers (state, data) {
-  state.proposal = data;
-}
-
-export function addAboutProposalAnswers (state, data) {
-  state.aboutProposal = data;
-}
-
-export function addAboutDevelopmentAnswers (state, data) {
-  state.aboutDevelopment = data;
+//creates application with application id returned from the backend, selected address info and site's geojson
+export function createApplication (state, data) {
+  const applications = state.state.applications;
+  applications.push(data);
+  state.state.applications = applications;
 }
 
 export function createFirstFlow (state, data) {
@@ -60,7 +43,7 @@ export function createFirstFlow (state, data) {
 }
 
 export function updateFlow (state, data) {
-  //check if selected proposal already exists
+  //todo check if selected proposal already exists
   data.selectedProposal.forEach(function(element, index) {
     state.state.proposalFlow.forEach(function(el) {
 
@@ -99,7 +82,7 @@ export function updateFlow (state, data) {
     state.state.proposalFlow.splice(currentLevelPosition + 1 + i, 0, flow[i]);
   }
 
-  console.log('--------FINAL FLOW', state.state.proposalFlow);
+  // console.log('--------FINAL FLOW', state.state.proposalFlow);
 }
 
 

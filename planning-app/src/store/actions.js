@@ -1,3 +1,12 @@
+export function createApplication ({commit}, data) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      commit('createApplication', data);
+      resolve();
+    }, 1000);
+  });
+}
+
 export function createFirstFlow ({commit}, data) {
   return new Promise((resolve) => {
     setTimeout(() => {
