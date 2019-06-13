@@ -3,9 +3,9 @@
     <div class="purpose-message govuk-body">
       <p>Application type and site location are based entirely on the selections you have made. <a class="govuk-link" href="">Change</a></p>
 
-      <span>{{this.siteInfo.siteLocation.buildingNumber}}<br>
+      <!-- <span>{{this.siteInfo.siteLocation.buildingNumber}}<br>
       {{this.siteInfo.siteLocation.street}}<br>
-      {{this.siteInfo.siteLocation.postcode}}</span> 
+      {{this.siteInfo.siteLocation.postcode}}</span>  -->
     </div>
     <h1 class="govuk-heading-xl">Application overview</h1>
 
@@ -17,7 +17,7 @@
 
     <ul class="govuk-list">
       <li><a class="govuk-link" href="#">Location of the works</a></li>
-      <li><router-link to="work-start" class="govuk-link">Starting the works</router-link></li>
+      <li><router-link :to="{ name: 'WorkStart'}" class="govuk-link">Starting the works</router-link></li>
       <li><a class="govuk-link" href="#">Describe the proposed works</a></li>
       <li><a class="govuk-link" href="#">Describe the surroundings: Trees</a></li>
       <li><a class="govuk-link" href="#">Define materials</a></li>
@@ -26,7 +26,7 @@
     <h2 class="govuk-heading-l">2. Supporting documentation</h2>
 
     <ul class="govuk-list">
-      <li><router-link :to="{ name: 'DocumentationLocation'}" class="govuk-link">Add a location plan</router-link></li>
+      <li><router-link :to="{ name: 'DocumentationLocation', params: { applicationId: this.applicationId }}" class="govuk-link">Add a location plan</router-link></li>
       <li><a class="govuk-link" href="#">Add a Design and Access statement</a></li>
       <li><a class="govuk-link" href="#">Add aditional plans</a></li>
     </ul>
@@ -60,15 +60,21 @@
     name: 'Overview',
     components: {
     },
-    computed: {
-      siteInfo () {
-        if (this.$store.state.site) {
-          return this.$store.state.site;
-        } else {
-          return false;
-        }
+    data () {
+      return {
+        applicationId: undefined,
+      }
+    },
+    created () {
+      this.getRouteData();
+    },
+    watch: {
+      '$route': 'getRouteData'
+    },
+    methods: {
+      getRouteData () {
+        this.applicationId = this.$route.params.applicationId;
       }
     }
-
   }
 </script>

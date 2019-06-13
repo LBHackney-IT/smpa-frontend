@@ -280,7 +280,7 @@
         })
         .finally(() => { 
           this.$store.dispatch('createApplication', this.application).then(() => {
-            router.push({ name: 'Overview' });
+            router.push({ name: 'ApplicationOverview', params: { applicationId: this.application.data.id } });
           })
         })
       }

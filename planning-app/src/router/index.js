@@ -10,10 +10,10 @@ import SignIn from '../views/SignIn.vue';
 import ResetPassword from '../views/ResetPassword.vue';
 import Accounts from '../views/Accounts.vue';
 import Overview from '../views/Overview.vue';
+import ApplicationOverview from '../views/ApplicationOverview.vue';
 import CreateAccount from '../views/CreateAccount.vue';
 import Applications from '../views/Applications.vue';
 import WorkStart from '../forms/works/WorkStart.vue';
-import MultipleOccupation from '../forms/works/MultipleOccupation.vue';
 import Proposal from '../forms/works/Proposal.vue';
 import AboutProposal from '../forms/works/AboutProposal.vue';
 import AboutDevelopment from '../forms/works/AboutDevelopment.vue';
@@ -94,117 +94,184 @@ export default new Router({
       path: '/applications',
       component: Applications,
       children: [
-        { path: '', name: 'Applications', component: WorkStart },
-        { path: 'work-start', name: 'WorkStart', component: WorkStart },
-        { path: 'multiple-occupation', name: 'MultipleOccupation', component: MultipleOccupation },
-        { path: 'proposal', name: 'Proposal', component: Proposal },
-        { path: 'about-proposal', name:'AboutProposal', component: AboutProposal },
-        { path: 'about-changes-to-original-house', name:'AboutChangesToOriginalHouse', component: AboutChangesToOriginalHouse },
-        { path: 'about-development', name:'AboutDevelopment', component: AboutDevelopment },
-        { path: 'about-equipment', name:'AboutEquipment', component: AboutEquipment },
-        { path: 'works-floor-area', name:'WorksFloorArea', component: WorksFloorArea },
-        { path: 'works-data', name:'WorksData', component: WorksData },
-        { path: 'works-x-location/:id', name:'WorksXLocation', component: WorksXLocation },
-        { path: 'free-text-form', name:'FreeTextForm', component: FreeTextForm },
-        { path: 'description-of-the-works', name:'DescriptionOfTheWorks', component: DescriptionOfTheWorks },
-        { path: 'outbuilding', name:'Outbuilding', component: Outbuilding },
-        { path: 'overview', name:'Overview', component: Overview },
         { 
-          path: 'basement', 
-          component: Basement,
-          children: [
-            { path: '', name: 'Basement', component: AboutBasement }
-          ]
-        },
+          path: '', 
+          name: 'Applications', 
+          component: Overview 
+        }, //redirect to page that lists all applications associated with the signed in user
         { 
-          path: 'gates-fence-walls', 
-          component: GatesFencesWalls,
+          path: ':applicationId', 
+          name:'ApplicationOverview', 
+          component: ApplicationOverview,
           children: [
-            { path: '', name: 'GatesFencesWalls', component: GatesFencesWalls }
-          ]
-        },
-        { 
-          path: 'roofs', 
-          component: Roofs,
-          children: [
-            { path: '', name: 'Roofs', component: AboutRoofs }
-          ]
-        },
-        { 
-          path: 'surroundings', 
-          component: Surroundings,
-          children: [
-            { path: '', name: 'Surroundings', component: Trees },
-            { path: 'trees', name: 'Trees', component: Trees },
-            { path: 'access', name: 'Access', component: Access },
-            { path: 'more-about-access', name: 'MoreAboutAccess', component: MoreAboutAccess }
-          ]
-        },
-        { 
-          path: 'parking', 
-          component: Parking,
-          children: [
-            { path: '', name: 'Parking', component: AboutParking },
-            { path: 'cars', name: 'CarParkingSpaces', component: CarParkingSpaces },
-            { path: 'bikes', name: 'BikeParkingSpaces', component: BikeParkingSpaces },
-            { path: 'ev-charging-points', name: 'EVChargingPoints', component: EVChargingPoints }
-          ]
-        },
-        { 
-          path: 'materials', 
-          component: Materials,
-          children: [
-            { path: '', name: 'Materials', component: MaterialsStepOne },
-            { path: 'steps', component: WhatMaterials },
-            { path: 'steps/what-materials', name: 'WhatMaterials', component: WhatMaterials },
-            { path: 'steps/1', name: 'MaterialsStep1', component: MaterialsStepOne },
-            { path: 'steps/2', name: 'MaterialsStep2', component: MaterialsStepTwo },
-            { path: 'steps/3', name: 'MaterialsStep3', component: MaterialsStepThree },
-            { path: 'steps/4', name: 'MaterialsStep4', component: MaterialsStepFour },
-            { path: 'steps/5', name: 'MaterialsStep5', component: MaterialsStepFive },
-            { path: 'confirmation', name: 'MaterialsConfirmation', component: MaterialsConfirmation }
-          ]
-        },
-        { 
-          path: 'documentation', 
-          component: Documentation,
-          children: [
-            { path: '', name: 'SupportingDocumentation', component: SupportingDocumentation },
-            { path: 'location', name:'DocumentationLocation', component: LocationPlan },
-            { path: 'design-access-statement', name: 'DocumentationDesignAccessStatement', component: DesignAndAccessStatement },
-            { path: 'heritage-statement', name: 'DocumentationHeritageStatement', component: HeritageStatement },
-            { path: 'additional-plans', name: 'DocumentationAdditionalPlans', component: AdditionalPlans },
-            { path: 'docs-review', name: 'DocumentationDocsReview', component: DocumentsReview }
-          ]
-        },
-        { 
-          path: 'contact', 
-          component: Contact,
-          children: [
-            { path: '', name: 'ApplicationContact', component: ContactAgent },
-            { path: 'agent', name: 'ApplicationContactAgent', component: ContactAgent },
-            { path: 'applicant', name:'ApplicationContactApplicant', component: ContactApplicant },
-            { path: 'about-applicant', name:'AboutApplicant', component: AboutApplicant }
-          ]
-        },
-        { 
-          path: 'declarations', 
-          component: Declarations,
-          children: [
-            { path: '', name: 'Declarations', component: DeclarationsAuthority },
-            { path: 'authority', name:'DeclarationsAuthority', component: DeclarationsAuthority },
-            { path: 'ownership', name:'DeclarationsOwnership', component: DeclarationsOwnership },
-            { path: 'certificate', name: 'OwnershipCertificateDeclaration', component: OwnershipCertificateDeclaration }
-          ]
-        },
-        { 
-          path: 'payment', 
-          component: Payment,
-          children: [
-            { path: '', name: 'Payment', component: Eligibility },
-            { path: 'eligibility', name:'Eligibility', component: Eligibility },
-            { path: 'pay', name:'Pay', component: Pay },
-            { path: 'success', name:'PaymentSuccessful', component: PaymentSuccessful }
+            { 
+              path: '', 
+              name: 'ApplicationOverview', 
+              component: Overview 
+            },
+            { 
+              path: 'overview', 
+              name:'Overview', 
+              component: Overview 
+            },
+            { 
+              path: 'work-start', 
+              name: 'WorkStart', 
+              component: WorkStart 
+            },
+            { 
+              path: 'proposal', 
+              name: 'Proposal', 
+              component: Proposal 
+            },
+            { 
+              path: 'about-proposal', 
+              name:'AboutProposal', 
+              component: AboutProposal 
+            },
+            { 
+              path: 'about-changes-to-original-house', 
+              name:'AboutChangesToOriginalHouse', 
+              component: AboutChangesToOriginalHouse 
+            },
+            { 
+              path: 'about-development', 
+              name:'AboutDevelopment', 
+              component: AboutDevelopment 
+            },
+            { 
+              path: 'about-equipment', 
+              name:'AboutEquipment', 
+              component: AboutEquipment 
+            },
+            { 
+              path: 'works-floor-area', 
+              name:'WorksFloorArea', 
+              component: WorksFloorArea 
+            },
+            { 
+              path: 'works-data', 
+              name:'WorksData', 
+              component: WorksData 
+            },
+            { 
+              path: 'works-x-location/:id', 
+              name:'WorksXLocation', 
+              component: WorksXLocation 
+            },
+            { 
+              path: 'free-text-form', 
+              name:'FreeTextForm', 
+              component: FreeTextForm 
+            },
+            { 
+              path: 'description-of-the-works', 
+              name:'DescriptionOfTheWorks', 
+              component: DescriptionOfTheWorks 
+            },
+            { 
+              path: 'outbuilding', 
+              name:'Outbuilding', 
+              component: Outbuilding 
+            },
+            { 
+              path: 'basement', 
+              component: Basement,
+              children: [
+                { path: '', name: 'Basement', component: AboutBasement }
+              ]
+            },
+            { 
+              path: 'gates-fence-walls', 
+              component: GatesFencesWalls,
+              children: [
+                { path: '', name: 'GatesFencesWalls', component: GatesFencesWalls }
+              ]
+            },
+            { 
+              path: 'roofs', 
+              component: Roofs,
+              children: [
+                { path: '', name: 'Roofs', component: AboutRoofs }
+              ]
+            },
+            { 
+              path: 'surroundings', 
+              component: Surroundings,
+              children: [
+                { path: '', name: 'Surroundings', component: Trees },
+                { path: 'trees', name: 'Trees', component: Trees },
+                { path: 'access', name: 'Access', component: Access },
+                { path: 'more-about-access', name: 'MoreAboutAccess', component: MoreAboutAccess }
+              ]
+            },
+            { 
+              path: 'parking', 
+              component: Parking,
+              children: [
+                { path: '', name: 'Parking', component: AboutParking },
+                { path: 'cars', name: 'CarParkingSpaces', component: CarParkingSpaces },
+                { path: 'bikes', name: 'BikeParkingSpaces', component: BikeParkingSpaces },
+                { path: 'ev-charging-points', name: 'EVChargingPoints', component: EVChargingPoints }
+              ]
+            },
+            { 
+              path: 'materials', 
+              component: Materials,
+              children: [
+                { path: '', name: 'Materials', component: MaterialsStepOne },
+                { path: 'steps', component: WhatMaterials },
+                { path: 'steps/what-materials', name: 'WhatMaterials', component: WhatMaterials },
+                { path: 'steps/1', name: 'MaterialsStep1', component: MaterialsStepOne },
+                { path: 'steps/2', name: 'MaterialsStep2', component: MaterialsStepTwo },
+                { path: 'steps/3', name: 'MaterialsStep3', component: MaterialsStepThree },
+                { path: 'steps/4', name: 'MaterialsStep4', component: MaterialsStepFour },
+                { path: 'steps/5', name: 'MaterialsStep5', component: MaterialsStepFive },
+                { path: 'confirmation', name: 'MaterialsConfirmation', component: MaterialsConfirmation }
+              ]
+            },
+            { 
+              path: 'documentation', 
+              component: Documentation,
+              children: [
+                { path: '', name: 'SupportingDocumentation', component: SupportingDocumentation },
+                { path: 'location', name:'DocumentationLocation', component: LocationPlan },
+                { path: 'design-access-statement', name: 'DocumentationDesignAccessStatement', component: DesignAndAccessStatement },
+                { path: 'heritage-statement', name: 'DocumentationHeritageStatement', component: HeritageStatement },
+                { path: 'additional-plans', name: 'DocumentationAdditionalPlans', component: AdditionalPlans },
+                { path: 'docs-review', name: 'DocumentationDocsReview', component: DocumentsReview }
+              ]
+            },
+            { 
+              path: 'contact', 
+              component: Contact,
+              children: [
+                { path: '', name: 'ApplicationContact', component: ContactAgent },
+                { path: 'agent', name: 'ApplicationContactAgent', component: ContactAgent },
+                { path: 'applicant', name:'ApplicationContactApplicant', component: ContactApplicant },
+                { path: 'about-applicant', name:'AboutApplicant', component: AboutApplicant }
+              ]
+            },
+            { 
+              path: 'declarations', 
+              component: Declarations,
+              children: [
+                { path: '', name: 'Declarations', component: DeclarationsAuthority },
+                { path: 'authority', name:'DeclarationsAuthority', component: DeclarationsAuthority },
+                { path: 'ownership', name:'DeclarationsOwnership', component: DeclarationsOwnership },
+                { path: 'certificate', name: 'OwnershipCertificateDeclaration', component: OwnershipCertificateDeclaration }
+              ]
+            },
+            { 
+              path: 'payment', 
+              component: Payment,
+              children: [
+                { path: '', name: 'Payment', component: Eligibility },
+                { path: 'eligibility', name:'Eligibility', component: Eligibility },
+                { path: 'pay', name:'Pay', component: Pay },
+                { path: 'success', name:'PaymentSuccessful', component: PaymentSuccessful }
+              ]
+            }
           ]
         }
       ]
