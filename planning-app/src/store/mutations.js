@@ -5,6 +5,14 @@ export function createApplication (state, data) {
   state.state.applications = applications;
 }
 
+export function updateApplication (state, data) {
+  const position = state.state.applications.findIndex( application => application.data.id === data.id );
+
+  if (position) {
+    state.state.applications[position].data = data;
+  }
+}
+
 export function createFirstFlow (state, data) {
   data.selectedProposal.forEach(function(element, index) {
     state.state.proposalFlow.forEach(function(el) {
