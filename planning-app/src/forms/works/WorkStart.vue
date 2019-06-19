@@ -14,13 +14,13 @@
 				</div>
 				<div class="govuk-radios govuk-radios--inline">
 					<div class="govuk-radios__item">
-						<input class="govuk-radios__input" id="work-started-1" name="work-started" type="radio" value="Yes" v-model="workStarted">
+						<input class="govuk-radios__input" id="work-started-1" name="work-started" type="radio" value="true" v-model="workStarted">
 						<label class="govuk-label govuk-radios__label" for="work-started-1">
 							Yes
 						</label>
 					</div>
 					<div class="govuk-radios__item">
-						<input class="govuk-radios__input" id="work-started-2" name="work-started" type="radio" value="No" v-model="workStarted">
+						<input class="govuk-radios__input" id="work-started-2" name="work-started" type="radio" value="false" v-model="workStarted">
 						<label class="govuk-label govuk-radios__label" for="work-started-2">
 							No
 						</label>
@@ -76,13 +76,13 @@
 					</legend>
 					<div class="govuk-radios govuk-radios--inline">
 						<div class="govuk-radios__item">
-							<input class="govuk-radios__input" id="work-completed-1" name="work-completed" type="radio" value="Yes" v-model="workCompleted">
+							<input class="govuk-radios__input" id="work-completed-1" name="work-completed" type="radio" value="true" v-model="workCompleted">
 							<label class="govuk-label govuk-radios__label" for="work-completed-1">
 								Yes
 							</label>
 						</div>
 						<div class="govuk-radios__item">
-							<input class="govuk-radios__input" id="work-completed-2" name="work-completed" type="radio" value="No" v-model="workCompleted">
+							<input class="govuk-radios__input" id="work-completed-2" name="work-completed" type="radio" value="false" v-model="workCompleted">
 							<label class="govuk-label govuk-radios__label" for="work-completed-2">
 								No
 							</label>
@@ -137,7 +137,7 @@
 				:isRequired="hasWorkStarted">
 			</v-text-area>
 		</div>
-		<v-cta name="Continue" :onClick="navigate"></v-cta>
+		<v-cta name="Continue" :onClick="submit"></v-cta>
 	</div>
 </template>
 
@@ -146,9 +146,12 @@ import vCta from '../../components/Cta.vue';
 import vTextArea from '../../components/form/vTextArea.vue';
 import router from '../../router';
 import WarningMessage from '../../components/WarningMessage.vue';
+import axios from 'axios';
+import { getRouteAppId } from '../../mixins/getRouteAppId';
 
 export default {
 	name: 'WorkStart',
+	mixins: [ getRouteAppId ],
 	components: {
 		vCta,
 		vTextArea,
@@ -166,60 +169,52 @@ export default {
 			workCompleted: undefined,
 			dayWorkFinished: undefined,
 			monthWorkFinished: undefined,
-			yearWorkFinished: undefined
+			yearWorkFinished: undefined,
+			apiResponse: undefined
     }
   },
 	methods: {
-		collectDataAndStore () {
+		submit() {
+			let objectToBeSent = {};
 
-			let question = {
-				question: this.question,
-				answers: {}
-			};
+			objectToBeSent.works_started = this.workStarted === 'true' ? true : false;
 
-			if (this.workStarted) {
-				let workStartedAnswers = {};
+			if (objectToBeSent.works_started) {
+				objectToBeSent.date_works_started = this.yearWorkStarted + '-' + this.monthWorkStarted + '-' + this.dayWorkStarted;
 
-				workStartedAnswers.question = this.question;
-				workStartedAnswers.answerLabel = this.workStarted;
-				workStartedAnswers.answerValue = this.workStarted === 'Yes' ? true : false;
-				workStartedAnswers.required = true;
+				objectToBeSent.works_completed = this.workCompleted === 'true' ? true : undefined;
 
-				question.answers = workStartedAnswers;
-			}
-
-			if (this.hasWorkStarted) {
-
-				let answerWorkDetails = {};
-
-				answerWorkDetails.question = 'Describe what you have already done';
-				answerWorkDetails.answerValue = this.workDetails;
-				answerWorkDetails.required = true;
-				answerWorkDetails.dayWorkStarted = this.dayWorkStarted;
-				answerWorkDetails.monthWorkStarted = this.monthWorkStarted;
-				answerWorkDetails.yearWorkStarted = this.yearWorkStarted;
-
-				if (this.workCompleted) {
-					answerWorkDetails.workCompleted = this.workCompleted;
-					answerWorkDetails.dayWorkFinished = this.dayWorkFinished,
-					answerWorkDetails.monthWorkFinished = this.monthWorkFinished,
-					answerWorkDetails.yearWorkFinished = this.yearWorkFinished
+				if (objectToBeSent.works_completed) {
+					objectToBeSent.date_works_completed = this.yearWorkFinished + '-' + this.monthWorkFinished + '-' + this.dayWorkFinished;
+				} else {
+					objectToBeSent.date_works_completed = undefined;
 				}
-				question.answers.workDetails = answerWorkDetails;
+
+				if (this.workDetails) {
+					objectToBeSent.works_description = this.workDetails;
+				}
+			} else {
+				objectToBeSent.date_works_started = undefined;
+				objectToBeSent.works_completed = undefined;
+				objectToBeSent.date_works_completed = undefined;
+				objectToBeSent.works_description = undefined;
 			}
-			this.$store.commit('addWorksAnswers', JSON.parse(JSON.stringify(question)));
-		},
-    navigate() {
-			this.collectDataAndStore();
-      router.push({ name: 'Proposal' });
-    }
+
+			let payload = {};
+			payload.data = objectToBeSent;
+			payload.id = this.applicationId;
+
+			this.$store.dispatch('updateApplication', payload).then(() => {
+				router.push({ name: 'Proposal', params: { applicationId: this.applicationId } });
+			})
+		}
 	},
 	computed: {
 		hasWorkStarted () {
-			return this.workStarted === 'Yes';
+			return this.workStarted === 'true';
 		},
 		isWorkComplete () {
-			return this.workCompleted === 'Yes';
+			return this.workCompleted === 'true';
 		}
 	}
 }

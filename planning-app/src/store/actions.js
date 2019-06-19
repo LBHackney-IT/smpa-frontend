@@ -11,11 +11,10 @@ export function createApplication ({commit}, applicationData) {
 }
 
 export function updateApplication ({commit}, data) {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      commit('updateApplication', data);
-      resolve();
-    }, 1000);
+  return ApplicationsService
+  .update(data.id, data.data)
+  .then( response => {
+    commit('updateApplication', response.data);
   });
 }
 

@@ -4,13 +4,6 @@
 
 <script>
   export default {
-    name: 'ApplicationOverview',
-    components: {
-    },
-    data() {
-    },
-    mounted() {
-      
-    }
+    name: 'ApplicationOverview'
   }
 </script>

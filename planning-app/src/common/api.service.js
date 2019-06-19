@@ -62,9 +62,9 @@ export const ApplicationsService = {
     return ApiService.post('applications', {});
   },
 
-  update (id) {
+  update (id, payload) {
     ApiService.setHeader();
-    return ApiService.update('applications', id);
+    return ApiService.update('applications', id, payload);
   },
 
   addSiteAddress (payload) {
