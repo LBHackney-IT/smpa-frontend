@@ -1,7 +1,19 @@
-export function createApplication ({commit}, data) {
+import { ApplicationsService, ExtensionProposalService } from '@/common/api.service'
+
+export function createApplication ({commit}, applicationData) {
+  return ApplicationsService
+  .create()
+  .then( response => {
+    applicationData.data = response.data;
+    commit('createApplication', applicationData);
+    return applicationData;
+  });
+}
+
+export function updateApplication ({commit}, data) {
   return new Promise((resolve) => {
     setTimeout(() => {
-      commit('createApplication', data);
+      commit('updateApplication', data);
       resolve();
     }, 1000);
   });
@@ -23,5 +35,20 @@ export function updateFlow ({commit}, data) {
       resolve();
     }, 1000);
   });
+}
+
+export function createExtensionProposal ({commit}, data) {
+  return ExtensionProposalService
+    .post(data)
+    .then( response => {
+    });
+}
+
+
+export function createEquipmentProposal ({commit}, data) {
+  return EquipmentProposalService
+    .post(data)
+    .then( response => {
+    });
 }
 
