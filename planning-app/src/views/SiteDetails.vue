@@ -144,12 +144,6 @@
           accessToken: 'pk.eyJ1IjoiaGFja25leWdpcyIsImEiOiJjajh2ZGRiMDMxMzc5MndwbHBmaGtjYTAyIn0.G75YwN8Zgr8gqDJoV8XMFw'
         }).addTo(map);
 
-        // var hackneyBoundary = L.tileLayer.wms('https://map.hackney.gov.uk/geoserver/wms/', {
-        //     layers: 'BDY_HACKNEY',
-        //     transparent: true,
-        //     format: 'image/png'
-        // }).addTo(map);
-
         map.addLayer(Mapbox_Basemap);
 
         var overlay_OSMM_light_1 = L.tileLayer.wms("https://map.hackney.gov.uk/geoserver/wms", {
@@ -247,41 +241,14 @@
         });
 
         map.addLayer(statuaryListedBuildings);
-
-        // var currentApplications = L.tileLayer.wms('https://map.hackney.gov.uk/geoserver/wms/', {
-        //     layers: 'lbhplanning:PLA_APPS_CURRENT_VW',
-        //     transparent: true,
-        //     format: 'image/png',
-        //     maxZoom: 20
-        // });
-
-        // map.addLayer(currentApplications);
       },
       
       navigate() {
-        const api = process.env.VUE_APP_BACKEND_BASE_URL + '/api/v1/applications';
-        const token = 'jwt ' + process.env.VUE_APP_TEMP_AUTH_TOKEN;
+        this.application.selectedAddress = this.selectedAddress;
+        this.application.siteGeoJson = this.geoJson;
 
-        //todo move to lib
-        axios.post(api , {}, {
-          headers: {
-            'Content-Type': 'application/json; charset=UTF-8',
-            'Authorization': token
-          }  
-        })
-        .then(response => {
-          this.application.data = response.data;
-          this.application.selectedAddress = this.selectedAddress;
-          this.application.siteGeoJson = this.geoJson;
-        })
-        .catch(error => {
-          //todo do something with this error
-          this.error = true;
-        })
-        .finally(() => { 
-          this.$store.dispatch('createApplication', this.application).then(() => {
-            router.push({ name: 'ApplicationOverview', params: { applicationId: this.application.data.id } });
-          })
+        this.$store.dispatch('createApplication', this.application).then((response) => {
+          router.push({ name: 'ApplicationOverview', params: { applicationId: response.data.id } });
         })
       }
     },
