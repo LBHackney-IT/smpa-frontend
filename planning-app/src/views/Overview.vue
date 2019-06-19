@@ -1,11 +1,10 @@
 <template>
   <div>
-    <div class="purpose-message govuk-body">
+    <div class="purpose-message govuk-body" v-if="applicationAddress">
       <p>Application type and site location are based entirely on the selections you have made. <a class="govuk-link" href="">Change</a></p>
-
-      <!-- <span>{{this.siteInfo.siteLocation.buildingNumber}}<br>
-      {{this.siteInfo.siteLocation.street}}<br>
-      {{this.siteInfo.siteLocation.postcode}}</span>  -->
+      <span>{{applicationAddress.buildingNumber}}<br>
+      {{applicationAddress.street}}<br>
+      {{applicationAddress.postcode}}</span> 
     </div>
     <h1 class="govuk-heading-xl">Application overview</h1>
 
@@ -18,7 +17,7 @@
     <ul class="govuk-list">
       <li><a class="govuk-link" href="#">Location of the works</a></li>
       <li><router-link :to="{ name: 'WorkStart'}" class="govuk-link">Starting the works</router-link></li>
-      <li><a class="govuk-link" href="#">Describe the proposed works</a></li>
+      <li><router-link :to="{ name: 'Proposal'}" class="govuk-link">Describe the proposed works</router-link></li>
       <li><a class="govuk-link" href="#">Describe the surroundings: Trees</a></li>
       <li><a class="govuk-link" href="#">Define materials</a></li>
     </ul>
@@ -56,24 +55,18 @@
 </template>
 
 <script>
+  import { getRouteAppId } from '../mixins/getRouteAppId';
   export default {
+    mixins: [ getRouteAppId ],
     name: 'Overview',
     components: {
     },
-    data () {
-      return {
-        applicationId: undefined,
-      }
-    },
-    created () {
-      this.getRouteData();
-    },
-    watch: {
-      '$route': 'getRouteData'
-    },
-    methods: {
-      getRouteData () {
-        this.applicationId = this.$route.params.applicationId;
+    computed: {
+      applicationAddress () {
+        debugger;
+        const applications = this.$store.state.state.applications;
+        const result = applications.find( application => application.data.id === this.applicationId );
+        return result.selectedAddress;
       }
     }
   }
