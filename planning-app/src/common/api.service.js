@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import axios from 'axios';
 import VueAxios from 'vue-axios';
-import JwtService from '@/common/jwt.service';
+//import JwtService from '@/common/jwt.service';
 import { API_URL } from '@/common/config';
 
 const ApiService = {
@@ -12,7 +12,9 @@ const ApiService = {
 
   setHeader () {
     Vue.axios.defaults.headers.common['Content-Type'] = 'application/json; charset=UTF-8';
-    Vue.axios.defaults.headers.common['Authorization'] = `jwt ${JwtService.getToken()}`;
+    //Vue.axios.defaults.headers.common['Authorization'] = `jwt ${JwtService.getToken()}`;
+    Vue.axios.defaults.headers.common['Authorization'] = 'jwt ' + process.env.VUE_APP_TEMP_AUTH_TOKEN;
+
   },
 
   get(resource) {
@@ -49,46 +51,55 @@ export default ApiService;
 
 export const AuthService = {
   post (payload) {
+    ApiService.setHeader();
     return ApiService.post(`auth`, payload);
   }
 }
 
 export const ApplicationsService = {
-  createApplication () {
-    return ApiService.post('applications');
+  create () {
+    ApiService.setHeader();
+    return ApiService.post('applications', {});
   },
 
-  updateApplication (id) {
+  update (id) {
+    ApiService.setHeader();
     return ApiService.update('applications', id);
   },
 
   addSiteAddress (payload) {
+    ApiService.setHeader();
     return ApiService.post('site-addresses', payload);
   }
 }
 
 export const ExtensionProposalService = {
-  post () {
-    return ApiService.post('extension-proposals');
+  post (payload) {
+    ApiService.setHeader();
+    return ApiService.post('extension-proposals', payload);
   },
 
   update (payload, id) {
+    ApiService.setHeader();
     return ApiService.update('extension-proposals', id, payload);
   }
 }
 
 export const EquipmentProposalService = {
-  post () {
-    return ApiService.post('equipment-proposals');
+  post (payload) {
+    ApiService.setHeader();
+    return ApiService.post('equipment-proposals', payload);
   },
 
   update (payload, id) {
+    ApiService.setHeader();
     return ApiService.update('equipment-proposals', id, payload);
   }
 }
 
 export const GenericWorkService = {
   get (resource) {
+    ApiService.setHeader();
     return ApiService.get(`${resource}`);
   }
 }
