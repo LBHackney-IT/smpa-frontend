@@ -46,3 +46,50 @@ const ApiService = {
 }
 
 export default ApiService;
+
+export const AuthService = {
+  post (payload) {
+    return ApiService.post(`auth`, payload);
+  }
+}
+
+export const ApplicationsService = {
+  createApplication () {
+    return ApiService.post('applications');
+  },
+
+  updateApplication (id) {
+    return ApiService.update('applications', id);
+  },
+
+  addSiteAddress (payload) {
+    return ApiService.post('site-addresses', payload);
+  }
+}
+
+export const ExtensionProposalService = {
+  post () {
+    return ApiService.post('extension-proposals');
+  },
+
+  update (payload, id) {
+    return ApiService.update('extension-proposals', id, payload);
+  }
+}
+
+export const EquipmentProposalService = {
+  post () {
+    return ApiService.post('equipment-proposals');
+  },
+
+  update (payload, id) {
+    return ApiService.update('equipment-proposals', id, payload);
+  }
+}
+
+export const GenericWorkService = {
+  get (resource) {
+    return ApiService.get(`${resource}`);
+  }
+}
+
