@@ -18,27 +18,27 @@ export const state = {
     proposal_extension: [
       {
         proposalName: "To the original house",
-        proposalId: "extension_original_house",
+        proposalId: "original_house",
         goTo: ["AboutChangesToOriginalHouse"]
       },
       {
         proposalName: "Outbuilding",
-        proposalId: "extension_incidental_buildings",
+        proposalId: "incidental_buildings",
         goTo: ["WorksXLocation", "Outbuilding"]
       },
       {
         proposalName: "To gates, fences, garden walls, etc",
-        proposalId: "extension_gates_fences_etc",
+        proposalId: "boundaries",
         goTo: ["GatesFencesWalls", "WorksXLocation"]
       },
       {
         proposalName: "To means of access to the site",
-        proposalId: "extension_means_of_access_to_site",
+        proposalId: "means_of_access",
         goTo: ["Access", "MoreAboutAccess"]
       },
       {
         proposalName: "Car and/or bike parking spaces",
-        proposalId: "extension_car_bike_spaces",
+        proposalId: "parking",
         goTo: ["Parking"]
       }
     ],

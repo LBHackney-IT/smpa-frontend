@@ -53,6 +53,17 @@ export function createExtensionProposal ({commit}, application) {
     });
 }
 
+export function updateExtensionProposal ({commit}, data) {
+  return ExtensionProposalService
+    .update(data.selectedProposals, data.extension_id )
+    .then( response => {
+      commit('updateProposal', {
+        'applicationId': data.application_id,
+        'data': response.data,
+        'type': 'extension'
+      });
+    });
+}
 
 export function createEquipmentProposal ({commit}, application) {
   return EquipmentProposalService
@@ -60,6 +71,18 @@ export function createEquipmentProposal ({commit}, application) {
     .then( response => {
       commit('addProposal', {
         'applicationId': application.application_id,
+        'data': response.data,
+        'type': 'equipment'
+      });
+    });
+}
+
+export function updateEquipmentProposal ({commit}, data) {
+  return ExtensionProposalService
+    .update(data.selectedProposals, data.extension_id )
+    .then( response => {
+      commit('updateProposal', {
+        'applicationId': data.application_id,
         'data': response.data,
         'type': 'equipment'
       });
@@ -76,4 +99,5 @@ export function createBothProposals ({commit}, application) {
       });
     });
 }
+
 

@@ -17,7 +17,7 @@
 
         <div class="govuk-checkboxes">
           <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="proposal-1" name="proposal" type="checkbox" value="extension_original_house" v-model="selectedProposal">
+            <input class="govuk-checkboxes__input" id="proposal-1" name="proposal" type="checkbox" value="original_house" v-model="selectedProposal">
             <label class="govuk-label govuk-checkboxes__label" for="proposal-1">
               <strong>You are making changes to the original house</strong>
               <div class="govuk-inset-text">
@@ -28,7 +28,7 @@
           </div>
 
           <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="proposal-2" name="proposal" type="checkbox" value="extension_incidental_buildings" v-model="selectedProposal">
+            <input class="govuk-checkboxes__input" id="proposal-2" name="proposal" type="checkbox" value="incidental_buildings" v-model="selectedProposal">
             <label class="govuk-label govuk-checkboxes__label" for="proposal-2">
               <strong>You are building, replacing or removing an outbuilding</strong>
               <p>Incidental building include garages, sheds, summerhouses and similar outbuildings.</p>
@@ -40,7 +40,7 @@
           </div>
 
           <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="proposal-4" name="proposal" type="checkbox" value="extension_gates_fences_etc" v-model="selectedProposal">
+            <input class="govuk-checkboxes__input" id="proposal-4" name="proposal" type="checkbox" value="boundaries" v-model="selectedProposal">
             <label class="govuk-label govuk-checkboxes__label" for="proposal-4">
               <strong>You are making changes to gates, fences, garden walls, boundary treatments etc.</strong>
               <div class="govuk-inset-text">
@@ -51,7 +51,7 @@
           </div>
 
           <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="proposal-7" name="proposal" type="checkbox" value="extension_means_of_access_to_site" v-model="selectedProposal">
+            <input class="govuk-checkboxes__input" id="proposal-7" name="proposal" type="checkbox" value="means_of_access" v-model="selectedProposal">
             <label class="govuk-label govuk-checkboxes__label" for="proposal-7">
               <strong>You are making changes to the site access</strong>
               <p>Any works that involve alteration to or creation of a new access to the public road (not including temporary closures or diversions).</p>
@@ -63,7 +63,7 @@
           </div>
 
           <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="proposal-9" name="proposal" type="checkbox" value="extension_car_bike_spaces" v-model="selectedProposal">
+            <input class="govuk-checkboxes__input" id="proposal-9" name="proposal" type="checkbox" value="parking" v-model="selectedProposal">
             <label class="govuk-label govuk-checkboxes__label" for="proposal-9">
               <strong>You are making changes to car and/or bike parking spaces</strong>
             </label>
@@ -72,45 +72,34 @@
       </fieldset>
     </div>
     <free-description></free-description>
-		<v-cta name="Continue" :onClick="navigate"></v-cta>
-    <!-- <review-works></review-works> -->
+		<v-cta name="Continue" :onClick="submit"></v-cta>
 	</div>
 </template>
 
 <script>
 import vCta from '../../components/Cta.vue';
 import router from '../../router';
-import reviewWorks from './reviewWorks.vue';
 import FreeDescription from '../../components/FreeDescription.vue';
+import { getRouteAppId } from '../../mixins/getRouteAppId';
 
 export default {
-	name: 'AboutProposal',
+  name: 'AboutProposal',
+  mixins: [ getRouteAppId ],
 	components: {
     vCta,
-    reviewWorks,
     FreeDescription
   },
   data () {
     return {
-      selectedProposal: [],
-      typeOfExtension: [],
-      question: 'About the extension, improvement or alteration'
+      selectedProposal: []
+    }
+  },
+  computed: {
+    extensionId () {
+      return this.$store.getters.getExtensionId;
     }
   },
 	methods: {
-    collectDataAndStore () {
-
-			let question = {
-				question: this.question,
-				answers: {}
-      };
-      
-      question.answers.required = true;
-      question.answers.proposal = this.selectedProposal;
-      question.answers.typeOfExtension = this.typeOfExtension;
-			this.$store.commit('addAboutProposalAnswers', JSON.parse(JSON.stringify(question)));
-    },
-    
     updateNavigation () {
       var navigationInfo = {
         currentLevel: 'proposal_extension',
@@ -126,25 +115,19 @@ export default {
         router.push({ name: this.$store.state.state.proposalFlow[currentLevelInMap + 1].goTo[0], params: {currentLevelInfo: this.$store.state.state.proposalFlow[currentLevelInMap + 1], id: this.$store.state.state.proposalFlow[currentLevelInMap + 1].proposalId } });
       });
     },
-    navigate() {
-      //this.collectDataAndStore();
-      this.updateNavigation();
-    },
-    proposalIsChecked(selectedProposal) {
-      const result = this.selectedProposal.find(function(proposal) {
-        return proposal === selectedProposal;
+    submit() {
+      let selectedProposals = {};
+
+      this.selectedProposal.forEach(function(element) {
+        selectedProposals[element] = {};
       });
-      return result ? true : false;
+
+      const extensionId = this.$store.getters.getExtensionId(this.applicationId);
+
+      this.$store.dispatch('updateExtensionProposal', { "application_id": this.applicationId, selectedProposals, "extension_id": extensionId }).then(() => {
+        this.updateNavigation();
+      })
     }
-  },
-  computed: {
-		isInConservationArea () {
-      if (this.$store.state.site && this.$store.state.site.siteConstraints && this.$store.state.site.siteConstraints.conservationArea) {
-        return this.$store.state.site.siteConstraints.conservationArea;
-      } else {
-        return false;
-      }
-		}
-	}
+  }
 }
 </script>

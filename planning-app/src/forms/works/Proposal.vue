@@ -38,44 +38,32 @@
       </fieldset>
     </div>
     <free-description></free-description>
-		<v-cta name="Continue" :onClick="navigate"></v-cta>
-    <!-- <review-works></review-works> -->
+		<v-cta name="Continue" :onClick="submit"></v-cta>
 	</div>
 </template>
 
 <script>
 import vCta from '../../components/Cta.vue';
 import router from '../../router';
-import reviewWorks from './reviewWorks.vue';
 import FreeDescription from '../../components/FreeDescription.vue';
+import { getRouteAppId } from '../../mixins/getRouteAppId';
 
 export default {
-	name: 'Proposal',
+  name: 'Proposal',
+  mixins: [ getRouteAppId ],
 	components: {
     vCta,
-    reviewWorks,
     FreeDescription
   },
   data () {
     return {
       question: 'About the works',
       selectedProposal: [],
-      selectedEquipment: []
+      selectedEquipment: [],
+      apiResponse: undefined
     }
   },
 	methods: {
-    collectDataAndStore () {
-
-			let question = {
-				question: this.question,
-				answers: {}
-      };
-      
-      question.answers.required = true;
-      question.answers.proposal = this.selectedProposal;
-      question.answers.equipments = this.selectedEquipment;
-			this.$store.commit('addProposalAnswers', JSON.parse(JSON.stringify(question)));
-    },
     updateNavigation () {
       var navigationInfo = {
         currentLevel: 'proposal',
@@ -83,28 +71,26 @@ export default {
       }
 
       this.$store.dispatch('createFirstFlow', JSON.parse(JSON.stringify(navigationInfo))).then(() => {
-        router.push({ name: this.$store.state.state.proposalFlow[0].goTo });
+        router.push({ name: this.$store.state.state.proposalFlow[0].goTo, params: { applicationId: this.applicationId } });
       });
     },
-    navigate() {
-      this.collectDataAndStore();
-      this.updateNavigation();
-    },
-    proposalIsChecked(selectedProposal) {
-      const result = this.selectedProposal.find(function(proposal) {
-        return proposal === selectedProposal;
-      });
-      return result ? true : false;
-    }
-  },
-  computed: {
-		isInConservationArea () {
-      if (this.$store.state.site && this.$store.state.site.siteConstraints && this.$store.state.site.siteConstraints.conservationArea) {
-        return this.$store.state.site.siteConstraints.conservationArea;
+    submit() {
+      if (this.selectedProposal.length === 2) {
+        this.$store.dispatch('createBothProposals', { "application_id": this.applicationId }).then(() => {
+           this.updateNavigation();
+        })
+
+      } else if (this.selectedProposal[0] === 'proposal_extension') {
+        this.$store.dispatch('createExtensionProposal', { "application_id": this.applicationId }).then(() => {
+           this.updateNavigation();
+        })
       } else {
-        return false;
+        // would then be "proposal_equipment"
+        this.$store.dispatch('createEquipmentProposal', { "application_id": this.applicationId }).then(() => {
+           this.updateNavigation();
+        })
       }
-		}
-	}
+    }
+  }
 }
 </script>

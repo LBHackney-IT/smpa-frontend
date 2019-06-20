@@ -34,7 +34,24 @@ export function addProposal (state, data) {
 
     state.state.applications[position].data = applicationData;
   }
+}
 
+export function updateProposal (state, data) {
+  const position = state.state.applications.findIndex( application => application.data.id === data.applicationId );
+
+  if (position > -1) {
+    let applicationData = state.state.applications[position].data;
+    let merged = {};
+
+    if (data.type === 'extension') {
+      merged = {...applicationData.extension, ...data.data};
+      state.state.applications[position].data.extension = merged;
+
+    } else if (data.type === 'equipment') {
+      merged = {...applicationData.equipment, ...data.data};
+      state.state.applications[position].data.equipment = merged;
+    }
+  }
 }
 
 export function createFirstFlow (state, data) {
