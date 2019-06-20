@@ -70,6 +70,11 @@ export const ApplicationsService = {
   addSiteAddress (payload) {
     ApiService.setHeader();
     return ApiService.post('site-addresses', payload);
+  },
+
+  updateSiteAddress (id, payload) {
+    ApiService.setHeader();
+    return ApiService.update('site-addresses', id, payload);
   }
 }
 
@@ -101,6 +106,21 @@ export const GenericWorkService = {
   get (resource) {
     ApiService.setHeader();
     return ApiService.get(`${resource}`);
+  }
+}
+
+export const CreateBothProposals = {
+  create (id) {
+    return Vue.axios.all([
+      ExtensionProposalService.post(id), 
+      EquipmentProposalService.post(id)
+    ])
+    .then(axios.spread(function (extension, equipment) {
+      let response = {};
+      response.extension = extension.data;
+      response.equipment = equipment.data;
+      return response;
+    }));
   }
 }
 

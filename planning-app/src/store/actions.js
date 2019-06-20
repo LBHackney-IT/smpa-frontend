@@ -1,4 +1,9 @@
-import { ApplicationsService, ExtensionProposalService } from '@/common/api.service'
+import { 
+  ApplicationsService, 
+  ExtensionProposalService, 
+  EquipmentProposalService,
+  CreateBothProposals 
+} from '@/common/api.service';
 
 export function createApplication ({commit}, applicationData) {
   return ApplicationsService
@@ -36,18 +41,39 @@ export function updateFlow ({commit}, data) {
   });
 }
 
-export function createExtensionProposal ({commit}, data) {
+export function createExtensionProposal ({commit}, application) {
   return ExtensionProposalService
-    .post(data)
+    .post(application)
     .then( response => {
+      commit('addProposal', {
+        'applicationId': application.application_id,
+        'data': response.data,
+        'type': 'extension'
+      });
     });
 }
 
 
-export function createEquipmentProposal ({commit}, data) {
+export function createEquipmentProposal ({commit}, application) {
   return EquipmentProposalService
-    .post(data)
+    .post(application)
     .then( response => {
+      commit('addProposal', {
+        'applicationId': application.application_id,
+        'data': response.data,
+        'type': 'equipment'
+      });
+    });
+}
+
+export function createBothProposals ({commit}, application) {
+  return CreateBothProposals
+    .create(application)
+    .then ( response => {
+      commit('addProposal', {
+        'applicationId': application.application_id,
+        'data': response
+      });
     });
 }
 

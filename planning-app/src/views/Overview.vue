@@ -63,7 +63,6 @@
     },
     computed: {
       applicationAddress () {
-        debugger;
         const applications = this.$store.state.state.applications;
         const result = applications.find( application => application.data.id === this.applicationId );
         return result.selectedAddress;

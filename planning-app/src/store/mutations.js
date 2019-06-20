@@ -8,9 +8,33 @@ export function createApplication (state, data) {
 export function updateApplication (state, data) {
   const position = state.state.applications.findIndex( application => application.data.id === data.id );
 
-  if (position) {
+  if (position > -1) {
     state.state.applications[position].data = data;
   }
+}
+
+export function addProposal (state, data) {
+  const position = state.state.applications.findIndex( application => application.data.id === data.applicationId );
+
+  if (position > -1) {
+    let applicationData = state.state.applications[position].data;
+
+    if (data.type === 'extension') {
+      applicationData.extension = data.data;
+
+      state.state.applications[position].data = applicationData;
+    } else if (data.type === 'equipment') {
+      applicationData.equipment = data.data;
+    } else {
+      //then it is both
+      
+      let merged = {...applicationData, ...data.data};
+      applicationData = merged;
+    }
+
+    state.state.applications[position].data = applicationData;
+  }
+
 }
 
 export function createFirstFlow (state, data) {
