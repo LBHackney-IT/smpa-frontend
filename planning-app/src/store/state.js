@@ -74,64 +74,64 @@ export const state = {
         goTo: ["WorksXLocation"]
       }
     ],
-    extension_original_house: [
+    original_house: [
       {
         proposalName: "Single storey extension",
-        proposalId: "extension_original_house_single_storey_extension",
+        proposalId: "single_storey_extension",
         goTo: ["WorksXLocation"]
       },
       {
         proposalName: "Two storey extension",
-        proposalId: "extension_original_house_two_storey_extension",
+        proposalId: "two_storey_extension",
         goTo: ["WorksXLocation"]
       },
       {
         proposalName: "Part single / Part two storey extension",
-        proposalId: "extension_original_house_part_single_part_two_storey_extension",
+        proposalId: "part_single_part_two_storey_extension",
         goTo: ["WorksXLocation"]
       },
       {
         proposalName: "Basement",
-        proposalId: "extension_original_house_basement",
+        proposalId: "basement",
         goTo: ["Basement", "WorksXLocation"]
       },
       {
         proposalName: "Roof works",
-        proposalId: "extension_original_house_roof_works",
+        proposalId: "roof",
         goTo: ["Roofs", "WorksXLocation"]
       },
       {
         proposalName: "Outbuilding",
-        proposalId: "extension_original_house_outbuilding",
+        proposalId: "outbuilding",
         goTo: ["WorksXLocation"]
       },
       {
         proposalName: "Porch",
-        proposalId: "extension_original_house_porch",
+        proposalId: "porch",
         goTo: ["WorksXLocation"]
       },
       {
         proposalName: "Balcony or terrace",
-        proposalId: "extension_original_house_balcony_terrace",
+        proposalId: "balcony_terrace",
         goTo: ["WorksXLocation"]
       },
       {
         proposalName: "Staircase",
-        proposalId: "extension_original_house_staircase",
+        proposalId: "staircase",
         goTo: ["WorksXLocation"]
       },
       {
         proposalName: "Addition and/or replacement of windows and doors",
-        proposalId: "extension_original_house_add_replacement_windows_doors",
+        proposalId: "windows_doors",
         goTo: ["WorksXLocation"]
       },
       {
         proposalName: "Changing and/or adding cladding",
-        proposalId: "extension_original_house_cladding",
+        proposalId: "cladding",
         goTo: ["WorksXLocation"]
       }
     ],
-    extension_car_bike_spaces: [
+    parking: [
       {
         proposalName: "Only for pedestrian access",
         proposalId: "extension_car_bike_spaces_only_pedestrian_access",

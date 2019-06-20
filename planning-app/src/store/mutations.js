@@ -51,6 +51,8 @@ export function updateProposal (state, data) {
       merged = {...applicationData.equipment, ...data.data};
       state.state.applications[position].data.equipment = merged;
     }
+
+    console.log('final state', state.state.applications[position]);
   }
 }
 
@@ -122,7 +124,6 @@ export function updateFlow (state, data) {
     });
 
     flow.push(selectedProposal);
-
   });
 
   var currentLevelPosition = state.state.proposalFlow.findIndex(x => x.proposalId === currentLevelInMap);
@@ -130,8 +131,6 @@ export function updateFlow (state, data) {
   for (let i = 0; i < flow.length; i++) { 
     state.state.proposalFlow.splice(currentLevelPosition + 1 + i, 0, flow[i]);
   }
-
-  // console.log('--------FINAL FLOW', state.state.proposalFlow);
 }
 
 
