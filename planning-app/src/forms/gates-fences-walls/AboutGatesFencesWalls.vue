@@ -15,36 +15,12 @@
         </span>
 
         <div class="govuk-checkboxes">
-          <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="proposal-1" name="proposal" type="checkbox" value="Addition of a new entrance" v-model="selectedProposal">
-            <label class="govuk-label govuk-checkboxes__label" for="proposal-1">
-              <strong>Addition of a new gate</strong>
+          <div class="govuk-checkboxes__item" v-bind:key="option.id" v-for="option in this.defaultOptions">
+            <input class="govuk-checkboxes__input" v-bind:id="option.id" name="proposal" type="checkbox" v-bind:value="option.id" v-model="selectedProposal">
+            <label class="govuk-label govuk-checkboxes__label" v-bind:for="option.id">
+              <strong>{{option.name}}</strong>
             </label>
           </div>
-
-          <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="proposal-4" name="proposal" type="checkbox" value="Removal of an entrance" v-model="selectedProposal">
-            <label class="govuk-label govuk-checkboxes__label" for="proposal-4">
-              <strong>Removal of a gate</strong>
-            </label>
-          </div>
-
-          <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="proposal-7" name="proposal" type="checkbox" value="Replacement and/or repair of wall" v-model="selectedProposal">
-            <label class="govuk-label govuk-checkboxes__label" for="proposal-7">
-              <strong>Replacement and/or repair of any boundary treatment</strong>
-            </label>
-          </div>
-
-          <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="proposal-7" name="proposal" type="checkbox" value="Replacement and/or repair of pillar caps" v-model="selectedProposal">
-            <label class="govuk-label govuk-checkboxes__label" for="proposal-7">
-              <strong>Replacement and/or repair of pillar caps </strong>
-            </label>
-          </div>
-
-
-
         </div>
       </fieldset>
     </div>
@@ -68,11 +44,15 @@ export default {
   data () {
     return {
       selectedProposal: [],
-      currentWorks: undefined
+      currentWorks: undefined,
+      defaultOptions: undefined
     }
   },
   created () {
     this.fetchData();
+  },
+  beforeMount () {
+    this.loadDefaultOptions();
   },
   watch: {
     '$route': 'fetchData'
@@ -91,6 +71,11 @@ export default {
         return proposal === selectedProposal;
       });
       return result ? true : false;
+    },
+    loadDefaultOptions() {
+      this.$store.dispatch('getDefaultData', 'border-works-types').then((response) => {
+        this.defaultOptions = response.data;
+      })
     }
   },
   computed: {

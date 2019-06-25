@@ -15,22 +15,10 @@
           Select one
         </span>
 
-				<div class="govuk-radios__item">
-          <input class="govuk-radios__input" id="access-only-pedestrian" name="access-only-pedestrian" type="radio" value="car-parking-spaces" v-model="typeOfAlteration">
-          <label class="govuk-label govuk-radios__label" for="access-only-pedestrian">
-            Only car parking spaces
-          </label>
-        </div>
-        <div class="govuk-radios__item">
-          <input class="govuk-radios__input" id="access-only-vehicle" name="access-only-vehicle" type="radio" value="cycle-parking-spaces" v-model="typeOfAlteration">
-          <label class="govuk-label govuk-radios__label" for="access-only-vehicle">
-            Only bike parking spaces
-          </label>
-        </div>
-        <div class="govuk-radios__item">
-          <input class="govuk-radios__input" id="access-both" name="access-both" type="radio" value="car-and-bike-parking-spaces" v-model="typeOfAlteration">
-          <label class="govuk-label govuk-radios__label" for="access-both">
-            Both, car and bike parking spaces
+				<div class="govuk-radios__item" v-bind:key="option.id" v-for="option in this.defaultOptions">
+          <input class="govuk-radios__input" v-bind:id="option.id" v-bind:name="option.name" type="radio" v-bind:value="option.id" v-model="typeOfAlteration">
+          <label class="govuk-label govuk-radios__label" v-bind:for="option.id">
+            {{option.name}}
           </label>
         </div>
 			</fieldset>
@@ -55,11 +43,15 @@ export default {
 	},
 	data () {
     return {
+      defaultOptions: undefined,
       alterationToAccess: '',
       typeOfAlteration: '',
       currentWorks: undefined,
       warningMessage: 'Any public footpath that crosses or adjoins the site, or is affected, must be shown clearly on the plans. This includes any proposals that may require a closure or diversion.'
     }
+  },
+  beforeMount () {
+    this.loadDefaultOptions();
   },
   computed: {
 		hasAlterationToAccess () {
@@ -88,6 +80,11 @@ export default {
       } else {
         return;
       }
+    },
+    loadDefaultOptions() {
+      this.$store.dispatch('getDefaultData', 'parking-works-scopes').then((response) => {
+        this.defaultOptions = response.data;
+      })
     }
   }
 

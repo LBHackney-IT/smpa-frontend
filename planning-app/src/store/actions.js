@@ -2,7 +2,9 @@ import {
   ApplicationsService, 
   ExtensionProposalService, 
   EquipmentProposalService,
-  CreateBothProposals 
+  CreateBothProposals,
+  GenericWorkService,
+  SubmitWorksLocation 
 } from '@/common/api.service';
 
 export function createApplication ({commit}, applicationData) {
@@ -101,3 +103,30 @@ export function createBothProposals ({commit}, application) {
 }
 
 
+export function getDefaultData ({commit}, type) {
+  return GenericWorkService
+    .get(type)
+    .then( response => {
+      return response;
+    });
+}
+
+export function getDefaultDataFromTwoSources ({commit}, resource) {
+  return GenericWorkService
+    .getBoth(resource)
+    .then( response => {
+      return response;
+    });
+}
+
+export function submitWorksLocation ({commit}, payload) {
+  return SubmitWorksLocation
+    .update(payload)
+    .then( response => {
+      commit('updateProposal', {
+        'applicationId': response.data.application_id,
+        'data': response.data,
+        'type': payload.type
+      });
+    });
+}

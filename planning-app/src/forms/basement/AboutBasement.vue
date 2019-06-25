@@ -16,32 +16,10 @@
         </span>
 
         <div class="govuk-checkboxes">
-          <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="proposal-1" name="proposal" type="checkbox" value="Single storey extension" v-model="selectedProposal">
-            <label class="govuk-label govuk-checkboxes__label" for="proposal-1">
-              <strong>Excavation of a new basement</strong>
-            </label>
-          </div>
-
-          <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="proposal-1" name="proposal" type="checkbox" value="Enlargement of an existing basement" v-model="selectedProposal">
-            <label class="govuk-label govuk-checkboxes__label" for="proposal-1">
-              <strong>Enlargement of an existing basement</strong>
-            </label>
-          </div>
-
-
-          <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="proposal-2" name="proposal" type="checkbox" value="Two storey extension" v-model="selectedProposal">
-            <label class="govuk-label govuk-checkboxes__label" for="proposal-2">
-              <strong>Addition of lightwell(s)</strong>
-            </label>
-          </div>
-
-          <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="proposal-3" name="proposal" type="checkbox" value="Basement works" v-model="selectedProposal">
-            <label class="govuk-label govuk-checkboxes__label" for="proposal-3">
-              <strong>Other alterations to the appearance of the house</strong>
+          <div class="govuk-checkboxes__item" v-bind:key="option.id" v-for="option in this.defaultOptions">
+            <input class="govuk-checkboxes__input" v-bind:id="option.id" name="proposal" type="checkbox" v-bind:value="option.id" v-model="selectedProposal">
+            <label class="govuk-label govuk-checkboxes__label" v-bind:for="option.id">
+              <strong>{{option.name}}</strong>
             </label>
           </div>
         </div>
@@ -67,8 +45,12 @@ export default {
   data () {
     return {
       selectedProposal: [],
-      currentWorks: undefined
+      currentWorks: undefined,
+      defaultOptions: undefined
     }
+  },
+  beforeMount () {
+    this.loadDefaultOptions();
   },
   created () {
     this.fetchData();
@@ -83,6 +65,11 @@ export default {
     navigate() {
       var routerParams = Navigate.calculateNavigation(this.$store.state.state.proposalFlow, this.currentWorks, 'Basement');
       router.push(routerParams);
+    },
+    loadDefaultOptions() {
+      this.$store.dispatch('getDefaultData', 'basement-works-types').then((response) => {
+        this.defaultOptions = response.data;
+      })
     }
   }
 }

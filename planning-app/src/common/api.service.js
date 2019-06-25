@@ -106,6 +106,26 @@ export const GenericWorkService = {
   get (resource) {
     ApiService.setHeader();
     return ApiService.get(`${resource}`);
+  },
+
+  getBoth (resources) {
+    ApiService.setHeader();
+
+    return Vue.axios.all([
+      ApiService.get(`${resources.general}`), 
+      ApiService.get(`${resources.conservationArea}`)
+    ])
+    .then(axios.spread(function (responseGeneral, responseConservationArea) {
+      let response = [];
+
+      response = responseGeneral.data;
+
+      responseConservationArea.data.forEach(function(element) {
+        response.push(element);
+      });
+      
+      return response;
+    }));
   }
 }
 
@@ -121,6 +141,13 @@ export const CreateBothProposals = {
       response.equipment = equipment.data;
       return response;
     }));
+  }
+}
+
+export const SubmitWorksLocation = {
+  update (payload) {
+    ApiService.setHeader();
+    return ApiService.update(payload.resource, payload.id, payload.data);
   }
 }
 

@@ -17,22 +17,10 @@
           Select one
         </span>
 
-				<div class="govuk-radios__item">
-          <input class="govuk-radios__input" id="access-only-pedestrian" name="access-only-pedestrian" type="radio" value="pedestrian" v-model="typeOfAlteration">
-          <label class="govuk-label govuk-radios__label" for="access-only-pedestrian">
-            Only for pedestrian access
-          </label>
-        </div>
-        <div class="govuk-radios__item">
-          <input class="govuk-radios__input" id="access-only-vehicle" name="access-only-vehicle" type="radio" value="vehicle" v-model="typeOfAlteration">
-          <label class="govuk-label govuk-radios__label" for="access-only-vehicle">
-            Only for vehicle access
-          </label>
-        </div>
-        <div class="govuk-radios__item">
-          <input class="govuk-radios__input" id="access-both" name="access-both" type="radio" value="both" v-model="typeOfAlteration">
-          <label class="govuk-label govuk-radios__label" for="access-both">
-            For vehicle and pedestrian access
+				<div class="govuk-radios__item" v-bind:key="option.id" v-for="option in this.defaultOptions">
+          <input class="govuk-radios__input" v-bind:id="option.id" v-bind:name="option.name" type="radio" v-bind:value="option.id" v-model="typeOfAlteration">
+          <label class="govuk-label govuk-radios__label" v-bind:for="option.id">
+            {{option.name}}
           </label>
         </div>
 			</fieldset>
@@ -54,11 +42,15 @@ export default {
 	},
 	data () {
     return {
+      defaultOptions: undefined,
       alterationToAccess: '',
       typeOfAlteration: '',
       currentWorks: undefined,
       warningMessage: 'Any public footpath affected by the site must be shown on the plans. This includes temporary closures or diversions.'
     }
+  },
+  beforeMount () {
+    this.loadDefaultOptions();
   },
   created () {
     this.fetchData();
@@ -73,6 +65,11 @@ export default {
     },
     navigate() {
       router.push({ name: 'MoreAboutAccess', params: { type: this.typeOfAlteration, currentLevelInfo: this.currentWorks} });
+    },
+    loadDefaultOptions() {
+      this.$store.dispatch('getDefaultData', 'access-works-scopes').then((response) => {
+        this.defaultOptions = response.data;
+      })
     }
   }
 
