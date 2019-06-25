@@ -13,13 +13,13 @@
         </legend>
         <div class="govuk-radios govuk-radios--inline">
 					<div class="govuk-radios__item">
-						<input class="govuk-radios__input" id="work-existing-outbuilding-1" name="work-existing-outbuilding" type="radio" value="Yes" v-model="workStarted">
+						<input class="govuk-radios__input" id="work-existing-outbuilding-1" name="work-existing-outbuilding" type="radio" value="true" v-model="existingOutbuilding">
 						<label class="govuk-label govuk-radios__label" for="work-existing-outbuilding-1">
 							Yes
 						</label>
 					</div>
 					<div class="govuk-radios__item">
-						<input class="govuk-radios__input" id="work-existing-outbuilding-2" name="work-existing-outbuilding" type="radio" value="No" v-model="workStarted">
+						<input class="govuk-radios__input" id="work-existing-outbuilding-2" name="work-existing-outbuilding" type="radio" value="false" v-model="existingOutbuilding">
 						<label class="govuk-label govuk-radios__label" for="work-existing-outbuilding-2">
 							No
 						</label>
@@ -30,11 +30,11 @@
         <label class="govuk-label" for="more-detail">
           Can you provide more detail?
         </label>
-        <textarea class="govuk-textarea" id="more-detail" name="more-detail" rows="5" aria-describedby="more-detail-hint"></textarea>
+        <textarea class="govuk-textarea" id="more-detail" name="more-detail" rows="10" aria-describedby="more-detail-hint" v-model="details"></textarea>
       </div>
     </div>
     <free-description></free-description>
-		<v-cta name="Continue" :onClick="navigate"></v-cta>
+		<v-cta name="Continue" :onClick="submit"></v-cta>
 	</div>
 </template>
 
@@ -43,9 +43,11 @@ import vCta from '../../components/Cta.vue';
 import router from '../../router';
 import Navigate from '../../common/navigate';
 import FreeDescription from '../../components/FreeDescription.vue';
+import { getRouteAppId } from '../../mixins/getRouteAppId';
 
 export default {
-	name: 'Outbuilding',
+  name: 'Outbuilding',
+  mixins: [ getRouteAppId ],
 	components: {
     vCta,
     FreeDescription
@@ -59,8 +61,9 @@ export default {
   data () {
     return {
       selectedProposal: [],
-      workStarted: undefined,
-      currentWorks: undefined
+      existingOutbuilding: undefined,
+      currentWorks: undefined,
+      details: undefined
     }
   },
 	methods: {
@@ -71,6 +74,20 @@ export default {
     navigate() {
       var routerParams = Navigate.calculateNavigation(this.$store.state.state.proposalFlow, this.currentWorks, 'Outbuilding');
       router.push(routerParams);
+    },
+    submit() {
+      let payload = {
+        "incidental_buildings": {
+          "removal_or_demolition": this.existingOutbuilding === 'true' ? true : false,
+          "details": this.details
+        }
+      };
+
+      const extensionId = this.$store.getters.getExtensionId(this.applicationId);
+
+      this.$store.dispatch('updateExtensionProposal', { "application_id": this.applicationId, 'selectedProposals': payload, "extension_id": extensionId }).then(() => {
+        this.navigate();
+      })
     }
   }
 }
