@@ -50,42 +50,18 @@
           </span>
 
           <div class="govuk-checkboxes">
-            <div class="govuk-checkboxes__item">
-              <input class="govuk-checkboxes__input" id="materials-1" name="materials-1" type="checkbox" value="timber-framed" v-model="windowMaterial" >
-              <label class="govuk-label govuk-checkboxes__label" for="materials-1">
-                Timber framed
-              </label>
+            <div class="vertical-checkboxes" v-bind:key="option.id" v-for="option in this.defaultOptions">
+              <div class="govuk-checkboxes__item">
+                <input class="govuk-checkboxes__input" v-bind:id="option.id" v-bind:name="option.name" type="checkbox" v-bind:value="option.id" v-model="checkedMaterials" >
+                <label class="govuk-label govuk-checkboxes__label" v-bind:for="option.id">
+                  {{option.name}}
+                </label>
+              </div>
+
+              <other-material v-if="materialIsChecked(option.id) && option.name === 'Other'" material="other" :secondQuestion="otherMaterialsDetailsQuestion" @clicked="onClickChild"></other-material>
+
+              <materials-info v-if="materialIsChecked(option.id) && option.name != 'Other'" v-bind:material="option.name" :secondQuestion="materialsDetailsQuestion" @clicked="onClickChild"></materials-info>
             </div>
-
-            <materials-info v-if="materialIsChecked('timber-framed')" material="timber-framed" :secondQuestion="materialsDetailsQuestion" @clicked="onClickChild"></materials-info>
-
-            <div class="govuk-checkboxes__item">
-              <input class="govuk-checkboxes__input" id="materials-2" name="materials-2" type="checkbox" value="pvc" v-model="windowMaterial">
-              <label class="govuk-label govuk-checkboxes__label" for="materials-2">
-                PVC
-              </label>
-            </div>
-
-            <materials-info v-if="materialIsChecked('pvc')" material="pvc" :secondQuestion="materialsDetailsQuestion" @clicked="onClickChild"></materials-info>
-
-            <div class="govuk-checkboxes__item">
-              <input class="govuk-checkboxes__input" id="materials-3" name="materials-3" type="checkbox" value="aluminium" v-model="windowMaterial">
-              <label class="govuk-label govuk-checkboxes__label" for="materials-3">
-                Aluminium
-              </label>
-            </div>
-
-            <materials-info v-if="materialIsChecked('aluminium')" material="aluminium" :secondQuestion="materialsDetailsQuestion" @clicked="onClickChild"></materials-info>
-
-            <div class="govuk-checkboxes__item">
-              <input class="govuk-checkboxes__input" id="materials-5" name="materials-5" type="checkbox" value="other" v-model="windowMaterial">
-              <label class="govuk-label govuk-checkboxes__label" for="materials-5">
-                Other
-              </label>
-            </div>
-
-            <other-material v-if="materialIsChecked('other')" material="other" :secondQuestion="otherMaterialsDetailsQuestion" @clicked="onClickChild"></other-material>
-
           </div>
         </fieldset>
       </div>
@@ -111,30 +87,39 @@ export default {
   data () {
     return {
       material: '',
-      windowMaterial: [],
+      checkedMaterials: [],
       materialsDetailsQuestion: 'Is the proposed material and finish the same as the existing?',
-      otherMaterialsDetailsQuestion: 'Is the proposed material and finish the same as the existing?'
+      otherMaterialsDetailsQuestion: 'Is the proposed material and finish the same as the existing?',
+      defaultOptions: undefined
     }
+  },
+  beforeMount () {
+    this.loadDefaultOptions();
   },
 	methods: {
     navigate() {
       router.push({ name: 'MaterialsStep4' });
     },
     materialIsChecked(selectedMaterial) {
-      const result = this.windowMaterial.find(function(material) {
+      const result = this.checkedMaterials.find(function(material) {
         return material === selectedMaterial;
       });
       return result ? true : false;
       
     },
-    onClickChild () {}
+    onClickChild () {},
+    loadDefaultOptions() {
+      this.$store.dispatch('getDefaultData', 'materials/options/window').then((response) => {
+        this.defaultOptions = response.data;
+      })
+    }
   },
   computed: {
 		hasNewWindows () {
 			return this.newWindows === 'Yes';
     },
     hasOtherWindowMaterial () {
-      return this.windowMaterial === 'other';
+      return this.checkedMaterials === 'other';
     }
 	}
 }

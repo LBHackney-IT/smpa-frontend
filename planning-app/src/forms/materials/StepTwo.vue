@@ -52,96 +52,18 @@
           </span>
 
           <div class="govuk-checkboxes">
-            <div class="govuk-checkboxes__item">
-              <input class="govuk-checkboxes__input" id="materials-1" name="materials-1" type="checkbox" value="concrete" v-model="checkedMaterials" >
-              <label class="govuk-label govuk-checkboxes__label" for="materials-1">
-                Concrete
-              </label>
+            <div class="vertical-checkboxes" v-bind:key="option.id" v-for="option in this.defaultOptions">
+              <div class="govuk-checkboxes__item">
+                <input class="govuk-checkboxes__input" v-bind:id="option.id" v-bind:name="option.name" type="checkbox" v-bind:value="option.id" v-model="checkedMaterials" >
+                <label class="govuk-label govuk-checkboxes__label" v-bind:for="option.id">
+                  {{option.name}}
+                </label>
+              </div>
+
+              <other-material v-if="materialIsChecked(option.id) && option.name === 'Other'" material="other" :secondQuestion="otherMaterialsDetailsQuestion" @clicked="onClickChild"></other-material>
+
+              <materials-info v-if="materialIsChecked(option.id) && option.name != 'Other'" v-bind:material="option.name" :secondQuestion="materialsDetailsQuestion" @clicked="onClickChild"></materials-info>
             </div>
-
-            <materials-info v-if="materialIsChecked('concrete')" material="concrete" :secondQuestion="materialsDetailsQuestion" @clicked="onClickChild"></materials-info>
-
-            <div class="govuk-checkboxes__item">
-              <input class="govuk-checkboxes__input" id="materials-2" name="materials-2" type="checkbox" value="render" v-model="checkedMaterials">
-              <label class="govuk-label govuk-checkboxes__label" for="materials-2">
-                Render
-              </label>
-            </div>
-
-            <materials-info v-if="materialIsChecked('render')" material="render" :secondQuestion="materialsDetailsQuestion" @clicked="onClickChild"></materials-info>
-
-            <div class="govuk-checkboxes__item">
-              <input class="govuk-checkboxes__input" id="materials-3" name="materials-3" type="checkbox" value="stone-cladding" v-model="checkedMaterials">
-              <label class="govuk-label govuk-checkboxes__label" for="materials-3">
-                Stone cladding
-              </label>
-            </div>
-
-            <materials-info v-if="materialIsChecked('stone-cladding')" material="stone-cladding" :secondQuestion="materialsDetailsQuestion" @clicked="onClickChild"></materials-info>
-
-            <div class="govuk-checkboxes__item">
-              <input class="govuk-checkboxes__input" id="materials-4" name="materials-4" type="checkbox" value="brick" v-model="checkedMaterials">
-              <label class="govuk-label govuk-checkboxes__label" for="materials-4">
-                Brick
-              </label>
-            </div>
-
-            <materials-info v-if="materialIsChecked('brick')" material="brick" :secondQuestion="materialsDetailsQuestion" @clicked="onClickChild"></materials-info>
-
-            <div class="govuk-checkboxes__item">
-              <input class="govuk-checkboxes__input" id="materials-5" name="materials-5" type="checkbox" value="ceramic-facade" v-model="checkedMaterials">
-              <label class="govuk-label govuk-checkboxes__label" for="materials-5">
-                Ceramic facade
-              </label>
-            </div>
-
-            <materials-info v-if="materialIsChecked('ceramic-facade')" material="ceramic-facade" :secondQuestion="materialsDetailsQuestion" @clicked="onClickChild"></materials-info>
-
-            <div class="govuk-checkboxes__item">
-              <input class="govuk-checkboxes__input" id="materials-6" name="materials-6" type="checkbox" value="wooden-cladding" v-model="checkedMaterials">
-              <label class="govuk-label govuk-checkboxes__label" for="materials-6">
-                Wooden cladding
-              </label>
-            </div>
-
-            <materials-info v-if="materialIsChecked('wooden-cladding')" material="wooden-cladding" :secondQuestion="materialsDetailsQuestion" @clicked="onClickChild"></materials-info>
-
-            <div class="govuk-checkboxes__item">
-              <input class="govuk-checkboxes__input" id="materials-7" name="materials-7" type="checkbox" value="metal-cladding" v-model="checkedMaterials">
-              <label class="govuk-label govuk-checkboxes__label" for="materials-7">
-                Metal cladding
-              </label>
-            </div>
-
-            <materials-info v-if="materialIsChecked('metal-cladding')" material="metal-cladding" :secondQuestion="materialsDetailsQuestion" @clicked="onClickChild"></materials-info>
-
-            <div class="govuk-checkboxes__item">
-              <input class="govuk-checkboxes__input" id="materials-8" name="materials-8" type="checkbox" value="plastic-cladding" v-model="checkedMaterials">
-              <label class="govuk-label govuk-checkboxes__label" for="materials-8">
-                Plastic cladding
-              </label>
-            </div>
-
-            <materials-info v-if="materialIsChecked('plastic-cladding')" material="plastic-cladding" :secondQuestion="materialsDetailsQuestion" @clicked="onClickChild"></materials-info>
-
-            <div class="govuk-checkboxes__item">
-              <input class="govuk-checkboxes__input" id="materials-9" name="materials-9" type="checkbox" value="glass" v-model="checkedMaterials">
-              <label class="govuk-label govuk-checkboxes__label" for="materials-9">
-                Glass
-              </label>
-            </div>
-
-            <materials-info v-if="materialIsChecked('glass')" material="glass" :secondQuestion="materialsDetailsQuestion" @clicked="onClickChild"></materials-info>
-
-            <div class="govuk-checkboxes__item">
-              <input class="govuk-checkboxes__input" id="materials-10" name="materials-10" type="checkbox" value="other" v-model="checkedMaterials">
-              <label class="govuk-label govuk-checkboxes__label" for="materials-10">
-                Other
-              </label>
-            </div>
-
-            <other-material v-if="materialIsChecked('other')" material="other" :secondQuestion="otherMaterialsDetailsQuestion" @clicked="onClickChild"></other-material>
-
           </div>
         </fieldset>
       </div>
@@ -169,8 +91,12 @@ export default {
       material: '',
       checkedMaterials: [],
       materialsDetailsQuestion: 'Is the proposed material and finish the same as the external walls?',
-      otherMaterialsDetailsQuestion: 'Is the proposed material and finish the same as the existing?'
+      otherMaterialsDetailsQuestion: 'Is the proposed material and finish the same as the existing?',
+      defaultOptions: undefined
     }
+  },
+  beforeMount () {
+    this.loadDefaultOptions();
   },
 	methods: {
     materialIsChecked(selectedMaterial) {
@@ -183,7 +109,12 @@ export default {
     navigate() {
       router.push({ name: 'MaterialsStep3' });
     },
-    onClickChild () {}
+    onClickChild () {},
+    loadDefaultOptions() {
+      this.$store.dispatch('getDefaultData', 'materials/options/wall').then((response) => {
+        this.defaultOptions = response.data;
+      })
+    }
   }
 }
 </script>
