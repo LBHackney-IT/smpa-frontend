@@ -27,14 +27,14 @@
           <label class="govuk-label" for="name">
             Current number of car parking spaces
           </label>
-          <input class="govuk-input" id="name" name="name" type="number">
+          <input class="govuk-input" id="name" name="name" type="number" v-model="current">
         </div>
 
         <div class="govuk-form-group">
           <label class="govuk-label" for="name">
             Total number of car parking spaces after completion
           </label>
-          <input class="govuk-input" id="name" name="name" type="number">
+          <input class="govuk-input" id="name" name="name" type="number" v-model="total">
         </div>
 			</fieldset>
 		</div>
@@ -48,9 +48,11 @@ import vCta from '../../components/Cta.vue';
 import router from '../../router';
 import WarningMessage from '../../components/WarningMessage.vue';
 import FreeDescription from '../../components/FreeDescription.vue';
+import { getRouteAppId } from '../../mixins/getRouteAppId';
 
 export default {
-	name: 'CarParkingSpaces',
+  name: 'CarParkingSpaces',
+  mixins: [ getRouteAppId ],
 	components: {
     vCta,
     WarningMessage,
@@ -62,7 +64,9 @@ export default {
       typeOfAlteration: '',
       warningMessage: 'Any public footpath that crosses or adjoins the site, or is affected, must be shown clearly on the plans. This includes any proposals that may require a closure or diversion.',
       type: undefined,
-      currentWorks: undefined
+      currentWorks: undefined,
+      current: undefined,
+      total: undefined
     }
   },
   created () {
@@ -88,6 +92,20 @@ export default {
       } else {
         return;
       }
+    },
+    submit() {
+      let payload = {
+        "parking": {
+          "current_car_parking_spaces": this.current,
+          "planned_car_parking_spaces": this.total
+        }
+      };
+
+      const extensionId = this.$store.getters.getExtensionId(this.applicationId);
+
+      this.$store.dispatch('updateExtensionProposal', { "application_id": this.applicationId, 'selectedProposals': payload, "extension_id": extensionId }).then(() => {
+        this.navigate();
+      })
     }
   }
 

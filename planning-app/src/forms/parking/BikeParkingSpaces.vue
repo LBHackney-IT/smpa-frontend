@@ -15,14 +15,14 @@
           <label class="govuk-label" for="name">
             Current number of bike parking spaces
           </label>
-          <input class="govuk-input" id="name" name="name" type="number">
+          <input class="govuk-input" id="name" name="name" type="number" v-model="current">
         </div>
 
         <div class="govuk-form-group">
           <label class="govuk-label" for="name">
             Total number of bike parking spaces after completion
           </label>
-          <input class="govuk-input" id="name" name="name" type="number">
+          <input class="govuk-input" id="name" name="name" type="number" v-model="total">
         </div>
 			</fieldset>
 		</div>
@@ -37,9 +37,11 @@ import router from '../../router';
 import WarningMessage from '../../components/WarningMessage.vue';
 import Navigate from '../../common/navigate';
 import FreeDescription from '../../components/FreeDescription.vue';
+import { getRouteAppId } from '../../mixins/getRouteAppId';
 
 export default {
-	name: 'BikeParkingSpaces',
+  name: 'BikeParkingSpaces',
+  mixins: [ getRouteAppId ],
 	components: {
     vCta,
     WarningMessage,
@@ -51,7 +53,9 @@ export default {
       typeOfAlteration: '',
       warningMessage: 'Any public footpath that crosses or adjoins the site, or is affected, must be shown clearly on the plans. This includes any proposals that may require a closure or diversion.',
       currentWorks: undefined,
-      type: undefined
+      type: undefined,
+      current: undefined,
+      total: undefined
     }
   },
   computed: {
@@ -77,6 +81,20 @@ export default {
         var routerParams = Navigate.calculateNavigation(this.$store.state.state.proposalFlow, this.currentWorks, 'Parking');
         router.push(routerParams);
       }
+    },
+    submit() {
+      let payload = {
+        "parking": {
+          "current_car_parking_spaces": this.current,
+          "planned_car_parking_spaces": this.total
+        }
+      };
+
+      const extensionId = this.$store.getters.getExtensionId(this.applicationId);
+
+      this.$store.dispatch('updateExtensionProposal', { "application_id": this.applicationId, 'selectedProposals': payload, "extension_id": extensionId }).then(() => {
+        this.navigate();
+      })
     }
   }
 

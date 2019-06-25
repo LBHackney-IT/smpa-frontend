@@ -69,11 +69,14 @@ export default {
       this.currentWorks = this.$route.params.currentLevelInfo;
     },
     navigate() {
-      if (this.typeOfAlteration === 'car-parking-spaces' || this.typeOfAlteration === 'car-and-bike-parking-spaces') {
+
+      //if car spaces or car and bike spaces are selected
+      // todo find a more elegant way of doing this (without using the id)
+      if (this.typeOfAlteration === "c4358d0e-c649-4b48-9a05-405d6ee90c0c" || this.typeOfAlteration === "8033164a-49e1-47db-810e-b0cac4ecd84b") {
         
         router.push({ name: 'CarParkingSpaces', params: { type: this.typeOfAlteration, currentLevelInfo: this.currentWorks } });
 
-      } else if (this.typeOfAlteration === 'cycle-parking-spaces') {
+      } else if (this.typeOfAlteration === "0e5f59ac-fb07-4419-8578-41e011a83d1f") {
 
         router.push({ name: 'BikeParkingSpaces', params: { type: this.typeOfAlteration, currentLevelInfo: this.currentWorks } });
 
