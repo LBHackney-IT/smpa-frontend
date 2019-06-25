@@ -52,79 +52,19 @@
           </span>
 
           <div class="govuk-checkboxes">
-            <div class="govuk-checkboxes__item">
-              <input class="govuk-checkboxes__input" id="materials-1" name="materials-1" type="checkbox" value="tiles" v-model="checkedMaterials" >
-              <label class="govuk-label govuk-checkboxes__label" for="materials-1">
-                Tiles
-              </label>
+
+            <div class="vertical-checkboxes" v-bind:key="option.id" v-for="option in this.defaultOptions">
+              <div class="govuk-checkboxes__item">
+                <input class="govuk-checkboxes__input" v-bind:id="option.id" v-bind:name="option.name" type="checkbox" v-bind:value="option.id" v-model="checkedMaterials" >
+                <label class="govuk-label govuk-checkboxes__label" v-bind:for="option.id">
+                  {{option.name}}
+                </label>
+              </div>
+
+              <other-material v-if="materialIsChecked(option.id) && option.name === 'Other'" material="other" :secondQuestion="otherMaterialsDetailsQuestion" @clicked="onClickChild"></other-material>
+
+              <materials-info v-if="materialIsChecked(option.id) && option.name != 'Other'" v-bind:material="option.name" :secondQuestion="materialsDetailsQuestion" @clicked="onClickChild"></materials-info>
             </div>
-
-            <materials-info v-if="materialIsChecked('tiles')" material="tiles" :secondQuestion="materialsDetailsQuestion" @clicked="onClickChild"></materials-info>
-
-            <div class="govuk-checkboxes__item">
-              <input class="govuk-checkboxes__input" id="materials-2" name="materials-2" type="checkbox" value="concrete" v-model="checkedMaterials">
-              <label class="govuk-label govuk-checkboxes__label" for="materials-2">
-                Concrete
-              </label>
-            </div>
-
-            <materials-info v-if="materialIsChecked('concrete')" material="concrete" :secondQuestion="materialsDetailsQuestion" @clicked="onClickChild"></materials-info>
-
-            <div class="govuk-checkboxes__item">
-              <input class="govuk-checkboxes__input" id="materials-3" name="materials-3" type="checkbox" value="slate" v-model="checkedMaterials">
-              <label class="govuk-label govuk-checkboxes__label" for="materials-3">
-                Slate
-              </label>
-            </div>
-
-            <materials-info v-if="materialIsChecked('slate')" material="slate" :secondQuestion="materialsDetailsQuestion" @clicked="onClickChild"></materials-info>
-
-            <div class="govuk-checkboxes__item">
-              <input class="govuk-checkboxes__input" id="materials-4" name="materials-4" type="checkbox" value="metal" v-model="checkedMaterials">
-              <label class="govuk-label govuk-checkboxes__label" for="materials-4">
-                Metal
-              </label>
-            </div>
-
-            <materials-info v-if="materialIsChecked('metal')" material="metal" :secondQuestion="materialsDetailsQuestion" @clicked="onClickChild"></materials-info>
-
-            <div class="govuk-checkboxes__item">
-              <input class="govuk-checkboxes__input" id="materials-5" name="materials-5" type="checkbox" value="thatch" v-model="checkedMaterials">
-              <label class="govuk-label govuk-checkboxes__label" for="materials-5">
-                Thatch
-              </label>
-            </div>
-
-            <materials-info v-if="materialIsChecked('thatch')" material="thatch" :secondQuestion="materialsDetailsQuestion" @clicked="onClickChild"></materials-info>
-
-            <div class="govuk-checkboxes__item">
-              <input class="govuk-checkboxes__input" id="materials-9" name="materials-9" type="checkbox" value="asphalt-shingles" v-model="checkedMaterials">
-              <label class="govuk-label govuk-checkboxes__label" for="materials-9">
-                Asphalt shingles
-              </label>
-            </div>
-
-            <materials-info v-if="materialIsChecked('asphalt-shingles')" material="asphalt-shingles" :secondQuestion="materialsDetailsQuestion" @clicked="onClickChild"></materials-info>
-
-            <div class="govuk-checkboxes__item">
-              <input class="govuk-checkboxes__input" id="materials-6" name="materials-6" type="checkbox" value="flat-roof" v-model="checkedMaterials">
-              <label class="govuk-label govuk-checkboxes__label" for="materials-6">
-                Flat Roof
-              </label>
-            </div>
-
-            <materials-info v-if="materialIsChecked('flat-roof')" material="flat-roof" :secondQuestion="materialsDetailsQuestion" @clicked="onClickChild"></materials-info>
-
-
-            <div class="govuk-checkboxes__item">
-              <input class="govuk-checkboxes__input" id="materials-10" name="materials-10" type="checkbox" value="other" v-model="checkedMaterials">
-              <label class="govuk-label govuk-checkboxes__label" for="materials-10">
-                Other
-              </label>
-            </div>
-
-            <other-material v-if="materialIsChecked('other')" material="other" :secondQuestion="otherMaterialsDetailsQuestion" @clicked="onClickChild"></other-material>
-
           </div>
         </fieldset>
       </div>
@@ -152,8 +92,12 @@ export default {
       material: '',
       checkedMaterials: [],
       materialsDetailsQuestion: 'Is the proposed material and finish the same as roof covering?',
-      otherMaterialsDetailsQuestion: 'Is the proposed material and finish the same as the existing?'
+      otherMaterialsDetailsQuestion: 'Is the proposed material and finish the same as the existing?',
+      defaultOptions: undefined
     }
+  },
+  beforeMount () {
+    this.loadDefaultOptions();
   },
 	methods: {
     navigate() {
@@ -166,7 +110,12 @@ export default {
       return result ? true : false;
       
     },
-    onClickChild () {}
+    onClickChild () {},
+    loadDefaultOptions() {
+      this.$store.dispatch('getDefaultData', 'materials/options/roof').then((response) => {
+        this.defaultOptions = response.data;
+      })
+    }
   }
 }
 </script>

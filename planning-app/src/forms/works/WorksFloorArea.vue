@@ -50,8 +50,7 @@
           </label>
           <input class="govuk-input govuk-!-width-one-quarter" id="one-quarter" name="one-quarter" type="number">
           <select class="govuk-select" id="sort" name="sort">
-            <option value="sqm" selected>sqm</option>
-            <option value="sqft">sqft</option>
+            <option value="sqm" v-bind:key="option.id" v-for="option in this.defaultOptions">{{option.name}}</option>
           </select>
         </div>
       </fieldset>
@@ -73,15 +72,21 @@ export default {
   },
   data () {
     return {
-      selectedProposal: []
+      selectedProposal: [],
+      defaultOptions: undefined
     }
   },
-  created () {
-      this.fetchData();
+  beforeMount () {
+    this.loadDefaultOptions();
   },
 	methods: {
     navigate() {
       router.push({ name: 'WorksData' });
+    },
+    loadDefaultOptions() {
+      this.$store.dispatch('getDefaultData', 'area-units').then((response) => {
+        this.defaultOptions = response.data;
+      })
     }
   },
   computed: {
