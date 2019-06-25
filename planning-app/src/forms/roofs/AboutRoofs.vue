@@ -26,7 +26,7 @@
       </fieldset>
     </div>
     <free-description></free-description>
-		<v-cta name="Continue" :onClick="navigate"></v-cta>
+		<v-cta name="Continue" :onClick="submit"></v-cta>
 	</div>
 </template>
 
@@ -35,9 +35,11 @@ import vCta from '../../components/Cta.vue';
 import router from '../../router';
 import Navigate from '../../common/navigate';
 import FreeDescription from '../../components/FreeDescription.vue';
+import { getRouteAppId } from '../../mixins/getRouteAppId';
 
 export default {
-	name: 'AboutRoofs',
+  name: 'AboutRoofs',
+  mixins: [ getRouteAppId ],
 	components: {
     vCta,
     FreeDescription
@@ -64,6 +66,21 @@ export default {
     navigate() {
       var routerParams = Navigate.calculateNavigation(this.$store.state.state.proposalFlow, this.currentWorks, 'Roofs');
       router.push(routerParams);
+    },
+    submit() {
+      let payload = {
+        "original_house": {
+          "roof": {
+            "works_type_ids": this.selectedProposal
+          }
+        }
+      };
+
+      const extensionId = this.$store.getters.getExtensionId(this.applicationId);
+
+      this.$store.dispatch('updateExtensionProposal', { "application_id": this.applicationId, 'selectedProposals': payload, "extension_id": extensionId }).then(() => {
+        this.navigate();
+      })
     },
     loadDefaultOptions() {
       this.$store.dispatch('getDefaultData', 'roof-works-types').then((response) => {
