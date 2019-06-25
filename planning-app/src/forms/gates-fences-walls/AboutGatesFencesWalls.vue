@@ -25,7 +25,7 @@
       </fieldset>
     </div>
     <free-description></free-description>
-		<v-cta name="Continue" :onClick="navigate"></v-cta>
+		<v-cta name="Continue" :onClick="submit"></v-cta>
 	</div>
 </template>
 
@@ -34,9 +34,12 @@ import vCta from '../../components/Cta.vue';
 import router from '../../router';
 import Navigate from '../../common/navigate';
 import FreeDescription from '../../components/FreeDescription.vue';
+import { getRouteAppId } from '../../mixins/getRouteAppId';
+
 
 export default {
-	name: 'AboutGatesFencesWalls',
+  name: 'AboutGatesFencesWalls',
+  mixins: [ getRouteAppId ],
 	components: {
     vCta,
     FreeDescription
@@ -73,8 +76,25 @@ export default {
       return result ? true : false;
     },
     loadDefaultOptions() {
-      this.$store.dispatch('getDefaultData', 'border-works-types').then((response) => {
+      this.$store.dispatch('getDefaultData', 'gate-fences-walls-types').then((response) => {
         this.defaultOptions = response.data;
+      })
+    },
+    submit() {
+      let payload = {
+        "boundaries": {
+          "gates_fences_walls": {
+            "works_type_ids": [
+              this.selectedProposal
+            ]
+          }
+        }
+      };
+
+      const extensionId = this.$store.getters.getExtensionId(this.applicationId);
+
+      this.$store.dispatch('updateExtensionProposal', { "application_id": this.applicationId, 'selectedProposals': payload, "extension_id": extensionId }).then(() => {
+        this.navigate();
       })
     }
   },

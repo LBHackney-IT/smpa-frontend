@@ -20,39 +20,25 @@
         </span>
 
         <div class="govuk-checkboxes">
-          <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="proposal-1" name="proposal" type="checkbox" value="Addition of a new entrance" v-model="selectedProposal">
-            <label class="govuk-label govuk-checkboxes__label" for="proposal-1">
-              <strong>Addition of a new entrance</strong>
+          <div class="govuk-checkboxes__item" v-bind:key="option.id" v-for="option in this.defaultOptions">
+            <input class="govuk-checkboxes__input" v-bind:id="option.id" name="proposal" type="checkbox" v-bind:value="option.id" v-model="selectedProposal">
+            <label class="govuk-label govuk-checkboxes__label" v-bind:for="option.id">
+              <strong>{{option.name}}</strong>
             </label>
           </div>
 
-
-          <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="proposal-2" name="proposal" type="checkbox" value="Removal of an entrance" v-model="selectedProposal">
-            <label class="govuk-label govuk-checkboxes__label" for="proposal-2">
-              <strong>Removal of an entrance</strong>
-            </label>
-          </div>
-
-          <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="proposal-3" name="proposal" type="checkbox" value="Improve disabled access" v-model="selectedProposal">
-            <label class="govuk-label govuk-checkboxes__label" for="proposal-3">
-              <strong>Addition of disabled access</strong>
-            </label>
-          </div>
-
-          <div class="govuk-checkboxes__item" v-if="this.type === 'vehicle' || this.type === 'both'">
+          <!-- todo fix this if  -->
+   <!--        <div class="govuk-checkboxes__item" v-if="this.type === 'vehicle' || this.type === 'both'">
             <input class="govuk-checkboxes__input" id="proposal-4" name="proposal" type="checkbox" value="Vehicle access" v-model="selectedProposal">
             <label class="govuk-label govuk-checkboxes__label" for="proposal-4">
               <strong>Dropped kerb and formation of vehicle access</strong>
             </label>
-          </div>
+          </div> -->
         </div>
       </fieldset>
     </div>
     <free-description></free-description>
-		<v-cta name="Continue" :onClick="navigate"></v-cta>
+		<v-cta name="Continue" :onClick="submit"></v-cta>
 	</div>
 </template>
 
@@ -61,10 +47,11 @@ import vCta from '../../components/Cta.vue';
 import router from '../../router';
 import Navigate from '../../common/navigate';
 import FreeDescription from '../../components/FreeDescription.vue';
-
+import { getRouteAppId } from '../../mixins/getRouteAppId';
 
 export default {
-	name: 'MoreAboutAccess',
+  name: 'MoreAboutAccess',
+  mixins: [ getRouteAppId ],
 	components: {
     vCta,
     FreeDescription
@@ -74,8 +61,12 @@ export default {
       selectedProposal: [],
       type: undefined,
       typeOfAlteration: undefined,
-      currentWorks: undefined
+      currentWorks: undefined,
+      defaultOptions: []
     }
+  },
+  beforeMount () {
+    this.loadDefaultOptions();
   },
   created () {
     this.fetchData();
@@ -92,6 +83,24 @@ export default {
     navigate() {
       var routerParams = Navigate.calculateNavigation(this.$store.state.state.proposalFlow, this.currentWorks, 'MoreAboutAccess');
       router.push(routerParams);
+    },
+    loadDefaultOptions() {
+      this.$store.dispatch('getDefaultData', 'access-works-types').then((response) => {
+        this.defaultOptions = response.data;
+      })
+    },
+    submit() {
+      let payload = {
+        "means_of_access": {
+          "access_works_sub_type_ids": this.selectedProposal
+        }
+      };
+
+      const extensionId = this.$store.getters.getExtensionId(this.applicationId);
+
+      this.$store.dispatch('updateExtensionProposal', { "application_id": this.applicationId, 'selectedProposals': payload, "extension_id": extensionId }).then(() => {
+        this.navigate();
+      })
     }
   },
   computed: {

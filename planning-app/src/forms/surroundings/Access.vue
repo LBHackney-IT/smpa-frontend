@@ -25,7 +25,7 @@
         </div>
 			</fieldset>
 		</div>
-		<v-cta name="Continue" :onClick="navigate"></v-cta>
+		<v-cta name="Continue" :onClick="submit"></v-cta>
 	</div>
 </template>
 
@@ -33,9 +33,11 @@
 import vCta from '../../components/Cta.vue';
 import router from '../../router';
 import WarningMessage from '../../components/WarningMessage.vue';
+import { getRouteAppId } from '../../mixins/getRouteAppId';
 
 export default {
-	name: 'Access',
+  name: 'Access',
+  mixins: [ getRouteAppId ],
 	components: {
     vCta,
     WarningMessage
@@ -64,11 +66,36 @@ export default {
       this.currentWorks = this.$route.params.currentLevelInfo;
     },
     navigate() {
-      router.push({ name: 'MoreAboutAccess', params: { type: this.typeOfAlteration, currentLevelInfo: this.currentWorks} });
+
+      let nameOfAlteration;
+
+      //todo find a more elegant way of doing this
+      if (this.typeOfAlteration === "6d7c5aa1-7c6b-42be-b791-8aed006b1482") {
+        nameOfAlteration = 'vehicle';
+      } else if (this.typeOfAlteration === "44c566ba-95dc-4cff-b0a9-53de934d309e") {
+        nameOfAlteration = 'pedestrian';
+      } else {
+        nameOfAlteration = 'both';
+      }
+
+      router.push({ name: 'MoreAboutAccess', params: { type: nameOfAlteration, currentLevelInfo: this.currentWorks} });
     },
     loadDefaultOptions() {
       this.$store.dispatch('getDefaultData', 'access-works-scopes').then((response) => {
         this.defaultOptions = response.data;
+      })
+    },
+    submit() {
+      let payload = {
+        "means_of_access": {
+          "access_works_scope_id": this.typeOfAlteration
+        }
+      };
+
+      const extensionId = this.$store.getters.getExtensionId(this.applicationId);
+
+      this.$store.dispatch('updateExtensionProposal', { "application_id": this.applicationId, 'selectedProposals': payload, "extension_id": extensionId }).then(() => {
+        this.navigate();
       })
     }
   }
