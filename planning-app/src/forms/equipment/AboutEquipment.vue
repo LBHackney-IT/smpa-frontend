@@ -15,49 +15,11 @@
         </span>
 
         <div class="govuk-checkboxes">
-          <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="equipment-1" name="equipment-1" type="checkbox" value="proposal_equipment_satellite_dish" v-model="selectedProposal">
-            <label class="govuk-label govuk-checkboxes__label" for="equipment-1">
-              <strong>Satellite dish</strong>
+          <div class="govuk-checkboxes__item" v-bind:key="option.id" v-for="option in this.defaultOptions">
+            <input class="govuk-checkboxes__input" v-bind:id="option.id" name="proposal" type="checkbox" v-bind:value="option.id" v-model="selectedProposal">
+            <label class="govuk-label govuk-checkboxes__label" v-bind:for="option.id">
+              <strong>{{option.name}}</strong>
             </label>
-          </div>
-
-          <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="equipment-2" name="equipment-2" type="checkbox" value="proposal_equipment_air_con" v-model="selectedProposal">
-            <label class="govuk-label govuk-checkboxes__label" for="equipment-2">
-              <strong>Air conditioning unit</strong>
-            </label>
-          </div>
-
-          <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="equipment-3" name="equipment-3" type="checkbox" value="proposal_equipment_tank" v-model="selectedProposal">
-            <label class="govuk-label govuk-checkboxes__label" for="equipment-3">
-              <strong>Tank</strong>
-            </label>
-          </div>
-
-
-          <div v-if="isInConservationArea">
-            <div class="govuk-checkboxes__item" v-if="isInConservationArea">
-              <input class="govuk-checkboxes__input" id="equipment-4" name="equipment-4" type="checkbox" value="proposal_equipment_cctv" v-model="selectedEquipment">
-              <label class="govuk-label govuk-checkboxes__label" for="equipment-4">
-                <strong>CCTV</strong>
-              </label>
-            </div>
-
-            <div class="govuk-checkboxes__item" v-if="isInConservationArea">
-              <input class="govuk-checkboxes__input" id="equipment-5" name="equipment-5" type="checkbox" value="proposal_equipment_security_alarm" v-model="selectedEquipment">
-              <label class="govuk-label govuk-checkboxes__label" for="equipment-5">
-                <strong>Security alarm</strong>
-              </label>
-            </div>
-
-            <div class="govuk-checkboxes__item" v-if="isInConservationArea">
-              <input class="govuk-checkboxes__input" id="equipment-6" name="equipment-6" type="checkbox" value="proposal_equipment_sustainable_energy" v-model="selectedEquipment">
-              <label class="govuk-label govuk-checkboxes__label" for="equipment-6">
-                <strong>Solar panel or other sustainable energy equipment</strong>
-              </label>
-            </div>
           </div>
         </div>
       </fieldset>
@@ -83,27 +45,45 @@ export default {
       question: 'About the works',
       selectedProposal: [],
       selectedEquipment: [],
-      currentWorks: undefined
+      currentWorks: undefined,
+      defaultOptions: undefined
     }
   },
   created () {
     this.fetchData();
   },
+  beforeMount () {
+    this.loadDefaultOptions();
+  },
     watch: {
     '$route': 'fetchData'
   },
 	methods: {
-    collectDataAndStore () {
+    loadDefaultOptions() {
 
-			let question = {
-				question: this.question,
-				answers: {}
-      };
-      
-      question.answers.required = true;
-      question.answers.proposal = this.selectedProposal;
-      question.answers.equipments = this.selectedEquipment;
-			this.$store.commit('addProposalAnswers', JSON.parse(JSON.stringify(question)));
+      //todo: check if in conservation area
+      if (false) {
+        this.$store.dispatch('getDefaultData', 'equipment-works-types').then((response) => {
+          this.defaultOptions = response.data;
+        });
+      } else {
+        const equipmentResources = {
+          'general': 'equipment-works-types',
+          'conservationArea': 'equipment-works-conservation-types'
+        };
+
+        this.$store.dispatch(
+          'getDefaultDataFromTwoSources', equipmentResources
+        ).then((response) => {
+          this.defaultOptions = response;
+
+          this.$store.dispatch(
+            'generateProposalEquipment', this.defaultOptions
+          ).then(() => {
+            //todo add loading set to false
+          });
+        });
+      }
     },
     fetchData () {
       this.currentWorks = this.$route.params.currentLevelInfo;
@@ -120,7 +100,7 @@ export default {
           return element.proposalId === 'proposal_equipment';
         });
 
-        router.push({ name: this.$store.state.state.proposalFlow[currentLevelInMap + 1].goTo[0], params: {currentLevelInfo: this.$store.state.state.proposalFlow[currentLevelInMap + 1], id: this.$store.state.state.proposalFlow[currentLevelInMap + 1].proposalId } });
+        router.push({ name: this.$store.state.state.proposalFlow[currentLevelInMap + 1].goTo[0], params: {currentLevelInfo: this.$store.state.state.proposalFlow[currentLevelInMap + 1], id: this.$store.state.state.proposalFlow[currentLevelInMap + 1].proposalId, origin: 'equipment' } });
       });
     },
     navigate() {

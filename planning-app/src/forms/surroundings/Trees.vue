@@ -61,13 +61,13 @@
 
 				<div class="govuk-radios govuk-radios--inline">
 					<div class="govuk-radios__item">
-						<input class="govuk-radios__input" id="trees-adjacent-1" name="trees-adjacent" type="radio" value="Yes" v-model="treesAdjacent">
+						<input class="govuk-radios__input" id="trees-adjacent-1" name="trees-adjacent" type="radio" value="Yes" v-model="removedOrPruned">
 						<label class="govuk-label govuk-radios__label" for="trees-adjacent-1">
 							Yes
 						</label>
 					</div>
 					<div class="govuk-radios__item">
-						<input class="govuk-radios__input" id="trees-adjacent-2" name="trees-adjacent" type="radio" value="No" v-model="treesAdjacent">
+						<input class="govuk-radios__input" id="trees-adjacent-2" name="trees-adjacent" type="radio" value="No" v-model="removedOrPruned">
 						<label class="govuk-label govuk-radios__label" for="trees-adjacent-2">
 							No
 						</label>
@@ -88,13 +88,13 @@
 
 				<div class="govuk-radios govuk-radios--inline">
 					<div class="govuk-radios__item">
-						<input class="govuk-radios__input" id="trees-adjacent-3" name="trees-adjacent3" type="radio" value="Yes" v-model="questionThree">
+						<input class="govuk-radios__input" id="trees-adjacent-3" name="trees-adjacent3" type="radio" value="Yes" v-model="outsideBoundary">
 						<label class="govuk-label govuk-radios__label" for="trees-adjacent-3">
 							Yes
 						</label>
 					</div>
 					<div class="govuk-radios__item">
-						<input class="govuk-radios__input" id="trees-adjacent-4" name="trees-adjacent4" type="radio" value="No" v-model="questionThree">
+						<input class="govuk-radios__input" id="trees-adjacent-4" name="trees-adjacent4" type="radio" value="No" v-model="outsideBoundary">
 						<label class="govuk-label govuk-radios__label" for="trees-adjacent-4">
 							No
 						</label>
@@ -104,7 +104,7 @@
 			</fieldset>
 
 		</div>
-		<v-cta name="Continue" :onClick="navigate"></v-cta>
+		<v-cta name="Continue" :onClick="submit"></v-cta>
 	</div>
 </template>
 
@@ -112,9 +112,11 @@
 import vCta from '../../components/Cta.vue';
 import router from '../../router';
 import WarningMessage from '../../components/WarningMessage.vue';
+import { getRouteAppId } from '../../mixins/getRouteAppId';
 
 export default {
 	name: 'WorkStart',
+	mixins: [ getRouteAppId ],
 	components: {
     vCta,
     WarningMessage
@@ -122,8 +124,8 @@ export default {
 	data () {
     return {
 			treesInsideBoundary: undefined,
-      treesAdjacent: undefined,
-      questionThree: undefined,
+      removedOrPruned: undefined,
+      outsideBoundary: undefined,
       warningMessageOne: 'You must mark trees position on a scaled plan',
       warningMessageTwo: 'You might need to submit a Tree Survey',
       warningMessageThree: 'In conservation areas, notice is required for works to trees that have a trunk diameter of more than 75mm when measured at 1.5m from the ground level (or more than 100mm if reducing the number of trees to benefit the growth of other trees).',
@@ -142,17 +144,30 @@ export default {
 			return this.treesInsideBoundary === 'Yes';
     },
     hasTreesAdjacent () {
-			return this.treesAdjacent === 'Yes';
+			return this.removedOrPruned === 'Yes';
     },
     hasQuestionThree () {
-			return this.questionThree === 'Yes';
+			return this.outsideBoundary === 'Yes';
 		}
   },
   methods: {
     navigate() {
       router.push({ name: 'WhatMaterials' });
+		},
+		submit() {
+      let payload = {
+				"trees": {
+					"inside_boundry": this.treesInsideBoundary === 'Yes' ? true : false,
+					"removed_or_pruned": this.removedOrPruned === 'Yes' ? true : false,
+					"outside_boundry": this.outsideBoundary === 'Yes' ? true : false
+				}
+			};
+      const extensionId = this.$store.getters.getExtensionId(this.applicationId);
+
+      this.$store.dispatch('updateExtensionProposal', { "application_id": this.applicationId, 'selectedProposals': payload, "extension_id": extensionId }).then(() => {
+        this.navigate();
+      })
     }
   }
-
 }
 </script>

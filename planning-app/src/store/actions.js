@@ -65,6 +65,7 @@ export function updateExtensionProposal ({commit}, data) {
         'type': 'extension'
       });
     });
+
 }
 
 export function createEquipmentProposal ({commit}, application) {
@@ -129,4 +130,24 @@ export function submitWorksLocation ({commit}, payload) {
         'type': payload.type
       });
     });
+}
+
+
+//generate the content for state.js
+export function generateProposalEquipment ({commit}, data) {
+  let proposal_equipment = [];
+
+  data.forEach(element => {
+    var finalObject = {
+      'proposalName': element.name,
+      'proposalId': element.id,
+      'goTo': ["WorksXLocation"]
+    }
+
+    proposal_equipment.push(finalObject);
+  });
+
+  commit('updateEquipmentFlow', {
+    'proposal_equipment': proposal_equipment
+  });
 }

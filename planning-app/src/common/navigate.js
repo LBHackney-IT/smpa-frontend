@@ -25,11 +25,11 @@ export default {
 
       if (proposalFlow.length === currentWorkIndexInFlow + 1) {
         var needsFloorArea = proposalFlow.find(function(element) {
-          return element.proposalId === 'extension_original_house_single_storey_extension' || 
-          element.proposalId === 'extension_original_house_two_storey_extension' || 
-          element.proposalId === 'extension_original_house_part_single_part_two_storey_extension' ||
-          element.proposalId === 'extension_original_house_outbuilding' ||
-          element.proposalId === 'extension_original_house_porch';
+          return element.proposalId === 'single_storey_extension' || 
+          element.proposalId === 'two_storey_extension' || 
+          element.proposalId === 'part_single_part_two_storey_extension' ||
+          element.proposalId === 'outbuilding' ||
+          element.proposalId === 'porch';
         });
 
         if (needsFloorArea) {

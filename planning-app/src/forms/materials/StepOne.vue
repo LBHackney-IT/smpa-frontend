@@ -63,14 +63,14 @@
 
               <other-material v-if="materialIsChecked(option.id) && option.name === 'Other'" material="other" :secondQuestion="otherMaterialsDetailsQuestion" @clicked="onClickChild"></other-material>
 
-              <materials-info v-if="materialIsChecked(option.id) && option.name != 'Other'" v-bind:material="option.name" :secondQuestion="materialsDetailsQuestion" @clicked="onClickChild"></materials-info>
+              <materials-info v-if="materialIsChecked(option.id) && option.name != 'Other'" v-bind:material="option.id" :secondQuestion="materialsDetailsQuestion" @clicked="onClickChild"></materials-info>
             </div>
           </div>
         </fieldset>
       </div>
     </div>
 
-		<v-cta name="Continue" :onClick="navigate"></v-cta>
+		<v-cta name="Continue" :onClick="submit"></v-cta>
 	</div>
 </template>
 
@@ -79,9 +79,11 @@ import vCta from '../../components/Cta.vue';
 import router from '../../router';
 import MaterialsInfo from '../../components/form/MaterialsInfo.vue';
 import OtherMaterial from '../../components/form/OtherMaterial.vue';
+import { getRouteAppId } from '../../mixins/getRouteAppId';
 
 export default {
-	name: 'MaterialsStepOne',
+  name: 'MaterialsStepOne',
+  mixins: [ getRouteAppId ],
 	components: {
     vCta,
     MaterialsInfo,
@@ -93,7 +95,8 @@ export default {
       checkedMaterials: [],
       materialsDetailsQuestion: 'Is the proposed material and finish the same as roof covering?',
       otherMaterialsDetailsQuestion: 'Is the proposed material and finish the same as the existing?',
-      defaultOptions: undefined
+      defaultOptions: undefined,
+      dataToBeSent: []
     }
   },
   beforeMount () {
@@ -103,6 +106,34 @@ export default {
     navigate() {
       router.push({ name: 'MaterialsStep2' });
     },
+    submit() {
+      let payload;
+
+      if (this.material === 'new-material') {
+        payload = {
+          "materials": {
+            "roof": {
+              "proposals": this.dataToBeSent
+            }
+          }
+        };
+      } else {
+        payload = {
+          "materials": {
+            "roof": {
+              "matches_existing": this.material === 'match-existing' ? true : false,
+              "not_applicable": this.material === 'not-applicable' ? true : false
+            }
+          }
+        };
+      }
+
+      const extensionId = this.$store.getters.getExtensionId(this.applicationId);
+
+      this.$store.dispatch('updateExtensionProposal', { "application_id": this.applicationId, 'selectedProposals': payload, "extension_id": extensionId }).then(() => {
+        this.navigate();
+      })
+    },
     materialIsChecked(selectedMaterial) {
       const result = this.checkedMaterials.find(function(material) {
         return material === selectedMaterial;
@@ -110,7 +141,9 @@ export default {
       return result ? true : false;
       
     },
-    onClickChild () {},
+    onClickChild (response) {
+      this.dataToBeSent.push(response);
+    },
     loadDefaultOptions() {
       this.$store.dispatch('getDefaultData', 'materials/options/roof').then((response) => {
         this.defaultOptions = response.data;

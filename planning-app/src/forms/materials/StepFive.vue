@@ -32,44 +32,72 @@
 				</div>
 
         <div v-if="hasOtherMaterials" class="govuk-inset-text">
-          <div class="govuk-form-group">
+          <div class="govuk-form-group" v-bind:key="index" v-for="(field, index) in this.fields">
             <label class="govuk-label" for="more-detail">
               Proposed material
             </label>
             <span id="more-detail-hint" class="govuk-hint">
               Include type, colour and name.
             </span>
-            <textarea class="govuk-textarea" id="more-detail" name="more-detail" rows="5" aria-describedby="more-detail-hint"></textarea>
+            <textarea class="govuk-textarea" id="more-detail" name="more-detail" rows="5" aria-describedby="more-detail-hint" v-model="field.value"></textarea>
           </div>
 
-          <button>Add another material</button>
+          <button @click="addField">Add another material</button>
 
         </div>
       </fieldset>
     </div>
     
-		<v-cta name="Continue" :onClick="navigate"></v-cta>
+		<v-cta name="Continue" :onClick="submit"></v-cta>
 	</div>
 </template>
 
 <script>
 import vCta from '../../components/Cta.vue';
 import router from '../../router';
+import { getRouteAppId } from '../../mixins/getRouteAppId';
 
 export default {
-	name: 'MaterialsStepFive',
+  name: 'MaterialsStepFive',
+  mixins: [ getRouteAppId ],
 	components: {
     vCta
   },
   data () {
     return {
       otherMaterials: '',
-      doorMaterial: []
+      fields: [
+        {
+          value: ''
+        }
+      ],
+      materialsDescription: []
     }
   },
 	methods: {
+    addField: function () {
+      this.fields.push({ value: '' });
+    },
     navigate() {
       router.push({ name: 'SupportingDocumentation' });
+    },
+    submit() {
+      this.fields.forEach(element => {
+       this.materialsDescription.push(element.value);
+        
+      });
+
+      let payload = {
+        "materials": {
+          "other": this.materialsDescription
+        }
+      };
+
+      const extensionId = this.$store.getters.getExtensionId(this.applicationId);
+
+      this.$store.dispatch('updateExtensionProposal', { "application_id": this.applicationId, 'selectedProposals': payload, "extension_id": extensionId }).then(() => {
+        this.navigate();
+      })
     }
   },
   computed: {

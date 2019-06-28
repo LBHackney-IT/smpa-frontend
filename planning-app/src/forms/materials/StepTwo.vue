@@ -78,9 +78,11 @@ import vCta from '../../components/Cta.vue';
 import router from '../../router';
 import MaterialsInfo from '../../components/form/MaterialsInfo.vue';
 import OtherMaterial from '../../components/form/OtherMaterial.vue';
+import { getRouteAppId } from '../../mixins/getRouteAppId';
 
 export default {
-	name: 'MaterialsStepTwo',
+  name: 'MaterialsStepTwo',
+  mixins: [ getRouteAppId ],
 	components: {
     vCta,
     MaterialsInfo,
@@ -92,13 +94,42 @@ export default {
       checkedMaterials: [],
       materialsDetailsQuestion: 'Is the proposed material and finish the same as the external walls?',
       otherMaterialsDetailsQuestion: 'Is the proposed material and finish the same as the existing?',
-      defaultOptions: undefined
+      defaultOptions: undefined,
+      dataToBeSent: []
     }
   },
   beforeMount () {
     this.loadDefaultOptions();
   },
 	methods: {
+    submit() {
+      let payload;
+
+      if (this.material === 'new-material') {
+        payload = {
+          "materials": {
+            "walls": {
+              "proposals": this.dataToBeSent
+            }
+          }
+        };
+      } else {
+        payload = {
+          "materials": {
+            "walls": {
+              "matches_existing": this.material === 'match-existing' ? true : false,
+              "not_applicable": this.material === 'not-applicable' ? true : false
+            }
+          }
+        };
+      }
+
+      const extensionId = this.$store.getters.getExtensionId(this.applicationId);
+
+      this.$store.dispatch('updateExtensionProposal', { "application_id": this.applicationId, 'selectedProposals': payload, "extension_id": extensionId }).then(() => {
+        this.navigate();
+      })
+    },
     materialIsChecked(selectedMaterial) {
       const result = this.checkedMaterials.find(function(material) {
         return material === selectedMaterial;
@@ -109,7 +140,9 @@ export default {
     navigate() {
       router.push({ name: 'MaterialsStep3' });
     },
-    onClickChild () {},
+    onClickChild (response) {
+      this.dataToBeSent.push(response);
+    },
     loadDefaultOptions() {
       this.$store.dispatch('getDefaultData', 'materials/options/wall').then((response) => {
         this.defaultOptions = response.data;

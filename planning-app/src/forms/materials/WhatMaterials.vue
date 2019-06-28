@@ -46,7 +46,7 @@
       </fieldset>
     </div>
 
-		<v-cta name="Continue" :onClick="navigate"></v-cta>
+		<v-cta name="Continue" :onClick="submit"></v-cta>
 	</div>
 </template>
 
@@ -54,9 +54,11 @@
 import vCta from '../../components/Cta.vue';
 import router from '../../router';
 import WarningMessage from '../../components/WarningMessage.vue';
+import { getRouteAppId } from '../../mixins/getRouteAppId';
 
 export default {
-	name: 'WhatMaterials',
+  name: 'WhatMaterials',
+  mixins: [ getRouteAppId ],
 	components: {
     vCta,
     WarningMessage
@@ -74,6 +76,21 @@ export default {
       } else {
         router.push({ name: 'MaterialsStep1' });
       }
+    },
+    submit() {
+      let payload = {
+        "materials": {
+          "definitions_in_documents": this.materials === 'Yes' ? true : false,
+          "definitions_in_form": this.materials === 'No' ? true : false,
+          "definitions_to_follow": this.materials === 'dont-know' ? true : false
+        }
+      };
+
+      const extensionId = this.$store.getters.getExtensionId(this.applicationId);
+
+      this.$store.dispatch('updateExtensionProposal', { "application_id": this.applicationId, 'selectedProposals': payload, "extension_id": extensionId }).then(() => {
+        this.navigate();
+      })
     }
   }
 }

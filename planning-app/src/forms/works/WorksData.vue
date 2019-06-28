@@ -49,19 +49,19 @@
             <label class="govuk-label" for="name">
               How many new single bedrooms are gained?
             </label>
-            <input class="govuk-input govuk-!-width-one-quarter" id="name" name="name" type="number">
+            <input class="govuk-input govuk-!-width-one-quarter" id="name" name="name" type="number" v-model="newSingleBedrooms">
           </div>
           <div class="govuk-form-group">
             <label class="govuk-label" for="name">
               How many new double bedrooms are gained?
             </label>
-            <input class="govuk-input govuk-!-width-one-quarter" id="name" name="name" type="number">
+            <input class="govuk-input govuk-!-width-one-quarter" id="name" name="name" type="number" v-model="newDoubleBedrooms">
           </div>
         </div>
       </fieldset>
     </div>
 
-		<v-cta name="Continue" :onClick="navigate"></v-cta>
+		<v-cta name="Continue" :onClick="submit"></v-cta>
 	</div>
 </template>
 
@@ -69,20 +69,35 @@
 import vCta from '../../components/Cta.vue';
 import router from '../../router';
 import FreeDescription from '../../components/FreeDescription.vue';
+import { getRouteAppId } from '../../mixins/getRouteAppId';
 
 export default {
-	name: 'WorksData',
+  name: 'WorksData',
+  mixins: [ getRouteAppId ],
 	components: {
     vCta,
     FreeDescription
   },
   data () {
     return {
-      newStories: '',
-      newBedroom: ''
+      newBedroom: '',
+      newSingleBedrooms: '',
+      newDoubleBedrooms: ''
     }
   },
 	methods: {
+    submit() {
+      let payload = {
+        "new_single_bedrooms": this.newSingleBedrooms,
+        "new_double_bedrooms": this.newDoubleBedrooms
+      }
+
+      const extensionId = this.$store.getters.getExtensionId(this.applicationId);
+
+      this.$store.dispatch('updateExtensionProposal', { "application_id": this.applicationId, 'selectedProposals': payload, "extension_id": extensionId }).then(() => {
+        this.navigate();
+      })
+    },
     navigate() {
       router.push({ name: 'Trees' });
     }

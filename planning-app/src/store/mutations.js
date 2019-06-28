@@ -133,6 +133,10 @@ export function updateFlow (state, data) {
   }
 }
 
+export function updateEquipmentFlow (state, data) {
+  state.state.proposalMap.proposal_equipment = data.proposal_equipment;
+}
+
 
 
 

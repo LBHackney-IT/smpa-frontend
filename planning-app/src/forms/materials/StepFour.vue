@@ -76,9 +76,11 @@ import vCta from '../../components/Cta.vue';
 import router from '../../router';
 import MaterialsInfo from '../../components/form/MaterialsInfo.vue';
 import OtherMaterial from '../../components/form/OtherMaterial.vue';
+import { getRouteAppId } from '../../mixins/getRouteAppId';
 
 export default {
-	name: 'MaterialsStepFour',
+  name: 'MaterialsStepFour',
+  mixins: [ getRouteAppId ],
 	components: {
     vCta,
     MaterialsInfo,
@@ -96,6 +98,34 @@ export default {
     this.loadDefaultOptions();
   },
 	methods: {
+    submit() {
+      let payload;
+
+      if (this.material === 'new-material') {
+        payload = {
+          "materials": {
+            "doors": {
+              "proposals": this.dataToBeSent
+            }
+          }
+        };
+      } else {
+        payload = {
+          "materials": {
+            "doors": {
+              "matches_existing": this.material === 'match-existing' ? true : false,
+              "not_applicable": this.material === 'not-applicable' ? true : false
+            }
+          }
+        };
+      }
+
+      const extensionId = this.$store.getters.getExtensionId(this.applicationId);
+
+      this.$store.dispatch('updateExtensionProposal', { "application_id": this.applicationId, 'selectedProposals': payload, "extension_id": extensionId }).then(() => {
+        this.navigate();
+      })
+    },
     navigate() {
       router.push({ name: 'MaterialsStep5' });
     },
@@ -106,7 +136,9 @@ export default {
       return result ? true : false;
       
     },
-    onClickChild () {},
+    onClickChild (response) {
+      this.dataToBeSent.push(response);
+    },
     loadDefaultOptions() {
       this.$store.dispatch('getDefaultData', 'materials/options/door').then((response) => {
         this.defaultOptions = response.data;

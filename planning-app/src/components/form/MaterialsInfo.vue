@@ -14,23 +14,6 @@
         v-model="colourAndType">
       </textarea>
     </div>
-
-    <div v-if="hasSameMaterialAsExisting" class="govuk-inset-text govuk-!-margin-bottom-6">
-      <div class="govuk-form-group">
-        <label class="govuk-label" v-bind:for="material + '-existing-material'">
-          Existing material
-        </label>
-        <input class="govuk-input" v-bind:id="material + '-existing-material'" v-bind:name="material + '-existing-material'" type="text" v-model="existingMaterial">
-      </div>
-
-      <div class="govuk-form-group">
-        <label class="govuk-label" v-bind:for="material + '-existing-material-color-type'">
-          Colour and type
-        </label>
-        <textarea class="govuk-textarea" v-bind:id="material + '-existing-material-color-type'" v-bind:name="material + '-existing-material-color-type'" rows="5" aria-describedby="more-detail-hint" v-model="existingMaterialColourAndType"></textarea>
-      </div>
-    </div>
-
     <v-cta name="Save" :onClick="saveAndReturn"></v-cta>
   </div>
 </template>
@@ -54,21 +37,18 @@ export default {
   },
   data () {
     return {
-      sameMaterialAsExisting: '',
-      colourAndType: '',
-      existingMaterial: '',
-      existingMaterialColourAndType: ''
+      colourAndType: ''
     }
   },
   methods: {
     saveAndReturn (event) {
-      this.$emit('clicked', this.$data);
+      const response = {
+        colour_and_type: this.$data.colourAndType,
+        material_id: this.material
+      };
+
+      this.$emit('clicked', response );
     }
   },
-  computed: {
-		hasSameMaterialAsExisting () {
-			return this.sameMaterialAsExisting === 'Yes';
-    }
-	}
 }
 </script>

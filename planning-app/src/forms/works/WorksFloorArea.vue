@@ -48,14 +48,15 @@
           <label class="govuk-label govuk-!-width-one-third" for="one-quarter">
             Additional floor area
           </label>
-          <input class="govuk-input govuk-!-width-one-quarter" id="one-quarter" name="one-quarter" type="number">
-          <select class="govuk-select" id="sort" name="sort">
-            <option value="sqm" v-bind:key="option.id" v-for="option in this.defaultOptions">{{option.name}}</option>
+          <input class="govuk-input govuk-!-width-one-quarter" id="one-quarter" name="one-quarter" type="number" v-model="floorArea"> 
+          
+          <select class="govuk-select" id="sort" name="sort" v-model="selectedOption">
+            <option v-bind:value="option.id" v-bind:key="option.id" v-for="option in this.defaultOptions">{{option.name}}</option>
           </select>
         </div>
       </fieldset>
     </div>
-		<v-cta name="Continue" :onClick="navigate"></v-cta>
+		<v-cta name="Continue" :onClick="submit"></v-cta>
 	</div>
 </template>
 
@@ -63,16 +64,19 @@
 import vCta from '../../components/Cta.vue';
 import router from '../../router';
 import FreeDescription from '../../components/FreeDescription.vue';
+import { getRouteAppId } from '../../mixins/getRouteAppId';
 
 export default {
-	name: 'WorksFloorArea',
+  name: 'WorksFloorArea',
+  mixins: [ getRouteAppId ],
 	components: {
     vCta,
     FreeDescription
   },
   data () {
     return {
-      selectedProposal: [],
+      floorArea: undefined,
+      selectedOption: '',
       defaultOptions: undefined
     }
   },
@@ -86,6 +90,18 @@ export default {
     loadDefaultOptions() {
       this.$store.dispatch('getDefaultData', 'area-units').then((response) => {
         this.defaultOptions = response.data;
+      })
+    },
+    submit() {
+      let payload = {
+        "additional_floor_area_units_id": this.selectedOption,
+        "additional_floor_area": this.floorArea
+      };
+
+      const extensionId = this.$store.getters.getExtensionId(this.applicationId);
+
+      this.$store.dispatch('updateExtensionProposal', { "application_id": this.applicationId, 'selectedProposals': payload, "extension_id": extensionId }).then(() => {
+        this.navigate();
       })
     }
   },
