@@ -16,32 +16,11 @@
         </span>
 
         <div class="govuk-checkboxes">
-          <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="proposal-1" name="proposal" type="checkbox" value="Rear" v-model="selectedProposal">
+          
+          <div class="govuk-checkboxes__item" v-bind:key="option.id" v-for="option in this.defaultData">
+            <input class="govuk-checkboxes__input" id="proposal-1" name="proposal" type="checkbox" v-bind:value="option.id" v-model="selectedProposal">
             <label class="govuk-label govuk-checkboxes__label" for="proposal-1">
-              <strong>Rear</strong>
-            </label>
-          </div>
-
-
-          <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="proposal-2" name="proposal" type="checkbox" value="Side" v-model="selectedProposal">
-            <label class="govuk-label govuk-checkboxes__label" for="proposal-2">
-              <strong>Side</strong>
-            </label>
-          </div>
-
-          <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="proposal-3" name="proposal" type="checkbox" value="Front" v-model="selectedProposal">
-            <label class="govuk-label govuk-checkboxes__label" for="proposal-3">
-              <strong>Front</strong>
-            </label>
-          </div>
-
-          <div class="govuk-checkboxes__item" v-if="this.currentWorks.proposalId === 'extension_original_house_single_storey_extension' || this.currentWorks.proposalId === 'extension_original_house_two_storey_extension' || this.currentWorks.proposalId === 'extension_original_house_part_single_part_two_storey_extension'">
-            <input class="govuk-checkboxes__input" id="proposal-4" name="proposal" type="checkbox" value="Wrap-around" v-model="selectedProposal">
-            <label class="govuk-label govuk-checkboxes__label" for="proposal-4">
-              <strong>Rear / side wrap-around</strong>
+              <strong>{{option.name}}</strong>
             </label>
           </div>
         </div>
@@ -57,10 +36,11 @@ import vCta from '../../components/Cta.vue';
 import router from '../../router';
 import Navigate from '../../common/navigate';
 import FreeDescription from '../../components/FreeDescription.vue';
-
+import { getRouteAppId } from '../../mixins/getRouteAppId';
 
 export default {
-	name: 'WorksXLocation',
+  name: 'WorksXLocation',
+  mixins: [ getRouteAppId ],
 	components: {
     vCta,
     FreeDescription
@@ -68,8 +48,12 @@ export default {
   data () {
     return {
       selectedProposal: [],
-      currentWorks: undefined
+      currentWorks: undefined,
+      defaultData: undefined
     }
+  },
+  beforeMount () {
+    this.loadDefaultData();
   },
   created () {
     this.fetchData();
@@ -83,8 +67,69 @@ export default {
       this.currentWorks = this.$route.params.currentLevelInfo;
     },
     navigate() {
-      var routerParams = Navigate.calculateNavigation(this.$store.state.state.proposalFlow, this.currentWorks, 'WorksXLocation');
-      router.push(routerParams);
+      let payload = {};
+
+      if (this.$route.params.origin === 'equipment') {
+        const equipmentId = this.$store.getters.getEquipmentId(this.applicationId);
+
+        payload = {
+          'data': {},
+          'resource': 'equipment-proposals',
+          'type': 'equipment',
+          'id': equipmentId
+        }
+
+        var currentWorkLocation = {
+          "equipment": {
+            "equipment_locations": [
+              {
+                "location_ids": this.selectedProposal,
+                "equipment_type_id": equipmentId
+              }
+            ]
+          }
+        };
+
+      } else {
+        const extensionId = this.$store.getters.getExtensionId(this.applicationId);
+      
+        payload = {
+          'data': {},
+          'resource': 'extension-proposals',
+          'type': 'extension',
+          'id': extensionId
+        }
+
+        var currentWorkLocation = {};
+
+        let proposalId;
+
+        //todo find a more elegant fix
+        if (this.currentWorks.proposalId === "incidental_buildings") {
+          proposalId = 'outbuilding';
+        } else {
+          proposalId = this.currentWorks.proposalId;
+        }
+
+        currentWorkLocation[proposalId] = {};
+        
+        currentWorkLocation[proposalId] = {
+          "works_location_ids": this.selectedProposal
+        };
+        
+        payload.data[this.$route.params.id] = currentWorkLocation;
+      }
+ 
+      this.$store.dispatch('submitWorksLocation', payload).then((response) => {
+
+      });
+        var routerParams = Navigate.calculateNavigation(this.$store.state.state.proposalFlow, this.currentWorks, 'WorksXLocation');
+        router.push(routerParams);
+    },
+    loadDefaultData() {
+      this.$store.dispatch('getDefaultData', 'works-locations').then((response) => {
+        this.defaultData = response.data;
+      })
     }
   },
   computed: {

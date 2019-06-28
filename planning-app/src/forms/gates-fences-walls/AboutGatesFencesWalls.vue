@@ -84,16 +84,14 @@ export default {
       let payload = {
         "boundaries": {
           "gates_fences_walls": {
-            "works_type_ids": [
-              this.selectedProposal
-            ]
+            "works_type_ids": this.selectedProposal
           }
         }
       };
 
       const extensionId = this.$store.getters.getExtensionId(this.applicationId);
 
-      this.$store.dispatch('updateExtensionProposal', { "application_id": this.applicationId, 'selectedProposals': payload, "extension_id": extensionId }).then(() => {
+      this.$store.dispatch('updateExtensionProposal', { "application_id": this.applicationId, 'selectedProposals': payload, "extension_id": extensionId, "id": 'boundaries' }).then(() => {
         this.navigate();
       })
     }
