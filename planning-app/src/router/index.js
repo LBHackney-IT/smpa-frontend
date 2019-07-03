@@ -287,8 +287,8 @@ export default new Router({
       component: SignIn
     },
     {
-      path: '/accounts',
-      name: 'accounts',
+      path: '/account',
+      name: 'AccountOverview',
       component: Accounts
     },
     {

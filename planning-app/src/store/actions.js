@@ -1,4 +1,5 @@
 import { 
+  AuthService,
   ApplicationsService, 
   ExtensionProposalService, 
   EquipmentProposalService,
@@ -6,6 +7,14 @@ import {
   GenericWorkService,
   SubmitWorksLocation 
 } from '@/common/api.service';
+
+export function signIn ({commit}, payload) {
+  return AuthService
+  .post(payload)
+  .then( response => {
+    commit('signIn', response.data);
+  });
+}
 
 export function createApplication ({commit}, applicationData) {
   return ApplicationsService

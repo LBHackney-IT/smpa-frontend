@@ -1,8 +1,9 @@
 import Vue from 'vue';
 import axios from 'axios';
 import VueAxios from 'vue-axios';
-//import JwtService from '@/common/jwt.service';
+import JwtService from '@/common/jwt.service';
 import { API_URL } from '@/common/config';
+import qs from 'qs';
 
 const ApiService = {
   init () {
@@ -10,11 +11,13 @@ const ApiService = {
     Vue.axios.defaults.baseURL = API_URL;
   },
 
+  setFormUrlencoded () {
+    Vue.axios.defaults.headers.common['Content-Type'] = 'application/x-www-form-urlencoded';
+  },
+
   setHeader () {
     Vue.axios.defaults.headers.common['Content-Type'] = 'application/json; charset=UTF-8';
-    //Vue.axios.defaults.headers.common['Authorization'] = `jwt ${JwtService.getToken()}`;
-    Vue.axios.defaults.headers.common['Authorization'] = 'jwt ' + process.env.VUE_APP_TEMP_AUTH_TOKEN;
-
+    Vue.axios.defaults.headers.common['Authorization'] = `jwt ${JwtService.getToken()}`;
   },
 
   get(resource) {
@@ -51,8 +54,8 @@ export default ApiService;
 
 export const AuthService = {
   post (payload) {
-    ApiService.setHeader();
-    return ApiService.post(`auth`, payload);
+    ApiService.setFormUrlencoded();
+    return ApiService.post('auth', qs.stringify(payload));
   }
 }
 

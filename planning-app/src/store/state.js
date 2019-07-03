@@ -1,5 +1,9 @@
+import JwtService from '@/common/jwt.service';
+
 // all applications inside an account should go inside "applications". Each application will have the "proposal flow" saved inside it.
 export const state = {
+  isAuthenticated: !!JwtService.getToken(),
+  user: {},
   applications: [],
   proposalFlow: [],
   proposalMap: {

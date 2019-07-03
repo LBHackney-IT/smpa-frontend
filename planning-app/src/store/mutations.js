@@ -1,3 +1,5 @@
+import JwtService from '@/common/jwt.service'
+
 //creates application with application id returned from the backend, selected address info and site's geojson
 export function createApplication (state, data) {
   const applications = state.state.applications;
@@ -135,6 +137,13 @@ export function updateFlow (state, data) {
 
 export function updateEquipmentFlow (state, data) {
   state.state.proposalMap.proposal_equipment = data.proposal_equipment;
+}
+
+
+export function signIn (state, data) {
+  state.state.user = data;
+  state.state.isAuthenticated = true;
+  JwtService.saveToken(state.state.user.jwt);
 }
 
 

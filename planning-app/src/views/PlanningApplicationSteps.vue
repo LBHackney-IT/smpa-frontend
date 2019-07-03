@@ -30,8 +30,9 @@
         <p><a href="https://hackney.gov.uk/stage1-pre-application">Find out if you need planning permission</a></p>
       </div>
 
-      <a class="govuk-button govuk-button--start" href="/sites/search" role="button">Start now</a>
-
+      <router-link v-if="this.isSignedIn" class="govuk-button govuk-button--start" :to="{ path: '/sites/search' }">Start now</router-link>
+      <router-link v-if="!this.isSignedIn" class="govuk-button govuk-button--start" :to="{ name: 'SignIn', params: { 'origin': 'start' }}">Start now</router-link>
+      
       <h3 class="govuk-heading-m govuk-!-margin-top-5">Get help</h3>
 
       <div class="govuk-body">
@@ -59,9 +60,14 @@
 </template>
 
 <script>
+  import JwtService from '@/common/jwt.service';
+
   export default {
     name: 'PlanningApplicationsSteps',
-    components: {
+    computed: {
+      isSignedIn () {
+        return !!JwtService.getToken();
+      }
     }
 
   }

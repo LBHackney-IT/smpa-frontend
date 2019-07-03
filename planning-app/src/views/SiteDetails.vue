@@ -88,6 +88,7 @@
   import vCta from '../components/Cta.vue';
   import router from '../router';
   import axios from 'axios';
+  import JwtService from '@/common/jwt.service';
 
   export default {
     name: 'SiteDetails',
@@ -247,9 +248,13 @@
         this.application.selectedAddress = this.selectedAddress;
         this.application.siteGeoJson = this.geoJson;
 
-        this.$store.dispatch('createApplication', this.application).then((response) => {
-          router.push({ name: 'ApplicationOverview', params: { applicationId: response.data.id } });
-        })
+        if (!!JwtService.getToken()) {
+          this.$store.dispatch('createApplication', this.application).then((response) => {
+            router.push({ name: 'ApplicationOverview', params: { 'applicationId': response.data.id } });
+          })
+        } else {
+          router.push({ name: 'SignIn', params: { 'origin': 'constraints-finder', 'application': this.application} });
+        }
       }
     },
     computed: {
