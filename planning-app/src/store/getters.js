@@ -16,3 +16,8 @@ export function getEquipmentId (state) {
   }
 }
 
+export function getExistingApplication (state, applicationId) {
+  let index = state.state.applications.findIndex( application => application.data.id === applicationId );
+
+  return state.state.applications[index];
+}

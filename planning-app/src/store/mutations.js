@@ -15,6 +15,19 @@ export function updateApplication (state, data) {
   }
 }
 
+export function getApplication (state, data) {
+  const position = state.state.applications.findIndex( application => application.data.id === data.id );
+  var application = {};
+
+  application.data = data;
+
+  if (position === -1) {
+    console.log('doesnt exist');
+    state.state.applications.push(application);
+    console.log('THE FINAL STATE', state.state);
+  }
+}
+
 export function addProposal (state, data) {
   const position = state.state.applications.findIndex( application => application.data.id === data.applicationId );
 
@@ -133,6 +146,8 @@ export function updateFlow (state, data) {
   for (let i = 0; i < flow.length; i++) { 
     state.state.proposalFlow.splice(currentLevelPosition + 1 + i, 0, flow[i]);
   }
+
+  console.log('------state.state.proposalFlow', state.state.proposalFlow);
 }
 
 export function updateEquipmentFlow (state, data) {

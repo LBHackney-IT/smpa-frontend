@@ -172,12 +172,34 @@ export default {
 			yearWorkFinished: undefined,
 			apiResponse: undefined
     }
-  },
+	},
 	methods: {
+		loadExistingAnswers () {
+			this.workStarted = this.application.data.works_started ? true : undefined;
+			this.workCompleted = this.application.data.works_completed ? true : undefined;
+			this.workDetails = this.application.data.works_description;
+
+			if (this.application.data.date_works_completed) {
+				var dateWorksCompleted = new Date(this.application.data.date_works_completed);
+
+				this.dayWorkFinished = dateWorksCompleted.getDay();
+				this.monthWorkFinished = dateWorksCompleted.getMonth();
+				this.yearWorkFinished = dateWorksCompleted.getYear();
+			}
+
+			if (this.application.data.date_works_started) {
+				var dateWorksStarted = new Date(this.application.data.date_works_started);
+
+				this.dayWorkStarted = dateWorksStarted.getDay();
+				this.monthWorkStarted = dateWorksStarted.getMonth();
+				this.yearWorkStarted = dateWorksStarted.getYear();
+			}
+		},
 		submit() {
+			debugger;
 			let objectToBeSent = {};
 
-			objectToBeSent.works_started = this.workStarted === 'true' ? true : false;
+			objectToBeSent.works_started = this.workStarted === 'true' ||  this.workStarted === true ? true : false;
 
 			if (objectToBeSent.works_started) {
 				objectToBeSent.date_works_started = this.yearWorkStarted + '-' + this.monthWorkStarted + '-' + this.dayWorkStarted;
@@ -211,10 +233,20 @@ export default {
 	},
 	computed: {
 		hasWorkStarted () {
-			return this.workStarted === 'true';
+			return this.workStarted === 'true' || this.workStarted === true;
 		},
 		isWorkComplete () {
-			return this.workCompleted === 'true';
+			return this.workCompleted === 'true' || this.workCompleted === true;
+		},
+		application () {
+			let index = this.$store.state.state.applications.findIndex( application => application.data.id === this.applicationId );
+
+			return this.$store.state.state.applications[index];
+		}
+	},
+	watch: {
+		application (newValue, oldValue) {
+			this.loadExistingAnswers();
 		}
 	}
 }

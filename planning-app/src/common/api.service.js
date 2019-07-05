@@ -47,6 +47,10 @@ const ApiService = {
       .catch((error) => {
         throw new Error(`[RWV] ApiService ${error}`);
       })
+  },
+
+  getResource(resource, id) {
+    return Vue.axios.get(`${resource}/${id}`);
   }
 }
 
@@ -78,7 +82,13 @@ export const ApplicationsService = {
   updateSiteAddress (id, payload) {
     ApiService.setHeader();
     return ApiService.update('site-addresses', id, payload);
+  },
+
+  get (id) {
+    ApiService.setHeader();
+    return ApiService.getResource('applications', id);
   }
+
 }
 
 export const ExtensionProposalService = {

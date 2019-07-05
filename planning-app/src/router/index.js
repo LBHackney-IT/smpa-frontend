@@ -1,7 +1,10 @@
-import Vue from 'vue'
-import Router from 'vue-router'
+import Vue from 'vue';
+import Router from 'vue-router';
+import JwtService from '@/common/jwt.service';
+import store from '@/store/index';
 
-Vue.use(Router)
+Vue.use(Router);
+
 
 import PlanningApplicationSteps from '../views/PlanningApplicationSteps.vue';
 import SiteSearch from '../views/SiteSearch.vue';
@@ -93,11 +96,37 @@ export default new Router({
     {
       path: '/applications',
       component: Applications,
+      beforeEnter: (to, from, next) => {
+        //if signed in
+        if (!!JwtService.getToken()) {
+
+          //check if there is an applicationId in the url
+          if (to.params.applicationId) {
+            //check if :applicationId belongs to account
+
+            // //if we can get this application id with this token
+            store.dispatch('getApplication', to.params.applicationId).then((response) => {
+              // if no error
+              next();
+            });
+          } else {
+            next({
+              path: '/account'
+            });
+          }
+        } else {
+          //if not signed in
+          next({
+            path: '/sign-in',
+            query: { redirect: to.fullPath }
+          })
+        }  
+      },
       children: [
         { 
           path: '', 
           name: 'Applications', 
-          component: Overview 
+          component: Overview
         }, //redirect to page that lists all applications associated with the signed in user
         { 
           path: ':applicationId', 

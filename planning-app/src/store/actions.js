@@ -26,6 +26,15 @@ export function createApplication ({commit}, applicationData) {
   });
 }
 
+export function getApplication ({commit}, id) {
+  return ApplicationsService
+  .get(id)
+  .then( response => {
+    console.log('------RESPONSE', response.data);
+    commit('getApplication', response.data);
+  });
+}
+
 export function updateApplication ({commit}, data) {
   return ApplicationsService
   .update(data.id, data.data)
