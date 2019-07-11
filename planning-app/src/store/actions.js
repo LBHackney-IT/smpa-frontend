@@ -16,21 +16,39 @@ export function signIn ({commit}, payload) {
   });
 }
 
-export function createApplication ({commit}, applicationData) {
+export function addAddressToApplication ({commit}, data) {
+  return ApplicationsService
+  .addSiteAddress(data)
+  .then( response => {
+    let res = response.data;
+    res.application_id = data.application_id;
+    return res;
+  });
+}
+
+export function createApplication ({commit}) {
   return ApplicationsService
   .create()
   .then( response => {
-    applicationData.data = response.data;
-    commit('createApplication', applicationData);
-    return applicationData;
+    commit('createApplication', response);
+    return response;
   });
+}
+
+//chain both create application and add address to application
+export function generateApplication ({commit}, siteData) {
+  return this.dispatch('createApplication')
+    .then((response) => {
+      siteData.application_id = response.data.id;
+      return this.dispatch('addAddressToApplication', siteData);
+    });
 }
 
 export function getApplication ({commit}, id) {
   return ApplicationsService
   .get(id)
   .then( response => {
-    console.log('------RESPONSE', response.data);
+    console.log('------GET APPLICATION', response.data);
     commit('getApplication', response.data);
   });
 }
@@ -59,6 +77,12 @@ export function updateFlow ({commit}, data) {
       resolve();
     }, 1000);
   });
+}
+
+export function submitFlow ({commit}, data) {
+  return this.dispatch(data.action, data).then((response) => {
+    console.log('the flow was updated', response);
+  })
 }
 
 export function createExtensionProposal ({commit}, application) {

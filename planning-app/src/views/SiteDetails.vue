@@ -245,12 +245,25 @@
       },
       
       navigate() {
-        this.application.selectedAddress = this.selectedAddress;
+
         this.application.siteGeoJson = this.geoJson;
+        this.application.number = this.selectedAddress.buildingNumber;
+        this.application.property_name = this.selectedAddress.buildingName;
+        this.application.address_line_1 = this.selectedAddress.line1;
+        this.application.address_line_2 = this.selectedAddress.line2;
+        this.application.address_line_3 = this.selectedAddress.line3;
+        this.application.town_city = this.selectedAddress.town;
+        this.application.postcode = this.selectedAddress.postcode;
+        this.application.easting = this.selectedAddress.easting;
+        this.application.northing = this.selectedAddress.northing;
+        this.application.ward = this.selectedAddress.ward;
+        this.application.uprn = this.selectedAddress.uprn;
+        this.application.property_type = this.selectedAddress.usageDescription;
+        this.application.description = this.selectedAddress.usageCode;
 
         if (!!JwtService.getToken()) {
-          this.$store.dispatch('createApplication', this.application).then((response) => {
-            router.push({ name: 'ApplicationOverview', params: { 'applicationId': response.data.id } });
+          this.$store.dispatch('generateApplication', this.application).then((response) => {
+            router.push({ name: 'ApplicationOverview', params: { 'applicationId': response.application_id } });
           })
         } else {
           router.push({ name: 'SignIn', params: { 'origin': 'constraints-finder', 'application': this.application} });
