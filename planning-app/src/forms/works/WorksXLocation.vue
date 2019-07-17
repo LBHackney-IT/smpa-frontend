@@ -48,23 +48,46 @@ export default {
   data () {
     return {
       selectedProposal: [],
-      currentWorks: undefined,
+      currentWorks: {
+        proposalName: ''
+      },
       defaultData: undefined
     }
   },
   beforeMount () {
     this.loadDefaultData();
-  },
-  created () {
     this.fetchData();
   },
   watch: {
     '$route': 'fetchData'
   },
 	methods: {
+    loadExistingAnswers () {
+      //todo: should beforehand if it is equipment or extension
+
+      if (this.application.data.proposal_equipment[this.$route.params.id]) {
+
+      } else if (this.application.data.proposal_equipment[this.$route.params.id]) {
+
+      }
+    },
     fetchData () {
       this.selectedProposal = [];
-      this.currentWorks = this.$route.params.currentLevelInfo;
+
+      if (this.$route.params.currentLevelInfo) {
+        this.currentWorks = this.$route.params.currentLevelInfo;
+      } else {
+
+        var proposalFlow = JSON.parse(this.application.data.proposalFlow);
+
+        var id = this.$route.params.id;
+
+        var currentLevelInMap = proposalFlow.findIndex(function(element) {
+          return element.proposalId === id;
+        });
+        this.currentWorks = proposalFlow[currentLevelInMap + 1];
+      }
+
     },
     navigate() {
       let payload = {};
@@ -133,12 +156,22 @@ export default {
     }
   },
   computed: {
+    application () {
+			let index = this.$store.state.state.applications.findIndex( application => application.data.id === this.applicationId );
+
+			return this.$store.state.state.applications[index];
+		},
 		isInConservationArea () {
       if (this.$store.state.site && this.$store.state.site.siteConstraints && this.$store.state.site.siteConstraints.conservationArea) {
         return this.$store.state.site.siteConstraints.conservationArea;
       } else {
         return false;
       }
+		}
+  },
+  watch: {
+		application (newValue, oldValue) {
+			this.loadExistingAnswers();
 		}
 	}
 }
