@@ -146,7 +146,6 @@ import vCta from '../../components/Cta.vue';
 import vTextArea from '../../components/form/vTextArea.vue';
 import router from '../../router';
 import WarningMessage from '../../components/WarningMessage.vue';
-import axios from 'axios';
 import { getRouteAppId } from '../../mixins/getRouteAppId';
 
 export default {
@@ -175,8 +174,8 @@ export default {
 	},
 	methods: {
 		loadExistingAnswers () {
-			this.workStarted = this.application.data.works_started ? true : undefined;
-			this.workCompleted = this.application.data.works_completed ? true : undefined;
+			this.workStarted = this.application.data.works_started;
+			this.workCompleted = this.application.data.works_completed;
 			this.workDetails = this.application.data.works_description;
 
 			if (this.application.data.date_works_completed) {
@@ -196,7 +195,6 @@ export default {
 			}
 		},
 		submit() {
-			debugger;
 			let objectToBeSent = {};
 
 			objectToBeSent.works_started = this.workStarted === 'true' ||  this.workStarted === true ? true : false;
