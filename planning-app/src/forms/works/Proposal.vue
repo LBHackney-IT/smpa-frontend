@@ -15,25 +15,18 @@
         </span>
 
         <div class="govuk-checkboxes">
-          <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="proposal-1" name="proposal" type="checkbox" value="proposal_extension" v-model="selectedProposal">
-            <label class="govuk-label govuk-checkboxes__label" for="proposal-1">
-              <strong>You are doing an extension or alteration</strong>
-              <p>Enlarging, changing or adding to any aspect of a house, such as an extension or building an outbuilding. This also includes all general alterations like rooflights, gates or new windows.</p>
-              <div class="govuk-inset-text">
+          <div class="govuk-checkboxes__item" v-bind:key="index" v-for="(proposal, index) in proposals">
+            <input class="govuk-checkboxes__input" :id="proposal.id" name="proposal" type="checkbox" :value="proposal.value" v-model="selectedProposal">
+            <label class="govuk-label govuk-checkboxes__label" :for="proposal.id">
+              <strong>{{ proposal.name }}</strong>
+              <p>{{ proposal.description }}</p>
+              <div class="govuk-inset-text" v-if="proposal.example">
                 <p class="govuk-body govuk-!-font-weight-bold">Example</p>
-                A single-storey ground floor rear extension.
+                {{ proposal.example }}
               </div>
             </label>
           </div>
 
-          <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="proposal-7" name="proposal" type="checkbox" value="proposal_equipment" v-model="selectedProposal">
-            <label class="govuk-label govuk-checkboxes__label" for="proposal-7">
-              <strong>You are installing or replacing equipment</strong>
-              <p>The installation, alteration or replacement of equipment on a house or within the curtilage of a house. This may include a satellite dish, CCTV or a solar panel.</p>
-            </label>
-          </div>
         </div>
       </fieldset>
     </div>
@@ -59,18 +52,50 @@ export default {
     return {
       question: 'About the works',
       selectedProposal: [],
-      selectedEquipment: [],
-      apiResponse: undefined
+      proposals: [
+        {
+          id: 'proposal_extension',
+          value: 'proposal_extension',
+          name: 'You are doing an extension or alteration',
+          description: 'Enlarging, changing or adding to any aspect of a house, such as an extension or building an outbuilding. This also includes all general alterations like rooflights, gates or new windows.',
+          example: 'A single-storey ground floor rear extension.'
+        },
+        {
+          id: 'proposal_equipment',
+          value: 'proposal_equipment',
+          name: 'You are installing or replacing equipment',
+          description: 'The installation, alteration or replacement of equipment on a house or within the curtilage of a house. This may include a satellite dish, CCTV or a solar panel.'      
+        }
+      ]
     }
   },
+  computed: {
+    application () {
+			let index = this.$store.state.state.applications.findIndex( application => application.data.id === this.applicationId );
+
+			return this.$store.state.state.applications[index];
+		}
+  },
 	methods: {
-    updateNavigation () {
-      var navigationInfo = {
-        currentLevel: 'proposal',
-        selectedProposal: this.selectedProposal
+    loadExistingAnswers () {
+      if (this.application.data.proposal_extension) {
+        this.selectedProposal.push('proposal_extension');
       }
 
-      this.$store.dispatch('createFirstFlow', JSON.parse(JSON.stringify(navigationInfo))).then(() => {
+      if (this.application.data.proposal_equipment) {
+        this.selectedProposal.push('proposal_equipment');
+      }
+		},
+    updateNavigation () {
+      debugger;
+      var navigationInfo = {
+        currentLevel: 'proposal',
+        selectedProposal: this.selectedProposal,
+        action: 'createFlow',
+        application_id: this.applicationId
+      }
+
+      this.$store.dispatch('submitFlow', navigationInfo).then(() => {
         router.push({ name: this.$store.state.state.proposalFlow[0].goTo, params: { applicationId: this.applicationId } });
       });
     },
@@ -91,6 +116,11 @@ export default {
         })
       }
     }
-  }
+  },
+  watch: {
+		application (newValue, oldValue) {
+			this.loadExistingAnswers();
+		}
+	}
 }
 </script>
