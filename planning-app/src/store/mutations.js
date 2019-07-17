@@ -35,11 +35,11 @@ export function addProposal (state, data) {
     let applicationData = state.state.applications[position].data;
 
     if (data.type === 'extension') {
-      applicationData.extension = data.data;
+      applicationData.proposal_extension = data.data;
 
       state.state.applications[position].data = applicationData;
     } else if (data.type === 'equipment') {
-      applicationData.equipment = data.data;
+      applicationData.proposal_equipment = data.data;
     } else {
       //then it is both
       
@@ -59,12 +59,12 @@ export function updateProposal (state, data) {
     let merged = {};
 
     if (data.type === 'extension') {
-      merged = {...applicationData.extension, ...data.data};
-      state.state.applications[position].data.extension = merged;
+      merged = {...applicationData.proposal_extension, ...data.data};
+      state.state.applications[position].data.proposal_extension = merged;
 
     } else if (data.type === 'equipment') {
-      merged = {...applicationData.equipment, ...data.data};
-      state.state.applications[position].data.equipment = merged;
+      merged = {...applicationData.proposal_equipment, ...data.data};
+      state.state.applications[position].data.proposal_equipment = merged;
     }
 
     console.log('final state', state.state.applications[position]);
@@ -106,6 +106,7 @@ export function createFirstFlow (state, data) {
 
   state.state.proposalFlow = firstFlow;
 
+  console.log('------CREATED FLOW', state.state.proposalFlow);
 }
 
 export function updateFlow (state, data) {
@@ -146,8 +147,9 @@ export function updateFlow (state, data) {
   for (let i = 0; i < flow.length; i++) { 
     state.state.proposalFlow.splice(currentLevelPosition + 1 + i, 0, flow[i]);
   }
+  console.log('------UPDATED FLOW', state.state.proposalFlow);
 
-  console.log('------state.state.proposalFlow', state.state.proposalFlow);
+  return state.state.proposalFlow;
 }
 
 export function updateEquipmentFlow (state, data) {

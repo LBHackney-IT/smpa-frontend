@@ -91,7 +91,8 @@ export default {
     updateNavigation () {
       var navigationInfo = {
         currentLevel: 'proposal_equipment',
-        selectedProposal: this.selectedProposal
+        selectedProposal: this.selectedProposal,
+        action: 'updateFlow'
       }
 
       this.$store.dispatch('updateFlow', JSON.parse(JSON.stringify(navigationInfo))).then(() => {

@@ -57,11 +57,12 @@ export function updateApplication ({commit}, data) {
   return ApplicationsService
   .update(data.id, data.data)
   .then( response => {
+    console.log('-----application updated', response);
     commit('updateApplication', response.data);
   });
 }
 
-export function createFirstFlow ({commit}, data) {
+export function createFlow ({commit}, data) {
   return new Promise((resolve) => {
     setTimeout(() => {
       commit('createFirstFlow', data);
@@ -80,8 +81,17 @@ export function updateFlow ({commit}, data) {
 }
 
 export function submitFlow ({commit}, data) {
-  return this.dispatch(data.action, data).then((response) => {
-    console.log('the flow was updated', response);
+  return this.dispatch(data.action, data).then(() => {
+    console.log('the flow was updated-------', this.state);
+
+    let patch = {};
+    patch.id = data.application_id;
+    patch.data = {};
+    patch.data.proposalFlow = JSON.stringify(this.state.state.proposalFlow);
+
+    return this.dispatch('updateApplication', patch);
+
+
   })
 }
 

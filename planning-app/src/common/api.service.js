@@ -150,8 +150,8 @@ export const CreateBothProposals = {
     ])
     .then(axios.spread(function (extension, equipment) {
       let response = {};
-      response.extension = extension.data;
-      response.equipment = equipment.data;
+      response.proposal_extension = extension.data;
+      response.proposal_equipment = equipment.data;
       return response;
     }));
   }
@@ -163,4 +163,3 @@ export const SubmitWorksLocation = {
     return ApiService.update(payload.resource, payload.id, payload.data);
   }
 }
-
