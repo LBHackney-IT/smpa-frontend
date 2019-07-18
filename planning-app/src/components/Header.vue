@@ -6,6 +6,36 @@
             Submit my planning application
         </a>
       </div>
+
+
+      <div class="govuk-header__content">
+
+        <button type="button" role="button" class="govuk-header__menu-button js-header-toggle" aria-controls="navigation" aria-label="Show or hide Top Level Navigation">Menu</button>
+        <nav>
+          <ul id="navigation" class="govuk-header__navigation " aria-label="Top Level Navigation">
+            <li class="govuk-header__navigation-item govuk-header__navigation-item--active">
+              <a class="govuk-header__link" href="/">
+                Home
+              </a>
+            </li>
+            <li class="govuk-header__navigation-item">
+              <a class="govuk-header__link" href="#2">
+                Settings
+              </a>
+            </li>
+            <li class="govuk-header__navigation-item">
+              <a class="govuk-header__link" href="#3">
+                Account
+              </a>
+            </li>
+            <li class="govuk-header__navigation-item">
+              <a class="govuk-header__link" href="#4">
+                Log out
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
     </div>
   </header>
 </template>
