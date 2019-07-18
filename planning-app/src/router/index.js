@@ -11,11 +11,13 @@ import SiteSearch from '../views/SiteSearch.vue';
 import SiteDetails from '../views/SiteDetails.vue';
 import SignIn from '../views/SignIn.vue';
 import ResetPassword from '../views/ResetPassword.vue';
-import Accounts from '../views/Accounts.vue';
+import AccountOverview from '../views/AccountOverview.vue';
+import AccountActions from '../views/AccountActions.vue';
 import Overview from '../views/Overview.vue';
 import ApplicationOverview from '../views/ApplicationOverview.vue';
 import CreateAccount from '../views/CreateAccount.vue';
 import Applications from '../views/Applications.vue';
+import UserApplications from '../views/UserApplications.vue';
 import WorkStart from '../forms/works/WorkStart.vue';
 import Proposal from '../forms/works/Proposal.vue';
 import AboutProposal from '../forms/works/AboutProposal.vue';
@@ -318,7 +320,19 @@ export default new Router({
     {
       path: '/account',
       name: 'AccountOverview',
-      component: Accounts
+      component: AccountOverview,
+      children: [
+        { 
+          path: '', 
+          name: 'AccountActions', 
+          component: AccountActions 
+        },
+        { 
+          path: 'applications', 
+          name: 'UserApplications', 
+          component: UserApplications 
+        }
+      ]
     },
     {
       name: 'create',

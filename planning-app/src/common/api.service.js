@@ -87,8 +87,12 @@ export const ApplicationsService = {
   get (id) {
     ApiService.setHeader();
     return ApiService.getResource('applications', id);
-  }
+  },
 
+  getAll () {
+    ApiService.setHeader();
+    return ApiService.get('applications');
+  }
 }
 
 export const ExtensionProposalService = {

@@ -10,7 +10,7 @@
 
 <script>
   export default {
-    name: 'AccountOverview',
+    name: 'AccountActions',
     components: {
     }
   }

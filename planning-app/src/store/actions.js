@@ -26,6 +26,14 @@ export function addAddressToApplication ({commit}, data) {
   });
 }
 
+export function getAllApplications () {
+  return ApplicationsService
+  .getAll()
+  .then( response => {
+    return response;
+  });
+}
+
 export function createApplication ({commit}) {
   return ApplicationsService
   .create()
