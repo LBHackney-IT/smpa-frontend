@@ -34,7 +34,7 @@
       <tbody class="govuk-table__body">
         <tr class="govuk-table__row" v-for="(application, index) in this.applications" v-bind:key="index">
           <td class="govuk-table__cell">#####</td>
-          <td class="govuk-table__cell">{{application.site_address.address_line_1}}</td>
+          <td class="govuk-table__cell"><span v-if="application.site_address">{{ application.site_address.address_line_1 }}</span></td>
           <td class="govuk-table__cell">{{ generateDate(application.created_at) }}</td>
           <td class="govuk-table__cell">{{ generateDate(application.updated_at) }}</td>
           <td class="govuk-table__cell">Draft</td>
