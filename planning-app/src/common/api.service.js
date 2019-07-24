@@ -3,12 +3,24 @@ import axios from 'axios';
 import VueAxios from 'vue-axios';
 import JwtService from '@/common/jwt.service';
 import { API_URL } from '@/common/config';
+import router from '../router';
+import store from '../store';
 import qs from 'qs';
 
 const ApiService = {
   init () {
     Vue.use(VueAxios, axios);
     Vue.axios.defaults.baseURL = API_URL;
+
+    axios.interceptors.response.use(function (response) {
+      return response;
+    }, function (error) {
+      if (error.response.status === 401) {
+        store.dispatch('HandleUnauthorizedAccess');
+        router.push({ name: 'SignIn'});
+      }
+      return Promise.reject(error);
+    });
   },
 
   setFormUrlencoded () {
@@ -45,7 +57,7 @@ const ApiService = {
     return Vue.axios
       .delete(resource)
       .catch((error) => {
-        throw new Error(`[RWV] ApiService ${error}`);
+        throw new Error(`ApiService ${error}`);
       })
   },
 

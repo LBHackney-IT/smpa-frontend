@@ -8,12 +8,21 @@ import {
   SubmitWorksLocation 
 } from '@/common/api.service';
 
+import { 
+  destroyToken 
+} from '@/common/jwt.service';
+
 export function signIn ({commit}, payload) {
   return AuthService
   .post(payload)
   .then( response => {
     commit('signIn', response.data);
   });
+}
+
+export function signOut ({commit}) {
+  destroyToken();
+  commit('signOut');
 }
 
 export function addAddressToApplication ({commit}, data) {
@@ -31,6 +40,11 @@ export function getAllApplications () {
   .getAll()
   .then( response => {
     return response;
+  })
+  .catch(error => {
+    var errorResponse = {};
+    errorResponse.error = error;
+    return errorResponse;
   });
 }
 
@@ -49,6 +63,9 @@ export function generateApplication ({commit}, siteData) {
     .then((response) => {
       siteData.application_id = response.data.id;
       return this.dispatch('addAddressToApplication', siteData);
+    })
+    .catch(({response}) => {
+      console.log('ERROR-------------', response);
     });
 }
 
