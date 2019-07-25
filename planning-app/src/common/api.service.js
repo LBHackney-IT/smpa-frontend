@@ -179,3 +179,20 @@ export const SubmitWorksLocation = {
     return ApiService.update(payload.resource, payload.id, payload.data);
   }
 }
+
+export const DocumentsService = {
+  getDocumentSizes () {
+    ApiService.setHeader();
+    return ApiService.get('document-sizes');
+  },
+
+  getDocumentTypes () {
+    ApiService.setHeader();
+    return ApiService.get('document-types');
+  },
+
+  uploadDocument (data) {
+    ApiService.setHeader();
+    return ApiService.get('documents', data);
+  }
+}
