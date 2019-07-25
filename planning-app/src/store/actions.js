@@ -5,7 +5,8 @@ import {
   EquipmentProposalService,
   CreateBothProposals,
   GenericWorkService,
-  SubmitWorksLocation 
+  SubmitWorksLocation,
+  DocumentsService 
 } from '@/common/api.service';
 
 import { 
@@ -227,4 +228,28 @@ export function generateProposalEquipment ({commit}, data) {
   commit('updateEquipmentFlow', {
     'proposal_equipment': proposal_equipment
   });
+}
+
+export function getDocumentSizes ({commit}, data) {
+  return DocumentsService
+    .getDocumentSizes()
+    .then( response => {
+      console.log('document sizes---------', response);
+    });
+}
+
+export function getDocumentTypes ({commit}, data) {
+  return DocumentsService
+    .getDocumentTypes()
+    .then( response => {
+      console.log('document types---------', response);
+    });
+}
+
+export function uploadDocument ({commit}, payload) {
+  return DocumentsService
+    .uploadDocument(payload)
+    .then( response => {
+      console.log('document upload---------', response);
+    });
 }
