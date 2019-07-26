@@ -262,6 +262,6 @@ export function uploadDocument ({commit}, payload) {
   return DocumentsService
     .uploadDocument(payload)
     .then( response => {
-      console.log('document upload---------', response);
+      console.log('document upload action---------', response);
     });
 }

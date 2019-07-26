@@ -12,7 +12,7 @@ export const getDocumentSizes = {
   methods: {
     returnDocumentSizes () {
       if (!store.state.state.documentSizes) {
-        this.$store.dispatch('getDocumentTypes').then(() => {
+        this.$store.dispatch('getDocumentSizes').then(() => {
           this.documentSizes = store.state.state.documentSizes;
         })
       } else {

@@ -23,8 +23,16 @@ const ApiService = {
     });
   },
 
+  setFormData () {
+    Vue.axios.defaults.headers.common['Content-Type'] = 'multipart/form-data';
+  },
+
   setFormUrlencoded () {
     Vue.axios.defaults.headers.common['Content-Type'] = 'application/x-www-form-urlencoded';
+  },
+
+  setAuthorization () {
+    Vue.axios.defaults.headers.common['Authorization'] = `jwt ${JwtService.getToken()}`;
   },
 
   setHeader () {
@@ -197,7 +205,12 @@ export const DocumentsService = {
   },
 
   uploadDocument (data) {
-    ApiService.setHeader();
-    return ApiService.get('documents', data);
+    let formData = new FormData();
+    formData.append('file', data);
+    
+    ApiService.setAuthorization();
+    ApiService.setFormUrlencoded();
+
+    return ApiService.post('documents', data);
   }
 }
