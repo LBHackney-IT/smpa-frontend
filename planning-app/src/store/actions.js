@@ -30,9 +30,15 @@ export function addAddressToApplication ({commit}, data) {
   return ApplicationsService
   .addSiteAddress(data)
   .then( response => {
-    let res = response.data;
-    res.application_id = data.application_id;
-    return res;
+    return response;
+  });
+}
+
+export function addConstraintsToSite ({commit}, data) {
+  return ApplicationsService
+  .addSiteConstraints(data)
+  .then( response => {
+    return response;
   });
 }
 
@@ -60,13 +66,19 @@ export function createApplication ({commit}) {
 
 //chain both create application and add address to application
 export function generateApplication ({commit}, siteData) {
+  let applicationId;
   return this.dispatch('createApplication')
     .then((response) => {
-      siteData.application_id = response.data.id;
-      return this.dispatch('addAddressToApplication', siteData);
+      applicationId = response.data.id;
+      siteData.address.application_id = applicationId;
+      return this.dispatch('addAddressToApplication', siteData.address)
     })
-    .catch(({response}) => {
-      console.log('ERROR-------------', response);
+    .then(() => {
+      siteData.constraints.application_id = applicationId;
+      return this.dispatch('addConstraintsToSite', siteData.constraints)
+    })
+    .catch(({error}) => {
+      console.log('ERROR-------------', error);
     });
 }
 
@@ -230,19 +242,19 @@ export function generateProposalEquipment ({commit}, data) {
   });
 }
 
-export function getDocumentSizes ({commit}, data) {
+export function getDocumentSizes ({commit}) {
   return DocumentsService
     .getDocumentSizes()
     .then( response => {
-      console.log('document sizes---------', response);
+      commit('addDocumentSizes', response.data);
     });
 }
 
-export function getDocumentTypes ({commit}, data) {
+export function getDocumentTypes ({commit}) {
   return DocumentsService
     .getDocumentTypes()
     .then( response => {
-      console.log('document types---------', response);
+      commit('addDocumentTypes', response.data);
     });
 }
 

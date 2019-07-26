@@ -96,6 +96,11 @@ export const ApplicationsService = {
     return ApiService.update('site-addresses', id, payload);
   },
 
+  addSiteConstraints (payload) {
+    ApiService.setHeader();
+    return ApiService.post('site-constraints', payload);
+  },
+
   get (id) {
     ApiService.setHeader();
     return ApiService.getResource('applications', id);

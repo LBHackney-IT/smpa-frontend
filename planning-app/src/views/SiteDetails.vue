@@ -101,7 +101,10 @@
         loading: false,
         loadingMap: false,
         geoJson: {},
-        application: {}
+        application: {
+          address: {},
+          constraints: {}
+        }
       };
     },
     props: {
@@ -246,24 +249,26 @@
       
       navigate() {
 
-        this.application.siteGeoJson = this.geoJson;
-        this.application.number = this.selectedAddress.buildingNumber;
-        this.application.property_name = this.selectedAddress.buildingName;
-        this.application.address_line_1 = this.selectedAddress.line1;
-        this.application.address_line_2 = this.selectedAddress.line2;
-        this.application.address_line_3 = this.selectedAddress.line3;
-        this.application.town_city = this.selectedAddress.town;
-        this.application.postcode = this.selectedAddress.postcode;
-        this.application.easting = this.selectedAddress.easting;
-        this.application.northing = this.selectedAddress.northing;
-        this.application.ward = this.selectedAddress.ward;
-        this.application.uprn = this.selectedAddress.uprn;
-        this.application.property_type = this.selectedAddress.usageDescription;
-        this.application.description = this.selectedAddress.usageCode;
+        this.application.address.siteGeoJson = this.geoJson;
+        this.application.address.number = this.selectedAddress.buildingNumber;
+        this.application.address.property_name = this.selectedAddress.buildingName;
+        this.application.address.address_line_1 = this.selectedAddress.line1;
+        this.application.address.address_line_2 = this.selectedAddress.line2;
+        this.application.address.address_line_3 = this.selectedAddress.line3;
+        this.application.address.town_city = this.selectedAddress.town;
+        this.application.address.postcode = this.selectedAddress.postcode;
+        this.application.address.easting = this.selectedAddress.easting;
+        this.application.address.northing = this.selectedAddress.northing;
+        this.application.address.ward = this.selectedAddress.ward;
+        this.application.address.uprn = this.selectedAddress.uprn;
+        this.application.address.property_type = this.selectedAddress.usageDescription;
+        this.application.address.description = this.selectedAddress.usageCode;
+
+        this.application.constraints = this.site.properties;
 
         if (!!JwtService.getToken()) {
           this.$store.dispatch('generateApplication', this.application).then((response) => {
-            router.push({ name: 'ApplicationOverview', params: { 'applicationId': response.application_id } });
+            router.push({ name: 'ApplicationOverview', params: { 'applicationId': response.data.application_id } });
           })
         } else {
           router.push({ name: 'SignIn', params: { 'origin': 'constraints-finder', 'application': this.application} });
