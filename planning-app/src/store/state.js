@@ -4,6 +4,8 @@ import JwtService from '@/common/jwt.service';
 export const state = {
   isAuthenticated: !!JwtService.getToken(),
   user: {},
+  documentTypes: undefined,
+  documentSizes: undefined,
   applications: [],
   proposalFlow: [],
   proposalMap: {

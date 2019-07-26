@@ -163,6 +163,14 @@ export function signIn (state, data) {
   JwtService.saveToken(state.state.user.jwt);
 }
 
+export function addDocumentTypes (state, data) {
+  state.state.documentTypes = data;
+}
+
+export function addDocumentSizes (state, data) {
+  state.state.documentSizes = data;
+}
+
 
 
 
