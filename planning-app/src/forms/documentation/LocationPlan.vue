@@ -89,7 +89,6 @@ import router from '../../router';
 import { getRouteAppId } from '../../mixins/getRouteAppId';
 import { getDocumentTypes } from '../../mixins/getDocumentTypes';
 import { getDocumentSizes } from '../../mixins/getDocumentSizes';
-import navigate from '../../common/navigate';
 
 export default {
   name: 'LocationPlan',
