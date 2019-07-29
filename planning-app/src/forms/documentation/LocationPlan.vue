@@ -126,7 +126,7 @@ export default {
 
       this.$store.dispatch('uploadDocument', payload).then((response) => {
         console.log('-----doc uploaded');
-        navigate();
+        this.navigate();
       })
     },
     navigate() {
