@@ -44,10 +44,9 @@
               Select document size
             </label>
 
-            {{this.size}}
             <select class="govuk-select" id="doc-size" name="doc-size" v-model="size">
               <option disabled value="">Please select one</option>
-              <option v-bind:key="index" v-for="(docSize, index) in this.documentSizes" v-bind:value="docSize.name">{{docSize.name}}</option>
+              <option v-bind:key="index" v-for="(docSize, index) in this.documentSizes" v-bind:value="docSize.id">{{docSize.name}}</option>
             </select>
 
             <br><br>

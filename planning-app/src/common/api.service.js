@@ -71,6 +71,10 @@ const ApiService = {
 
   getResource(resource, id) {
     return Vue.axios.get(`${resource}/${id}`);
+  },
+
+  postWithConfig(resource, params, config) {
+    return Vue.axios.post(`${resource}`, params, config);
   }
 }
 
@@ -205,12 +209,22 @@ export const DocumentsService = {
   },
 
   uploadDocument (data) {
-    let formData = new FormData();
-    formData.append('file', data);
+    let form = new FormData();
+    form.append('document', new Blob([data.document], {'type': data.document.type}), data.document.name);
+    form.append('document_size_id', data.document_size_id);
+    form.append('application_id', data.application_id);
+    form.append('proposed', data.proposed);
     
     ApiService.setAuthorization();
-    ApiService.setFormUrlencoded();
 
-    return ApiService.post('documents', data);
+    //multipart/form-data forms need to have content-type undefined and let the browser calculate boundaries automatically
+
+    const config = {
+      headers: {
+          'content-type': undefined
+      }
+    };
+
+    return ApiService.postWithConfig('documents', form, config);
   }
 }
