@@ -214,6 +214,7 @@ export const DocumentsService = {
     form.append('document_size_id', data.document_size_id);
     form.append('application_id', data.application_id);
     form.append('proposed', data.proposed);
+    form.append('existing', data.existing);
     
     ApiService.setAuthorization();
 

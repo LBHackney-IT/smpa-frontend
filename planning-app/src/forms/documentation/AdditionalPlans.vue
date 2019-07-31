@@ -83,90 +83,22 @@ You should include elevations for all sides of the proposal.</p>
       <div class="govuk-grid-column-one-half">
         <p class="govuk-body govuk-!-font-weight-bold">Existing</p>
         <div class="govuk-checkboxes">
-          <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="existing-1" name="existing-1" type="checkbox" value="existing-1" v-model="fileIncludes" >
-            <label class="govuk-label govuk-checkboxes__label" for="existing-1">
-              Site layout plan
-            </label>
-          </div>
-
-          <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="existing-2" name="existing-2" type="checkbox" value="existing-2" v-model="fileIncludes" >
-            <label class="govuk-label govuk-checkboxes__label" for="existing-2">
-              Elevations
-            </label>
-          </div>
-
-          <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="existing-3" name="existing-3" type="checkbox" value="existing-3" v-model="fileIncludes" >
-            <label class="govuk-label govuk-checkboxes__label" for="existing-3">
-              Roof plans
-            </label>
-          </div>
-
-          <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="existing-4" name="existing-4" type="checkbox" value="existing-4" v-model="fileIncludes" >
-            <label class="govuk-label govuk-checkboxes__label" for="existing-4">
-              Floor plans
-            </label>
-          </div>
-
-          <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="existing-5" name="existing-5" type="checkbox" value="existing-5" v-model="fileIncludes" >
-            <label class="govuk-label govuk-checkboxes__label" for="existing-5">
-              Sections
-            </label>
-          </div>
-          <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="existing-6" name="existing-6" type="checkbox" value="existing-6" v-model="fileIncludes" >
-            <label class="govuk-label govuk-checkboxes__label" for="existing-6">
-              Other
+          <div class="govuk-checkboxes__item" v-bind:key="option.id + '-existing'" v-for="option in this.documentTypes">
+            <input class="govuk-checkboxes__input" v-bind:id="option.id + '-existing'" name="existing-proposal" type="checkbox" v-bind:value="option.id" v-model="existingFile">
+            <label class="govuk-label govuk-checkboxes__label" v-bind:for="option.id + '-existing'">
+              {{option.name}}
             </label>
           </div>
         </div>
       </div>
       <div class="govuk-grid-column-one-half">
         <p class="govuk-body govuk-!-font-weight-bold">Proposed</p>
-        <!-- if works already started changed to "consented" if works already finished "as built" -->
+        <!-- todo if works already started changed to "consented" if works already finished "as built" -->
         <div class="govuk-checkboxes">
-          <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="proposed-1" name="proposed-1" type="checkbox" value="proposed-1" v-model="fileIncludes" >
-            <label class="govuk-label govuk-checkboxes__label" for="proposed-1">
-              Site layout plan
-            </label>
-          </div>
-
-          <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="proposed-2" name="proposed-2" type="checkbox" value="proposed-2" v-model="fileIncludes" >
-            <label class="govuk-label govuk-checkboxes__label" for="proposed-2">
-              Elevations
-            </label>
-          </div>
-
-          <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="proposed-3" name="proposed-3" type="checkbox" value="proposed-3" v-model="fileIncludes" >
-            <label class="govuk-label govuk-checkboxes__label" for="proposed-3">
-              Roof plans
-            </label>
-          </div>
-
-          <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="proposed-4" name="proposed-4" type="checkbox" value="proposed-4" v-model="fileIncludes" >
-            <label class="govuk-label govuk-checkboxes__label" for="proposed-4">
-              Floor plans
-            </label>
-          </div>
-
-          <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="proposed-5" name="proposed-5" type="checkbox" value="proposed-5" v-model="fileIncludes" >
-            <label class="govuk-label govuk-checkboxes__label" for="proposed-5">
-              Sections
-            </label>
-          </div>
-          <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="proposed-6" name="proposed-6" type="checkbox" value="proposed-6" v-model="fileIncludes" >
-            <label class="govuk-label govuk-checkboxes__label" for="proposed-6">
-              Other
+          <div class="govuk-checkboxes__item" v-bind:key="option.id + '-proposed'" v-for="option in this.documentTypes">
+            <input class="govuk-checkboxes__input" v-bind:id="option.id + '-proposed'" name="proposal" type="checkbox" v-bind:value="option.id" v-model="proposedFile">
+            <label class="govuk-label govuk-checkboxes__label" v-bind:for="option.id + '-proposed'">
+              {{option.name}}
             </label>
           </div>
         </div>
@@ -176,17 +108,22 @@ You should include elevations for all sides of the proposal.</p>
     <br><br><br>
 
     <div class="govuk-form-group">
+      <label class="govuk-label" for="doc-size">
+        Select document size
+      </label>
+
+      <select class="govuk-select" id="doc-size" name="doc-size" v-model="size">
+        <option disabled value="">Please select one</option>
+        <option v-bind:key="index" v-for="(docSize, index) in this.documentSizes" v-bind:value="docSize.id">{{docSize.name}}</option>
+      </select>
+      <br><br>
       <label class="govuk-label" for="file-upload-1">
         Upload a file
       </label>
-      <input class="govuk-file-upload" id="file-upload-1" name="file-upload-1" type="file">
+      <input class="govuk-file-upload" id="file-upload-1" name="file-upload-1" ref="AdditionalPlans" type="file" v-on:change="handleFileUpload()">
     </div>
 
-    <!-- <button type="button" class="govuk-button" @click="showModal = true">Add a file</button><br>
-
-    <modal v-if="showModal" @close="showModal = false"></modal> -->
-
-    <v-cta name="Continue" :onClick="navigate"></v-cta>
+    <v-cta name="Continue" :onClick="submitFile"></v-cta>
     <br>
     <router-link :to="{ name: 'DocumentationDocsReview' }">Continue without adding a file</router-link>
 	</div>
@@ -196,9 +133,13 @@ You should include elevations for all sides of the proposal.</p>
 import vCta from '../../components/Cta.vue';
 import Modal from '../../components/form/DocumentsCheckModal.vue';
 import router from '../../router';
+import { getRouteAppId } from '../../mixins/getRouteAppId';
+import { getDocumentTypes } from '../../mixins/getDocumentTypes';
+import { getDocumentSizes } from '../../mixins/getDocumentSizes';
 
 export default {
-	name: 'AdditionalPlans',
+  name: 'AdditionalPlans',
+  mixins: [ getRouteAppId, getDocumentTypes, getDocumentSizes ],
 	components: {
     vCta,
     Modal
@@ -206,10 +147,32 @@ export default {
 	data () {
     return {
       showModal: false,
-      fileIncludes: []
+      file: '',
+      size: '',
+      existingFile: [],
+      proposedFile: []
     }
   },
 	methods: {
+    handleFileUpload(){
+      this.file = this.$refs.AdditionalPlans.files[0];
+    },
+    submitFile() {
+      let payload = {};
+
+      payload.document = this.file;
+      payload.document_size_id = this.size;
+      payload.application_id = this.applicationId;
+      payload.proposed = this.proposedFile.join();
+      payload.existing = this.existingFile.join();
+
+      debugger;
+
+      this.$store.dispatch('uploadDocument', payload).then((response) => {
+        console.log('-----doc uploaded');
+        this.navigate();
+      })
+    },
     navigate() {
       router.push({ name: 'DocumentationDocsReview' });
     }

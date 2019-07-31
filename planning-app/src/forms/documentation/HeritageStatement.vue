@@ -23,23 +23,32 @@
     </details>
 
     <div class="govuk-form-group">
+      <label class="govuk-label" for="doc-size">
+        Select document size
+      </label>
+
+      <select class="govuk-select" id="doc-size" name="doc-size" v-model="size">
+        <option disabled value="">Please select one</option>
+        <option v-bind:key="index" v-for="(docSize, index) in this.documentSizes" v-bind:value="docSize.id">{{docSize.name}}</option>
+      </select>
+      <br><br>
       <label class="govuk-label" for="file-upload-1">
         Upload a file
       </label>
-      <input class="govuk-file-upload" id="file-upload-1" name="file-upload-1" type="file">
+      <input class="govuk-file-upload" id="file-upload-1" name="file-upload-1" ref="HeritageStatement" type="file" v-on:change="handleFileUpload()">
 
       <br><br>
       <div class="govuk-checkboxes">
         <div class="govuk-checkboxes__item">
-          <input class="govuk-checkboxes__input" id="waste-1" name="waste" type="checkbox" value="carcasses">
-          <label class="govuk-label govuk-checkboxes__label" for="waste-1">
+          <input class="govuk-checkboxes__input" id="included" name="included" type="checkbox" value="true">
+          <label class="govuk-label govuk-checkboxes__label" for="included">
             The Heritage Statement is included in another document
           </label>
         </div>
       </div>
     </div>
 
-    <v-cta name="Continue" :onClick="navigate"></v-cta>
+    <v-cta name="Continue" :onClick="submitFile"></v-cta>
     <br>
     <router-link :to="{ name: 'DocumentationAdditionalPlans' }">Continue without adding a file</router-link>
 
@@ -51,16 +60,43 @@
 <script>
 import vCta from '../../components/Cta.vue';
 import router from '../../router';
+import { getRouteAppId } from '../../mixins/getRouteAppId';
+import { getDocumentTypes } from '../../mixins/getDocumentTypes';
+import { getDocumentSizes } from '../../mixins/getDocumentSizes';
 
 export default {
-	name: 'DesignAndAccessStatement',
+  name: 'HeritageStatement',
+  mixins: [ getRouteAppId, getDocumentTypes, getDocumentSizes ],
 	components: {
     vCta
 	},
 	data () {
-    return {}
+    return {
+      file: '',
+      size: ''
+    }
   },
 	methods: {
+    handleFileUpload(){
+      this.file = this.$refs.HeritageStatement.files[0];
+    },
+    submitFile() {
+      var docType = this.documentTypes.find(function(element) {
+        return element.name === 'Heritage statement';
+      });
+
+      let payload = {};
+
+      payload.document = this.file;
+      payload.document_size_id = this.size;
+      payload.application_id = this.applicationId;
+      payload.proposed = docType.id;
+
+      this.$store.dispatch('uploadDocument', payload).then((response) => {
+        console.log('-----doc uploaded');
+        this.navigate();
+      })
+    },
     navigate() {
       router.push({ name: 'DocumentationAdditionalPlans' });
     }
