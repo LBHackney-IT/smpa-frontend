@@ -6,10 +6,8 @@
             Submit my planning application
         </a>
       </div>
-
-
       <div class="govuk-header__content">
-
+        
         <button type="button" role="button" class="govuk-header__menu-button js-header-toggle" aria-controls="navigation" aria-label="Show or hide Top Level Navigation">Menu</button>
         <nav>
           <ul id="navigation" class="govuk-header__navigation " aria-label="Top Level Navigation">
@@ -18,19 +16,14 @@
                 Home
               </a>
             </li>
-            <li class="govuk-header__navigation-item">
-              <a class="govuk-header__link" href="#2">
-                Settings
-              </a>
-            </li>
-            <li class="govuk-header__navigation-item">
-              <a class="govuk-header__link" href="#3">
+            <li class="govuk-header__navigation-item" v-if="isAuthenticated">
+              <a class="govuk-header__link" href="/account">
                 Account
               </a>
             </li>
-            <li class="govuk-header__navigation-item">
-              <a class="govuk-header__link" href="#4">
-                Log out
+            <li class="govuk-header__navigation-item" v-if="isAuthenticated">
+              <a class="govuk-header__link" href="/sign-out">
+                Sign out
               </a>
             </li>
           </ul>
@@ -43,8 +36,14 @@
 <script>
 export default {
   name: 'Header',
-  props: {
-    msg: String
+  data () {
+    return {
+    }
+  },
+  computed: {
+    isAuthenticated () {
+      return this.$store.state.state.isAuthenticated;
+    }
   }
 }
 </script>

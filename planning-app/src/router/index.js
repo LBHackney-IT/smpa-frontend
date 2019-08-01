@@ -10,6 +10,7 @@ import PlanningApplicationSteps from '../views/PlanningApplicationSteps.vue';
 import SiteSearch from '../views/SiteSearch.vue';
 import SiteDetails from '../views/SiteDetails.vue';
 import SignIn from '../views/SignIn.vue';
+import SignOut from '../views/SignOut.vue';
 import ResetPassword from '../views/ResetPassword.vue';
 import AccountOverview from '../views/AccountOverview.vue';
 import AccountActions from '../views/AccountActions.vue';
@@ -98,7 +99,7 @@ export default new Router({
     {
       path: '/applications',
       component: Applications,
-      beforeEnter: (to, from, next) => {
+      beforeEach: (to, from, next) => {
         //if signed in
         if (!!JwtService.getToken()) {
 
@@ -316,6 +317,11 @@ export default new Router({
       path: '/sign-in',
       name: 'SignIn',
       component: SignIn
+    },
+    {
+      path: '/sign-out',
+      name: 'SignOut',
+      component: SignOut
     },
     {
       path: '/account',

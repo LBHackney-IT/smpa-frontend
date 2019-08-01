@@ -9,9 +9,7 @@ import {
   DocumentsService 
 } from '@/common/api.service';
 
-import { 
-  destroyToken 
-} from '@/common/jwt.service';
+import JwtService from '@/common/jwt.service';
 
 export function signIn ({commit}, payload) {
   return AuthService
@@ -22,8 +20,9 @@ export function signIn ({commit}, payload) {
 }
 
 export function signOut ({commit}) {
-  destroyToken();
+  JwtService.destroyToken();
   commit('signOut');
+  return true;
 }
 
 export function addAddressToApplication ({commit}, data) {

@@ -63,7 +63,7 @@
             router.push({ name: 'ApplicationOverview', params: { applicationId: response.data.id } });
           })
         } else {
-          router.push({ name: 'AccountOverview' });
+          router.push({ name: 'AccountActions' });
         }
       },
       signIn() {

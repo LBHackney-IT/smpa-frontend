@@ -21,3 +21,7 @@ export function getExistingApplication (state, applicationId) {
 
   return state.state.applications[index];
 }
+
+export function isAuthenticated (state) {
+  return state.state.isAuthenticated;
+}

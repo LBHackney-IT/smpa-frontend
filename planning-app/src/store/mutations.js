@@ -171,6 +171,17 @@ export function addDocumentSizes (state, data) {
   state.state.documentSizes = data;
 }
 
+export function signOut (state) {
+  state.state.user = {};
+  state.state.isAuthenticated = false;
+  state.state.documentTypes = undefined;
+  state.state.documentSizes = undefined;
+  state.state.applications = [];
+  state.state.proposalFlow = [];
+
+  console.log('state', state.state);
+}
+
 
 
 
