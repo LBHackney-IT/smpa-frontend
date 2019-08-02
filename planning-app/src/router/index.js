@@ -48,7 +48,7 @@ import ContactApplicant from '../forms/contact/ContactApplicant.vue';
 import ContactAgent from '../forms/contact/ContactAgent.vue';
 import AboutApplicant from '../forms/contact/AboutApplicant.vue';
 import Declarations from '../forms/declarations/Declarations.vue';
-import DeclarationsAuthority from '../forms/declarations/DeclarationsAuthority.vue';
+import DeclarationOfInterest from '../forms/declarations/DeclarationOfInterest.vue';
 import DeclarationsOwnership from '../forms/declarations/DeclarationsOwnership.vue';
 import OwnershipCertificateDeclaration from '../forms/declarations/OwnershipCertificateDeclaration.vue';
 import AboutEquipment from '../forms/equipment/AboutEquipment.vue';
@@ -288,8 +288,8 @@ export default new Router({
               path: 'declarations', 
               component: Declarations,
               children: [
-                { path: '', name: 'Declarations', component: DeclarationsAuthority },
-                { path: 'authority', name:'DeclarationsAuthority', component: DeclarationsAuthority },
+                { path: '', name: 'Declarations', component: DeclarationOfInterest },
+                { path: 'authority', name:'DeclarationOfInterest', component: DeclarationOfInterest },
                 { path: 'ownership', name:'DeclarationsOwnership', component: DeclarationsOwnership },
                 { path: 'certificate', name: 'OwnershipCertificateDeclaration', component: OwnershipCertificateDeclaration }
               ]

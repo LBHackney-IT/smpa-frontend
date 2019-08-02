@@ -46,7 +46,7 @@
             <td class="govuk-table__cell">{{ generateDate(application.created_at) }}</td>
             <td class="govuk-table__cell">{{ generateDate(application.updated_at) }}</td>
             <td class="govuk-table__cell">Draft</td>
-            <td class="govuk-table__cell">View | Print</td>
+            <td class="govuk-table__cell"><router-link :to="{ name: 'ApplicationOverview'}" class="govuk-link">View</router-link></td>
           </tr>
         </tbody>
       </table>

@@ -75,7 +75,7 @@ import router from '../../router';
 import AuthorityRelationship from '../../components/form/AuthorityRelationship.vue';
 
 export default {
-	name: 'DeclarationsAuthority',
+	name: 'DeclarationOfInterest',
 	components: {
     vCta,
     AuthorityRelationship

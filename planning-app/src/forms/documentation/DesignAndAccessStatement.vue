@@ -99,12 +99,21 @@ export default {
     },
 
     navigate() {
-      //todo
-      if (this.$store.state.site.siteConstraints.listedBuilding) {
+      if (this.hasListedbuilding) {
         router.push({ name: 'DocumentationHeritageStatement' });
       } else {
         router.push({ name: 'DocumentationAdditionalPlans' });
       }
+    }
+  },
+  computed: {
+    application () {
+      let index = this.$store.state.state.applications.findIndex( application => application.data.id === this.applicationId );
+			return this.$store.state.state.applications[index];
+    },
+    
+    hasListedbuilding () {
+      return this.application.data.site_constraints.is_listed_building === "1";
     }
 	}
 }
