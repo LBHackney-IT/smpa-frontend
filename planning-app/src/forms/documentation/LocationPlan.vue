@@ -16,7 +16,7 @@
 
     <p class=" govuk-!-font-size-19">This is the location plan we currently hold about the selected address:</p>
 
-    <v-map v-if="this.application.data.site_address.siteGeoJson" :geoJson="this.application.data.site_address.siteGeoJson"></v-map>
+    <v-map v-if="this.application" :geoJson="this.application.data.site_address.siteGeoJson"></v-map>
 
     <div class="govuk-form-group">
       <span id="proposal-hint" class="govuk-hint">
@@ -144,17 +144,14 @@ export default {
         return false;
       }
     },
-    isInConservationArea () {
-      if (this.$store.state.site && this.$store.state.site.siteConstraints && this.$store.state.site.siteConstraints.conservationArea) {
-        return this.$store.state.site.siteConstraints.conservationArea;
-      } else {
-        return false;
-      }
-    },
     application () {
       let index = this.$store.state.state.applications.findIndex( application => application.data.id === this.applicationId );
 			return this.$store.state.state.applications[index];
-		}
+    },
+    
+    isInConservationArea () {
+      return this.application.data.site_constraints.nb_conarea > 0;
+    }
 	}
 }
 </script>

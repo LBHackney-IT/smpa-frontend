@@ -101,15 +101,6 @@ export default {
     navigate() {
       router.push({ name: 'Trees' });
     }
-  },
-  computed: {
-		isInConservationArea () {
-      if (this.$store.state.site && this.$store.state.site.siteConstraints && this.$store.state.site.siteConstraints.conservationArea) {
-        return this.$store.state.site.siteConstraints.conservationArea;
-      } else {
-        return false;
-      }
-		}
-	}
+  }
 }
 </script>

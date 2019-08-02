@@ -36,7 +36,6 @@ import Navigate from '../../common/navigate';
 import FreeDescription from '../../components/FreeDescription.vue';
 import { getRouteAppId } from '../../mixins/getRouteAppId';
 
-
 export default {
   name: 'AboutGatesFencesWalls',
   mixins: [ getRouteAppId ],
@@ -97,13 +96,14 @@ export default {
     }
   },
   computed: {
-		isInConservationArea () {
-      if (this.$store.state.site && this.$store.state.site.siteConstraints && this.$store.state.site.siteConstraints.conservationArea) {
-        return this.$store.state.site.siteConstraints.conservationArea;
-      } else {
-        return false;
-      }
-		}
+    application () {
+      let index = this.$store.state.state.applications.findIndex( application => application.data.id === this.applicationId );
+			return this.$store.state.state.applications[index];
+    },
+    
+    isInConservationArea () {
+      return this.application.data.site_constraints.nb_conarea > 0;
+    }
 	}
 }
 </script>

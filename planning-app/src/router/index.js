@@ -99,7 +99,7 @@ export default new Router({
     {
       path: '/applications',
       component: Applications,
-      beforeEach: (to, from, next) => {
+      beforeEnter: (to, from, next) => {
         //if signed in
         if (!!JwtService.getToken()) {
 

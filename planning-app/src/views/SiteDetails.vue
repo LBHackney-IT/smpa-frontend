@@ -257,8 +257,8 @@
         this.application.address.address_line_3 = this.selectedAddress.line3;
         this.application.address.town_city = this.selectedAddress.town;
         this.application.address.postcode = this.selectedAddress.postcode;
-        this.application.address.easting = this.selectedAddress.easting;
-        this.application.address.northing = this.selectedAddress.northing;
+        this.application.address.easting = this.selectedAddress.easting.toString();
+        this.application.address.northing = this.selectedAddress.northing.toString();
         this.application.address.ward = this.selectedAddress.ward;
         this.application.address.uprn = this.selectedAddress.uprn;
         this.application.address.property_type = this.selectedAddress.usageDescription;

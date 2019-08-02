@@ -160,13 +160,6 @@ export default {
 			let index = this.$store.state.state.applications.findIndex( application => application.data.id === this.applicationId );
 
 			return this.$store.state.state.applications[index];
-		},
-		isInConservationArea () {
-      if (this.$store.state.site && this.$store.state.site.siteConstraints && this.$store.state.site.siteConstraints.conservationArea) {
-        return this.$store.state.site.siteConstraints.conservationArea;
-      } else {
-        return false;
-      }
 		}
   },
   watch: {

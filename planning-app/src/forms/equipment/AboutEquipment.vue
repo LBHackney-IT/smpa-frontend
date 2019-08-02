@@ -33,9 +33,11 @@
 import vCta from '../../components/Cta.vue';
 import router from '../../router';
 import FreeDescription from '../../components/FreeDescription.vue';
+import { getRouteAppId } from '../../mixins/getRouteAppId';
 
 export default {
-	name: 'AboutEquipment',
+  name: 'AboutEquipment',
+    mixins: [ getRouteAppId ],
 	components: {
     vCta,
     FreeDescription
@@ -60,9 +62,7 @@ export default {
   },
 	methods: {
     loadDefaultOptions() {
-
-      //todo: check if in conservation area
-      if (false) {
+      if (isInConservationArea) {
         this.$store.dispatch('getDefaultData', 'equipment-works-types').then((response) => {
           this.defaultOptions = response.data;
         });
@@ -115,13 +115,14 @@ export default {
     }
   },
   computed: {
-		isInConservationArea () {
-      if (this.$store.state.site && this.$store.state.site.siteConstraints && this.$store.state.site.siteConstraints.conservationArea) {
-        return this.$store.state.site.siteConstraints.conservationArea;
-      } else {
-        return false;
-      }
-		}
+    application () {
+      let index = this.$store.state.state.applications.findIndex( application => application.data.id === this.applicationId );
+			return this.$store.state.state.applications[index];
+    },
+    
+    isInConservationArea () {
+      return this.application.data.site_constraints.nb_conarea > 0;
+    }
 	}
 }
 </script>
