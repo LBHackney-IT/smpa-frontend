@@ -123,7 +123,7 @@
       },
 			navigate() {
         if (this.selected.usageCode == 'RD02' || this.selected.usageCode == 'RD03' || this.selected.usageCode == 'RD04' || this.selected.usageCode == 'RD') {
-          router.push({ name: 'SiteDetails', params: { selectedAddress: this.selected} });
+          router.push({ name: 'SiteDetails', params: { selectedAddress: this.selected, postcode: this.postcode.replace( /\s/g, '')} });
         } else {
           this.serviceAvailable = false;
         }

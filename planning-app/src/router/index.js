@@ -91,7 +91,7 @@ export default new Router({
       component: SiteSearch
     },
     {
-      path: '/sites/:siteId',
+      path: '/sites/:postcode',
       name: 'SiteDetails',
       component: SiteDetails,
       props: true

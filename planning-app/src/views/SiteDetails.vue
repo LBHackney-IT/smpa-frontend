@@ -111,6 +111,10 @@
 			selectedAddress: {
 				type: Object,
 				required: true
+      },
+      postcode: {
+				type: String,
+				required: true
 			}
     },
     mounted() {
