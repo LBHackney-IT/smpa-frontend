@@ -137,13 +137,6 @@ export default {
     },
   },
   computed: {
-		hasPostcode () {
-      if (this.$store.state.site && this.$store.state.site.address && this.$store.state.site.address.result && this.$store.state.site.address.result.postcode) {
-        return this.$store.state.site.address.result.postcode;
-      } else {
-        return false;
-      }
-    },
     application () {
       let index = this.$store.state.state.applications.findIndex( application => application.data.id === this.applicationId );
 			return this.$store.state.state.applications[index];
