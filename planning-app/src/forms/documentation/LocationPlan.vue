@@ -16,6 +16,7 @@
 
     <p class=" govuk-!-font-size-19">This is the location plan we currently hold about the selected address:</p>
 
+
     <v-map v-if="this.application" :geoJson="this.application.data.site_address.siteGeoJson"></v-map>
 
     <div class="govuk-form-group">
@@ -144,6 +145,12 @@ export default {
     
     isInConservationArea () {
       return this.application.data.site_constraints.nb_conarea > 0;
+    },
+
+    siteGeoJson () {
+      console.log('here', this.application.data.site_address.siteGeoJson);
+
+      return this.application.data.site_address.siteGeoJson;
     }
 	}
 }

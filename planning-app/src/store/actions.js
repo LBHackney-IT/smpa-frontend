@@ -29,6 +29,10 @@ export function addAddressToApplication ({commit}, data) {
   return ApplicationsService
   .addSiteAddress(data)
   .then( response => {
+    var payload = {};
+    payload.application_id = data.application_id;
+    payload.data = response.data;
+    commit("addSiteAddress", payload);
     return response;
   });
 }
@@ -37,6 +41,10 @@ export function addConstraintsToSite ({commit}, data) {
   return ApplicationsService
   .addSiteConstraints(data)
   .then( response => {
+    var payload = {};
+    payload.application_id = data.application_id;
+    payload.data = response.data;
+    commit("addSiteConstraints", payload);
     return response;
   });
 }

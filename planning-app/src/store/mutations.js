@@ -22,9 +22,7 @@ export function getApplication (state, data) {
   application.data = data;
 
   if (position === -1) {
-    console.log('doesnt exist');
     state.state.applications.push(application);
-    console.log('THE FINAL STATE', state.state);
   }
 }
 
@@ -180,6 +178,18 @@ export function signOut (state) {
   state.state.proposalFlow = [];
 
   console.log('state', state.state);
+}
+
+export function addSiteAddress (state, data) {
+  const position = state.state.applications.findIndex( application => application.data.id === data.application_id );
+
+  state.state.applications[position].data.site_address = data.data;
+}
+
+export function addSiteConstraints (state, data) {
+  const position = state.state.applications.findIndex( application => application.data.id === data.application_id );
+
+  state.state.applications[position].data.site_constraints = data.data;
 }
 
 
