@@ -17,23 +17,29 @@
       </span>
     </div>
 
-		<v-cta name="Proceed to payment" :onClick="navigate"></v-cta>
+		{{this.applicationId}}
+
+		<v-cta name="Proceed to payment" :onClick="createPayment"></v-cta>
 	</div>
 </template>
 
 <script>
 import vCta from '../../components/Cta.vue';
 import router from '../../router';
+import { getRouteAppId } from '../../mixins/getRouteAppId';
 
 export default {
 	name: 'Pay',
+	mixins: [ getRouteAppId ],
 	components: {
 		vCta
 	},
 	methods: {
-    navigate() {
-      router.push({ name: 'PaymentSuccessful' });
-    }
+		createPayment () {
+      this.$store.dispatch('createPayment', this.applicationId).then((response) => {
+				window.location = response.data.next_url;
+      });
+		}
 	}
 }
 </script>

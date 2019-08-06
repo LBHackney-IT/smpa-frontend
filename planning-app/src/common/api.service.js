@@ -229,3 +229,17 @@ export const DocumentsService = {
     return ApiService.postWithConfig('documents', form, config);
   }
 }
+
+export const PaymentsService = {
+  createPayment (applicationId) {
+    ApiService.setHeader();
+    const resourceUrl = 'applications/' + applicationId + '/payments';
+    return ApiService.post(resourceUrl);
+  },
+
+  checkPayment (paymentId) {
+    ApiService.setHeader();
+    const resourceUrl = 'payments/' + paymentId + '/check';
+    return ApiService.get(resourceUrl);
+  }
+}

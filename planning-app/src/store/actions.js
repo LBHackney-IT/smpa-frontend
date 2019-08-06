@@ -6,7 +6,8 @@ import {
   CreateBothProposals,
   GenericWorkService,
   SubmitWorksLocation,
-  DocumentsService 
+  DocumentsService,
+  PaymentsService 
 } from '@/common/api.service';
 
 import JwtService from '@/common/jwt.service';
@@ -22,7 +23,6 @@ export function signIn ({commit}, payload) {
 export function signOut ({commit}) {
   JwtService.destroyToken();
   commit('signOut');
-  return true;
 }
 
 export function addAddressToApplication ({commit}, data) {
@@ -270,5 +270,23 @@ export function uploadDocument ({commit}, payload) {
     .uploadDocument(payload)
     .then( response => {
       console.log('document upload action---------', response);
+    });
+}
+
+export function createPayment ({commit}, data) {
+  return PaymentsService
+    .createPayment(data)
+    .then( response => {
+      console.log('PAYMENT CREATED---------', response);
+      return response;
+    });
+}
+
+export function checkPayment ({commit}, data) {
+  return PaymentsService
+    .checkPayment(data)
+    .then( response => {
+      console.log('PAYMENT checked---------', response);
+      return response;
     });
 }

@@ -71,7 +71,9 @@ import Outbuilding from '../forms/works/Outbuilding.vue';
 import Payment from '../forms/payment/Payment.vue';
 import Eligibility from '../forms/payment/Eligibility.vue';
 import Pay from '../forms/payment/Pay.vue';
+import PaymentCheck from '../forms/payment/PaymentCheck.vue';
 import PaymentSuccessful from '../forms/payment/PaymentSuccessful.vue';
+import NotFound from '../views/404.vue';
 
 export default new Router({
   mode: 'history',
@@ -301,6 +303,7 @@ export default new Router({
                 { path: '', name: 'Payment', component: Eligibility },
                 { path: 'eligibility', name:'Eligibility', component: Eligibility },
                 { path: 'pay', name:'Pay', component: Pay },
+                { path: 'check/:paymentId', name:'Check', component: PaymentCheck },
                 { path: 'success', name:'PaymentSuccessful', component: PaymentSuccessful }
               ]
             }
@@ -347,7 +350,7 @@ export default new Router({
     },
     {
       path: '*', 
-      redirect: '/'
+      component: NotFound
     }
   ],
   scrollBehavior () {
