@@ -17,8 +17,6 @@
       </span>
     </div>
 
-		{{this.applicationId}}
-
 		<v-cta name="Proceed to payment" :onClick="createPayment"></v-cta>
 	</div>
 </template>

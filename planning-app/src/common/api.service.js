@@ -243,3 +243,10 @@ export const PaymentsService = {
     return ApiService.get(resourceUrl);
   }
 }
+
+export const AccountService = {
+  createAccount (payload) {
+    ApiService.setHeader();
+    return ApiService.post('users/create', payload);
+  }
+}

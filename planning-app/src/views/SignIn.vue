@@ -3,7 +3,7 @@
     <div class="govuk-grid-column-two-thirds">
       <h1 class="govuk-heading-xl">Sign in</h1>
 
-      <p>Sign in or <a href="">create an account</a> to get started</p>
+      <p>Sign in or <a href="/create-account">create an account</a> to get started</p>
 
       <div class="govuk-form-group">
         <label class="govuk-label" for="email">

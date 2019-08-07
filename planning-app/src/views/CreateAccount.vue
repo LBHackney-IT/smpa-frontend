@@ -42,14 +42,14 @@
           <label class="govuk-label" for="email">
             Email address
           </label>
-          <input class="govuk-input govuk-!-width-two-thirds" id="email" name="email" type="email" autocomplete="email" spellcheck="false">
+          <input class="govuk-input govuk-!-width-two-thirds" id="email" name="email" type="email" autocomplete="email" spellcheck="false" v-model="email">
         </div>
 
         <div class="govuk-form-group">
           <label class="govuk-label" for="email-confirm">
             Confirm your email address
           </label>
-          <input class="govuk-input govuk-!-width-two-thirds" id="email-confirm" name="email-confirm" type="email" spellcheck="false">
+          <input class="govuk-input govuk-!-width-two-thirds" id="email-confirm" name="email-confirm" type="email" spellcheck="false" v-model="emailConfirmation">
         </div>
 
         <h2 class="govuk-heading-l govuk-!-margin-top-9">Create password</h2>
@@ -65,7 +65,7 @@
           <label class="govuk-label" for="password">
             Password
           </label>
-          <input class="govuk-input govuk-!-width-two-thirds" id="password" name="password" :type="passwordFieldType" spellcheck="false"><br>
+          <input class="govuk-input govuk-!-width-two-thirds" id="password" name="password" :type="passwordFieldType" spellcheck="false" v-model="password"><br>
           <button class="govuk-link govuk-!-margin-top-5" v-on:click="togglePasswordView">
             <span v-if="passwordFieldType === 'password'">Show</span><span v-if="passwordFieldType === 'text'">Hide</span> password
           </button>
@@ -75,7 +75,7 @@
           <label class="govuk-label" for="password-confirm">
             Confirm password
           </label>
-          <input class="govuk-input govuk-!-width-two-thirds" id="password-confirm" name="password-confirm" type="password" spellcheck="false">
+          <input class="govuk-input govuk-!-width-two-thirds" id="password-confirm" name="password-confirm" type="password" spellcheck="false" v-model="passwordConfirmation">
         </div>
 
         <v-cta name="Create account" :onClick="createAccount"></v-cta><br>
@@ -98,7 +98,13 @@
       return { 
         stepOne: true,
         stepTwo: false,
-        passwordFieldType: 'password'
+        passwordFieldType: 'password',
+        password: undefined,
+        passwordConfirmation: undefined,
+        email: undefined,
+        emailConfirmation: undefined,
+        showEmailError: false,
+        showPasswordError: false
       };
     },
     methods: {
@@ -106,7 +112,27 @@
         this.stepOne = false;
         this.stepTwo = true;
       },
-      createAccount() {},
+      createAccount() {
+
+        //todo show errors visually.
+        if (this.email !== this.emailConfirmation) {
+          this.showEmailError = true;
+          return;
+        } 
+
+        if (this.password !== this.passwordConfirmation) {
+          this.showPasswordError = true;
+          return;
+        }
+
+        var payload = {};
+
+        payload.email = this.emaill;
+        payload.password = this.password;
+        this.$store.dispatch('createAccount', payload).then((response) => {
+          router.push({ name: 'AccountActions' });
+        });
+      },
       togglePasswordView() {
         this.passwordFieldType = this.passwordFieldType === 'password' ? 'text' : 'password';
       }

@@ -7,7 +7,8 @@ import {
   GenericWorkService,
   SubmitWorksLocation,
   DocumentsService,
-  PaymentsService 
+  PaymentsService,
+  AccountService
 } from '@/common/api.service';
 
 import JwtService from '@/common/jwt.service';
@@ -287,6 +288,15 @@ export function checkPayment ({commit}, data) {
     .checkPayment(data)
     .then( response => {
       console.log('PAYMENT checked---------', response);
+      return response;
+    });
+}
+
+export function createAccount ({commit}, data) {
+  return AccountService
+    .createAccount(data)
+    .then( response => {
+      console.log('account creation---------', response);
       return response;
     });
 }
