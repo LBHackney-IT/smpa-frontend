@@ -11,8 +11,8 @@ from io import BytesIO
 
 
 CDN = {
-    'aws_access_key': os.environ.get('AWS_ACCESS_KEY', None),
-    'aws_secret_key': os.environ.get('AWS_SECRET_KEY', None),
+    'aws_access_key': os.environ.get('AWS_ACCESS_KEY_ID', None),
+    'aws_secret_key': os.environ.get('AWS_SECRET_ACCESS_KEY', None),
     'aws_endpoint': 's3-eu-west-2.amazonaws.com',
     'aws_region': 'eu-west-2',
     'source': './planning-app/dist/'
@@ -46,9 +46,31 @@ def stage():
         'skipped': 0,
     }
     env.cdn = CDN
+    env.cdn['aws_bucket'] = 'smpa-frontend-staging'
+    env.cdn['aws_sitename'] = 'smpa-frontend-staging'
+    env.TAG = 'staging'
+
+
+@task
+def hactar():
+    """Set the bucket and sitename to hactar values"""
+    env.files = []
+    env.static_stats = {
+        'uploaded': 0,
+        'modified': 0,
+        'new': 0,
+        'skipped': 0,
+    }
+    env.cdn = {
+        'aws_access_key': os.environ.get('HACTAR_AWS_ACCESS_KEY_ID', None),
+        'aws_secret_key': os.environ.get('HACTAR_AWS_SECRET_ACCESS_KEY', None),
+        'aws_endpoint': 's3-eu-west-2.amazonaws.com',
+        'aws_region': 'eu-west-2',
+        'source': './planning-app/dist/'
+    }
     env.cdn['aws_bucket'] = 'smpa.hactar.is'
     env.cdn['aws_sitename'] = 'smpa.hactar.is'
-    env.TAG = 'staging'
+    env.TAG = 'hactar'
 
 
 @task
