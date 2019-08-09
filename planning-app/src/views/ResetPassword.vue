@@ -3,40 +3,58 @@
     <div class="govuk-grid-column-two-thirds">
       <h1 class="govuk-heading-xl">Reset your password</h1>
 
-      <p>Enter your email address below. If there's an account associated with the email address, we'll send you a link to reset your password.</p>
+      <p>Enter your new password below.</p>
 
       <div class="govuk-form-group">
-        <label class="govuk-label" for="email">
-          Email address
+        <label class="govuk-label" for="password">
+          New password
         </label>
-        <input class="govuk-input govuk-!-width-two-thirds" id="email" name="email" type="email" autocomplete="email" spellcheck="false">
+        <input class="govuk-input govuk-!-width-two-thirds" id="password" name="password" type="password" spellcheck="false" v-model="password">
       </div>
 
       <div class="govuk-form-group">
-        <label class="govuk-label" for="email-confirm">
-          Confirm your email address
+        <label class="govuk-label" for="password-confirm">
+          Confirm your new password
         </label>
-        <input class="govuk-input govuk-!-width-two-thirds" id="email-confirm" name="email-confirm" type="email" spellcheck="false">
+        <input class="govuk-input govuk-!-width-two-thirds" id="password-confirm" name="password-confirm" type="password" spellcheck="false" v-model="passwordConfirmation">
       </div>
 
-      <v-cta name="Email me the link" :onClick="reset"></v-cta><br>
+      <v-cta name="Reset password" :onClick="resetPassword"></v-cta><br>
 
       <a href="">Forgot your password?</a>
     </div>
   </div>
 </template>
-
 <script>
   import vCta from '../components/Cta.vue';
+  import router from '../router';
 
   export default {
-    name: 'ResetPassword',
+    name: 'VerifyAccount',
     components: {
       vCta
     },
+    data () {
+      return {
+        password: undefined,
+        passwordConfirmation: undefined
+      }
+    },
     methods: {
-      reset() {
-        
+      resetPassword () {
+
+        if (this.password === this.passwordConfirmation) {
+          let payload = {
+              "token": this.$route.params.token,
+              "password": this.password,
+              "password_confirm": this.password
+          }
+          this.$store.dispatch('resetPassword', payload).then((response) => {
+            console.log('-reset password response', response);
+          });
+        }
+
+    
       }
     }
 

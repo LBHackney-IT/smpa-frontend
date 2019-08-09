@@ -11,10 +11,10 @@ import SiteSearch from '../views/SiteSearch.vue';
 import SiteDetails from '../views/SiteDetails.vue';
 import SignIn from '../views/SignIn.vue';
 import SignOut from '../views/SignOut.vue';
-import ResetPassword from '../views/ResetPassword.vue';
+import ResetPasswordRequest from '../views/ResetPasswordRequest.vue';
 import AccountOverview from '../views/AccountOverview.vue';
 import AccountActions from '../views/AccountActions.vue';
-import Overview from '../views/Overview.vue';
+import TaskOverview from '../views/TaskOverview.vue';
 import ApplicationOverview from '../views/ApplicationOverview.vue';
 import CreateAccount from '../views/CreateAccount.vue';
 import Applications from '../views/Applications.vue';
@@ -51,6 +51,7 @@ import Declarations from '../forms/declarations/Declarations.vue';
 import DeclarationOfInterest from '../forms/declarations/DeclarationOfInterest.vue';
 import DeclarationsOwnership from '../forms/declarations/DeclarationsOwnership.vue';
 import OwnershipCertificateDeclaration from '../forms/declarations/OwnershipCertificateDeclaration.vue';
+import AnswersOverview from '../forms/declarations/AnswersOverview.vue';
 import AboutEquipment from '../forms/equipment/AboutEquipment.vue';
 import AboutParking from '../forms/parking/About.vue';
 import Parking from '../forms/parking/Parking.vue';
@@ -74,6 +75,9 @@ import Pay from '../forms/payment/Pay.vue';
 import PaymentCheck from '../forms/payment/PaymentCheck.vue';
 import PaymentSuccessful from '../forms/payment/PaymentSuccessful.vue';
 import NotFound from '../views/404.vue';
+import AccountsActions from '../views/Accounts.vue';
+import VerifyAccount from '../views/Verify.vue';
+import ResetPassword from '../views/ResetPassword.vue';
 
 export default new Router({
   mode: 'history',
@@ -131,22 +135,27 @@ export default new Router({
         { 
           path: '', 
           name: 'Applications', 
-          component: Overview
+          component: TaskOverview
         }, //redirect to page that lists all applications associated with the signed in user
         { 
           path: ':applicationId', 
-          name:'ApplicationOverview', 
+          name:'ApplicationTaskOverview', 
           component: ApplicationOverview,
           children: [
             { 
               path: '', 
-              name: 'ApplicationOverview', 
-              component: Overview 
+              name: 'ApplicationTaskOverview', 
+              component: TaskOverview 
             },
             { 
-              path: 'overview', 
-              name:'Overview', 
-              component: Overview 
+              path: 'tasks-overview', 
+              name:'TaskOverview', 
+              component: TaskOverview 
+            },
+            { 
+              path: 'form-overview', 
+              name:'FormOverview', 
+              component: AnswersOverview 
             },
             { 
               path: 'work-start', 
@@ -313,8 +322,8 @@ export default new Router({
     },
     {
       path: '/reset-password',
-      name: 'ResetPassword',
-      component: ResetPassword
+      name: 'ResetPasswordRequest',
+      component: ResetPasswordRequest
     },
     {
       path: '/sign-in',
@@ -340,6 +349,28 @@ export default new Router({
           path: 'applications', 
           name: 'UserApplications', 
           component: UserApplications 
+        }
+      ]
+    },
+    {
+      path: '/accounts',
+      name: 'AccountsActions',
+      component: AccountsActions,
+      children: [
+        { 
+          path: '', 
+          name: 'AccountsActions', 
+          component: AccountsActions 
+        },
+        { 
+          path: 'verify/:token', 
+          name: 'VerifyAccount', 
+          component: VerifyAccount 
+        },
+        { 
+          path: 'reset-password/:token', 
+          name: 'ResetPassword', 
+          component: ResetPassword 
         }
       ]
     },

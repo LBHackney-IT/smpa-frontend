@@ -179,14 +179,16 @@ export function createEquipmentProposal ({commit}, application) {
 }
 
 export function updateEquipmentProposal ({commit}, data) {
-  return ExtensionProposalService
-    .update(data.selectedProposals, data.extension_id )
+  return EquipmentProposalService
+    .update(data.id, data.equipment )
     .then( response => {
-      commit('updateProposal', {
-        'applicationId': data.application_id,
-        'data': response.data,
-        'type': 'equipment'
-      });
+
+      console.log('----equipment thing----', response);
+      // commit('updateProposal', {
+      //   'applicationId': data.application_id,
+      //   'data': response.data,
+      //   'type': 'equipment'
+      // });
     });
 }
 
@@ -297,6 +299,33 @@ export function createAccount ({commit}, data) {
     .createAccount(data)
     .then( response => {
       console.log('account creation---------', response);
+      return response;
+    });
+}
+
+export function verifyAccount ({commit}, data) {
+  return AccountService
+    .verifyAccount(data)
+    .then( response => {
+      console.log('account verified---------', response);
+      return response;
+    });
+}
+
+export function resetPasswordRequest ({commit}, data) {
+  return AccountService
+    .resetPasswordRequest(data)
+    .then( response => {
+      console.log('reset password request---------', response);
+      return response;
+    });
+}
+
+export function resetPassword ({commit}, data) {
+  return AccountService
+    .resetPassword(data)
+    .then( response => {
+      console.log('reset password request---------', response);
       return response;
     });
 }

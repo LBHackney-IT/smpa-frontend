@@ -142,7 +142,7 @@ export const EquipmentProposalService = {
     return ApiService.post('equipment-proposals', payload);
   },
 
-  update (payload, id) {
+  update (id, payload) {
     ApiService.setHeader();
     return ApiService.update('equipment-proposals', id, payload);
   }
@@ -162,14 +162,11 @@ export const GenericWorkService = {
       ApiService.get(`${resources.conservationArea}`)
     ])
     .then(axios.spread(function (responseGeneral, responseConservationArea) {
-      let response = [];
+      let response = {};
 
-      response = responseGeneral.data;
+      response.general = responseGeneral.data;
+      response.conservationArea = responseConservationArea.data;
 
-      responseConservationArea.data.forEach(function(element) {
-        response.push(element);
-      });
-      
       return response;
     }));
   }
@@ -246,7 +243,23 @@ export const PaymentsService = {
 
 export const AccountService = {
   createAccount (payload) {
+    ApiService.setFormUrlencoded();
+    return ApiService.post('users/create', qs.stringify(payload));
+  },
+
+  verifyAccount (token) {
     ApiService.setHeader();
-    return ApiService.post('users/create', payload);
+    const resourceUrl = 'users/verify/' + token;
+    return ApiService.get(resourceUrl);
+  },
+
+  resetPasswordRequest (payload) {
+    ApiService.setHeader();
+    return ApiService.post('users/reset-password', payload);
+  },
+
+  resetPassword(payload) {
+    ApiService.setFormUrlencoded();
+    return ApiService.post('users/reset-password', payload);
   }
 }
