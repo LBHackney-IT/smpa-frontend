@@ -127,8 +127,9 @@
 
         var payload = {};
 
-        payload.email = this.emaill;
+        payload.email = this.email;
         payload.password = this.password;
+        payload.password_confirm = this.passwordConfirmation;
         this.$store.dispatch('createAccount', payload).then((response) => {
           router.push({ name: 'AccountActions' });
         });
