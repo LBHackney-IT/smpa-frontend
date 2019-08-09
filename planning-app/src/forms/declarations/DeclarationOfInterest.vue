@@ -18,50 +18,37 @@
           <p>For the purposes of this question, "related to" means related, by birth or closely enough that there could be a bias on the part of the decision-maker in Hackney Council.</p>
         </div>
       </fieldset>
-    </div>
 
-    <div class="govuk-radios govuk-radios--inline govuk-!-margin-bottom-9">
-      <div class="govuk-radios__item">
-        <input class="govuk-radios__input" id="applicant-authority-relation" name="applicant-authority-relation-1" type="radio" value="applicant-authority-relation-1" v-model="applicantAuthorityRelation">
-        <label class="govuk-label govuk-radios__label" for="applicant-authority-relation-1">
-          You are a Hackney Council member of staff
-        </label>
-      </div>
+      <div class="govuk-radios govuk-radios--inline" v-bind:key="option.id" v-for="option in this.defaultOptions">
+        <div class="govuk-radios__item govuk-!-margin-bottom-3" >
+          <input class="govuk-radios__input" v-bind:id="option.id" v-bind:name="option.name" type="radio" v-bind:value="option.id" v-model="typeOfInterest">
+          <label class="govuk-label govuk-radios__label" v-bind:for="option.id">
+            {{option.name}}
+          </label>
+        </div>
 
-      <authority-relationship v-if="this.applicantAuthorityRelation === 'applicant-authority-relation-1'" :relationship="applicantAuthorityRelation" @clicked="onClickChild"></authority-relationship>
+        <div class="govuk-inset-text" v-if="typeOfInterest === option.id && option.id !='e0bbf434-9c28-4fe8-b4ae-892b3e359479'">
+          <div class="govuk-form-group">
+            <label class="govuk-label" v-bind:for="option.id + '-name'">
+              Name
+            </label>
+            <input class="govuk-input" v-bind:id="option.id + '-name'" v-bind:name="option.id + '-name'" type="text" v-model="name">
+          </div>
 
-      <div class="govuk-radios__item">
-        <input class="govuk-radios__input" id="applicant-authority-relation" name="applicant-authority-relation-2" type="radio" value="applicant-authority-relation-2" v-model="applicantAuthorityRelation">
-        <label class="govuk-label govuk-radios__label" for="applicant-authority-relation-2">
-          You are an elected member in Hackney
-        </label>
-      </div>
+          <div class="govuk-form-group">
+            <label class="govuk-label" v-bind:for="option.id + '-role'">
+              Role
+            </label>
+            <input class="govuk-input" v-bind:id="option.id + '-role'" v-bind:name="option.id + '-role'" type="text" v-model="role">
+          </div>
 
-      <authority-relationship v-if="this.applicantAuthorityRelation === 'applicant-authority-relation-2'" :relationship="applicantAuthorityRelation" @clicked="onClickChild"></authority-relationship>
-
-      <div class="govuk-radios__item">
-        <input class="govuk-radios__input" id="applicant-authority-relation" name="applicant-authority-relation-3" type="radio" value="applicant-authority-relation-3" v-model="applicantAuthorityRelation">
-        <label class="govuk-label govuk-radios__label" for="applicant-authority-relation-3">
-          You are related to a Hackney Council member of staff
-        </label>
-      </div>
-
-      <authority-relationship v-if="this.applicantAuthorityRelation === 'applicant-authority-relation-3'" :relationship="applicantAuthorityRelation" @clicked="onClickChild"></authority-relationship>
-
-      <div class="govuk-radios__item">
-        <input class="govuk-radios__input" id="applicant-authority-relation" name="applicant-authority-relation-4" type="radio" value="applicant-authority-relation-4" v-model="applicantAuthorityRelation">
-        <label class="govuk-label govuk-radios__label" for="applicant-authority-relation-4">
-          You are related to an elected member in Hackney
-        </label>
-      </div>
-
-      <authority-relationship v-if="this.applicantAuthorityRelation === 'applicant-authority-relation-4'" :relationship="applicantAuthorityRelation" @clicked="onClickChild"></authority-relationship>
-
-      <div class="govuk-radios__item">
-        <input class="govuk-radios__input" id="applicant-authority-relation" name="applicant-authority-relation-5" type="radio" value="applicant-authority-relation-5" v-model="applicantAuthorityRelation">
-        <label class="govuk-label govuk-radios__label" for="applicant-authority-relation-5">
-          None of the above
-        </label>
+          <div class="govuk-form-group">
+            <label class="govuk-label" v-bind:for="option.id + '-relationship'">
+              Define relationship
+            </label>
+            <textarea class="govuk-textarea" v-bind:id="option.id + '-relationship'" v-bind:name="option.id + '-relationship'" rows="5" aria-describedby="more-detail-hint" v-model="relationshipDescription"></textarea>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -72,22 +59,44 @@
 <script>
 import vCta from '../../components/Cta.vue';
 import router from '../../router';
-import AuthorityRelationship from '../../components/form/AuthorityRelationship.vue';
+import { getRouteAppId } from '../../mixins/getRouteAppId';
 
 export default {
-	name: 'DeclarationOfInterest',
+  name: 'DeclarationOfInterest',
+  mixins: [ getRouteAppId ],
 	components: {
-    vCta,
-    AuthorityRelationship
+    vCta
   },
   data () {
     return {
-      applicantAuthorityRelation: ''
+      applicantAuthorityRelation: '',
+      defaultOptions: undefined,
+      name: undefined,
+      role: undefined,
+      relationshipDescription: undefined,
+      typeOfInterest: undefined
     }
   },
+  beforeMount () {
+    this.loadDefaultOptions();
+  },
 	methods: {
+    loadDefaultOptions() {
+      this.$store.dispatch('getDefaultData', 'declarations').then((response) => {
+        this.defaultOptions = response.data;
+      });
+    },
     navigate() {
-      router.push({ name: 'DeclarationsOwnership' });
+      var payload = {};
+
+      payload.id = this.applicationId;
+      payload.data = {};
+      payload.data.declaration_id = this.typeOfInterest;
+
+      this.$store.dispatch('updateApplication', payload).then(() => {
+				router.push({ name: 'DeclarationsOwnership' });
+			})
+      
     },
     onClickChild () {}
   }

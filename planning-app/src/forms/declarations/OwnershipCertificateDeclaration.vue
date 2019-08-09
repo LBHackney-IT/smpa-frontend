@@ -37,9 +37,11 @@
 <script>
 import vCta from '../../components/Cta.vue';
 import router from '../../router';
+import { getRouteAppId } from '../../mixins/getRouteAppId';
 
 export default {
-	name: 'OwnershipCertificateDeclaration',
+  name: 'OwnershipCertificateDeclaration',
+  mixins: [ getRouteAppId ],
 	components: {
     vCta
   },
@@ -59,7 +61,15 @@ export default {
   },
 	methods: {
     navigate() {
-      router.push({ name: 'Payment' });
+      var payload = {};
+      payload.id = this.applicationId;
+      payload.data = {};
+      payload.data.ownership_declaration = true;
+
+      this.$store.dispatch('updateApplication', payload).then(() => {
+        router.push({ name: 'FormOverview' });
+      });
+      
     }
   }
 }
