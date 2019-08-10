@@ -1,4 +1,5 @@
-import JwtService from '@/common/jwt.service'
+import JwtService from '@/common/jwt.service';
+import Vue from 'vue';
 
 //creates application with application id returned from the backend, selected address info and site's geojson
 export function createApplication (state, data) {
@@ -157,8 +158,9 @@ export function updateEquipmentFlow (state, data) {
 
 export function signIn (state, data) {
   state.state.user = data;
-  state.state.isAuthenticated = true;
+  Vue.set(state.state, 'isAuthenticated', true);
   JwtService.saveToken(state.state.user.jwt);
+  console.log('state after signing in-------', state.state.isAuthenticated);
 }
 
 export function addDocumentTypes (state, data) {
@@ -171,13 +173,14 @@ export function addDocumentSizes (state, data) {
 
 export function signOut (state) {
   state.state.user = {};
-  state.state.isAuthenticated = false;
+  //state.state.isAuthenticated = false;
   state.state.documentTypes = undefined;
   state.state.documentSizes = undefined;
   state.state.applications = [];
   state.state.proposalFlow = [];
+  Vue.set(state.state, 'isAuthenticated', false);
 
-  console.log('state', state.state);
+  console.log('after sign out', state.state.isAuthenticated);
 }
 
 export function addSiteAddress (state, data) {
@@ -190,6 +193,11 @@ export function addSiteConstraints (state, data) {
   const position = state.state.applications.findIndex( application => application.data.id === data.application_id );
 
   state.state.applications[position].data.site_constraints = data.data;
+}
+
+export function accountVerified (state, data) {
+  Vue.set(state.state, 'isAuthenticated', true);
+  JwtService.saveToken(data.jwt);
 }
 
 

@@ -12,6 +12,8 @@ import SiteDetails from '../views/SiteDetails.vue';
 import SignIn from '../views/SignIn.vue';
 import SignOut from '../views/SignOut.vue';
 import ResetPasswordRequest from '../views/ResetPasswordRequest.vue';
+import ResetPasswordRequestSuccessful from '../views/ResetPasswordRequestSuccess.vue';
+import ResetPasswordSuccessful from '../views/ResetPasswordSuccess.vue';
 import AccountOverview from '../views/AccountOverview.vue';
 import AccountActions from '../views/AccountActions.vue';
 import TaskOverview from '../views/TaskOverview.vue';
@@ -323,6 +325,16 @@ export default new Router({
       path: '/reset-password',
       name: 'ResetPasswordRequest',
       component: ResetPasswordRequest
+    },
+    {
+      path: '/reset-password-request-success',
+      name: 'ResetPasswordRequestSuccessful',
+      component: ResetPasswordRequestSuccessful
+    },
+    {
+      path: '/reset-password-success',
+      name: 'ResetPasswordSuccessful',
+      component: ResetPasswordSuccessful
     },
     {
       path: '/sign-in',

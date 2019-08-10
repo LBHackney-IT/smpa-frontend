@@ -32,6 +32,7 @@
 
 <script>
   import vCta from '../components/Cta.vue';
+  import router from '../router';
   import * as errorMessage from '../messages/errorMessages';
 
   export default {
@@ -60,7 +61,7 @@
           payload.email = this.email;
 
           this.$store.dispatch('resetPasswordRequest', payload).then((response) => {
-            console.log('-reset password request response', response);
+            router.push({ name: 'ResetPasswordRequestSuccessful' });
           });
         } else {
           this.showErrorMessage = true;
