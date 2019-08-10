@@ -18,7 +18,11 @@
           <label class="govuk-label" for="email-confirm">
             Confirm your email address
           </label>
-          <input class="govuk-input govuk-!-width-two-thirds" id="email-confirm" name="email-confirm" type="email" spellcheck="false" v-model="emailConfirmation">
+
+          <span id="email-error" class="govuk-error-message" v-if="showEmailError">
+            <span class="govuk-visually-hidden">Error:</span> {{ errorEmailMessage }}
+          </span>
+          <input class="govuk-input govuk-!-width-two-thirds" v-bind:class="{ 'govuk-input--error': showEmailError }" id="email-confirm" name="email-confirm" type="email" spellcheck="false" v-model="emailConfirmation" v-bind:aria-describedby="{'email-error': showEmailError}">
         </div>
 
         <h2 class="govuk-heading-l govuk-!-margin-top-9">Create password</h2>
@@ -44,7 +48,12 @@
           <label class="govuk-label" for="password-confirm">
             Confirm password
           </label>
-          <input class="govuk-input govuk-!-width-two-thirds" id="password-confirm" name="password-confirm" type="password" spellcheck="false" v-model="passwordConfirmation">
+
+          <span id="email-error" class="govuk-error-message" v-if="showPasswordError">
+            <span class="govuk-visually-hidden">Error:</span> {{ errorPasswordMessage }}
+          </span>
+
+          <input class="govuk-input govuk-!-width-two-thirds" v-bind:class="{ 'govuk-input--error': showPasswordError }" id="password-confirm" name="password-confirm" type="password" spellcheck="false" v-model="passwordConfirmation" v-bind:aria-describedby="{'email-error': showPasswordError}">
         </div>
 
         <v-cta name="Create account" :onClick="createAccount"></v-cta><br>
@@ -57,11 +66,15 @@
 
 <script>
   import vCta from '../components/Cta.vue';
+  import * as errorMessage from '../messages/errorMessages';
 
   export default {
     name: 'CreateAccount',
     components: {
       vCta
+    },
+    created() {
+      this.errorMessages = errorMessage;
     },
     data() {
       return { 
@@ -70,8 +83,11 @@
         passwordConfirmation: undefined,
         email: undefined,
         emailConfirmation: undefined,
+        errorMessages: undefined,
         showEmailError: false,
-        showPasswordError: false
+        errorEmailMessage: undefined,
+        showPasswordError: false,
+        errorPasswordMessage: undefined
       };
     },
     methods: {
@@ -80,13 +96,30 @@
         //todo show errors visually.
         if (this.email !== this.emailConfirmation) {
           this.showEmailError = true;
+          this.errorEmailMessage = this.errorMessages.CREATE_ACCOUNT.SAME_EMAIL;
           return;
         } 
+        this.showEmailError = false;
+        this.errorEmailMessage = undefined;
 
         if (this.password !== this.passwordConfirmation) {
           this.showPasswordError = true;
+          this.errorPasswordMessage = this.errorMessages.CREATE_ACCOUNT.SAME_PASSWORDS;
           return;
         }
+
+        if (this.password.length < 8) {
+          this.showPasswordError = true;
+          this.errorPasswordMessage = this.errorMessages.CREATE_ACCOUNT.WRONG_LENGTH;
+            return;
+        } else {
+          this.showErrorMessage = false;
+        }
+        
+        
+
+        this.showPasswordError = false;
+        this.errorPasswordMessage = undefined;
 
         var payload = {};
 

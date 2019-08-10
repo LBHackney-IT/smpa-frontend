@@ -62,6 +62,7 @@
           if (this.password.length < 8) {
             this.showErrorMessage = true;
             this.errorMessage = this.errorMessages.RESET_PASSWORD.WRONG_LENGTH;
+            return;
           } else {
             this.showErrorMessage = false;
           }
