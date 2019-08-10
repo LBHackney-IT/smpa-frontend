@@ -221,8 +221,7 @@ export default {
 			return this.$store.state.state.applications[index];
     },
     applicationOnBehalfOfTheApplicant () {
-      console.log(this.application.agent);
-      return this.application.agent !== null && this.application.agent !== undefined;
+      return this.application.data.agent !== null && this.application.data.agent !== undefined;
     }
 	},
 }
