@@ -16,27 +16,47 @@
           Can you provide more detail?
         </label>
 
-        <textarea class="govuk-textarea" id="more-detail" name="more-detail" rows="5" aria-describedby="more-detail-hint"></textarea>
+        <textarea class="govuk-textarea" id="more-detail" name="more-detail" rows="5" aria-describedby="more-detail-hint" v-model="description"></textarea>
       </div>
     </div>
-		<v-cta name="Continue" :onClick="navigate"></v-cta>
+		<v-cta name="Continue" :onClick="submit"></v-cta>
 	</div>
 </template>
 
 <script>
 import vCta from '../../components/Cta.vue';
-
+import { getRouteAppId } from '../../mixins/getRouteAppId';
+import router from '../../router';
 
 export default {
-	name: 'FreeTextForm',
+  name: 'FreeTextForm',
+  mixins: [ getRouteAppId ],
 	components: {
     vCta
   },
   data () {
     return {
-      selectedProposal: []
+      description: undefined
     }
   },
-	methods: {}
+	methods: {
+    submit() {
+
+      var payload = {};
+      payload.id = this.applicationId;
+      payload.data = {};
+
+      payload.data.free_text_description = this.description;
+
+      this.$store.dispatch('updateApplication', payload).then(() => {
+
+        router.push({ name: 'Trees' });
+
+      });
+
+      
+
+    }
+  }
 }
 </script>
