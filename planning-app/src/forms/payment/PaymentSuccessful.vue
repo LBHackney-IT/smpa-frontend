@@ -5,8 +5,8 @@
 				Your application has been sent to Hackney Council.
 			</h1>
 			<div class="govuk-panel__body">
-				Your reference number
-				<br><strong>HDJ2123F</strong>
+				Your reference number<br>
+				<p v-if="this.application.data.reference"><strong>{{this.application.data.reference}}</strong></p>
 			</div>
 		</div>
 
@@ -25,16 +25,18 @@
 		<h3 class="govuk-heading-m">3. Decision making</h3>
 		<p>A decision will be reached within 8 weeks. You will be notified when this decision has been made.</p>
 
-		<a href="">Go back to dashboard account</a>
+		<a href="/account">Go back to dashboard account</a>
 	</div>
 </template>
 
 <script>
 import vCta from '../../components/Cta.vue';
 import router from '../../router';
+import { getRouteAppId } from '../../mixins/getRouteAppId';
 
 export default {
 	name: 'PaymentSuccessful',
+	mixins: [ getRouteAppId ],
 	components: {
 		vCta
 	},
@@ -47,6 +49,12 @@ export default {
     navigate() {
       router.push({ name: 'Proposal' });
     }
+	},
+	computed: {
+		application () {
+			let index = this.$store.state.state.applications.findIndex( application => application.data.id === this.applicationId );
+			return this.$store.state.state.applications[index];
+		}
 	}
 }
 </script>
