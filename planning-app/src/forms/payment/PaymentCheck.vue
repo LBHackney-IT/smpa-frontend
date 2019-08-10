@@ -1,13 +1,14 @@
 <template>
 	<div>
-		<h1 class="govuk-heading-xl">
-      Payment check...
+		<h1 class="govuk-heading-xl" v-if="loadingCheck">
+      We're verifying the payment.
 		</h1>
 
-    <div class="govuk-panel govuk-panel--confirmation" v-if="this.payment && this.payment.state.status === 'success'">
+    <div class="govuk-panel govuk-panel--confirmation" v-if="this.payment && this.payment.status.name === 'Submitted'">
 			<h2 class="govuk-panel__title">
 				Your application has been sent to Hackney Council.
 			</h2>
+      <p>Your reference is {{this.payment.reference}}.</p>
 		</div>
 	</div>
 </template>
@@ -23,7 +24,8 @@ export default {
 	},
 	data () {
     return {
-      payment: {}
+      loadingCheck: true,
+      payment: undefined
     }
   },
   mounted () {
@@ -32,10 +34,20 @@ export default {
 	methods: {
     checkPayment() {
       this.$store.dispatch('checkPayment', this.$route.params.paymentId).then((response) => {
-        console.log('PAYMENT CHECK----------', response);
-        this.payment = response.data;
+
+        let submission = {};
+        submission.id = response.data.application_id;
+        submission.data = {
+            "submitted": true
+        };
+        
+        this.$store.dispatch('submitApplication', submission).then((res) => {
+          this.loadingCheck = false;
+          this.payment = res.data;
+        })
       });
     }
   }
 }
 </script>
+

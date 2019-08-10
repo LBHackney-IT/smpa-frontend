@@ -335,5 +335,6 @@ export function submitApplication ({commit}, data) {
   .submitApplication(data.id, data.data)
   .then( response => {
     console.log('-----application submitted', response);
+    return response;
   });
 }
