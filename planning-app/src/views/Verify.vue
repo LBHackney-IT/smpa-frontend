@@ -1,9 +1,11 @@
 <template>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <h1 class="govuk-heading-xl">Verify</h1>
+      <h1 class="govuk-heading-xl">Verify your account</h1>
 
-      <p>Verifying your account</p>
+      <p v-if="this.loading">Verifying your account...</p>
+
+      <p v-if="!this.loading">Your account is now verified and you're signed in. You will be automatically redirected to your account. If that doesn't happen in five seconds, you can <a href="/account">visit your account</a>.</p>
     </div>
   </div>
 </template>
@@ -19,18 +21,20 @@
     },
     data () {
       return {
-        token: ''
+        token: '',
+        loading: true
       }
     },
     mounted () {
       this.token = this.$route.params.token;
-      console.log('this.token', this.token);
       this.verifyAccount();
     },
     methods: {
       verifyAccount () {
         this.$store.dispatch('verifyAccount', this.token).then((response) => {
-          console.log('-token response', response);
+          this.loading = false;
+          router.push({ name: 'AccountOverview'});
+
         });
     
       }

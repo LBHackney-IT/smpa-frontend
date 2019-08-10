@@ -307,7 +307,7 @@ export function verifyAccount ({commit}, data) {
   return AccountService
     .verifyAccount(data)
     .then( response => {
-      console.log('account verified---------', response);
+      commit('accountVerified', response.data);
       return response;
     });
 }
