@@ -1,2 +1,2 @@
 export default {}
-export const API_URL = 'http://localhost:5000/api/v1/'
+export const API_URL = 'https://smpaapi.hactar.is/api/v1/'
