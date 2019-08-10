@@ -39,7 +39,7 @@
 			</fieldset>
 		</div>
     <free-description></free-description>
-		<v-cta name="Continue" :onClick="navigate"></v-cta>
+		<v-cta name="Continue" :onClick="submit"></v-cta>
 	</div>
 </template>
 
@@ -81,11 +81,13 @@ export default {
       this.currentWorks = this.$route.params.currentLevelInfo;
     },
     navigate() {
-      if (this.type === 'car-parking-spaces') {
+      //if only car parking spaces
+      if (this.type === 'c4358d0e-c649-4b48-9a05-405d6ee90c0c') {
         
         router.push({ name: 'EVChargingPoints', params: { type: this.type, currentLevelInfo: this.currentWorks } });
 
-      } else if (this.type === 'cycle-parking-spaces' || this.type === 'car-and-bike-parking-spaces') {
+        //else if cycle parking spaces or both 
+      } else if (this.type === '0e5f59ac-fb07-4419-8578-41e011a83d1f' || this.type === '8033164a-49e1-47db-810e-b0cac4ecd84b') {
 
         router.push({ name: 'BikeParkingSpaces', params: { type: this.type, currentLevelInfo: this.currentWorks } });
 

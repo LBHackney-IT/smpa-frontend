@@ -84,6 +84,19 @@ export default {
         return;
       }
     },
+    submit() {
+      let payload = {
+        "parking": {
+          "parking_works_scope_id": this.typeOfAlteration
+        }
+      };
+
+      const extensionId = this.$store.getters.getExtensionId(this.applicationId);
+
+      this.$store.dispatch('updateExtensionProposal', { "application_id": this.applicationId, 'selectedProposals': payload, "extension_id": extensionId }).then(() => {
+        this.navigate();
+      })
+    },
     loadDefaultOptions() {
       this.$store.dispatch('getDefaultData', 'parking-works-scopes').then((response) => {
         this.defaultOptions = response.data;

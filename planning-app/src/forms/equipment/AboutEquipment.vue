@@ -15,8 +15,14 @@
         </span>
 
         <div class="govuk-checkboxes">
-          <div class="govuk-checkboxes__item" v-bind:key="option.id" v-for="option in this.defaultOptions">
-            <input class="govuk-checkboxes__input" v-bind:id="option.id" name="proposal" type="checkbox" v-bind:value="option.id" v-model="selectedProposal">
+          <div class="govuk-checkboxes__item" v-bind:key="option.id" v-for="option in this.defaultGeneralOptions">
+            <input class="govuk-checkboxes__input" v-bind:id="option.id" name="proposal" type="checkbox" v-bind:value="option.id" v-model="selectedGeneralProposal">
+            <label class="govuk-label govuk-checkboxes__label" v-bind:for="option.id">
+              <strong>{{option.name}}</strong>
+            </label>
+          </div>
+          <div class="govuk-checkboxes__item" v-bind:key="option.id" v-for="option in this.defaultConservationAreaOptions">
+            <input class="govuk-checkboxes__input" v-bind:id="option.id" name="proposal" type="checkbox" v-bind:value="option.id" v-model="selectedConservationAreaProposal">
             <label class="govuk-label govuk-checkboxes__label" v-bind:for="option.id">
               <strong>{{option.name}}</strong>
             </label>
@@ -37,7 +43,7 @@ import { getRouteAppId } from '../../mixins/getRouteAppId';
 
 export default {
   name: 'AboutEquipment',
-    mixins: [ getRouteAppId ],
+  mixins: [ getRouteAppId ],
 	components: {
     vCta,
     FreeDescription
@@ -45,10 +51,11 @@ export default {
   data () {
     return {
       question: 'About the works',
-      selectedProposal: [],
-      selectedEquipment: [],
+      selectedGeneralProposal: [],
+      selectedConservationAreaProposal: [],
       currentWorks: undefined,
-      defaultOptions: undefined
+      defaultGeneralOptions: undefined,
+      defaultConservationAreaOptions: undefined
     }
   },
   created () {
@@ -62,7 +69,7 @@ export default {
   },
 	methods: {
     loadDefaultOptions() {
-      if (isInConservationArea) {
+      if (!this.isInConservationArea) {
         this.$store.dispatch('getDefaultData', 'equipment-works-types').then((response) => {
           this.defaultOptions = response.data;
         });
@@ -71,17 +78,11 @@ export default {
           'general': 'equipment-works-types',
           'conservationArea': 'equipment-works-conservation-types'
         };
-
         this.$store.dispatch(
           'getDefaultDataFromTwoSources', equipmentResources
         ).then((response) => {
-          this.defaultOptions = response;
-
-          this.$store.dispatch(
-            'generateProposalEquipment', this.defaultOptions
-          ).then(() => {
-            //todo add loading set to false
-          });
+          this.defaultGeneralOptions = response.general;
+          this.defaultConservationAreaOptions = response.conservationArea;
         });
       }
     },
@@ -89,9 +90,19 @@ export default {
       this.currentWorks = this.$route.params.currentLevelInfo;
     },
     updateNavigation () {
+
+      let defaultOptions = [];
+      defaultOptions = this.defaultGeneralOptions.concat(this.defaultConservationAreaOptions);
+
+      this.$store.dispatch('generateProposalEquipment', defaultOptions);
+
+      let selectedProposal = [];
+
+      selectedProposal = this.selectedConservationAreaProposal.concat(this.selectedGeneralProposal);
+
       var navigationInfo = {
         currentLevel: 'proposal_equipment',
-        selectedProposal: this.selectedProposal,
+        selectedProposal: selectedProposal,
         action: 'updateFlow'
       }
 
@@ -105,7 +116,23 @@ export default {
       });
     },
     navigate() {
-      this.updateNavigation();
+
+      const extensionId = this.$store.getters.getEquipmentId(this.applicationId);
+
+      var payload = {};
+      payload.id = extensionId;
+      payload.equipment = {
+        equipment: {
+          equipment_type_ids: this.selectedGeneralProposal,
+          equipment_conservation_type_ids: this.selectedConservationAreaProposal
+        }
+      }
+      
+      this.$store.dispatch('updateEquipmentProposal', payload).then((response) => {
+        console.log('done and navigating', response);
+        this.updateNavigation();
+      });
+      
     },
     proposalIsChecked(selectedProposal) {
       const result = this.selectedProposal.find(function(proposal) {
@@ -121,6 +148,7 @@ export default {
     },
     
     isInConservationArea () {
+      var isIt = this.application.data.site_constraints.nb_conarea > 0;
       return this.application.data.site_constraints.nb_conarea > 0;
     }
 	}

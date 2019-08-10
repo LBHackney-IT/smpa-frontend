@@ -33,16 +33,16 @@
         <div class="govuk-inset-text" v-if="electricalVehical === 'Yes'">
           <div class="govuk-form-group">
             <label class="govuk-label" for="name">
-              How many new EC charhing points are being added?
+              How many new EC charging points are being added?
             </label>
-            <input class="govuk-input" id="name" name="name" type="number">
+            <input class="govuk-input" id="name" name="name" type="number" v-model="chargingPoints">
           </div>
         </div>
 
 			</fieldset>
 		</div>
     <free-description></free-description>
-		<v-cta name="Continue" :onClick="navigate"></v-cta>
+		<v-cta name="Continue" :onClick="submit"></v-cta>
 	</div>
 </template>
 
@@ -51,9 +51,11 @@ import vCta from '../../components/Cta.vue';
 import router from '../../router';
 import Navigate from '../../common/navigate';
 import FreeDescription from '../../components/FreeDescription.vue';
+import { getRouteAppId } from '../../mixins/getRouteAppId';
 
 export default {
-	name: 'EVChargingPoints',
+  name: 'EVChargingPoints',
+  mixins: [ getRouteAppId ],
 	components: {
     vCta,
     FreeDescription
@@ -61,7 +63,8 @@ export default {
 	data () {
     return {
       electricalVehical: '',
-      currentWorks: undefined
+      currentWorks: undefined,
+      chargingPoints: undefined
     }
   },
   created () {
@@ -73,6 +76,24 @@ export default {
   methods: {
     fetchData () {
       this.currentWorks = this.$route.params.currentLevelInfo;
+    },
+    submit() {
+      if (this.electricalVehical === "Yes") {
+        let payload = {
+          "parking": {
+            "new_ev_charging_points": 10
+          }
+        }
+
+        const extensionId = this.$store.getters.getExtensionId(this.applicationId);
+
+
+        this.$store.dispatch('updateExtensionProposal', { "application_id": this.applicationId, 'selectedProposals': payload, "extension_id": extensionId }).then(() => {
+          this.navigate();
+        })
+      } else {
+        this.navigate();
+      }
     },
     navigate() {
       var routerParams = Navigate.calculateNavigation(this.$store.state.state.proposalFlow, this.currentWorks, 'Parking');

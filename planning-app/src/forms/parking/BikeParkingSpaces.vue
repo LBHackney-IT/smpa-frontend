@@ -27,7 +27,7 @@
 			</fieldset>
 		</div>
     <free-description></free-description>
-		<v-cta name="Continue" :onClick="navigate"></v-cta>
+		<v-cta name="Continue" :onClick="submit"></v-cta>
 	</div>
 </template>
 
@@ -75,7 +75,7 @@ export default {
       this.type = this.$route.params.type;
     },
     navigate() {
-      if (this.type === 'car-and-bike-parking-spaces') {
+      if (this.type === '8033164a-49e1-47db-810e-b0cac4ecd84b') {
         router.push({ name: 'EVChargingPoints', params: { type: this.type, currentLevelInfo: this.currentWorks } });
       } else {
         var routerParams = Navigate.calculateNavigation(this.$store.state.state.proposalFlow, this.currentWorks, 'Parking');
@@ -85,8 +85,8 @@ export default {
     submit() {
       let payload = {
         "parking": {
-          "current_car_parking_spaces": this.current,
-          "planned_car_parking_spaces": this.total
+          "current_bike_parking_spaces": this.current,
+          "planned_bike_parking_spaces": this.total
         }
       };
 
