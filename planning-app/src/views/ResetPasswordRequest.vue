@@ -12,11 +12,15 @@
         <input class="govuk-input govuk-!-width-two-thirds" id="email" name="email" type="email" autocomplete="email" spellcheck="false" v-model="email">
       </div>
 
-      <div class="govuk-form-group">
+      <div class="govuk-form-group" v-bind:class="{ 'govuk-form-group--error': showErrorMessage }">
         <label class="govuk-label" for="email-confirm">
           Confirm your email address
         </label>
-        <input class="govuk-input govuk-!-width-two-thirds" id="email-confirm" name="email-confirm" type="email" spellcheck="false" v-model="emailConfirmation">
+
+        <span id="email-error" class="govuk-error-message" v-if="showErrorMessage">
+          <span class="govuk-visually-hidden">Error:</span> {{ errorMessages.RESET_PASSWORD.SAME_EMAIL }}
+        </span>
+        <input class="govuk-input govuk-!-width-two-thirds" v-bind:class="{ 'govuk-input--error': showErrorMessage }" id="email-confirm" name="email-confirm" type="email" spellcheck="false" v-model="emailConfirmation" v-bind:aria-describedby="{'email-error': showErrorMessage}">
       </div>
 
       <v-cta name="Email me the link" :onClick="reset"></v-cta><br>
@@ -28,21 +32,28 @@
 
 <script>
   import vCta from '../components/Cta.vue';
+  import * as errorMessage from '../messages/errorMessages';
 
   export default {
     name: 'ResetPassword',
     components: {
       vCta
     },
+    created() {
+      this.errorMessages = errorMessage;
+    },
     data () {
       return {
         email: undefined,
-        emailConfirmation: undefined
+        emailConfirmation: undefined,
+        showErrorMessage: false,
+        errorMessages: undefined
       }
     },
     methods: {
       reset() {
         if (this.email === this.emailConfirmation) {
+          this.showErrorMessage = false;
 
           let payload = {};
 
@@ -51,6 +62,8 @@
           this.$store.dispatch('resetPasswordRequest', payload).then((response) => {
             console.log('-reset password request response', response);
           });
+        } else {
+          this.showErrorMessage = true;
         }
 
         
