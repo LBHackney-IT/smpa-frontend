@@ -46,7 +46,7 @@ import DocumentsReview from '../forms/documentation/DocumentsReview.vue';
 import Contact from '../forms/contact/Contact.vue';
 import ContactApplicant from '../forms/contact/ContactApplicant.vue';
 import ContactAgent from '../forms/contact/ContactAgent.vue';
-import AboutApplicant from '../forms/contact/AboutApplicant.vue';
+import ApplicationType from '../forms/contact/ApplicationType.vue';
 import Declarations from '../forms/declarations/Declarations.vue';
 import DeclarationOfInterest from '../forms/declarations/DeclarationOfInterest.vue';
 import DeclarationsOwnership from '../forms/declarations/DeclarationsOwnership.vue';
@@ -289,10 +289,9 @@ export default new Router({
               path: 'contact', 
               component: Contact,
               children: [
-                { path: '', name: 'ApplicationContact', component: ContactAgent },
+                { path: '', name: 'ApplicationContact', component: ApplicationType },
                 { path: 'agent', name: 'ApplicationContactAgent', component: ContactAgent },
-                { path: 'applicant', name:'ApplicationContactApplicant', component: ContactApplicant },
-                { path: 'about-applicant', name:'AboutApplicant', component: AboutApplicant }
+                { path: 'applicant', name:'ApplicationContactApplicant', component: ContactApplicant }
               ]
             },
             { 

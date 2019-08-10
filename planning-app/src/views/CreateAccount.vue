@@ -2,41 +2,10 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <h1 class="govuk-heading-xl">Create account</h1>
-
-      <p v-if="stepTwo" class="govuk-!-font-size-27">You need to enter an email address and create a password. This will allow you to make, save and submit planning applications.</p>
-
       <p>If you already have an account, please <a href="/sign-in">sign in</a>.</p>
+      <p class="govuk-!-font-size-27">You need to enter an email address and create a password. This will allow you to make, save and submit planning applications.</p>
 
-      <div v-if="stepOne" class="govuk-!-margin-top-9">
-        <div class="govuk-form-group">
-          <fieldset class="govuk-fieldset">
-            <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-              <h2 class="govuk-fieldset__heading">
-                Are you an agent acting on behalf of the applicant?
-              </h2>
-            </legend>
-            <div class="govuk-radios govuk-radios--inline">
-              <div class="govuk-radios__item">
-                <input class="govuk-radios__input" id="account-type-1" name="changed-name" type="radio" value="yes">
-                <label class="govuk-label govuk-radios__label" for="account-type-1">
-                  Yes, you're acting on behalf of the applicant
-                </label>
-              </div>
-              <div class="govuk-radios__item">
-                <input class="govuk-radios__input" id="account-type-2" name="changed-name" type="radio" value="no">
-                <label class="govuk-label govuk-radios__label" for="account-type-2">
-                  No, you're the applicant
-                </label>
-              </div>
-            </div>
-          </fieldset>
-        </div>
-
-        <v-cta name="Continue" :onClick="setTypeOfAccount"></v-cta><br>
-      </div>
-
-
-      <div v-if="stepTwo" class="govuk-!-margin-top-9">
+      <div class="govuk-!-margin-top-9">
         <h2 class="govuk-heading-l">Email address</h2>
         <div class="govuk-form-group">
           <label class="govuk-label" for="email">
@@ -96,8 +65,6 @@
     },
     data() {
       return { 
-        stepOne: true,
-        stepTwo: false,
         passwordFieldType: 'password',
         password: undefined,
         passwordConfirmation: undefined,
@@ -108,10 +75,6 @@
       };
     },
     methods: {
-      setTypeOfAccount() {
-        this.stepOne = false;
-        this.stepTwo = true;
-      },
       createAccount() {
 
         //todo show errors visually.
