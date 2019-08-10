@@ -75,6 +75,10 @@ const ApiService = {
 
   postWithConfig(resource, params, config) {
     return Vue.axios.post(`${resource}`, params, config);
+  },
+
+  updateWithCustomResource(resource, params) {
+    return Vue.axios.patch(`${resource}`, params);
   }
 }
 
@@ -121,6 +125,12 @@ export const ApplicationsService = {
   getAll () {
     ApiService.setHeader();
     return ApiService.get('applications');
+  },
+
+  submitApplication (id, payload) {
+    ApiService.setHeader();
+    var resource = 'applications/' + id + '/submit'
+    return ApiService.updateWithCustomResource(resource, payload);
   }
 }
 

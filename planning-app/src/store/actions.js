@@ -329,3 +329,11 @@ export function resetPassword ({commit}, data) {
       return response;
     });
 }
+
+export function submitApplication ({commit}, data) {
+  return ApplicationsService
+  .submitApplication(data.id, data.data)
+  .then( response => {
+    console.log('-----application submitted', response);
+  });
+}

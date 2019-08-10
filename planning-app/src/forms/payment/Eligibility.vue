@@ -33,9 +33,11 @@
 <script>
 import vCta from '../../components/Cta.vue';
 import router from '../../router';
+import { getRouteAppId } from '../../mixins/getRouteAppId';
 
 export default {
 	name: 'Eligibility',
+	mixins: [ getRouteAppId ],
 	components: {
 		vCta
 	},
@@ -46,7 +48,32 @@ export default {
   },
 	methods: {
     navigate() {
-      router.push({ name: 'Pay' });
+			var payload = {};
+      payload.id = this.applicationId;
+      payload.data = {};
+      payload.data.reduction_eligible = this.improveAccessibility === 'Yes' ? true : false;
+
+      this.$store.dispatch('updateApplication', payload).then(() => {
+
+				if (this.improveAccessibility === 'Yes') {
+
+					let submission = {};
+
+					submission.id = this.applicationId;
+					submission.data = {
+							"submitted": true
+					};
+					
+					this.$store.dispatch('submitApplication', submission).then(() => {
+							router.push({ name: 'PaymentSuccessful' });
+					})
+					
+				} else {
+					router.push({ name: 'Pay' });
+				}
+        
+      });
+      
     }
 	}
 }
