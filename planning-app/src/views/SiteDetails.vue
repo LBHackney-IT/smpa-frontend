@@ -272,7 +272,7 @@
 
         if (!!JwtService.getToken()) {
           this.$store.dispatch('generateApplication', this.application).then((response) => {
-            router.push({ name: 'ApplicationOverview', params: { 'applicationId': response.data.application_id } });
+            router.push({ name: 'ApplicationTaskOverview', params: { 'applicationId': response.data.application_id } });
           })
         } else {
           router.push({ name: 'SignIn', params: { 'origin': 'constraints-finder', 'application': this.application} });

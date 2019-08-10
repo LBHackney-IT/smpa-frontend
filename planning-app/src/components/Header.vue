@@ -11,17 +11,18 @@
         <button type="button" role="button" class="govuk-header__menu-button js-header-toggle" aria-controls="navigation" aria-label="Show or hide Top Level Navigation">Menu</button>
         <nav>
           <ul id="navigation" class="govuk-header__navigation " aria-label="Top Level Navigation">
+
             <li class="govuk-header__navigation-item govuk-header__navigation-item--active">
               <a class="govuk-header__link" href="/">
                 Home
               </a>
             </li>
-            <li class="govuk-header__navigation-item" v-if="isAuthenticated">
+            <li class="govuk-header__navigation-item" v-if="this.isUserAuthenticated">
               <a class="govuk-header__link" href="/account">
                 Account
               </a>
             </li>
-            <li class="govuk-header__navigation-item" v-if="isAuthenticated">
+            <li class="govuk-header__navigation-item" v-if="this.isUserAuthenticated">
               <a class="govuk-header__link" href="/sign-out">
                 Sign out
               </a>
@@ -41,8 +42,17 @@ export default {
     }
   },
   computed: {
-    isAuthenticated () {
+    isUserAuthenticated() {
+      console.log('inside computed');
       return this.$store.state.state.isAuthenticated;
+    }
+  },
+  watch: {
+    isUserAuthenticated (newValue, oldValue){
+      console.log('new value:', newValue, 'old value:', oldValue);
+    },
+    'this.$store.state.state.isAuthenticated': function () {
+      console.log('WATCHED', this.$store.state.state.isAuthenticated);
     }
   }
 }

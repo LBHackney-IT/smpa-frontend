@@ -21,7 +21,7 @@
 
       <v-cta name="Sign in" :onClick="signIn"></v-cta><br>
 
-      <a href="">Forgot your password?</a>
+      <a href="reset-password">Forgot your password?</a>
     </div>
   </div>
 </template>
@@ -60,7 +60,7 @@
       navigate () {
         if (this.source === 'constraints-finder' && this.application) {
           this.$store.dispatch('createApplication', this.application).then((response) => {
-            router.push({ name: 'ApplicationOverview', params: { applicationId: response.data.id } });
+            router.push({ name: 'ApplicationTaskOverview', params: { applicationId: response.data.id } });
           })
         } else {
           router.push({ name: 'AccountActions' });
