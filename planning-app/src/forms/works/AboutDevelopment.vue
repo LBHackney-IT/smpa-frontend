@@ -64,7 +64,6 @@
 import vCta from '../../components/Cta.vue';
 import router from '../../router';
 import WarningMessage from '../../components/WarningMessage.vue';
-import reviewWorks from './reviewWorks.vue';
 import FreeDescription from '../../components/FreeDescription.vue';
 
 export default {
@@ -72,7 +71,6 @@ export default {
 	components: {
     vCta,
     WarningMessage,
-    reviewWorks,
     FreeDescription
   },
   data () {
@@ -85,19 +83,7 @@ export default {
     }
   },
 	methods: {
-    collectDataAndStore () {
-			let question = {
-				question: 'About development',
-				answers: {}
-      };
-      
-      question.answers.floorArea = this.floorArea;
-      question.answers.numberOfBedrooms = this.numberOfBedrooms;
-      question.answers.numberOfStoreys = this.numberOfStoreys;
-			this.$store.commit('addAboutDevelopmentAnswers', JSON.parse(JSON.stringify(question)));
-		},
     navigate() {
-      this.collectDataAndStore();
       router.push({ name: 'Trees' });
     }
   }
