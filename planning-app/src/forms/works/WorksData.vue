@@ -81,22 +81,29 @@ export default {
   data () {
     return {
       newBedroom: '',
-      newSingleBedrooms: '',
-      newDoubleBedrooms: ''
+      newSingleBedrooms: undefined,
+      newDoubleBedrooms: undefined
     }
   },
 	methods: {
     submit() {
-      let payload = {
-        "new_single_bedrooms": this.newSingleBedrooms,
-        "new_double_bedrooms": this.newDoubleBedrooms
+
+      if (this.newBedroom === 'Yes') {
+        let payload = {
+          "new_single_bedrooms": this.newSingleBedrooms,
+          "new_double_bedrooms": this.newDoubleBedrooms
+        }
+
+        const extensionId = this.$store.getters.getExtensionId(this.applicationId);
+
+        this.$store.dispatch('updateExtensionProposal', { "application_id": this.applicationId, 'selectedProposals': payload, "extension_id": extensionId }).then(() => {
+          this.navigate();
+        })
+
+      } else {
+        this.navigate();
       }
 
-      const extensionId = this.$store.getters.getExtensionId(this.applicationId);
-
-      this.$store.dispatch('updateExtensionProposal', { "application_id": this.applicationId, 'selectedProposals': payload, "extension_id": extensionId }).then(() => {
-        this.navigate();
-      })
     },
     navigate() {
       router.push({ name: 'Trees' });
