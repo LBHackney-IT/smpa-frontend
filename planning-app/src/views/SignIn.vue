@@ -62,6 +62,8 @@
           this.$store.dispatch('createApplication', this.application).then((response) => {
             router.push({ name: 'ApplicationTaskOverview', params: { applicationId: response.data.id } });
           })
+        } else if (this.$route.query.redirect) {
+          router.push({ path: this.$route.query.redirect });
         } else {
           router.push({ name: 'AccountActions' });
         }
