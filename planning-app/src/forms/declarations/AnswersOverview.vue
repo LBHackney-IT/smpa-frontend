@@ -212,9 +212,9 @@
             {{this.hasMaterials}}
           </dd>
           <dd class="govuk-summary-list__actions">
-            <a class="govuk-link" href="#">
+            <router-link :to="{ name: 'WhatMaterials'}" class="govuk-link">
               Change<span class="govuk-visually-hidden"> walls cladding materials</span>
-            </a>
+            </router-link>
           </dd>
         </div>
         <div class="govuk-summary-list__row">
@@ -225,9 +225,9 @@
             {{this.hasMaterials}}
           </dd>
           <dd class="govuk-summary-list__actions">
-            <a class="govuk-link" href="#">
+            <router-link :to="{ name: 'WhatMaterials'}" class="govuk-link">
               Change<span class="govuk-visually-hidden"> roof covering materials</span>
-            </a>
+            </router-link>
           </dd>
         </div>
         <div class="govuk-summary-list__row">
@@ -238,9 +238,9 @@
             {{this.hasMaterials}}
           </dd>
           <dd class="govuk-summary-list__actions">
-            <a class="govuk-link" href="#">
+            <router-link :to="{ name: 'WhatMaterials'}" class="govuk-link">
               Change<span class="govuk-visually-hidden"> windows materials</span>
-            </a>
+            </router-link>
           </dd>
         </div>
         <div class="govuk-summary-list__row">
@@ -251,9 +251,9 @@
             {{this.hasMaterials}}
           </dd>
           <dd class="govuk-summary-list__actions">
-            <a class="govuk-link" href="#">
+            <router-link :to="{ name: 'WhatMaterials'}" class="govuk-link">
               Change<span class="govuk-visually-hidden"> change doors materials</span>
-            </a>
+            </router-link>
           </dd>
         </div>
 
@@ -265,9 +265,9 @@
             <p v-if="this.application.data.proposal_extension && this.application.data.proposal_extension.materials && this.application.data.proposal_extension.materials.other">{{this.application.data.proposal_extension.materials.other}}</p>
           </dd>
           <dd class="govuk-summary-list__actions">
-            <a class="govuk-link" href="#">
+            <router-link :to="{ name: 'WhatMaterials'}" class="govuk-link">
               Change<span class="govuk-visually-hidden"> other materials</span>
-            </a>
+            </router-link>
           </dd>
         </div>
       </dl>
@@ -275,26 +275,16 @@
       <h2 class="govuk-heading-l">Support documentation</h2>
 
       <dl class="govuk-summary-list">
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">
-            file.pdf
-          </dt>
+        <div class="govuk-summary-list__row" v-for="file in this.application.data.document_files">
+    
+          <dd class="govuk-summary-list__value">
+            {{ file.original_name }}
+          </dd>
     
           <dd class="govuk-summary-list__actions">
-            <a class="govuk-link" href="#">
-              Change<span class="govuk-visually-hidden"> applicant name</span>
-            </a>
-          </dd>
-        </div>
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">
-          file.pdf
-          </dt>
-      
-          <dd class="govuk-summary-list__actions">
-            <a class="govuk-link" href="#">
-              Change<span class="govuk-visually-hidden"> name of agent</span>
-            </a>
+            <router-link :to="{ name: 'SupportingDocumentation'}" class="govuk-link">
+              Change<span class="govuk-visually-hidden"> files</span>
+            </router-link>
           </dd>
         </div>
       </dl>
