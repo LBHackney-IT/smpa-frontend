@@ -99,7 +99,11 @@
             Description
           </dt>
           <dd class="govuk-summary-list__value">
-            undefined
+            <ul>
+              <li v-for="work in this.worksDescription">
+                {{ work }}
+              </li>
+            </ul>
           </dd>
           <dd class="govuk-summary-list__actions">
             <a class="govuk-link" href="#">
@@ -147,7 +151,7 @@
           </dt>
           <dd class="govuk-summary-list__value">
             <p v-if="!this.hasProposalExtension">You didn't provide this information.</p>
-            <p v-if="this.hasTreesInsideBoundary">{{this.hasTreesInsideBoundary}}</p>
+            <p v-if="this.hasTreesInformation && this.hasTreesInsideBoundary">{{this.hasTreesInsideBoundary}}</p>
           </dd>
           <dd class="govuk-summary-list__actions">
             <router-link :to="{ name: 'Trees'}" class="govuk-link" v-if="this.hasProposalExtension">
@@ -165,7 +169,7 @@
           </dt>
           <dd class="govuk-summary-list__value">
             <p v-if="!this.hasProposalExtension">You didn't provide this information.</p>
-            <p v-if="this.hasTreesOutsideBoundary">{{this.hasTreesOutsideBoundary}}</p>
+            <p v-if="this.hasTreesInformation && this.hasTreesOutsideBoundary">{{this.hasTreesOutsideBoundary}}</p>
           </dd>
           <dd class="govuk-summary-list__actions">
             <router-link :to="{ name: 'Trees'}" class="govuk-link" v-if="this.hasProposalExtension">
@@ -183,7 +187,7 @@
           </dt>
           <dd class="govuk-summary-list__value">
             <p v-if="!this.hasProposalExtension">You didn't provide this information.</p>
-            <p v-if="this.hasTreesPrunedOrRemoved">{{this.hasTreesPrunedOrRemoved}}</p>
+            <p v-if="this.hasTreesInformation && this.hasTreesPrunedOrRemoved">{{this.hasTreesPrunedOrRemoved}}</p>
           </dd>
           <dd class="govuk-summary-list__actions">
             <router-link :to="{ name: 'Trees'}" class="govuk-link" v-if="this.hasProposalExtension">
@@ -347,6 +351,7 @@
 import vCta from '../../components/Cta.vue';
 import router from '../../router';
 import { getRouteAppId } from '../../mixins/getRouteAppId';
+import GenerateWorks from '../../common/worksDescription';
 
 export default {
   name: 'AnswersOverview',
@@ -528,6 +533,9 @@ export default {
       } else {
         return materials.answer = 'You did not provide this information.';
       }
+    },
+    worksDescription () {
+      return GenerateWorks.generateWorkDescription(this.application.data);
     }
   }
 }

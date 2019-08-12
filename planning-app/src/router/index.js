@@ -264,9 +264,8 @@ export default new Router({
               path: 'materials', 
               component: Materials,
               children: [
-                { path: '', name: 'Materials', component: MaterialsStepOne },
-                { path: 'steps', component: WhatMaterials },
-                { path: 'steps/what-materials', name: 'WhatMaterials', component: WhatMaterials },
+                { path: '', name: 'WhatMaterials', component: WhatMaterials },
+                { path: 'steps', name: 'WhatMaterials', component: WhatMaterials },
                 { path: 'steps/1', name: 'MaterialsStep1', component: MaterialsStepOne },
                 { path: 'steps/2', name: 'MaterialsStep2', component: MaterialsStepTwo },
                 { path: 'steps/3', name: 'MaterialsStep3', component: MaterialsStepThree },
