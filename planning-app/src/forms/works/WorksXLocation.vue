@@ -65,15 +65,14 @@ export default {
     loadExistingAnswers () {
       //todo: should beforehand if it is equipment or extension
 
-      if (this.application.data.proposal_equipment[this.$route.params.id]) {
+      // if (this.application.data.proposal_equipment[this.$route.params.id]) {
 
-      } else if (this.application.data.proposal_equipment[this.$route.params.id]) {
+      // } else if (this.application.data.proposal_equipment[this.$route.params.id]) {
 
-      }
+      // }
     },
     fetchData () {
       this.selectedProposal = [];
-
       if (this.$route.params.currentLevelInfo) {
         this.currentWorks = this.$route.params.currentLevelInfo;
       } else {
@@ -115,39 +114,55 @@ export default {
 
       } else {
         const extensionId = this.$store.getters.getExtensionId(this.applicationId);
+        
+        //get id from url
+        var proposalId = this.$route.params.currentLevelInfo.proposalId;
       
         payload = {
-          'data': {},
+          'data': this.application.data.proposal_extension,
           'resource': 'extension-proposals',
           'type': 'extension',
           'id': extensionId
         }
 
-        var currentWorkLocation = {};
+        var workLocationPayload = {};
 
-        let proposalId;
-
-        //todo find a more elegant fix
         if (this.currentWorks.proposalId === "incidental_buildings") {
-          proposalId = 'outbuilding';
+
+          workLocationPayload = {
+            "outbuilding" : {
+              "works_location_ids": this.selectedProposal
+            }
+          };
+
+          payload.data.incidental_buildings = workLocationPayload;
+
+        } else if (this.currentWorks.proposalId === "boundaries") {
+
+          workLocationPayload = {
+            "gates_fences_walls" : {
+              "works_location_ids": this.selectedProposal
+            }
+          };
+
+          payload.data.boundaries = workLocationPayload;
+
         } else {
-          proposalId = this.currentWorks.proposalId;
+
+          //else we can assume that the key is inside original_house
+
+          workLocationPayload = {
+            "works_location_ids": this.selectedProposal
+          };
+
+          payload.data.original_house[proposalId] = workLocationPayload;
         }
-
-        currentWorkLocation[proposalId] = {};
-        
-        currentWorkLocation[proposalId] = {
-          "works_location_ids": this.selectedProposal
-        };
-        
-        payload.data[this.$route.params.id] = currentWorkLocation;
       }
- 
-      this.$store.dispatch('submitWorksLocation', payload).then((response) => {
 
-      });
+      this.$store.dispatch('submitWorksLocation', payload).then((response) => {
         var routerParams = Navigate.calculateNavigation(this.$store.state.state.proposalFlow, this.currentWorks, 'WorksXLocation');
         router.push(routerParams);
+      });
     },
     loadDefaultData() {
       this.$store.dispatch('getDefaultData', 'works-locations').then((response) => {
