@@ -182,13 +182,12 @@ export function updateEquipmentProposal ({commit}, data) {
   return EquipmentProposalService
     .update(data.id, data.equipment )
     .then( response => {
-
-      console.log('----equipment thing----', response);
-      // commit('updateProposal', {
-      //   'applicationId': data.application_id,
-      //   'data': response.data,
-      //   'type': 'equipment'
-      // });
+      console.log('Update equipment proposal----', response);
+      commit('updateProposal', {
+        'applicationId': response.data.application_id,
+        'data': response.data,
+        'type': 'equipment'
+      });
     });
 }
 
@@ -220,7 +219,7 @@ export function getDefaultDataFromTwoSources ({commit}, resource) {
     });
 }
 
-export function submitWorksLocation ({commit}, payload) {
+export function submitWorksLocation ({commit}, payload) {  
   return SubmitWorksLocation
     .update(payload)
     .then( response => {

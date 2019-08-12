@@ -54,8 +54,6 @@
     },
     methods: {
       resetPassword () {
-        debugger;
-
         if (this.password === this.passwordConfirmation) {
           this.errorMessage = this.errorMessages.RESET_PASSWORD.SAME_PASSWORDS;
 
@@ -82,10 +80,7 @@
           this.showErrorMessage = true;
           this.errorMessage = this.errorMessages.RESET_PASSWORD.SAME_PASSWORDS;
         }
-
-    
       }
     }
-
   }
 </script>

@@ -91,27 +91,69 @@ export default {
     navigate() {
       let payload = {};
 
-      if (this.$route.params.origin === 'equipment') {
+      var typesOfEquipments = [
+        "4b2aa4a1-e01e-49ff-aedc-ddd638695839", 
+        "510e6d41-168d-45e6-ad7e-329a578961d2", 
+        "9f9390fa-f175-4d7a-8599-48c40644f0c3",
+        "fa6f8957-a775-4dc0-adfc-4c3ddfd42698", 
+        "cc70f42f-dc59-4a03-bf7e-fbb2e7ff3b5b", 
+        "b36079c1-dc9f-4225-a94d-b7c54c83b86e"
+      ]
+
+      if (this.$route.params.origin === 'equipment' || typesOfEquipments.includes(this.$route.params.id)) {        
         const equipmentId = this.$store.getters.getEquipmentId(this.applicationId);
 
         payload = {
-          'data': {},
+          'data': this.application.data.proposal_equipment,
           'resource': 'equipment-proposals',
           'type': 'equipment',
           'id': equipmentId
         }
 
-        var currentWorkLocation = {
-          "equipment": {
-            "equipment_locations": [
+        let workLocationPayload = {};
+
+        if (this.application.data.proposal_equipment.equipment.equipment_type_ids.includes(this.$route.params.id)) {
+
+          if (payload.data.equipment.equipment_locations && payload.data.equipment.equipment_locations.length > 0) {
+            
+            workLocationPayload = {
+              "location_ids": this.selectedProposal,
+              "equipment_type_id": this.$route.params.id
+            };
+
+            payload.data.equipment.equipment_locations.push(workLocationPayload);
+          } else {
+            workLocationPayload = [
               {
                 "location_ids": this.selectedProposal,
-                "equipment_type_id": equipmentId
+                "equipment_type_id": this.$route.params.id
               }
-            ]
+            ];
+            payload.data.equipment.equipment_locations = workLocationPayload;
           }
-        };
+        } else if (this.application.data.proposal_equipment.equipment.equipment_conservation_type_ids.includes(this.$route.params.id)) {
 
+          if (payload.data.equipment.equipment_conservation_locations && payload.data.equipment.equipment_conservation_locations.length > 0) {
+            
+            workLocationPayload = {
+              "location_ids": this.selectedProposal,
+              "equipment_type_id": this.$route.params.id
+            };
+            payload.data.equipment.equipment_conservation_locations.push(workLocationPayload);
+          } else {
+            
+            workLocationPayload = [
+              {
+                "location_ids": this.selectedProposal,
+                "equipment_type_id": this.$route.params.id
+              }
+            ];
+
+            payload.data.equipment.equipment_locations = workLocationPayload;
+          }
+        } else {
+          //todo show error
+        }
       } else {
         const extensionId = this.$store.getters.getExtensionId(this.applicationId);
         

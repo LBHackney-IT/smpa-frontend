@@ -86,8 +86,7 @@ export default {
         this.selectedProposal.push('proposal_equipment');
       }
 		},
-    updateNavigation () {
-      debugger;
+    updateNavigation () {      
       var navigationInfo = {
         currentLevel: 'proposal',
         selectedProposal: this.selectedProposal,

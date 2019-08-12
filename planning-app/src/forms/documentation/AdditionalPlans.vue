@@ -166,8 +166,6 @@ export default {
       payload.proposed = this.proposedFile.join();
       payload.existing = this.existingFile.join();
 
-      debugger;
-
       this.$store.dispatch('uploadDocument', payload).then((response) => {
         console.log('-----doc uploaded');
         this.navigate();
