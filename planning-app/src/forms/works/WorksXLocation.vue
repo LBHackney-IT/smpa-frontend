@@ -171,23 +171,13 @@ export default {
 
         if (this.currentWorks.proposalId === "incidental_buildings") {
 
-          workLocationPayload = {
-            "outbuilding" : {
-              "works_location_ids": this.selectedProposal
-            }
+          payload.data.incidental_buildings.outbuilding = {
+            "works_location_ids": this.selectedProposal
           };
-
-          payload.data.incidental_buildings = workLocationPayload;
 
         } else if (this.currentWorks.proposalId === "boundaries") {
 
-          workLocationPayload = {
-            "gates_fences_walls" : {
-              "works_location_ids": this.selectedProposal
-            }
-          };
-
-          payload.data.boundaries = workLocationPayload;
+          payload.data.boundaries.gates_fences_walls.works_location_ids = this.selectedProposal;
 
         } else {
 
