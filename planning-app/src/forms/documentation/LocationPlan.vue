@@ -40,7 +40,7 @@
 				</div>
         <div class="govuk-inset-text" v-if="useMapDisplayed === 'No'">
 
-          <div class="govuk-form-group">
+          <div class="govuk-form-group" v-bind:class="{ 'govuk-form-group--error': error }">
             <label class="govuk-label" for="doc-size">
               Select document size
             </label>
@@ -54,11 +54,17 @@
             <label class="govuk-label" for="file-upload-1">
               Upload a location plan
             </label>
+
+            <span id="file-upload-1-error" class="govuk-error-message" v-if="error">
+              <span class="govuk-visually-hidden">Error:</span> {{this.errorMessage}}
+            </span>
             <input class="govuk-file-upload" id="file-upload-1" name="file-upload-1" ref="locationPlan" type="file" v-on:change="handleFileUpload()">
           </div>
         </div>
 			</fieldset>
 		</div>
+
+    <p class="govuk-heading-m" v-if="this.uploading">We're uploading your file. Once that is done you will be redirected.</p>
 
     <v-cta name="Continue" :onClick="submitFile"></v-cta>
     <br>
@@ -104,7 +110,11 @@ export default {
       useMapDisplayed: undefined,
       locationPlanMessage: 'You need to upload a new location map if your site affects the site boundary.',
       file: '',
-      size: ''
+      size: '',
+      uploading: false,
+      error: false,
+      errorMessage: undefined,
+
     }
   },
 	methods: {
@@ -124,9 +134,17 @@ export default {
       payload.application_id = this.applicationId;
       payload.proposed = docType.id;
 
+      this.uploading = true;
+
       this.$store.dispatch('uploadDocument', payload).then((response) => {
-        console.log('-----doc uploaded');
-        this.navigate();
+        this.uploading = false;
+
+        if (response.error) {
+          this.error = true;
+          this.errorMessage = 'Something went wrong while uploading your file. Try again.'
+        } else {
+          this.navigate();
+        }
       })
     },
     navigate() {

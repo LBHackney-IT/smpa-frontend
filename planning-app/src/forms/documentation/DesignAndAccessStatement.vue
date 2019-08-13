@@ -22,7 +22,7 @@
       </div>
     </details>
 
-    <div class="govuk-form-group">
+    <div class="govuk-form-group" v-bind:class="{ 'govuk-form-group--error': error }">
       <label class="govuk-label" for="doc-size">
         Select document size
       </label>
@@ -35,6 +35,10 @@
       <label class="govuk-label" for="file-upload-1">
         Upload a file
       </label>
+
+      <span id="file-upload-1-error" class="govuk-error-message" v-if="error">
+        <span class="govuk-visually-hidden">Error:</span> {{this.errorMessage}}
+      </span>
       <input class="govuk-file-upload" id="file-upload-1" name="file-upload-1" ref="DesignAndAccessStatement" type="file" v-on:change="handleFileUpload()">
 
       <br><br>
@@ -48,6 +52,9 @@
         </div>
       </div>
     </div>
+
+    <p class="govuk-heading-m" v-if="this.uploading">We're uploading your file. Once that is done you will be redirected.</p>
+
 
     <v-cta name="Continue" :onClick="submitFile"></v-cta>
     <br>
@@ -73,7 +80,10 @@ export default {
 	data () {
     return {
       file: '',
-      size: ''
+      size: '',
+      uploading: false,
+      error: false,
+      errorMessage: undefined,
     }
   },
 	methods: {
@@ -92,9 +102,17 @@ export default {
       payload.application_id = this.applicationId;
       payload.proposed = docType.id;
 
+      this.uploading = true;
+
       this.$store.dispatch('uploadDocument', payload).then((response) => {
-        console.log('-----doc uploaded');
-        this.navigate();
+        this.uploading = false;
+
+        if (response.error) {
+          this.error = true;
+          this.errorMessage = 'Something went wrong while uploading your file. Try again.'
+        } else {
+          this.navigate();
+        }
       })
     },
 

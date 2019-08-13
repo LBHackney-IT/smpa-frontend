@@ -18,6 +18,7 @@ export function signIn ({commit}, payload) {
   .post(payload)
   .then( response => {
     commit('signIn', response.data);
+    return response;
   })
   .catch(function (error) {
     let errorResponse = {};
@@ -375,7 +376,7 @@ export function uploadDocument ({commit}, payload) {
   return DocumentsService
     .uploadDocument(payload)
     .then( response => {
-      console.log('document upload action---------', response);
+      return response;
     })
     .catch(function (error) {
       let errorResponse = {};

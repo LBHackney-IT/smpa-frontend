@@ -107,7 +107,7 @@ You should include elevations for all sides of the proposal.</p>
 
     <br><br><br>
 
-    <div class="govuk-form-group">
+    <div class="govuk-form-group" v-bind:class="{ 'govuk-form-group--error': error }">
       <label class="govuk-label" for="doc-size">
         Select document size
       </label>
@@ -120,10 +120,26 @@ You should include elevations for all sides of the proposal.</p>
       <label class="govuk-label" for="file-upload-1">
         Upload a file
       </label>
+
+      <span id="file-upload-1-error" class="govuk-error-message" v-if="error">
+        <span class="govuk-visually-hidden">Error:</span> {{this.errorMessage}}
+      </span>
       <input class="govuk-file-upload" id="file-upload-1" name="file-upload-1" ref="AdditionalPlans" type="file" v-on:change="handleFileUpload()">
     </div>
 
-    <v-cta name="Continue" :onClick="submitFile"></v-cta>
+    <v-cta name="Upload file" :onClick="submitFile"></v-cta>
+
+    <p class="govuk-heading-m" v-if="this.uploading">We're uploading your file. The list bellow will be updated.</p>
+
+    <h3 class="govuk-heading-m">List of additional plans that you uploaded</h3>
+
+    <p>You uploaded a total of {{this.additionalPlans.length}}.</p>
+
+    <ul class="govuk-list govuk-list--bullet" v-if="this.additionalPlans.length > 0">
+      <li v-for="(item, index) in this.additionalPlans" v-bind:key="index">{{item.original_name}}</li>
+    </ul>
+
+    <v-cta name="Continue" :onClick="navigate"></v-cta>
     <br>
     <router-link :to="{ name: 'DocumentationDocsReview' }">Continue without adding a file</router-link>
 	</div>
@@ -150,7 +166,11 @@ export default {
       file: '',
       size: '',
       existingFile: [],
-      proposedFile: []
+      proposedFile: [],
+      uploading: false,
+      error: false,
+      errorMessage: undefined,
+      additionalPlans: []
     }
   },
 	methods: {
@@ -166,9 +186,18 @@ export default {
       payload.proposed = this.proposedFile.join();
       payload.existing = this.existingFile.join();
 
+      this.uploading = true;
+
       this.$store.dispatch('uploadDocument', payload).then((response) => {
-        console.log('-----doc uploaded');
-        this.navigate();
+        this.uploading = false;
+
+        if (response.error) {
+          this.error = true;
+          this.errorMessage = 'Something went wrong while uploading your file. Try again.'
+        } else {
+          this.additionalPlans.push(response.data);
+        }
+        
       })
     },
     navigate() {
