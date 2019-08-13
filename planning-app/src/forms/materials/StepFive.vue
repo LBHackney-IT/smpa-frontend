@@ -87,11 +87,16 @@ export default {
         
       });
 
-      let payload = {
-        "materials": {
-          "other": this.materialsDescription
-        }
+      let payload;
+
+      let currentMaterials = this.application.data.proposal_extension.materials;
+
+      currentMaterials.other = this.materialsDescription;
+
+      payload = {
+        "materials": currentMaterials
       };
+
 
       const extensionId = this.$store.getters.getExtensionId(this.applicationId);
 
@@ -103,6 +108,10 @@ export default {
   computed: {
 		hasOtherMaterials () {
 			return this.otherMaterials === 'Yes';
+    },
+    application () {
+      let index = this.$store.state.state.applications.findIndex( application => application.data.id === this.applicationId );
+			return this.$store.state.state.applications[index];
     }
 	}
 }

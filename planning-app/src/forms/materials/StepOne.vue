@@ -52,7 +52,6 @@
           </span>
 
           <div class="govuk-checkboxes">
-
             <div class="vertical-checkboxes" v-bind:key="option.id" v-for="option in this.defaultOptions">
               <div class="govuk-checkboxes__item">
                 <input class="govuk-checkboxes__input" v-bind:id="option.id" v-bind:name="option.name" type="checkbox" v-bind:value="option.id" v-model="checkedMaterials" >
@@ -109,24 +108,23 @@ export default {
     submit() {
       let payload;
 
-      if (this.material === 'new-material') {
-        payload = {
-          "materials": {
-            "roof": {
-              "proposals": this.dataToBeSent
-            }
-          }
-        };
-      } else {
-        payload = {
-          "materials": {
-            "roof": {
-              "matches_existing": this.material === 'match-existing' ? true : false,
-              "not_applicable": this.material === 'not-applicable' ? true : false
-            }
-          }
-        };
+      let currentMaterials = this.application.data.proposal_extension.materials;
+
+      if (!currentMaterials.roof) {
+        currentMaterials.roof = {};
       }
+
+      if (this.material === 'new-material') {
+        currentMaterials.roof.proposals = this.dataToBeSent;
+ 
+      } else {
+        currentMaterials.roof.matches_existing = this.material === 'match-existing' ? true : false;
+        currentMaterials.roof.not_applicable = this.material === 'not-applicable' ? true : false;
+      }
+
+      payload = {
+        "materials": currentMaterials
+      };
 
       const extensionId = this.$store.getters.getExtensionId(this.applicationId);
 
@@ -148,6 +146,12 @@ export default {
       this.$store.dispatch('getDefaultData', 'materials/options/roof').then((response) => {
         this.defaultOptions = response.data;
       })
+    }
+  },
+  computed: {
+    application () {
+      let index = this.$store.state.state.applications.findIndex( application => application.data.id === this.applicationId );
+			return this.$store.state.state.applications[index];
     }
   }
 }

@@ -69,7 +69,7 @@
       </div>
     </div>
 
-		<v-cta name="Continue" :onClick="navigate"></v-cta>
+		<v-cta name="Continue" :onClick="submit"></v-cta>
 	</div>
 </template>
 
@@ -105,24 +105,23 @@ export default {
     submit() {
       let payload;
 
-      if (this.material === 'new-material') {
-        payload = {
-          "materials": {
-            "walls": {
-              "proposals": this.dataToBeSent
-            }
-          }
-        };
-      } else {
-        payload = {
-          "materials": {
-            "walls": {
-              "matches_existing": this.material === 'match-existing' ? true : false,
-              "not_applicable": this.material === 'not-applicable' ? true : false
-            }
-          }
-        };
+      let currentMaterials = this.application.data.proposal_extension.materials;
+
+      if (!currentMaterials.walls) {
+        currentMaterials.walls = {};
       }
+
+      if (this.material === 'new-material') {
+        currentMaterials.walls.proposals = this.dataToBeSent;
+ 
+      } else {
+        currentMaterials.walls.matches_existing = this.material === 'match-existing' ? true : false;
+        currentMaterials.walls.not_applicable = this.material === 'not-applicable' ? true : false;
+      }
+
+      payload = {
+        "materials": currentMaterials
+      };
 
       const extensionId = this.$store.getters.getExtensionId(this.applicationId);
 
@@ -147,6 +146,12 @@ export default {
       this.$store.dispatch('getDefaultData', 'materials/options/wall').then((response) => {
         this.defaultOptions = response.data;
       })
+    }
+  },
+  computed: {
+    application () {
+      let index = this.$store.state.state.applications.findIndex( application => application.data.id === this.applicationId );
+			return this.$store.state.state.applications[index];
     }
   }
 }

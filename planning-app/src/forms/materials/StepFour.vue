@@ -67,7 +67,7 @@
       </div>
     </div>
     
-		<v-cta name="Continue" :onClick="navigate"></v-cta>
+		<v-cta name="Continue" :onClick="submit"></v-cta>
 	</div>
 </template>
 
@@ -91,7 +91,9 @@ export default {
       material: '',
       checkedMaterials: [],
       materialsDetailsQuestion: 'Is the proposed material and finish the same as the existing?',
-      otherMaterialsDetailsQuestion: 'Is the proposed material and finish the same as the existing?'
+      otherMaterialsDetailsQuestion: 'Is the proposed material and finish the same as the existing?',
+      defaultOptions: undefined,
+      dataToBeSent: []
     }
   },
   beforeMount () {
@@ -101,24 +103,23 @@ export default {
     submit() {
       let payload;
 
-      if (this.material === 'new-material') {
-        payload = {
-          "materials": {
-            "doors": {
-              "proposals": this.dataToBeSent
-            }
-          }
-        };
-      } else {
-        payload = {
-          "materials": {
-            "doors": {
-              "matches_existing": this.material === 'match-existing' ? true : false,
-              "not_applicable": this.material === 'not-applicable' ? true : false
-            }
-          }
-        };
+      let currentMaterials = this.application.data.proposal_extension.materials;
+
+      if (!currentMaterials.doors) {
+        currentMaterials.doors = {};
       }
+
+      if (this.material === 'new-material') {
+        currentMaterials.doors.proposals = this.dataToBeSent;
+ 
+      } else {
+        currentMaterials.doors.matches_existing = this.material === 'match-existing' ? true : false;
+        currentMaterials.doors.not_applicable = this.material === 'not-applicable' ? true : false;
+      }
+
+      payload = {
+        "materials": currentMaterials
+      };
 
       const extensionId = this.$store.getters.getExtensionId(this.applicationId);
 
@@ -148,7 +149,11 @@ export default {
   computed: {
 		hasNewDoors () {
 			return this.newDoors === 'Yes';
+    },
+    application () {
+      let index = this.$store.state.state.applications.findIndex( application => application.data.id === this.applicationId );
+			return this.$store.state.state.applications[index];
     }
-	}
+  }
 }
 </script>
