@@ -376,6 +376,28 @@ export function uploadDocument ({commit}, payload) {
   return DocumentsService
     .uploadDocument(payload)
     .then( response => {
+
+      var data = {
+        id: payload.application_id,
+        data: response.data
+      };
+
+      commit('updateDocuments', data);
+      
+      return response;
+    })
+    .catch(function (error) {
+      let errorResponse = {};
+      errorResponse.response = error;
+      errorResponse.error = true;
+      return errorResponse;
+    });
+}
+
+export function deleteDocument ({commit}, payload) {
+  return DocumentsService
+    .deleteDocument(payload)
+    .then( response => {
       return response;
     })
     .catch(function (error) {

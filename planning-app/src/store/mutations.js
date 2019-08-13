@@ -201,6 +201,14 @@ export function accountVerified (state, data) {
 }
 
 
+export function updateDocuments (state, data) {
+  const position = state.state.applications.findIndex( application => application.data.id === data.id );
+
+  if (position > -1) {
+    state.state.applications[position].data.document_files.push(data.data);
+  }
+}
+
 
 
 

@@ -239,6 +239,19 @@ export const DocumentsService = {
     };
 
     return ApiService.postWithConfig('documents', form, config);
+  },
+
+  deleteDocument (data) {
+    ApiService.setAuthorization();
+
+    const config = {
+      headers: {
+          'content-type': undefined
+      }
+    };
+
+    var resource = 'documents/' + data.id;
+    return ApiService.delete(resource);
   }
 }
 
