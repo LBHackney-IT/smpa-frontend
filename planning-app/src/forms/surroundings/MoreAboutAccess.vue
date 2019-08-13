@@ -90,11 +90,15 @@ export default {
       })
     },
     submit() {
+      let currentData = this.application.data.proposal_extension.means_of_access;
+
       let payload = {
-        "means_of_access": {
-          "access_works_sub_type_ids": this.selectedProposal
-        }
+        "means_of_access": {}
       };
+
+      payload.means_of_access = currentData;
+
+      payload.means_of_access.access_works_sub_type_ids = this.selectedProposal;
 
       const extensionId = this.$store.getters.getExtensionId(this.applicationId);
 
