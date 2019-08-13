@@ -111,10 +111,6 @@ export default {
     application () {
       let index = this.$store.state.state.applications.findIndex( application => application.data.id === this.applicationId );
 			return this.$store.state.state.applications[index];
-    },
-    
-    isInConservationArea () {
-      return this.application.data.site_constraints.nb_conarea > 0;
     }
 	}
 }

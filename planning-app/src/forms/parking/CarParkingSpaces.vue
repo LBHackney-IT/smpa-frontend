@@ -96,12 +96,17 @@ export default {
       }
     },
     submit() {
+
+      let currentData = this.application.data.proposal_extension.parking;
+
+      currentData.current_car_parking_spaces = parseInt(this.current);
+      currentData.planned_car_parking_spaces = parseInt(this.total);
+
       let payload = {
-        "parking": {
-          "current_car_parking_spaces": this.current,
-          "planned_car_parking_spaces": this.total
-        }
+        parking: {}
       };
+
+      payload.parking = currentData;
 
       const extensionId = this.$store.getters.getExtensionId(this.applicationId);
 
@@ -109,7 +114,13 @@ export default {
         this.navigate();
       })
     }
-  }
+  },
+  computed: {
+    application () {
+      let index = this.$store.state.state.applications.findIndex( application => application.data.id === this.applicationId );
+			return this.$store.state.state.applications[index];
+    }
+	}
 
 }
 </script>

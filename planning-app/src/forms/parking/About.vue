@@ -24,7 +24,7 @@
 			</fieldset>
 		</div>
     <free-description></free-description>
-		<v-cta name="Continue" :onClick="navigate"></v-cta>
+		<v-cta name="Continue" :onClick="submit"></v-cta>
 	</div>
 </template>
 
@@ -33,9 +33,11 @@ import vCta from '../../components/Cta.vue';
 import router from '../../router';
 import WarningMessage from '../../components/WarningMessage.vue';
 import FreeDescription from '../../components/FreeDescription.vue';
+import { getRouteAppId } from '../../mixins/getRouteAppId';
 
 export default {
-	name: 'WorkStart',
+  name: 'WorkStart',
+  mixins: [ getRouteAppId ],
 	components: {
     vCta,
     WarningMessage,
@@ -102,7 +104,13 @@ export default {
         this.defaultOptions = response.data;
       })
     }
-  }
+  },
+  computed: {
+    application () {
+      let index = this.$store.state.state.applications.findIndex( application => application.data.id === this.applicationId );
+			return this.$store.state.state.applications[index];
+    }
+	}
 
 }
 </script>

@@ -79,14 +79,18 @@ export default {
     },
     submit() {
       if (this.electricalVehical === "Yes") {
+
+        let currentData = this.application.data.proposal_extension.parking;
+
+        currentData.new_ev_charging_points = parseInt(this.chargingPoints);
+
         let payload = {
-          "parking": {
-            "new_ev_charging_points": 10
-          }
-        }
+          parking: {}
+        };
+
+        payload.parking = currentData;
 
         const extensionId = this.$store.getters.getExtensionId(this.applicationId);
-
 
         this.$store.dispatch('updateExtensionProposal', { "application_id": this.applicationId, 'selectedProposals': payload, "extension_id": extensionId }).then(() => {
           this.navigate();
@@ -99,7 +103,13 @@ export default {
       var routerParams = Navigate.calculateNavigation(this.$store.state.state.proposalFlow, this.currentWorks, 'Parking');
       router.push(routerParams);
     }
-  }
+  },
+  computed: {
+    application () {
+      let index = this.$store.state.state.applications.findIndex( application => application.data.id === this.applicationId );
+			return this.$store.state.state.applications[index];
+    }
+	}
 
 }
 </script>
