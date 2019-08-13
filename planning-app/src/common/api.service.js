@@ -15,6 +15,11 @@ const ApiService = {
     axios.interceptors.response.use(function (response) {
       return response;
     }, function (error) {
+
+      // todo find a more elegant way of doing this
+      if (error.response.data.message === 'Email is already registered') {
+        return Promise.reject(error);
+      }
       if (error.response.status === 401) {
         store.dispatch('HandleUnauthorizedAccess');
         router.push({ name: 'SignIn'});

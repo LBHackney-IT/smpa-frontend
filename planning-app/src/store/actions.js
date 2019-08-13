@@ -18,6 +18,12 @@ export function signIn ({commit}, payload) {
   .post(payload)
   .then( response => {
     commit('signIn', response.data);
+  })
+  .catch(function (error) {
+    let errorResponse = {};
+    errorResponse.response = error;
+    errorResponse.error = true;
+    return errorResponse;
   });
 }
 
@@ -35,6 +41,12 @@ export function addAddressToApplication ({commit}, data) {
     payload.data = response.data;
     commit("addSiteAddress", payload);
     return response;
+  })
+  .catch(function (error) {
+    let errorResponse = {};
+    errorResponse.response = error;
+    errorResponse.error = true;
+    return errorResponse;
   });
 }
 
@@ -47,6 +59,12 @@ export function addConstraintsToSite ({commit}, data) {
     payload.data = response.data;
     commit("addSiteConstraints", payload);
     return response;
+  })
+  .catch(function (error) {
+    let errorResponse = {};
+    errorResponse.response = error;
+    errorResponse.error = true;
+    return errorResponse;
   });
 }
 
@@ -69,6 +87,12 @@ export function createApplication ({commit}) {
   .then( response => {
     commit('createApplication', response);
     return response;
+  })
+  .catch(function (error) {
+    let errorResponse = {};
+    errorResponse.response = error;
+    errorResponse.error = true;
+    return errorResponse;
   });
 }
 
@@ -86,7 +110,10 @@ export function generateApplication ({commit}, siteData) {
       return this.dispatch('addConstraintsToSite', siteData.constraints)
     })
     .catch(({error}) => {
-      console.log('ERROR-------------', error);
+      let errorResponse = {};
+      errorResponse.response = error;
+      errorResponse.error = true;
+      return errorResponse;
     });
 }
 
@@ -96,6 +123,12 @@ export function getApplication ({commit}, id) {
   .then( response => {
     console.log('------GET APPLICATION', response.data);
     commit('getApplication', response.data);
+  })
+  .catch(function (error) {
+    let errorResponse = {};
+    errorResponse.response = error;
+    errorResponse.error = true;
+    return errorResponse;
   });
 }
 
@@ -105,6 +138,12 @@ export function updateApplication ({commit}, data) {
   .then( response => {
     console.log('-----application updated', response);
     commit('updateApplication', response.data);
+  })
+  .catch(function (error) {
+    let errorResponse = {};
+    errorResponse.response = error;
+    errorResponse.error = true;
+    return errorResponse;
   });
 }
 
@@ -137,8 +176,13 @@ export function submitFlow ({commit}, data) {
 
     return this.dispatch('updateApplication', patch);
 
-
   })
+  .catch(function (error) {
+    let errorResponse = {};
+    errorResponse.response = error;
+    errorResponse.error = true;
+    return errorResponse;
+  });
 }
 
 export function createExtensionProposal ({commit}, application) {
@@ -150,6 +194,12 @@ export function createExtensionProposal ({commit}, application) {
         'data': response.data,
         'type': 'extension'
       });
+    })
+    .catch(function (error) {
+      let errorResponse = {};
+      errorResponse.response = error;
+      errorResponse.error = true;
+      return errorResponse;
     });
 }
 
@@ -162,6 +212,12 @@ export function updateExtensionProposal ({commit}, data) {
         'data': response.data,
         'type': 'extension'
       });
+    })
+    .catch(function (error) {
+      let errorResponse = {};
+      errorResponse.response = error;
+      errorResponse.error = true;
+      return errorResponse;
     });
 
 }
@@ -175,6 +231,12 @@ export function createEquipmentProposal ({commit}, application) {
         'data': response.data,
         'type': 'equipment'
       });
+    })
+    .catch(function (error) {
+      let errorResponse = {};
+      errorResponse.response = error;
+      errorResponse.error = true;
+      return errorResponse;
     });
 }
 
@@ -188,6 +250,12 @@ export function updateEquipmentProposal ({commit}, data) {
         'data': response.data,
         'type': 'equipment'
       });
+    })
+    .catch(function (error) {
+      let errorResponse = {};
+      errorResponse.response = error;
+      errorResponse.error = true;
+      return errorResponse;
     });
 }
 
@@ -199,6 +267,12 @@ export function createBothProposals ({commit}, application) {
         'applicationId': application.application_id,
         'data': response
       });
+    })
+    .catch(function (error) {
+      let errorResponse = {};
+      errorResponse.response = error;
+      errorResponse.error = true;
+      return errorResponse;
     });
 }
 
@@ -208,6 +282,12 @@ export function getDefaultData ({commit}, type) {
     .get(type)
     .then( response => {
       return response;
+    })
+    .catch(function (error) {
+      let errorResponse = {};
+      errorResponse.response = error;
+      errorResponse.error = true;
+      return errorResponse;
     });
 }
 
@@ -216,6 +296,12 @@ export function getDefaultDataFromTwoSources ({commit}, resource) {
     .getBoth(resource)
     .then( response => {
       return response;
+    })
+    .catch(function (error) {
+      let errorResponse = {};
+      errorResponse.response = error;
+      errorResponse.error = true;
+      return errorResponse;
     });
 }
 
@@ -228,6 +314,12 @@ export function submitWorksLocation ({commit}, payload) {
         'data': response.data,
         'type': payload.type
       });
+    })
+    .catch(function (error) {
+      let errorResponse = {};
+      errorResponse.response = error;
+      errorResponse.error = true;
+      return errorResponse;
     });
 }
 
@@ -256,6 +348,12 @@ export function getDocumentSizes ({commit}) {
     .getDocumentSizes()
     .then( response => {
       commit('addDocumentSizes', response.data);
+    })
+    .catch(function (error) {
+      let errorResponse = {};
+      errorResponse.response = error;
+      errorResponse.error = true;
+      return errorResponse;
     });
 }
 
@@ -264,6 +362,12 @@ export function getDocumentTypes ({commit}) {
     .getDocumentTypes()
     .then( response => {
       commit('addDocumentTypes', response.data);
+    })
+    .catch(function (error) {
+      let errorResponse = {};
+      errorResponse.response = error;
+      errorResponse.error = true;
+      return errorResponse;
     });
 }
 
@@ -272,6 +376,12 @@ export function uploadDocument ({commit}, payload) {
     .uploadDocument(payload)
     .then( response => {
       console.log('document upload action---------', response);
+    })
+    .catch(function (error) {
+      let errorResponse = {};
+      errorResponse.response = error;
+      errorResponse.error = true;
+      return errorResponse;
     });
 }
 
@@ -281,6 +391,12 @@ export function createPayment ({commit}, data) {
     .then( response => {
       console.log('PAYMENT CREATED---------', response);
       return response;
+    })
+    .catch(function (error) {
+      let errorResponse = {};
+      errorResponse.response = error;
+      errorResponse.error = true;
+      return errorResponse;
     });
 }
 
@@ -290,6 +406,12 @@ export function checkPayment ({commit}, data) {
     .then( response => {
       console.log('PAYMENT checked---------', response);
       return response;
+    })
+    .catch(function (error) {
+      let errorResponse = {};
+      errorResponse.response = error;
+      errorResponse.error = true;
+      return errorResponse;
     });
 }
 
@@ -299,6 +421,12 @@ export function createAccount ({commit}, data) {
     .then( response => {
       console.log('account creation---------', response);
       return response;
+    })
+    .catch(function (error) {
+      let errorResponse = {};
+      errorResponse.response = error;
+      errorResponse.error = true;
+      return errorResponse;
     });
 }
 
@@ -308,6 +436,12 @@ export function verifyAccount ({commit}, data) {
     .then( response => {
       commit('accountVerified', response.data);
       return response;
+    })
+    .catch(function (error) {
+      let errorResponse = {};
+      errorResponse.response = error;
+      errorResponse.error = true;
+      return errorResponse;
     });
 }
 
@@ -317,6 +451,12 @@ export function resetPasswordRequest ({commit}, data) {
     .then( response => {
       console.log('reset password request---------', response);
       return response;
+    })
+    .catch(function (error) {
+      let errorResponse = {};
+      errorResponse.response = error;
+      errorResponse.error = true;
+      return errorResponse;
     });
 }
 
@@ -326,6 +466,12 @@ export function resetPassword ({commit}, data) {
     .then( response => {
       console.log('reset password request---------', response);
       return response;
+    })
+    .catch(function (error) {
+      let errorResponse = {};
+      errorResponse.response = error;
+      errorResponse.error = true;
+      return errorResponse;
     });
 }
 
@@ -335,5 +481,11 @@ export function submitApplication ({commit}, data) {
   .then( response => {
     console.log('-----application submitted', response);
     return response;
+  })
+  .catch(function (error) {
+    let errorResponse = {};
+    errorResponse.response = error;
+    errorResponse.error = true;
+    return errorResponse;
   });
 }

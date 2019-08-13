@@ -5,14 +5,16 @@
 
       <p>Sign in or <a href="/create-account">create an account</a> to get started</p>
 
-      <div class="govuk-form-group">
+      <div class="govuk-form-group" v-bind:class="{ 'govuk-form-group--error': error }">
+
+        <span id="email-error" class="govuk-error-message" v-if="error">
+          <span class="govuk-visually-hidden">Error:</span> {{ errorMessages.SIGN_IN.ERROR }}
+        </span>
+
         <label class="govuk-label" for="email">
           Email address
         </label>
         <input class="govuk-input govuk-!-width-two-thirds" id="email" name="email" type="email" autocomplete="email" spellcheck="false" v-model="email">
-      </div>
-
-      <div class="govuk-form-group">
         <label class="govuk-label" for="password">
           Password
         </label>
@@ -29,6 +31,7 @@
 <script>
   import vCta from '../components/Cta.vue';
   import router from '../router';
+  import * as errorMessage from '../messages/errorMessages';
 
   export default {
     name: 'SignIn',
@@ -40,11 +43,14 @@
         email: '',
         password: '',
         source: '',
-        application: undefined
+        application: undefined,
+        error: false,
+        errorMessages: undefined
       }
     },
     created () {
       this.fetchData();
+      this.errorMessages = errorMessage;
     },
     watch: {
       '$route': 'fetchData'
@@ -70,8 +76,16 @@
       },
       signIn() {
 
-        this.$store.dispatch('signIn', { "email": this.email, 'password': this.password }).then(() => {
-          this.navigate();
+        this.$store.dispatch('signIn', { "email": this.email, 'password': this.password }).then((response) => {
+
+          if (response.error) {
+
+            this.error = true;
+
+          } else {
+            this.navigate();
+          }
+          
         })
         
       }
