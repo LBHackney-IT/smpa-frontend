@@ -68,6 +68,7 @@
 <script>
   import vCta from '../components/Cta.vue';
   import * as errorMessage from '../messages/errorMessages';
+  import router from '../router';
 
   export default {
     name: 'CreateAccount',
@@ -126,7 +127,7 @@
         payload.password = this.password;
         payload.password_confirm = this.passwordConfirmation;
         this.$store.dispatch('createAccount', payload).then((response) => {
-          if (response.response.response.data.message) {
+          if (response && response.response && response.response.response.data.message) {
             this.error = true;
             this.responseError = response.response.response.data.message;
           } else if (response.error) {
