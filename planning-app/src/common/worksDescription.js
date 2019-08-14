@@ -290,15 +290,68 @@ function generateWorkDescription (application) {
       }
 
     }
-
-    return worksDescription;
-
-  } else if (application.proposal_equipment) {
-    console.log('equipment');
-  } else {
-    worksDescription.push('You did not specifiy what are the works.');
-    return worksDescription;
   }
+  
+  if (application.proposal_equipment) {
+    if (application.proposal_equipment.equipment.equipment_conservation_types) {
+
+      let listOfEquipments = [];
+
+      application.proposal_equipment.equipment.equipment_conservation_types.forEach((equipment, index) => {
+
+        let currentEquipmentInfo = '';
+
+        let currentEquipment = application.proposal_equipment.equipment.equipment_locations.find((eq) => eq.equipment_type_id === equipment.id);
+
+        if (currentEquipment.locations) {
+          currentEquipment.locations.forEach((equipmentLocation, locationIndex) => {
+            if (locationIndex + 1 === currentEquipment.locations.length) {
+              currentEquipmentInfo += equipmentLocation.name + ' ';
+            } else {
+              currentEquipmentInfo += equipmentLocation.name + ', ';
+            }
+          });
+        }
+
+        currentEquipmentInfo += equipment.name;
+
+        listOfEquipments.push(currentEquipmentInfo);
+
+      });
+
+      application.proposal_equipment.equipment.equipment_types.forEach((equipment, index) => {
+
+        let currentEquipmentInfo = '';
+
+        let currentEquipment = application.proposal_equipment.equipment.equipment_locations.find((eq) => eq.equipment_type_id === equipment.id);
+
+        if (currentEquipment.locations) {
+          currentEquipment.locations.forEach((equipmentLocation, locationIndex) => {
+            if (locationIndex + 1 === currentEquipment.locations.length) {
+              currentEquipmentInfo += equipmentLocation.name + ' ';
+            } else {
+              currentEquipmentInfo += equipmentLocation.name + ', ';
+            }
+          });
+        }
+
+        currentEquipmentInfo += equipment.name;
+
+        listOfEquipments.push(currentEquipmentInfo);
+
+      });
+
+      listOfEquipments.forEach((equipment) => {
+        worksDescription.push(equipment);
+      });
+    }
+  } 
+  
+  if (!application.proposal_equipment && !application.proposal_equipment) {
+    worksDescription.push('You did not specifiy what are the works.');
+  }
+
+  return worksDescription;
 }
 
 export default { generateWorkDescription };
