@@ -73,6 +73,10 @@
           </tbody>
         </table>
 
+        <div v-if="error && !loading" class="govuk-inset-text govuk-inset-text--error ">
+          {{ errorMessage }}
+        </div>
+
         <v-cta name="Continue" :onClick="navigate" v-if="!loading"></v-cta>
       </div>
 
@@ -98,6 +102,8 @@
     },
     data() {
       return { 
+        errorMessage: undefined,
+        error: false,
         loading: false,
         loadingMap: false,
         geoJson: {},
@@ -272,7 +278,14 @@
 
         if (!!JwtService.getToken()) {
           this.$store.dispatch('generateApplication', this.application).then((response) => {
+
+          if (response.error) {
+            this.error = true;
+            this.errorMessage = 'Something went wrong while creating your application. Try again.'
+          } else {
             router.push({ name: 'ApplicationTaskOverview', params: { 'applicationId': response.data.application_id } });
+          }
+            
           })
         } else {
           router.push({ name: 'SignIn', params: { 'origin': 'constraints-finder', 'application': this.application} });
