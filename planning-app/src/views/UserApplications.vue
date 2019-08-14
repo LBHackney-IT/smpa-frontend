@@ -6,12 +6,16 @@
 
     <p v-if="this.loading">Requesting data.</p>
 
+    <div v-if="this.loading === false && this.error" class="govuk-inset-text govuk-inset-text--error ">
+      There has been an error. Try again later.
+    </div>
 
-    <div v-if="this.applications.length === 0 && this.loading === false">
+
+    <div v-if="this.applications.length === 0 && this.loading === false && this.error === false">
       <p>Currently there are no applications associated with this account.</p>
     </div>
 
-    <div v-if="this.applications.length > 0 && this.loading === false">
+    <div v-if="this.applications.length > 0 && this.loading === false && this.error === false">
       <div class="govuk-form-group">
         <label class="govuk-label" for="sort">
           Sort by
@@ -41,12 +45,12 @@
         </thead>
         <tbody class="govuk-table__body">
           <tr class="govuk-table__row" v-for="(application, index) in this.applications" v-bind:key="index">
-            <td class="govuk-table__cell">#####</td>
+            <td class="govuk-table__cell">{{application.reference}}</td>
             <td class="govuk-table__cell"><span v-if="application.site_address">{{ application.site_address.address_line_1 }}</span></td>
             <td class="govuk-table__cell">{{ generateDate(application.created_at) }}</td>
             <td class="govuk-table__cell">{{ generateDate(application.updated_at) }}</td>
-            <td class="govuk-table__cell">Draft</td>
-            <td class="govuk-table__cell"><router-link :to="{ name: 'ApplicationTaskOverview'}" class="govuk-link">View</router-link></td>
+            <td class="govuk-table__cell">{{application.status.name}}</td>
+            <td class="govuk-table__cell"><router-link :to="{ name: 'ApplicationTaskOverview', params: { applicationId: application.id}}" class="govuk-link">View</router-link></td>
           </tr>
         </tbody>
       </table>
@@ -67,7 +71,8 @@
     data() {
       return {
         applications: [],
-        loading: true
+        loading: true,
+        error: false
       };
     },
     mounted() {
@@ -83,8 +88,14 @@
       },
       getAllApplications() {
         this.$store.dispatch('getAllApplications').then((response) => {
-          this.applications = response.data;
-          this.loading = false;
+
+          if (response.error) {
+            this.error = true;
+            this.loading = false;
+          } else {
+            this.applications = response.data;
+            this.loading = false;
+          }
         });
 
       }

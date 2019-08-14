@@ -92,6 +92,11 @@ export default {
       payload.id = this.applicationId;
       payload.data = {};
       payload.data.declaration_id = this.typeOfInterest;
+      payload.data.declaration_detail = {
+        "name": this.name,
+        "role": this.role,
+        "details": this.relationshipDescription
+      };
 
       this.$store.dispatch('updateApplication', payload).then(() => {
 				router.push({ name: 'DeclarationsOwnership' });
