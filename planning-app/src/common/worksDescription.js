@@ -88,9 +88,41 @@ function generateWorkDescription (application) {
       }
     }
 
-    // if (application.proposal_extension.parking) {
+    if (application.proposal_extension.parking) {
+      if (application.proposal_extension.parking.current_bike_parking_spaces) {
+        worksDescription.push('The current number of bike parking spaces is ' + application.proposal_extension.parking.current_bike_parking_spaces + '.');
+      }
+      if (application.proposal_extension.parking.planned_bike_parking_spaces) {
+        worksDescription.push('The planned number of bike parking spaces will be ' + application.proposal_extension.parking.planned_bike_parking_spaces + '.');
+      }
 
-    // }
+      if (application.proposal_extension.parking.current_bike_parking_spaces && !application.proposal_extension.parking.planned_bike_parking_spaces) {
+        worksDescription.push('You added the current number of bike parking spaces but did not add the planned bike parking spaces after the works are done.');
+      }
+
+      if (!application.proposal_extension.parking.current_bike_parking_spaces && application.proposal_extension.parking.planned_bike_parking_spaces) {
+        worksDescription.push('You added the planned number of bike parking spaces but did not add the current bike parking spaces.');
+      }
+
+      if (application.proposal_extension.parking.current_car_parking_spaces) {
+        worksDescription.push('The current number of car parking spaces is ' + application.proposal_extension.parking.current_car_parking_spaces + '.');
+      }
+      if (application.proposal_extension.parking.planned_car_parking_spaces) {
+        worksDescription.push('The planned number of car parking spaces will be ' + application.proposal_extension.parking.planned_car_parking_spaces + '.');
+      }
+
+      if (application.proposal_extension.parking.current_car_parking_spaces && !application.proposal_extension.parking.planned_car_parking_spaces) {
+        worksDescription.push('You added the current number of car parking spaces but did not add the planned car parking spaces after the works are done.');
+      }
+
+      if (!application.proposal_extension.parking.current_car_parking_spaces && application.proposal_extension.parking.planned_car_parking_spaces) {
+        worksDescription.push('You added the planned number of car parking spaces but did not add the current car parking spaces.');
+      }
+
+      if (application.proposal_extension.parking.new_ev_charging_points) {
+        worksDescription.push('The proposal involves ' + application.proposal_extension.parking.new_ev_charging_points + ' electrical vehicle (EV) charging points');
+      }
+    }
 
     if (application.proposal_extension.new_double_bedrooms) {
       worksDescription.push('Number of new double bedrooms: ' + application.proposal_extension.new_double_bedrooms + '.');

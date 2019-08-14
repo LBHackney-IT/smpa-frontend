@@ -12,8 +12,8 @@
             Applicant name
           </dt>
           <dd class="govuk-summary-list__value">
-            <p v-if="this.hasApplicantFullName">{{this.application.data.applicant.full_name}}</p>
-            <p v-if="!this.application.data.applicant.full_name">You did not provide this information.</p>
+            <p v-if="this.hasApplicantFullName">{{this.applicantFullName}}</p>
+            <p v-if="!this.hasApplicantFullName">You did not provide this information.</p>
           </dd>
           <dd class="govuk-summary-list__actions">
             <router-link :to="{ name: 'ApplicationContactApplicant'}"> 
@@ -26,8 +26,8 @@
             Agent name
           </dt>
           <dd class="govuk-summary-list__value">
-            <p v-if="this.hasAgentFullName">{{this.application.data.agent.full_name}}</p>
-            <p v-if="!this.application.data.agent.full_name">You did not provide this information.</p>
+            <p v-if="this.hasAgentFullName">{{this.agentFullName}}</p>
+            <p v-if="!this.hasAgentFullName">You did not provide this information.</p>
           </dd>
           <dd class="govuk-summary-list__actions">
 
@@ -369,8 +369,18 @@ export default {
     hasApplicantFullName () {
       return this.containsKey(this.application.data.applicant, 'full_name');
     },
+    applicantFullName () {
+      if (this.hasApplicantFullName) {
+        return this.application.data.applicant.full_name;
+      }
+    },
     hasAgentFullName () {
       return this.containsKey(this.application.data.agent, 'full_name');
+    },
+    agentFullName () {
+      if (this.hasAgentFullName) {
+        return this.application.data.agent.full_name;
+      }
     },
     hasContactInformationAgent () {
       let contact = {};
