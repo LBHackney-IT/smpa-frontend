@@ -85,8 +85,17 @@ export default {
     submit() {
       let currentData = this.application.data.proposal_extension.parking;
 
-      currentData.current_bike_parking_spaces = parseInt(this.current);
-      currentData.planned_bike_parking_spaces = parseInt(this.total);
+      if (this.current) {
+        currentData.current_bike_parking_spaces = parseInt(this.current);
+      } else {
+        currentData.current_bike_parking_spaces = 0;
+      }
+
+      if (this.total) {
+        currentData.planned_bike_parking_spaces = parseInt(this.total);
+      } else {
+        currentData.planned_bike_parking_spaces = 0;
+      }
 
       let payload = {
         parking: {}

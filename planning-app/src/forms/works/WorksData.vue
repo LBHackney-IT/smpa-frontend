@@ -90,8 +90,8 @@ export default {
 
       if (this.newBedroom === 'Yes') {
         let payload = {
-          "new_single_bedrooms": this.newSingleBedrooms,
-          "new_double_bedrooms": this.newDoubleBedrooms
+          "new_single_bedrooms": this.newSingleBedrooms ?  this.newSingleBedrooms : 0,
+          "new_double_bedrooms": this.newDoubleBedrooms ? this.newDoubleBedrooms : 0
         }
 
         const extensionId = this.$store.getters.getExtensionId(this.applicationId);
