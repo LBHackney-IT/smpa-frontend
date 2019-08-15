@@ -149,7 +149,6 @@ export default {
           return element.proposalId === 'original_house';
         });
         var currentLevelInfo = this.$store.state.state.proposalFlow[currentLevelInMap + 1];
-        currentLevelInfo = currentLevelInfo;
         router.push({ name: this.$store.state.state.proposalFlow[currentLevelInMap + 1].goTo[0], params: {currentLevelInfo }});
       });
     },

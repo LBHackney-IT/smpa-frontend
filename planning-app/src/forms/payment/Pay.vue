@@ -23,7 +23,6 @@
 
 <script>
 import vCta from '../../components/Cta.vue';
-import router from '../../router';
 import { getRouteAppId } from '../../mixins/getRouteAppId';
 
 export default {

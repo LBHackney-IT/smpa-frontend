@@ -453,7 +453,8 @@ export default {
         if (this.application.data.proposal_extension.additional_floor_area 
         && this.application.data.proposal_extension.additional_floor_area_units 
         && this.application.data.proposal_extension.additional_floor_area_units.name) {
-          return answer = this.application.data.proposal_extension.additional_floor_area + ' ' + this.application.data.proposal_extension.additional_floor_area_units.name;
+          answer = this.application.data.proposal_extension.additional_floor_area + ' ' + this.application.data.proposal_extension.additional_floor_area_units.name;
+          return answer;
         } else {
           return answer = 'You did not provide this information.'
         }

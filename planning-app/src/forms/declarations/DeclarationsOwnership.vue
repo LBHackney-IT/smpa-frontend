@@ -9,8 +9,8 @@
 
       <h4 class="govuk-heading-m">
         Which of the following statements apply to the applicant?
-        <!-- if agent above -->
-        <!-- if member of the public: Which of the following statements apply to you? -->
+        <!-- todo if agent above -->
+        <!-- todo if member of the public: Which of the following statements apply to you? -->
       </h4>
 
       <div class="govuk-inset-text">

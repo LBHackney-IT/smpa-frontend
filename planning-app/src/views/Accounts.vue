@@ -10,12 +10,10 @@
 </template>
 
 <script>
-  import HelpLink from '../components/HelpLink.vue';
 
   export default {
     name: 'AccountsActions',
     components: {
-      HelpLink
     }
   }
 </script>

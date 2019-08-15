@@ -148,7 +148,6 @@ export default {
     },
     
     isInConservationArea () {
-      var isIt = this.application.data.site_constraints.nb_conarea > 0;
       return this.application.data.site_constraints.nb_conarea > 0;
     }
 	}

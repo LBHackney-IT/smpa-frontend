@@ -88,7 +88,6 @@
 
 <script>
   import L from 'leaflet';
-  import HelpLink from '../components/HelpLink.vue';
   import vCta from '../components/Cta.vue';
   import router from '../router';
   import axios from 'axios';
@@ -97,7 +96,6 @@
   export default {
     name: 'SiteDetails',
     components: {
-      HelpLink,
       vCta
     },
     data() {
@@ -130,9 +128,6 @@
         axios.get(api , {})
         .then(response => {
           this.loading = false;
-
-          var responseData = response.data;
-
           this.geoJson = response.data;
         })
         .catch(error => {
@@ -276,7 +271,7 @@
 
         this.application.constraints = this.site.properties;
 
-        if (!!JwtService.getToken()) {
+        if (JwtService.getToken()) {
           this.$store.dispatch('generateApplication', this.application).then((response) => {
 
           if (response.error) {

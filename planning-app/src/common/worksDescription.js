@@ -297,7 +297,7 @@ function generateWorkDescription (application) {
 
       let listOfEquipments = [];
 
-      application.proposal_equipment.equipment.equipment_conservation_types.forEach((equipment, index) => {
+      application.proposal_equipment.equipment.equipment_conservation_types.forEach((equipment) => {
 
         let currentEquipmentInfo = '';
 
@@ -319,7 +319,7 @@ function generateWorkDescription (application) {
 
       });
 
-      application.proposal_equipment.equipment.equipment_types.forEach((equipment, index) => {
+      application.proposal_equipment.equipment.equipment_types.forEach((equipment) => {
 
         let currentEquipmentInfo = '';
 

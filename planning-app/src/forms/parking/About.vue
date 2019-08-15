@@ -31,7 +31,6 @@
 <script>
 import vCta from '../../components/Cta.vue';
 import router from '../../router';
-import WarningMessage from '../../components/WarningMessage.vue';
 import FreeDescription from '../../components/FreeDescription.vue';
 import { getRouteAppId } from '../../mixins/getRouteAppId';
 
@@ -40,7 +39,6 @@ export default {
   mixins: [ getRouteAppId ],
 	components: {
     vCta,
-    WarningMessage,
     FreeDescription
 	},
 	data () {
@@ -48,17 +46,11 @@ export default {
       defaultOptions: undefined,
       alterationToAccess: '',
       typeOfAlteration: '',
-      currentWorks: undefined,
-      warningMessage: 'Any public footpath that crosses or adjoins the site, or is affected, must be shown clearly on the plans. This includes any proposals that may require a closure or diversion.'
+      currentWorks: undefined
     }
   },
   beforeMount () {
     this.loadDefaultOptions();
-  },
-  computed: {
-		hasAlterationToAccess () {
-			return this.alterationToAccess === 'Yes';
-    }
   },
   created () {
     this.fetchData();

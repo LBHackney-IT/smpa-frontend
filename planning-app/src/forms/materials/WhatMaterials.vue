@@ -53,20 +53,17 @@
 <script>
 import vCta from '../../components/Cta.vue';
 import router from '../../router';
-import WarningMessage from '../../components/WarningMessage.vue';
 import { getRouteAppId } from '../../mixins/getRouteAppId';
 
 export default {
   name: 'WhatMaterials',
   mixins: [ getRouteAppId ],
 	components: {
-    vCta,
-    WarningMessage
+    vCta
   },
   data () {
     return {
-      materials: '',
-      warningMessage: 'Materials are not mandatory in an application. You can submit a Approval of conditions later on when you know the materials of your proposal.'
+      materials: ''
     }
   },
 	methods: {

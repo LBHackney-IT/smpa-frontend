@@ -63,14 +63,12 @@
 <script>
 import vCta from '../../components/Cta.vue';
 import router from '../../router';
-import WarningMessage from '../../components/WarningMessage.vue';
 import FreeDescription from '../../components/FreeDescription.vue';
 
 export default {
 	name: 'AboutDevelopment',
 	components: {
     vCta,
-    WarningMessage,
     FreeDescription
   },
   data () {

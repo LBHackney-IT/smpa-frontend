@@ -14,13 +14,9 @@
 </template>
 
 <script>
-import vCta from '../../components/Cta.vue';
-import router from '../../router';
-
 export default {
   name: 'PaymentCheck',
 	components: {
-		vCta
 	},
 	data () {
     return {

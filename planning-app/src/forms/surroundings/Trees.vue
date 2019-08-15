@@ -43,10 +43,6 @@
 			</fieldset>
 
       <div class="govuk-inset-text" v-if="hasTreesInsideBoundary">
-        <!-- <warning-message :message="warningMessageOne" v-bind:typeAlert="true"></warning-message>
-        <warning-message :message="warningMessageTwo" v-bind:typeAlert="true"></warning-message>
-        <warning-message :message="warningMessageThree" v-bind:typeAlert="false"></warning-message> -->
-
         <p>
           You might need to submit a <a href="#">Tree Survey</a>
         </p>
@@ -111,25 +107,19 @@
 <script>
 import vCta from '../../components/Cta.vue';
 import router from '../../router';
-import WarningMessage from '../../components/WarningMessage.vue';
 import { getRouteAppId } from '../../mixins/getRouteAppId';
 
 export default {
 	name: 'WorkStart',
 	mixins: [ getRouteAppId ],
 	components: {
-    vCta,
-    WarningMessage
+    vCta
 	},
 	data () {
     return {
 			treesInsideBoundary: undefined,
       removedOrPruned: undefined,
-      outsideBoundary: undefined,
-      warningMessageOne: 'You must mark trees position on a scaled plan',
-      warningMessageTwo: 'You might need to submit a Tree Survey',
-      warningMessageThree: 'In conservation areas, notice is required for works to trees that have a trunk diameter of more than 75mm when measured at 1.5m from the ground level (or more than 100mm if reducing the number of trees to benefit the growth of other trees).',
-      warningMessageFour: 'There might be trees on land adjacent to your site that could be impacted by the works. A planner will need to visit and assess if you need to submit a tree assessment.'
+      outsideBoundary: undefined
     }
   },
   computed: {

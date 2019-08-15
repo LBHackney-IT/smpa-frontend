@@ -59,7 +59,10 @@ export default {
     this.fetchData();
   },
   watch: {
-    '$route': 'fetchData'
+    '$route': 'fetchData',
+    application () {
+			this.loadExistingAnswers();
+		}
   },
 	methods: {
     loadExistingAnswers () {
@@ -208,11 +211,6 @@ export default {
 
 			return this.$store.state.state.applications[index];
 		}
-  },
-  watch: {
-		application (newValue, oldValue) {
-			this.loadExistingAnswers();
-		}
-	}
+  }
 }
 </script>

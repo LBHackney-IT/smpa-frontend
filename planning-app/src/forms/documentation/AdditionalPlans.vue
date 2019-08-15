@@ -56,21 +56,6 @@ You should include elevations for all sides of the proposal.</p>
       </strong>
     </div> 
     
-    <!-- <div class="govuk-warning-text">
-      <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-      <strong class="govuk-warning-text__text">
-        <span class="govuk-warning-text__assistive">Warning</span>
-        You can’t upload multiples files at a time
-      </strong>
-    </div>
-
-    <div class="govuk-warning-text">
-      <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-      <strong class="govuk-warning-text__text">
-        <span class="govuk-warning-text__assistive">Warning</span>
-        You can’t upload one single document with all the files in it.
-      </strong>
-    </div> -->
     <p>
       Select what this document includes.
     </p>
@@ -147,7 +132,6 @@ You should include elevations for all sides of the proposal.</p>
 
 <script>
 import vCta from '../../components/Cta.vue';
-import Modal from '../../components/form/DocumentsCheckModal.vue';
 import router from '../../router';
 import { getRouteAppId } from '../../mixins/getRouteAppId';
 import { getDocumentTypes } from '../../mixins/getDocumentTypes';
@@ -157,12 +141,10 @@ export default {
   name: 'AdditionalPlans',
   mixins: [ getRouteAppId, getDocumentTypes, getDocumentSizes ],
 	components: {
-    vCta,
-    Modal
+    vCta
 	},
 	data () {
     return {
-      showModal: false,
       file: '',
       size: '',
       existingFile: [],

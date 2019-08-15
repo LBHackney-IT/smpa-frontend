@@ -91,7 +91,6 @@
 import L from 'leaflet';
 import vCta from '../../components/Cta.vue';
 import vMap from '../../components/Map.vue';
-import WarningMessage from '../../components/WarningMessage.vue';
 import router from '../../router';
 import { getRouteAppId } from '../../mixins/getRouteAppId';
 import { getDocumentTypes } from '../../mixins/getDocumentTypes';
@@ -102,7 +101,6 @@ export default {
   mixins: [ getRouteAppId, getDocumentTypes, getDocumentSizes ],
 	components: {
     vCta,
-    WarningMessage,
     vMap
 	},
 	data () {
