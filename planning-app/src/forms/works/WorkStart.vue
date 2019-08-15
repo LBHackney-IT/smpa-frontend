@@ -4,7 +4,7 @@
 			{{ question }}
 		</h1>
 		<div class="govuk-form-group">
-			<fieldset class="govuk-fieldset" aria-describedby="work-started-hint">
+			<fieldset class="govuk-fieldset">
 				<legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
 					<h2 class="govuk-heading-m">Have the works already started?</h2>
 				</legend>
@@ -30,37 +30,42 @@
 		</div>
 
 		<div v-if="hasWorkStarted" class="govuk-inset-text">
-			<legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
-				<h4 class="govuk-heading-s">
-					When did the work start?
-				</h4>
-			</legend>
 
-			<div class="govuk-form-group">
-				<fieldset class="govuk-fieldset" aria-describedby="dob-hint" role="group">
+			<div class="govuk-form-group" v-bind:class="{ 'govuk-form-group--error': dateStartedFormatError }">
+				<fieldset class="govuk-fieldset" role="group">
+					<legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+						<h4 class="govuk-heading-s">
+							When did the work start?
+						</h4>
+					</legend>
+
+					<span id="date-started-error" class="govuk-error-message" v-if="dateStartedFormatError">
+						<span class="govuk-visually-hidden">Error:</span> Date format should be DD MM YYYY.
+					</span>
+
 					<div class="govuk-date-input" id="dob">
 						<div class="govuk-date-input__item">
 							<div class="govuk-form-group">
-								<label class="govuk-label govuk-date-input__label" for="dob-day">
+								<label class="govuk-label govuk-date-input__label" for="work-started-day">
 									Day
 								</label>
-								<input class="govuk-input govuk-date-input__input govuk-input--width-2" id="dob-day" name="dob-day" type="number" pattern="[0-9]*" v-model="dayWorkStarted">
+								<input class="govuk-input govuk-date-input__input govuk-input--width-2" v-bind:class="{ 'govuk-input--error': dateStartedFormatError }" id="work-started-day" name="work-started-day" type="number" pattern="[0-9]*" v-model="dayWorkStarted">
 							</div>
 						</div>
 						<div class="govuk-date-input__item">
 							<div class="govuk-form-group">
-								<label class="govuk-label govuk-date-input__label" for="dob-month">
+								<label class="govuk-label govuk-date-input__label" for="work-started-month">
 									Month
 								</label>
-								<input class="govuk-input govuk-date-input__input govuk-input--width-2" id="dob-month" name="dob-month" type="number" pattern="[0-9]*" v-model="monthWorkStarted">
+								<input class="govuk-input govuk-date-input__input govuk-input--width-2" v-bind:class="{ 'govuk-input--error': dateStartedFormatError }" id="work-started-month" name="work-started-month" type="number" pattern="[0-9]*" v-model="monthWorkStarted">
 							</div>
 						</div>
 						<div class="govuk-date-input__item">
 							<div class="govuk-form-group">
-								<label class="govuk-label govuk-date-input__label" for="dob-year">
+								<label class="govuk-label govuk-date-input__label" for="work-started-year">
 									Year
 								</label>
-								<input class="govuk-input govuk-date-input__input govuk-input--width-4" id="dob-year" name="dob-year" type="number" pattern="[0-9]*" v-model="yearWorkStarted">
+								<input class="govuk-input govuk-date-input__input govuk-input--width-4" v-bind:class="{ 'govuk-input--error': dateStartedFormatError }" id="work-started-year" name="work-started-year" type="number" pattern="[0-9]*" v-model="yearWorkStarted">
 							</div>
 						</div>
 					</div>
@@ -68,12 +73,13 @@
 			</div>
 
 			<div class="govuk-form-group">
-				<fieldset class="govuk-fieldset" aria-describedby="work-completed-hint">
+				<fieldset class="govuk-fieldset">
 					<legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
 					<h4 class="govuk-heading-s">
 						Has the work already been completed?
 					</h4>
 					</legend>
+
 					<div class="govuk-radios govuk-radios--inline">
 						<div class="govuk-radios__item">
 							<input class="govuk-radios__input" id="work-completed-1" name="work-completed" type="radio" value="true" v-model="workCompleted">
@@ -92,37 +98,42 @@
 			</div>
 
 			<div v-if="isWorkComplete" class="govuk-inset-text">
-				<legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
-					<h4 class="govuk-heading-s">
-						When did the work finish?
-					</h4>
-				</legend>
+				<div class="govuk-form-group" v-bind:class="{ 'govuk-form-group--error': dateFinishedFormatError }">
+					<fieldset class="govuk-fieldset" role="group">
 
-				<div class="govuk-form-group">
-					<fieldset class="govuk-fieldset" aria-describedby="dob-hint" role="group">
+						<legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+							<h4 class="govuk-heading-s">
+								When did the work finish?
+							</h4>
+						</legend>
+
+						<span id="date-finished-error" class="govuk-error-message" v-if="dateFinishedFormatError">
+							<span class="govuk-visually-hidden">Error:</span> Date format should be DD MM YYYY.
+						</span>
+
 						<div class="govuk-date-input" id="dob">
 							<div class="govuk-date-input__item">
 								<div class="govuk-form-group">
-									<label class="govuk-label govuk-date-input__label" for="dob-day">
+									<label class="govuk-label govuk-date-input__label" for="work-finished-day">
 										Day
 									</label>
-									<input class="govuk-input govuk-date-input__input govuk-input--width-2" id="dob-day" name="dob-day" type="number" pattern="[0-9]*" v-model="dayWorkFinished">
+									<input class="govuk-input govuk-date-input__input govuk-input--width-2" v-bind:class="{ 'govuk-input--error': dateFinishedFormatError }" id="work-finished-day" name="work-finished-day" type="number" pattern="[0-9]*" v-model="dayWorkFinished">
 								</div>
 							</div>
 							<div class="govuk-date-input__item">
 								<div class="govuk-form-group">
-									<label class="govuk-label govuk-date-input__label" for="dob-month">
+									<label class="govuk-label govuk-date-input__label" for="work-finished-month">
 										Month
 									</label>
-									<input class="govuk-input govuk-date-input__input govuk-input--width-2" id="dob-month" name="dob-month" type="number" pattern="[0-9]*" v-model="monthWorkFinished">
+									<input class="govuk-input govuk-date-input__input govuk-input--width-2" v-bind:class="{ 'govuk-input--error': dateFinishedFormatError }" id="work-finished-month" name="work-finished-month" type="number" pattern="[0-9]*" v-model="monthWorkFinished">
 								</div>
 							</div>
 							<div class="govuk-date-input__item">
 								<div class="govuk-form-group">
-									<label class="govuk-label govuk-date-input__label" for="dob-year">
+									<label class="govuk-label govuk-date-input__label" for="work-finished-year">
 										Year
 									</label>
-									<input class="govuk-input govuk-date-input__input govuk-input--width-4" id="dob-year" name="dob-year" type="number" pattern="[0-9]*" v-model="yearWorkFinished">
+									<input class="govuk-input govuk-date-input__input govuk-input--width-4" v-bind:class="{ 'govuk-input--error': dateFinishedFormatError }" id="work-finished-year" name="work-finished-year" type="number" pattern="[0-9]*" v-model="yearWorkFinished">
 								</div>
 							</div>
 						</div>
@@ -137,6 +148,11 @@
 				:isRequired="hasWorkStarted">
 			</v-text-area>
 		</div>
+
+		<div v-if="error" class="govuk-inset-text govuk-inset-text--error ">
+			{{ responseError }}
+		</div>
+		
 		<v-cta name="Continue" :onClick="submit"></v-cta>
 	</div>
 </template>
@@ -145,16 +161,15 @@
 import vCta from '../../components/Cta.vue';
 import vTextArea from '../../components/form/vTextArea.vue';
 import router from '../../router';
-import WarningMessage from '../../components/WarningMessage.vue';
 import { getRouteAppId } from '../../mixins/getRouteAppId';
+import * as errorMessage from '../../messages/errorMessages';
 
 export default {
 	name: 'WorkStart',
 	mixins: [ getRouteAppId ],
 	components: {
 		vCta,
-		vTextArea,
-		WarningMessage
+		vTextArea
 	},
 	data () {
     return {
@@ -164,18 +179,24 @@ export default {
 			monthWorkStarted: undefined,
 			yearWorkStarted: undefined,
 			workDetails: undefined,
-			warningMessage: 'Message to applicant.',
 			workCompleted: undefined,
 			dayWorkFinished: undefined,
 			monthWorkFinished: undefined,
 			yearWorkFinished: undefined,
-			apiResponse: undefined
+			dateStartedFormatError: false,
+			dateFinishedFormatError: false,
+			errorMessages: undefined,
+			error: undefined,
+			responseError: undefined
     }
+	},
+	created() {
+		this.errorMessages = errorMessage;
 	},
 	methods: {
 		loadExistingAnswers () {
-			this.workStarted = this.application.data.works_started;
-			this.workCompleted = this.application.data.works_completed;
+			this.workStarted = this.application.data.works_started ? this.application.data.works_started : undefined;
+			this.workCompleted = this.application.data.works_completed ? this.application.data.works_completed  : undefined;
 			this.workDetails = this.application.data.works_description;
 
 			if (this.application.data.date_works_completed) {
@@ -183,7 +204,7 @@ export default {
 
 				this.dayWorkFinished = dateWorksCompleted.getDay();
 				this.monthWorkFinished = dateWorksCompleted.getMonth();
-				this.yearWorkFinished = dateWorksCompleted.getYear();
+				this.yearWorkFinished = dateWorksCompleted.getFullYear();
 			}
 
 			if (this.application.data.date_works_started) {
@@ -191,20 +212,80 @@ export default {
 
 				this.dayWorkStarted = dateWorksStarted.getDay();
 				this.monthWorkStarted = dateWorksStarted.getMonth();
-				this.yearWorkStarted = dateWorksStarted.getYear();
+				this.yearWorkStarted = dateWorksStarted.getFullYear();
+			}
+		},
+
+		sameAsExistingAnswers (payload) {
+			if (
+				payload.works_started === this.application.data.works_started &&
+				payload.works_completed === this.application.data.works_completed &&
+				payload.works_description === this.application.data.works_description &&
+				payload.date_works_completed === this.application.data.date_works_completed &&
+				payload.date_works_started === this.application.data.date_works_started
+			) {
+				return true;
+			} else {
+				return false;
 			}
 		},
 		submit() {
+
+			if (this.yearWorkStarted && (this.yearWorkStarted.length < 4 || this.yearWorkStarted.length > 4)) {
+				this.dateStartedFormatError = true;
+				return;
+			}
+
+			if (this.monthWorkStarted && (this.monthWorkStarted.length < 2 || this.monthWorkStarted.length > 2)) {
+				this.dateStartedFormatError = true;
+				return;
+			}
+
+			if (this.dayWorkStarted && (this.dayWorkStarted.length < 2 || this.dayWorkStarted.length > 2)) {
+				this.dateStartedFormatError = true;
+				return;
+			}
+
+			if (this.yearWorkFinished && (this.yearWorkFinished.length < 4 || this.yearWorkFinished.length > 4)) {
+				this.dateFinishedFormatError = true;
+				return;
+			}
+
+			if (this.monthWorkFinished && (this.monthWorkFinished.length < 2 || this.monthWorkFinished.length > 2)) {
+				this.dateFinishedFormatError = true;
+				return;
+			}
+
+			if (this.dayWorkFinished && (this.dayWorkFinished.length < 2 || this.dayWorkFinished.length > 2)) {
+				this.dateFinishedFormatError = true;
+				return;
+			}
+
+			this.dateStartedFormatError = false;
+			this.dateFinishedFormatError = false;
+
 			let objectToBeSent = {};
 
 			objectToBeSent.works_started = this.workStarted === 'true' ||  this.workStarted === true ? true : false;
 
 			if (objectToBeSent.works_started) {
+
+				if (!this.yearWorkStarted || !this.monthWorkStarted || !this.dayWorkStarted) {
+					this.dateStartedFormatError = true;
+					return;
+				}
+
 				objectToBeSent.date_works_started = this.yearWorkStarted + '-' + this.monthWorkStarted + '-' + this.dayWorkStarted;
 
-				objectToBeSent.works_completed = this.workCompleted === 'true' ? true : undefined;
+				objectToBeSent.works_completed = this.workCompleted === 'true' ||  this.workCompleted === true ? true : false;
 
 				if (objectToBeSent.works_completed) {
+
+					if (!this.yearWorkFinished || !this.monthWorkFinished || !this.dayWorkFinished) {
+						this.dateFinishedFormatError = true;
+						return;
+					}
+
 					objectToBeSent.date_works_completed = this.yearWorkFinished + '-' + this.monthWorkFinished + '-' + this.dayWorkFinished;
 				} else {
 					objectToBeSent.date_works_completed = undefined;
@@ -224,9 +305,20 @@ export default {
 			payload.data = objectToBeSent;
 			payload.id = this.applicationId;
 
-			this.$store.dispatch('updateApplication', payload).then(() => {
+			if (this.sameAsExistingAnswers(payload.data)) {
 				router.push({ name: 'Proposal', params: { applicationId: this.applicationId } });
-			})
+			} else {
+				this.$store.dispatch('updateApplication', payload).then((response) => {
+
+					if (response.error) {
+						this.error = true;
+						this.responseError = this.errorMessages.UPDATE_APPLICATION.GENERIC_ERROR;
+					} else {
+						this.error = false;
+						router.push({ name: 'Proposal', params: { applicationId: this.applicationId } });
+					}
+				})
+			}
 		}
 	},
 	computed: {

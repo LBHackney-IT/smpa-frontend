@@ -81,8 +81,8 @@ export default {
   data () {
     return {
       newBedroom: '',
-      newSingleBedrooms: undefined,
-      newDoubleBedrooms: undefined
+      newSingleBedrooms: 0,
+      newDoubleBedrooms: 0
     }
   },
 	methods: {

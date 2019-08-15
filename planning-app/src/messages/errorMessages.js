@@ -14,3 +14,7 @@ export const CREATE_ACCOUNT = {
 export const SIGN_IN = {
   ERROR : 'There was an error. Check that your email and password are correct.'
 }
+
+export const UPDATE_APPLICATION = {
+  GENERIC_ERROR : 'There was an error updating your application. Try again. If the problem persists please contact us.'
+}

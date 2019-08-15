@@ -139,6 +139,7 @@ export function updateApplication ({commit}, data) {
   .then( response => {
     console.log('-----application updated', response);
     commit('updateApplication', response.data);
+    return response;
   })
   .catch(function (error) {
     let errorResponse = {};

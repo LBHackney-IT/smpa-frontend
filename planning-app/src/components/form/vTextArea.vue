@@ -8,7 +8,6 @@
       :id="name" 
       :name="name" 
       rows="5" 
-      :aria-describedby="name-hint" 
       :value="content" 
       :required="isRequired"
       @input="updateSelf($event.target.value)">
