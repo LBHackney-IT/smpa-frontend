@@ -22,9 +22,9 @@
           </div>
         </div>
       </fieldset>
-
-
     </div>
+
+    <error-message v-if="showErrorMessage && !loading" :message="errorMessages.UPDATE_APPLICATION.GENERIC_ERROR"></error-message>
     <v-cta name="Continue" :onClick="navigate"></v-cta>
   </div>
 </template>
@@ -32,17 +32,24 @@
 <script>
 import vCta from '../../components/Cta.vue';
 import router from '../../router';
+import ErrorMessage from '../../components/ErrorMessage.vue';
+import * as errorMessage from '../../messages/errorMessages';
 
 export default {
 	name: 'ContactApplicant',
 	components: {
-    vCta
+    vCta,
+    ErrorMessage
   },
   data () {
     return {
       accountType: '',
-      showErrorMessage: false
+      showErrorMessage: false,
+      errorMessages: undefined
     }
+  },
+  created () {
+    this.errorMessages = errorMessage;
   },
 	methods: {
     navigate() {
@@ -51,16 +58,11 @@ export default {
       } else if (this.accountType && this.accountType === 'applicant') {
         router.push({ name: 'ApplicationContactApplicant' });
       } else {
-        this.showErrorMessage;
+        this.showErrorMessage = true;
       }
       
     }
-  },
-  computed: {
-		canContactApplicant () {
-			return this.contactApplicant === 'Yes';
-		}
-	}
+  }
 }
 </script>        
         

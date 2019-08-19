@@ -22,7 +22,7 @@
       </div>
     </details>
 
-    <div class="govuk-form-group" v-bind:class="{ 'govuk-form-group--error': error }">
+    <div class="govuk-form-group" v-bind:class="{ 'govuk-form-group--error': showErrorMessage }">
       <label class="govuk-label" for="doc-size">
         Select document size
       </label>
@@ -36,9 +36,8 @@
         Upload a file
       </label>
 
-      <span id="file-upload-1-error" class="govuk-error-message" v-if="error">
-        <span class="govuk-visually-hidden">Error:</span> {{this.errorMessage}}
-      </span>
+      <error-message v-if="showErrorMessage && !loading" :message="errorMessages.DOCUMENT_UPLOAD.GENERIC_ERROR"></error-message>
+
       <input class="govuk-file-upload" id="file-upload-1" name="file-upload-1" ref="DesignAndAccessStatement" type="file" v-on:change="handleFileUpload()">
 
       <br><br>
@@ -70,21 +69,27 @@ import router from '../../router';
 import { getRouteAppId } from '../../mixins/getRouteAppId';
 import { getDocumentTypes } from '../../mixins/getDocumentTypes';
 import { getDocumentSizes } from '../../mixins/getDocumentSizes';
+import ErrorMessage from '../../components/ErrorMessage.vue';
+import * as errorMessage from '../../messages/errorMessages';
 
 export default {
   name: 'DesignAndAccessStatement',
   mixins: [ getRouteAppId, getDocumentTypes, getDocumentSizes ],
 	components: {
-    vCta
+    vCta,
+    ErrorMessage
 	},
 	data () {
     return {
       file: '',
       size: '',
       uploading: false,
-      error: false,
-      errorMessage: undefined,
+      showErrorMessage: false,
+      errorMessages: undefined
     }
+  },
+  created () {
+    this.errorMessages = errorMessage;
   },
 	methods: {
     handleFileUpload(){
@@ -108,8 +113,7 @@ export default {
         this.uploading = false;
 
         if (response.error) {
-          this.error = true;
-          this.errorMessage = 'Something went wrong while uploading your file. Try again.'
+          this.showErrorMessage = true;
         } else {
           this.navigate();
         }

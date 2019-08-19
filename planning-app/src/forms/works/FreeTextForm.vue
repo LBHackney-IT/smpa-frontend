@@ -19,6 +19,9 @@
         <textarea class="govuk-textarea" id="more-detail" name="more-detail" rows="5" aria-describedby="more-detail-hint" v-model="description"></textarea>
       </div>
     </div>
+
+    <error-message v-if="showErrorMessage && !loading" :message="errorMessages.FREE_TEXT_FORM.GENERIC_ERROR"></error-message>
+
 		<v-cta name="Continue" :onClick="submit"></v-cta>
 	</div>
 </template>
@@ -27,17 +30,25 @@
 import vCta from '../../components/Cta.vue';
 import { getRouteAppId } from '../../mixins/getRouteAppId';
 import router from '../../router';
+import ErrorMessage from '../../components/ErrorMessage.vue';
+import * as errorMessage from '../../messages/errorMessages';
 
 export default {
   name: 'FreeTextForm',
   mixins: [ getRouteAppId ],
 	components: {
-    vCta
+    vCta,
+    ErrorMessage
   },
   data () {
     return {
-      description: undefined
+      description: undefined,
+      showErrorMessage: false,
+      errorMessages: undefined
     }
+  },
+  created () {
+    this.errorMessages = errorMessage;
   },
 	methods: {
     submit() {
@@ -48,14 +59,14 @@ export default {
 
       payload.data.free_text_description = this.description;
 
-      this.$store.dispatch('updateApplication', payload).then(() => {
-
-        router.push({ name: 'Trees' });
-
+      this.$store.dispatch('updateApplication', payload).then((response) => {
+        if (response.error) {
+          this.showErrorMessage = true;
+          return;
+        } else {
+          router.push({ name: 'Trees' });
+        }
       });
-
-      
-
     }
   }
 }

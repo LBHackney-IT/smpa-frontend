@@ -52,6 +52,8 @@
       </div>
     </div>
 
+    <error-message v-if="showErrorMessage && !loading" :message="errorMessages.DECLARATION.GENERIC_ERROR"></error-message>
+
 		<v-cta name="Continue" :onClick="navigate"></v-cta>
 	</div>
 </template>
@@ -60,12 +62,15 @@
 import vCta from '../../components/Cta.vue';
 import router from '../../router';
 import { getRouteAppId } from '../../mixins/getRouteAppId';
+import ErrorMessage from '../../components/ErrorMessage.vue';
+import * as errorMessage from '../../messages/errorMessages';
 
 export default {
   name: 'DeclarationOfInterest',
   mixins: [ getRouteAppId ],
 	components: {
-    vCta
+    vCta,
+    ErrorMessage
   },
   data () {
     return {
@@ -74,15 +79,23 @@ export default {
       name: undefined,
       role: undefined,
       relationshipDescription: undefined,
-      typeOfInterest: undefined
+      typeOfInterest: undefined,
+      showErrorMessage: false,
+      errorMessages: undefined
     }
   },
   beforeMount () {
     this.loadDefaultOptions();
   },
+  created () {
+    this.errorMessages = errorMessage;
+  },
 	methods: {
     loadDefaultOptions() {
       this.$store.dispatch('getDefaultData', 'declarations').then((response) => {
+        if (response.error) {
+          return this.showErrorMessage = true;
+        }
         this.defaultOptions = response.data;
       });
     },
@@ -98,12 +111,15 @@ export default {
         "details": this.relationshipDescription
       };
 
-      this.$store.dispatch('updateApplication', payload).then(() => {
-				router.push({ name: 'DeclarationsOwnership' });
+      this.$store.dispatch('updateApplication', payload).then((response) => {
+        if (response.error) {
+          this.showErrorMessage = true;
+        } else {
+          router.push({ name: 'DeclarationsOwnership' });
+        }
 			})
       
-    },
-    onClickChild () {}
+    }
   }
 }
 </script>

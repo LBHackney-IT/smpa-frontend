@@ -25,6 +25,9 @@
       </fieldset>
     </div>
     <free-description></free-description>
+
+    <error-message v-if="showErrorMessage && !loading" :message="errorMessages.DECLARATION.GENERIC_ERROR"></error-message>
+
 		<v-cta name="Continue" :onClick="submit"></v-cta>
 	</div>
 </template>
@@ -35,23 +38,30 @@ import router from '../../router';
 import Navigate from '../../common/navigate';
 import FreeDescription from '../../components/FreeDescription.vue';
 import { getRouteAppId } from '../../mixins/getRouteAppId';
+import ErrorMessage from '../../components/ErrorMessage.vue';
+import * as errorMessage from '../../messages/errorMessages';
+
 
 export default {
   name: 'AboutGatesFencesWalls',
   mixins: [ getRouteAppId ],
 	components: {
     vCta,
-    FreeDescription
+    FreeDescription,
+    ErrorMessage
   },
   data () {
     return {
       selectedProposal: [],
       currentWorks: undefined,
-      defaultOptions: undefined
+      defaultOptions: undefined,
+      showErrorMessage: false,
+      errorMessages: undefined
     }
   },
   created () {
     this.fetchData();
+    this.errorMessages = errorMessage;
   },
   beforeMount () {
     this.loadDefaultOptions();
@@ -76,6 +86,9 @@ export default {
     },
     loadDefaultOptions() {
       this.$store.dispatch('getDefaultData', 'gate-fences-walls-types').then((response) => {
+        if (response.error) {
+          return this.showErrorMessage = true;
+        }
         this.defaultOptions = response.data;
       })
     },
@@ -90,8 +103,19 @@ export default {
 
       const extensionId = this.$store.getters.getExtensionId(this.applicationId);
 
-      this.$store.dispatch('updateExtensionProposal', { "application_id": this.applicationId, 'selectedProposals': payload, "extension_id": extensionId, "id": 'boundaries' }).then(() => {
-        this.navigate();
+      this.$store.dispatch('updateExtensionProposal', 
+        { 
+          "application_id": this.applicationId, 
+          'selectedProposals': payload, 
+          "extension_id": extensionId, 
+          "id": 'boundaries' 
+        }).then((response) => {
+
+        if (response.error) {
+          return this.showErrorMessage = true;
+        } else {
+          this.navigate();
+        }
       })
     }
   },

@@ -26,6 +26,8 @@
 			</fieldset>
 		</div>
 
+    <error-message v-if="showErrorMessage && !loading" :message="errorMessages.APPLICATION_SUBMISSION.GENERIC_ERROR"></error-message>
+
 		<v-cta name="Continue" :onClick="navigate"></v-cta>
 	</div>
 </template>
@@ -34,17 +36,25 @@
 import vCta from '../../components/Cta.vue';
 import router from '../../router';
 import { getRouteAppId } from '../../mixins/getRouteAppId';
+import ErrorMessage from '../../components/ErrorMessage.vue';
+import * as errorMessage from '../../messages/errorMessages';
 
 export default {
 	name: 'Eligibility',
 	mixins: [ getRouteAppId ],
 	components: {
-		vCta
+		vCta,
+		ErrorMessage
 	},
 	data () {
     return {
-			improveAccessibility: undefined
+			improveAccessibility: undefined,
+			showErrorMessage: false,
+      errorMessages: undefined
     }
+	},
+	created () {
+    this.errorMessages = errorMessage;
   },
 	methods: {
     navigate() {
@@ -53,7 +63,7 @@ export default {
       payload.data = {};
       payload.data.reduction_eligible = this.improveAccessibility === 'Yes' ? true : false;
 
-      this.$store.dispatch('updateApplication', payload).then(() => {
+      this.$store.dispatch('updateApplication', payload).then((res) => {
 
 				if (this.improveAccessibility === 'Yes') {
 
@@ -64,8 +74,15 @@ export default {
 							"submitted": true
 					};
 					
-					this.$store.dispatch('submitApplication', submission).then(() => {
+					this.$store.dispatch('submitApplication', submission).then((response) => {
+
+						if (response.error) {
+							this.showErrorMessage = true;
+							return;
+						} else {
 							router.push({ name: 'PaymentSuccessful' });
+						}
+						
 					})
 					
 				} else {

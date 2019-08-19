@@ -28,6 +28,9 @@
       </fieldset>
     </div>
     <free-description></free-description>
+    
+    <error-message v-if="showErrorMessage && !loading" :message="errorMessages.CHANGES_TO_THE_ORIGINAL_HOUSE.GENERIC_ERROR"></error-message>
+
 		<v-cta name="Continue" :onClick="submit"></v-cta>
 	</div>
 </template>
@@ -37,13 +40,17 @@ import vCta from '../../components/Cta.vue';
 import router from '../../router';
 import FreeDescription from '../../components/FreeDescription.vue';
 import { getRouteAppId } from '../../mixins/getRouteAppId';
+import ErrorMessage from '../../components/ErrorMessage.vue';
+import * as errorMessage from '../../messages/errorMessages';
+
 
 export default {
   name: 'AboutChangesToOriginalHouse',
   mixins: [ getRouteAppId ],
 	components: {
     vCta,
-    FreeDescription
+    FreeDescription,
+    ErrorMessage
   },
   data () {
     return {
@@ -96,8 +103,13 @@ export default {
           name: 'Changing the external finish of the existing house',
           isInConservationArea: true
         }
-      ]
+      ],
+      showErrorMessage: false,
+      errorMessages: undefined
     }
+  },
+  created () {
+    this.errorMessages = errorMessage;
   },
   methods: {
     loadExistingAnswers () {
@@ -172,8 +184,14 @@ export default {
         "application_id": this.applicationId, 
         "selectedProposals": payload, 
         "extension_id": extensionId 
-      }).then(() => {
-        this.updateNavigation();
+      }).then((response) => {
+
+        if (response.error) {
+          this.showErrorMessage = true;
+          return;
+        } else {
+          this.updateNavigation();
+        }
       })
     }
   },

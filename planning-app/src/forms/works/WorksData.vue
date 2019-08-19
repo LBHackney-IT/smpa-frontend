@@ -61,6 +61,8 @@
       </fieldset>
     </div>
 
+    <error-message v-if="showErrorMessage && !loading" :message="errorMessages.BEDROOMS.GENERIC_ERROR"></error-message>
+
 		<v-cta name="Continue" :onClick="submit"></v-cta>
 	</div>
 </template>
@@ -70,20 +72,28 @@ import vCta from '../../components/Cta.vue';
 import router from '../../router';
 import FreeDescription from '../../components/FreeDescription.vue';
 import { getRouteAppId } from '../../mixins/getRouteAppId';
+import ErrorMessage from '../../components/ErrorMessage.vue';
+import * as errorMessage from '../../messages/errorMessages';
 
 export default {
   name: 'WorksData',
   mixins: [ getRouteAppId ],
 	components: {
     vCta,
-    FreeDescription
+    FreeDescription,
+    ErrorMessage
   },
   data () {
     return {
       newBedroom: '',
       newSingleBedrooms: 0,
-      newDoubleBedrooms: 0
+      newDoubleBedrooms: 0,
+      showErrorMessage: false,
+      errorMessages: undefined
     }
+  },
+  created () {
+    this.errorMessages = errorMessage;
   },
 	methods: {
     submit() {
@@ -96,8 +106,16 @@ export default {
 
         const extensionId = this.$store.getters.getExtensionId(this.applicationId);
 
-        this.$store.dispatch('updateExtensionProposal', { "application_id": this.applicationId, 'selectedProposals': payload, "extension_id": extensionId }).then(() => {
-          this.navigate();
+        this.$store.dispatch('updateExtensionProposal', { 
+          "application_id": this.applicationId, 
+          'selectedProposals': payload, 
+          "extension_id": extensionId }).then((response) => {
+          if (response.error) {
+            this.showErrorMessage = true;
+            return;
+          } else {
+            this.navigate();
+          }
         })
 
       } else {

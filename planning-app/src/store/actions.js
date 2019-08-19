@@ -124,6 +124,7 @@ export function getApplication ({commit}, id) {
   .then( response => {
     console.log('------GET APPLICATION', response.data);
     commit('getApplication', response.data);
+    return response;
   })
   .catch(function (error) {
     let errorResponse = {};
@@ -196,6 +197,8 @@ export function createExtensionProposal ({commit}, application) {
         'data': response.data,
         'type': 'extension'
       });
+
+      return response;
     })
     .catch(function (error) {
       let errorResponse = {};
@@ -214,6 +217,8 @@ export function updateExtensionProposal ({commit}, data) {
         'data': response.data,
         'type': 'extension'
       });
+
+      return response;
     })
     .catch(function (error) {
       let errorResponse = {};
@@ -233,6 +238,8 @@ export function createEquipmentProposal ({commit}, application) {
         'data': response.data,
         'type': 'equipment'
       });
+
+      return response;
     })
     .catch(function (error) {
       let errorResponse = {};
@@ -252,6 +259,8 @@ export function updateEquipmentProposal ({commit}, data) {
         'data': response.data,
         'type': 'equipment'
       });
+
+      return response;
     })
     .catch(function (error) {
       let errorResponse = {};
@@ -269,6 +278,8 @@ export function createBothProposals ({commit}, application) {
         'applicationId': application.application_id,
         'data': response
       });
+
+      return response;
     })
     .catch(function (error) {
       let errorResponse = {};
@@ -316,6 +327,8 @@ export function submitWorksLocation ({commit}, payload) {
         'data': response.data,
         'type': payload.type
       });
+
+      return response;
     })
     .catch(function (error) {
       let errorResponse = {};
@@ -350,6 +363,7 @@ export function getDocumentSizes ({commit}) {
     .getDocumentSizes()
     .then( response => {
       commit('addDocumentSizes', response.data);
+      return response;
     })
     .catch(function (error) {
       let errorResponse = {};
@@ -364,6 +378,7 @@ export function getDocumentTypes ({commit}) {
     .getDocumentTypes()
     .then( response => {
       commit('addDocumentTypes', response.data);
+      return response;
     })
     .catch(function (error) {
       let errorResponse = {};

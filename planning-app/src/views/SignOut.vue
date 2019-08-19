@@ -17,13 +17,12 @@
 <script>
   export default {
     name: 'SignOut',
-    mounted () {
+    created () {
       this.signOut();
     },
     methods: {
       signOut () {
         this.$store.dispatch('signOut').then(() => {
-          return;
         });
       }
     }

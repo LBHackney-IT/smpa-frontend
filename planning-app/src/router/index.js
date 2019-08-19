@@ -19,12 +19,12 @@ import AccountActions from '../views/AccountActions.vue';
 import TaskOverview from '../views/TaskOverview.vue';
 import ApplicationOverview from '../views/ApplicationOverview.vue';
 import CreateAccount from '../views/CreateAccount.vue';
+import CreateAccountSuccess from '../views/CreateAccountSuccess.vue';
 import Applications from '../views/Applications.vue';
 import UserApplications from '../views/UserApplications.vue';
 import WorkStart from '../forms/works/WorkStart.vue';
 import Proposal from '../forms/works/Proposal.vue';
 import AboutProposal from '../forms/works/AboutProposal.vue';
-import AboutDevelopment from '../forms/works/AboutDevelopment.vue';
 import AboutChangesToOriginalHouse from '../forms/works/AboutChangesToOriginalHouse.vue';
 import Surroundings from '../forms/surroundings/Surroundings.vue';
 import Trees from '../forms/surroundings/Trees.vue';
@@ -177,11 +177,6 @@ export default new Router({
               path: 'about-changes-to-original-house', 
               name:'AboutChangesToOriginalHouse', 
               component: AboutChangesToOriginalHouse 
-            },
-            { 
-              path: 'about-development', 
-              name:'AboutDevelopment', 
-              component: AboutDevelopment 
             },
             { 
               path: 'about-equipment', 
@@ -386,6 +381,11 @@ export default new Router({
       name: 'create',
       path: '/create-account',
       component: CreateAccount
+    },
+    {
+      name: 'CreateAccountSuccess',
+      path: '/create-account-success',
+      component: CreateAccountSuccess
     },
     {
       path: '*', 

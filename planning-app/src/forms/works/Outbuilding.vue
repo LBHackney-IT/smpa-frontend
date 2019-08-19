@@ -34,6 +34,9 @@
       </div>
     </div>
     <free-description></free-description>
+    
+    <error-message v-if="showErrorMessage && !loading" :message="errorMessages.OUTBUILDING.GENERIC_ERROR"></error-message>
+
 		<v-cta name="Continue" :onClick="submit"></v-cta>
 	</div>
 </template>
@@ -44,13 +47,16 @@ import router from '../../router';
 import Navigate from '../../common/navigate';
 import FreeDescription from '../../components/FreeDescription.vue';
 import { getRouteAppId } from '../../mixins/getRouteAppId';
+import ErrorMessage from '../../components/ErrorMessage.vue';
+import * as errorMessage from '../../messages/errorMessages';
 
 export default {
   name: 'Outbuilding',
   mixins: [ getRouteAppId ],
 	components: {
     vCta,
-    FreeDescription
+    FreeDescription,
+    ErrorMessage
   },
   created () {
     this.fetchData();
@@ -63,8 +69,13 @@ export default {
       selectedProposal: [],
       existingOutbuilding: undefined,
       currentWorks: undefined,
-      details: undefined
+      details: undefined,
+      showErrorMessage: false,
+      errorMessages: undefined
     }
+  },
+  created () {
+    this.errorMessages = errorMessage;
   },
 	methods: {
     fetchData () {
@@ -85,8 +96,16 @@ export default {
 
       const extensionId = this.$store.getters.getExtensionId(this.applicationId);
 
-      this.$store.dispatch('updateExtensionProposal', { "application_id": this.applicationId, 'selectedProposals': payload, "extension_id": extensionId }).then(() => {
-        this.navigate();
+      this.$store.dispatch('updateExtensionProposal', { 
+        "application_id": this.applicationId, 
+        'selectedProposals': payload, 
+        "extension_id": extensionId }).then((response) => {
+        if (response.error) {
+          this.showErrorMessage = true;
+          return;
+        } else {
+          this.navigate();
+        }
       })
     }
   }

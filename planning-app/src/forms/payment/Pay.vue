@@ -17,6 +17,8 @@
       </span>
     </div>
 
+		<error-message v-if="showErrorMessage && !loading" :message="errorMessages.CREATE_PAYMENT.GENERIC_ERROR"></error-message>
+
 		<v-cta name="Proceed to payment" :onClick="createPayment"></v-cta>
 	</div>
 </template>
@@ -24,17 +26,34 @@
 <script>
 import vCta from '../../components/Cta.vue';
 import { getRouteAppId } from '../../mixins/getRouteAppId';
+import ErrorMessage from '../../components/ErrorMessage.vue';
+import * as errorMessage from '../../messages/errorMessages';
 
 export default {
 	name: 'Pay',
 	mixins: [ getRouteAppId ],
 	components: {
-		vCta
+		vCta,
+		ErrorMessage
 	},
+	data () {
+    return {
+      showErrorMessage: false,
+      errorMessages: undefined
+    }
+  },
+	created () {
+    this.errorMessages = errorMessage;
+  },
 	methods: {
 		createPayment () {
       this.$store.dispatch('createPayment', this.applicationId).then((response) => {
-				window.location = response.data.next_url;
+				if (response.error) {
+          this.showErrorMessage = true;
+          return;
+        } else {
+          window.location = response.data.next_url;
+        }
       });
 		}
 	}

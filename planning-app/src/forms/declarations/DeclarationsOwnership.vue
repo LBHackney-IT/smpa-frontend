@@ -31,6 +31,8 @@
       </div>
     </fieldset>
 
+    <error-message v-if="showErrorMessage && !loading" :message="errorMessages.DECLARATION.GENERIC_ERROR"></error-message>
+
     <v-cta name="Continue" :onClick="navigate"></v-cta>
   </div>
 </template>
@@ -39,22 +41,30 @@
 import vCta from '../../components/Cta.vue';
 import router from '../../router';
 import { getRouteAppId } from '../../mixins/getRouteAppId';
+import ErrorMessage from '../../components/ErrorMessage.vue';
+import * as errorMessage from '../../messages/errorMessages';
 
 export default {
   name: 'DeclarationsOwnership',
   mixins: [ getRouteAppId ],
 	components: {
-    vCta
+    vCta,
+    ErrorMessage
   },
   data () {
     return {
       defaultOptions: undefined,
-      typeOfOwnership: ''
+      typeOfOwnership: '',
+      showErrorMessage: false,
+      errorMessages: undefined
 
     }
   },
   beforeMount () {
     this.loadDefaultOptions();
+  },
+  created () {
+    this.errorMessages = errorMessage;
   },
 	methods: {
     loadDefaultOptions() {
@@ -68,10 +78,19 @@ export default {
       payload.data = {};
       payload.data.ownership_type_id = this.typeOfOwnership;
 
-      this.$store.dispatch('updateApplication', payload).then(() => {
-        router.push({ name: 'OwnershipCertificateDeclaration', params: { doesApplicantOwnTheLand: this.typeOfOwnership } });
-      });
-      
+      this.$store.dispatch('updateApplication', payload).then((response) => {
+
+        if (response.error) {
+          this.showErrorMessage = true;
+        } else {
+          router.push({ 
+            name: 'OwnershipCertificateDeclaration', 
+            params: { 
+              doesApplicantOwnTheLand: this.typeOfOwnership 
+            } 
+          });
+        }
+      });    
     }
   }
 }

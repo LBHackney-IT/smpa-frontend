@@ -77,6 +77,8 @@ import router from '../../router';
 import MaterialsInfo from '../../components/form/MaterialsInfo.vue';
 import OtherMaterial from '../../components/form/OtherMaterial.vue';
 import { getRouteAppId } from '../../mixins/getRouteAppId';
+import ErrorMessage from '../../components/ErrorMessage.vue';
+import * as errorMessage from '../../messages/errorMessages';
 
 export default {
   name: 'MaterialsStepThree',
@@ -84,7 +86,8 @@ export default {
 	components: {
     vCta,
     MaterialsInfo,
-    OtherMaterial
+    OtherMaterial,
+    ErrorMessage
   },
   data () {
     return {
@@ -93,11 +96,16 @@ export default {
       materialsDetailsQuestion: 'Is the proposed material and finish the same as the existing?',
       otherMaterialsDetailsQuestion: 'Is the proposed material and finish the same as the existing?',
       defaultOptions: undefined,
-      dataToBeSent: []
+      dataToBeSent: [],
+      showErrorMessage: false,
+      errorMessages: undefined
     }
   },
   beforeMount () {
     this.loadDefaultOptions();
+  },
+  created () {
+    this.errorMessages = errorMessage;
   },
 	methods: {
     submit() {
@@ -123,8 +131,18 @@ export default {
 
       const extensionId = this.$store.getters.getExtensionId(this.applicationId);
 
-      this.$store.dispatch('updateExtensionProposal', { "application_id": this.applicationId, 'selectedProposals': payload, "extension_id": extensionId }).then(() => {
-        this.navigate();
+      this.$store.dispatch('updateExtensionProposal', 
+        { 
+          "application_id": this.applicationId, 
+          'selectedProposals': payload, 
+          "extension_id": extensionId 
+        }).then((response) => {
+          if (response.error) {
+            this.showErrorMessage = true;
+            return;
+          } else {
+            this.navigate();
+          }
       })
     },
     navigate() {
@@ -142,7 +160,12 @@ export default {
     },
     loadDefaultOptions() {
       this.$store.dispatch('getDefaultData', 'materials/options/window').then((response) => {
-        this.defaultOptions = response.data;
+        if (response.error) {
+          this.showErrorMessage = true;
+          return;
+        } else {
+          this.defaultOptions = response.data;
+        }
       })
     }
   },
@@ -152,13 +175,11 @@ export default {
     },
     hasOtherWindowMaterial () {
       return this.checkedMaterials === 'other';
-    }
-	},
-  computed: {
+    },
     application () {
       let index = this.$store.state.state.applications.findIndex( application => application.data.id === this.applicationId );
 			return this.$store.state.state.applications[index];
     }
-  }
+	}
 }
 </script>

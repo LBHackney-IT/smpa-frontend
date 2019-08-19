@@ -134,7 +134,7 @@
             this.error = true;
             this.responseError = this.errorMessages.CREATE_ACCOUNT.GENERIC_ERROR;
           } else {
-            router.push({ name: 'AccountActions' });
+            router.push({ name: 'CreateAccountSuccess' });
           }
         
         });

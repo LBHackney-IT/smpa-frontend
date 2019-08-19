@@ -73,9 +73,7 @@
           </tbody>
         </table>
 
-        <div v-if="error && !loading" class="govuk-inset-text govuk-inset-text--error ">
-          {{ errorMessage }}
-        </div>
+        <error-message v-if="showErrorMessage && !loading" :message="errorMessages.CREATE_APPLICATION.GENERIC_ERROR"></error-message>
 
         <v-cta name="Continue" :onClick="navigate" v-if="!loading"></v-cta>
       </div>
@@ -92,16 +90,19 @@
   import router from '../router';
   import axios from 'axios';
   import JwtService from '@/common/jwt.service';
+  import * as errorMessage from '../messages/errorMessages';
+  import ErrorMessage from '../components/ErrorMessage.vue';
 
   export default {
     name: 'SiteDetails',
     components: {
-      vCta
+      vCta,
+      ErrorMessage
     },
     data() {
       return { 
-        errorMessage: undefined,
-        error: false,
+        showErrorMessage: false,
+        errorMessages: undefined,
         loading: false,
         loadingMap: false,
         geoJson: {},
@@ -120,6 +121,9 @@
 				type: String,
 				required: true
 			}
+    },
+    created() {
+      this.errorMessages = errorMessage;
     },
     mounted() {
         this.loading = true;
@@ -275,8 +279,7 @@
           this.$store.dispatch('generateApplication', this.application).then((response) => {
 
           if (response.error) {
-            this.error = true;
-            this.errorMessage = 'Something went wrong while creating your application. Try again.'
+            this.showErrorMessage = true;
           } else {
             router.push({ name: 'ApplicationTaskOverview', params: { 'applicationId': response.data.application_id } });
           }

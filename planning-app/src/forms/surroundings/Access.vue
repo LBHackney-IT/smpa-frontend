@@ -25,6 +25,9 @@
         </div>
 			</fieldset>
 		</div>
+
+    <error-message v-if="showErrorMessage && !loading" :message="errorMessages.ACCESS.GENERIC_ERROR"></error-message>
+
 		<v-cta name="Continue" :onClick="submit"></v-cta>
 	</div>
 </template>
@@ -34,13 +37,16 @@ import vCta from '../../components/Cta.vue';
 import router from '../../router';
 import WarningMessage from '../../components/WarningMessage.vue';
 import { getRouteAppId } from '../../mixins/getRouteAppId';
+import ErrorMessage from '../../components/ErrorMessage.vue';
+import * as errorMessage from '../../messages/errorMessages';
 
 export default {
   name: 'Access',
   mixins: [ getRouteAppId ],
 	components: {
     vCta,
-    WarningMessage
+    WarningMessage,
+    ErrorMessage
 	},
 	data () {
     return {
@@ -48,7 +54,9 @@ export default {
       alterationToAccess: '',
       typeOfAlteration: '',
       currentWorks: undefined,
-      warningMessage: 'Any public footpath affected by the site must be shown on the plans. This includes temporary closures or diversions.'
+      warningMessage: 'Any public footpath affected by the site must be shown on the plans. This includes temporary closures or diversions.',
+      showErrorMessage: false,
+      errorMessages: undefined
     }
   },
   beforeMount () {
@@ -56,6 +64,7 @@ export default {
   },
   created () {
     this.fetchData();
+    this.errorMessages = errorMessage;
   },
   watch: {
     '$route': 'fetchData'
@@ -82,7 +91,13 @@ export default {
     },
     loadDefaultOptions() {
       this.$store.dispatch('getDefaultData', 'access-works-scopes').then((response) => {
-        this.defaultOptions = response.data;
+        
+        if (response.error) {
+          this.showErrorMessage = true;
+          return;
+        } else {
+          this.defaultOptions = response.data;
+        }
       })
     },
     submit() {
@@ -94,8 +109,18 @@ export default {
 
       const extensionId = this.$store.getters.getExtensionId(this.applicationId);
 
-      this.$store.dispatch('updateExtensionProposal', { "application_id": this.applicationId, 'selectedProposals': payload, "extension_id": extensionId }).then(() => {
-        this.navigate();
+      this.$store.dispatch('updateExtensionProposal', { 
+        "application_id": this.applicationId, 
+        'selectedProposals': payload, 
+        "extension_id": extensionId 
+      }).then((response) => {
+        
+        if (response.error) {
+          this.showErrorMessage = true;
+          return;
+        } else {
+          this.navigate();
+        }
       })
     }
   }

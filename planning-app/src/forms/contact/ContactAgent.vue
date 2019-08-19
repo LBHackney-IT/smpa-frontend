@@ -90,6 +90,7 @@
       </fieldset>
     </div>
 
+    <error-message v-if="showErrorMessage && !loading" :message="errorMessages.CONTACT.GENERIC_ERROR"></error-message>
 
 		<v-cta name="Continue" :onClick="submit"></v-cta>
 	</div>
@@ -99,12 +100,15 @@
 import vCta from '../../components/Cta.vue';
 import { getRouteAppId } from '../../mixins/getRouteAppId';
 import router from '../../router';
+import ErrorMessage from '../../components/ErrorMessage.vue';
+import * as errorMessage from '../../messages/errorMessages';
 
 export default {
   name: 'ContactAgent',
   mixins: [ getRouteAppId ],
 	components: {
-    vCta
+    vCta,
+    ErrorMessage
   },
   data () {
     return {
@@ -115,8 +119,13 @@ export default {
       town_city: '',
       postcode: '',
       phone: '',
-      email: ''
+      email: '',
+      showErrorMessage: false,
+      errorMessages: undefined
     }
+  },
+  created () {
+    this.errorMessages = errorMessage;
   },
 	methods: {
     submit() {
@@ -134,10 +143,12 @@ export default {
       payload.data.agent.phone = this.phone;
       payload.data.agent.email = this.email;
 
-      this.$store.dispatch('updateApplication', payload).then(() => {
-
-        router.push({ name: 'ApplicationContactApplicant' });
-
+      this.$store.dispatch('updateApplication', payload).then((response) => {
+        if (response.error) {
+          this.showErrorMessage = true;
+        } else {
+          router.push({ name: 'ApplicationContactApplicant' });
+        }
       });
     }
   }

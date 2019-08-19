@@ -47,7 +47,9 @@
         </div>
       </fieldset>
     </div>
-    
+
+    <error-message v-if="showErrorMessage && !loading" :message="errorMessages.MATERIALS.GENERIC_ERROR"></error-message>
+
 		<v-cta name="Continue" :onClick="submit"></v-cta>
 	</div>
 </template>
@@ -56,12 +58,15 @@
 import vCta from '../../components/Cta.vue';
 import router from '../../router';
 import { getRouteAppId } from '../../mixins/getRouteAppId';
+import ErrorMessage from '../../components/ErrorMessage.vue';
+import * as errorMessage from '../../messages/errorMessages';
 
 export default {
   name: 'MaterialsStepFive',
   mixins: [ getRouteAppId ],
 	components: {
-    vCta
+    vCta,
+    ErrorMessage
   },
   data () {
     return {
@@ -71,8 +76,13 @@ export default {
           value: ''
         }
       ],
-      materialsDescription: []
+      materialsDescription: [],
+      showErrorMessage: false,
+      errorMessages: undefined
     }
+  },
+  created () {
+    this.errorMessages = errorMessage;
   },
 	methods: {
     addField: function () {
@@ -100,8 +110,19 @@ export default {
 
       const extensionId = this.$store.getters.getExtensionId(this.applicationId);
 
-      this.$store.dispatch('updateExtensionProposal', { "application_id": this.applicationId, 'selectedProposals': payload, "extension_id": extensionId }).then(() => {
-        this.navigate();
+      this.$store.dispatch('updateExtensionProposal', 
+        { 
+          "application_id": this.applicationId, 
+          'selectedProposals': payload, 
+          "extension_id": extensionId 
+        }).then((response) => {
+
+          if (response.error) {
+            return this.showErrorMessage = true;
+          } else {
+            this.navigate();
+          }
+        
       })
     }
   },

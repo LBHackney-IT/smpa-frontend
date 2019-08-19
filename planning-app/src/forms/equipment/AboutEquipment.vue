@@ -31,6 +31,9 @@
       </fieldset>
     </div>
     <free-description></free-description>
+    
+    <error-message v-if="showErrorMessage && !loading" :message="errorMessages.EQUIPMENT.GENERIC_ERROR"></error-message>
+
 		<v-cta name="Continue" :onClick="navigate"></v-cta>
 	</div>
 </template>
@@ -40,13 +43,16 @@ import vCta from '../../components/Cta.vue';
 import router from '../../router';
 import FreeDescription from '../../components/FreeDescription.vue';
 import { getRouteAppId } from '../../mixins/getRouteAppId';
+import ErrorMessage from '../../components/ErrorMessage.vue';
+import * as errorMessage from '../../messages/errorMessages';
 
 export default {
   name: 'AboutEquipment',
   mixins: [ getRouteAppId ],
 	components: {
     vCta,
-    FreeDescription
+    FreeDescription,
+    ErrorMessage
   },
   data () {
     return {
@@ -55,22 +61,28 @@ export default {
       selectedConservationAreaProposal: [],
       currentWorks: undefined,
       defaultGeneralOptions: undefined,
-      defaultConservationAreaOptions: undefined
+      defaultConservationAreaOptions: undefined,
+      showErrorMessage: false,
+      errorMessages: undefined
     }
   },
   created () {
     this.fetchData();
+    this.errorMessages = errorMessage;
   },
   beforeMount () {
     this.loadDefaultOptions();
   },
-    watch: {
+  watch: {
     '$route': 'fetchData'
   },
 	methods: {
     loadDefaultOptions() {
       if (!this.isInConservationArea) {
         this.$store.dispatch('getDefaultData', 'equipment-works-types').then((response) => {
+          if (response.error) {
+            return this.showErrorMessage = true;
+          }
           this.defaultOptions = response.data;
         });
       } else {
@@ -81,6 +93,9 @@ export default {
         this.$store.dispatch(
           'getDefaultDataFromTwoSources', equipmentResources
         ).then((response) => {
+          if (response.error) {
+            return this.showErrorMessage = true;
+          }
           this.defaultGeneralOptions = response.general;
           this.defaultConservationAreaOptions = response.conservationArea;
         });
@@ -130,7 +145,11 @@ export default {
       
       this.$store.dispatch('updateEquipmentProposal', payload).then((response) => {
         console.log('done and navigating', response);
-        this.updateNavigation();
+        if (response.error) {
+          return this.showErrorMessage = true;
+        } else {
+          this.updateNavigation();
+        }
       });
       
     },

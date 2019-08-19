@@ -56,6 +56,9 @@
         </div>
       </fieldset>
     </div>
+
+    <error-message v-if="showErrorMessage && !loading" :message="errorMessages.FLOOR_AREA.GENERIC_ERROR"></error-message>
+
 		<v-cta name="Continue" :onClick="submit"></v-cta>
 	</div>
 </template>
@@ -65,20 +68,28 @@ import vCta from '../../components/Cta.vue';
 import router from '../../router';
 import FreeDescription from '../../components/FreeDescription.vue';
 import { getRouteAppId } from '../../mixins/getRouteAppId';
+import ErrorMessage from '../../components/ErrorMessage.vue';
+import * as errorMessage from '../../messages/errorMessages';
 
 export default {
   name: 'WorksFloorArea',
   mixins: [ getRouteAppId ],
 	components: {
     vCta,
-    FreeDescription
+    FreeDescription,
+    ErrorMessage
   },
   data () {
     return {
       floorArea: undefined,
       selectedOption: '',
-      defaultOptions: undefined
+      defaultOptions: undefined,
+      showErrorMessage: false,
+      errorMessages: undefined
     }
+  },
+  created () {
+    this.errorMessages = errorMessage;
   },
   beforeMount () {
     this.loadDefaultOptions();
@@ -89,7 +100,12 @@ export default {
     },
     loadDefaultOptions() {
       this.$store.dispatch('getDefaultData', 'area-units').then((response) => {
-        this.defaultOptions = response.data;
+        if (response.error) {
+          this.showErrorMessage = true;
+          return;
+        } else {
+          this.defaultOptions = response.data;
+        }
       })
     },
     submit() {
@@ -100,8 +116,17 @@ export default {
 
       const extensionId = this.$store.getters.getExtensionId(this.applicationId);
 
-      this.$store.dispatch('updateExtensionProposal', { "application_id": this.applicationId, 'selectedProposals': payload, "extension_id": extensionId }).then(() => {
-        this.navigate();
+      this.$store.dispatch('updateExtensionProposal', { 
+        "application_id": this.applicationId, 
+        'selectedProposals': payload, 
+        "extension_id": extensionId }).then((response) => {
+        
+        if (response.error) {
+          this.showErrorMessage = true;
+          return;
+        } else {
+          this.navigate();
+        }
       })
     }
   }

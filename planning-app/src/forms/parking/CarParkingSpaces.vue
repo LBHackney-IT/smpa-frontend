@@ -39,6 +39,9 @@
 			</fieldset>
 		</div>
     <free-description></free-description>
+
+    <error-message v-if="showErrorMessage && !loading" :message="errorMessages.PARKING.GENERIC_ERROR"></error-message>
+
 		<v-cta name="Continue" :onClick="submit"></v-cta>
 	</div>
 </template>
@@ -48,13 +51,16 @@ import vCta from '../../components/Cta.vue';
 import router from '../../router';
 import FreeDescription from '../../components/FreeDescription.vue';
 import { getRouteAppId } from '../../mixins/getRouteAppId';
+import ErrorMessage from '../../components/ErrorMessage.vue';
+import * as errorMessage from '../../messages/errorMessages';
 
 export default {
   name: 'CarParkingSpaces',
   mixins: [ getRouteAppId ],
 	components: {
     vCta,
-    FreeDescription
+    FreeDescription,
+    ErrorMessage
 	},
 	data () {
     return {
@@ -63,11 +69,14 @@ export default {
       type: undefined,
       currentWorks: undefined,
       current: undefined,
-      total: undefined
+      total: undefined,
+      showErrorMessage: false,
+      errorMessages: undefined
     }
   },
   created () {
     this.fetchData();
+    this.errorMessages = errorMessage;
   },
   watch: {
     '$route': 'fetchData'
@@ -116,8 +125,17 @@ export default {
 
       const extensionId = this.$store.getters.getExtensionId(this.applicationId);
 
-      this.$store.dispatch('updateExtensionProposal', { "application_id": this.applicationId, 'selectedProposals': payload, "extension_id": extensionId }).then(() => {
-        this.navigate();
+      this.$store.dispatch('updateExtensionProposal', { 
+        "application_id": this.applicationId, 
+        'selectedProposals': payload, 
+        "extension_id": extensionId 
+      }).then((response) => {
+        if (response.error) {
+          this.showErrorMessage = true;
+          return;
+        } else {
+          this.navigate();
+        }
       })
     }
   },

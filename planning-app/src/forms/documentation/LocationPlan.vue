@@ -40,7 +40,7 @@
 				</div>
         <div class="govuk-inset-text" v-if="useMapDisplayed === 'No'">
 
-          <div class="govuk-form-group" v-bind:class="{ 'govuk-form-group--error': error }">
+          <div class="govuk-form-group" v-bind:class="{ 'govuk-form-group--error': showErrorMessage }">
             <label class="govuk-label" for="doc-size">
               Select document size
             </label>
@@ -55,9 +55,8 @@
               Upload a location plan
             </label>
 
-            <span id="file-upload-1-error" class="govuk-error-message" v-if="error">
-              <span class="govuk-visually-hidden">Error:</span> {{this.errorMessage}}
-            </span>
+            <error-message v-if="showErrorMessage && !loading" :message="errorMessages.DECLARATION.GENERIC_ERROR"></error-message>
+
             <input class="govuk-file-upload" id="file-upload-1" name="file-upload-1" ref="locationPlan" type="file" v-on:change="handleFileUpload()">
           </div>
         </div>
@@ -95,13 +94,16 @@ import router from '../../router';
 import { getRouteAppId } from '../../mixins/getRouteAppId';
 import { getDocumentTypes } from '../../mixins/getDocumentTypes';
 import { getDocumentSizes } from '../../mixins/getDocumentSizes';
+import ErrorMessage from '../../components/ErrorMessage.vue';
+import * as errorMessage from '../../messages/errorMessages';
 
 export default {
   name: 'LocationPlan',
   mixins: [ getRouteAppId, getDocumentTypes, getDocumentSizes ],
 	components: {
     vCta,
-    vMap
+    vMap,
+    ErrorMessage
 	},
 	data () {
     return {
@@ -110,10 +112,13 @@ export default {
       file: '',
       size: '',
       uploading: false,
-      error: false,
-      errorMessage: undefined,
+      showErrorMessage: false,
+      errorMessages: undefined
 
     }
+  },
+  created () {
+    this.errorMessages = errorMessage;
   },
 	methods: {
     handleFileUpload(){
@@ -138,8 +143,7 @@ export default {
         this.uploading = false;
 
         if (response.error) {
-          this.error = true;
-          this.errorMessage = 'Something went wrong while uploading your file. Try again.'
+          this.showErrorMessage = true;
         } else {
           this.navigate();
         }

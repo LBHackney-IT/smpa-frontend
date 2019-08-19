@@ -8,7 +8,7 @@
       <div class="govuk-form-group" v-bind:class="{ 'govuk-form-group--error': error }">
 
         <span id="email-error" class="govuk-error-message" v-if="error">
-          <span class="govuk-visually-hidden">Error:</span> {{ errorMessages.SIGN_IN.ERROR }}
+          <span class="govuk-visually-hidden">Error:</span> {{ errorMessage}}
         </span>
 
         <label class="govuk-label" for="email">
@@ -45,7 +45,8 @@
         source: '',
         application: undefined,
         error: false,
-        errorMessages: undefined
+        errorMessages: undefined,
+        errorMessage: undefined
       }
     },
     created () {
@@ -77,10 +78,15 @@
       signIn() {
 
         this.$store.dispatch('signIn', { "email": this.email, 'password': this.password }).then((response) => {
-
-          if (response.error) {
-
+          if (response && response.response && response.response.response.data.title) {
             this.error = true;
+            this.errorMessage = response.response.response.data.title;
+            return;
+
+          } else if (response.error) {
+            this.error = true;
+            this.errorMessage = this.errorMessages.SIGN_IN.ERROR;
+            return;
 
           } else {
             this.navigate();

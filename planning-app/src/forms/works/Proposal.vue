@@ -31,6 +31,9 @@
       </fieldset>
     </div>
     <free-description></free-description>
+
+    <error-message v-if="showErrorMessage && !loading" :message="errorMessages.PROPOSAL.GENERIC_ERROR"></error-message>
+
 		<v-cta name="Continue" :onClick="submit"></v-cta>
 	</div>
 </template>
@@ -40,13 +43,16 @@ import vCta from '../../components/Cta.vue';
 import router from '../../router';
 import FreeDescription from '../../components/FreeDescription.vue';
 import { getRouteAppId } from '../../mixins/getRouteAppId';
+import ErrorMessage from '../../components/ErrorMessage.vue';
+import * as errorMessage from '../../messages/errorMessages';
 
 export default {
   name: 'Proposal',
   mixins: [ getRouteAppId ],
 	components: {
     vCta,
-    FreeDescription
+    FreeDescription,
+    ErrorMessage
   },
   data () {
     return {
@@ -66,8 +72,13 @@ export default {
           name: 'You are installing or replacing equipment',
           description: 'The installation, alteration or replacement of equipment on a house or within the curtilage of a house. This may include a satellite dish, CCTV or a solar panel.'      
         }
-      ]
+      ],
+      showErrorMessage: false,
+      errorMessages: undefined
     }
+  },
+  created () {
+    this.errorMessages = errorMessage;
   },
   computed: {
     application () {
@@ -100,18 +111,33 @@ export default {
     },
     submit() {
       if (this.selectedProposal.length === 2) {
-        this.$store.dispatch('createBothProposals', { "application_id": this.applicationId }).then(() => {
-           this.updateNavigation();
+        this.$store.dispatch('createBothProposals', { "application_id": this.applicationId }).then((response) => {
+          if (response.error) {
+            this.showErrorMessage = true;
+            return;
+          } else {
+            this.updateNavigation();
+          } 
         })
 
       } else if (this.selectedProposal[0] === 'proposal_extension') {
-        this.$store.dispatch('createExtensionProposal', { "application_id": this.applicationId }).then(() => {
-           this.updateNavigation();
+        this.$store.dispatch('createExtensionProposal', { "application_id": this.applicationId }).then((response) => {
+           if (response.error) {
+            this.showErrorMessage = true;
+            return;
+          } else {
+            this.updateNavigation();
+          } 
         })
       } else {
         // would then be "proposal_equipment"
-        this.$store.dispatch('createEquipmentProposal', { "application_id": this.applicationId }).then(() => {
-           this.updateNavigation();
+        this.$store.dispatch('createEquipmentProposal', { "application_id": this.applicationId }).then((response) => {
+          if (response.error) {
+            this.showErrorMessage = true;
+            return;
+          } else {
+            this.updateNavigation();
+          } 
         })
       }
     }

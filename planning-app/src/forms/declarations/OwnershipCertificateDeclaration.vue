@@ -29,6 +29,8 @@
     <ul class="govuk-list govuk-list--bullet" v-if="this.ownership_type === 'b1a704bc-86c1-493a-b396-d406b7ca8438' || this.ownership_type === '4d618804-ccc3-478e-be36-4746000a67d8'">
       <li v-for="(item, index) in this.declarationCDescription" v-bind:key="index">{{item}}</li>
     </ul>
+    
+    <error-message v-if="showErrorMessage && !loading" :message="errorMessages.DECLARATION.GENERIC_ERROR"></error-message>
 
     <v-cta name="Confirm" :onClick="navigate"></v-cta>
   </div>
@@ -38,12 +40,15 @@
 import vCta from '../../components/Cta.vue';
 import router from '../../router';
 import { getRouteAppId } from '../../mixins/getRouteAppId';
+import ErrorMessage from '../../components/ErrorMessage.vue';
+import * as errorMessage from '../../messages/errorMessages';
 
 export default {
   name: 'OwnershipCertificateDeclaration',
   mixins: [ getRouteAppId ],
 	components: {
-    vCta
+    vCta,
+    ErrorMessage
   },
   data () {
     return {
@@ -53,7 +58,12 @@ export default {
       declarationBDescription: ['the applicant has given the notice to everyone else who, 21 days before the date of this application, was the owner and/or agricultural tenant of any part of the land or building to which this application relates'],
       declarationCTitle: 'Ownership Certificate and Agricultural Land Declaration C',
       declarationCDescription: ['that all reasonable steps have been taken to find out the names and addresses of the other owners and/or agricultural tenants of the land or building, or of a part of it', 'I have/the applicant has been unable to do given them notice'],
+      showErrorMessage: false,
+      errorMessages: undefined
     }
+  },
+  created () {
+    this.errorMessages = errorMessage;
   },
 	methods: {
     navigate() {
@@ -62,10 +72,14 @@ export default {
       payload.data = {};
       payload.data.ownership_declaration = true;
 
-      this.$store.dispatch('updateApplication', payload).then(() => {
-        router.push({ name: 'FormOverview' });
+      this.$store.dispatch('updateApplication', payload).then((response) => {
+
+        if (response.error) {
+          this.showErrorMessage = true;
+        } else {
+          router.push({ name: 'FormOverview' });
+        }
       });
-      
     }
   },
   computed: {

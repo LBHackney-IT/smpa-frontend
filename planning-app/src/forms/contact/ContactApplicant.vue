@@ -159,6 +159,7 @@
 
     </div>
 
+    <error-message v-if="showErrorMessage && !loading" :message="errorMessages.CONTACT.GENERIC_ERROR"></error-message>
 
 		<v-cta name="Save and continue" :onClick="navigate"></v-cta>
 	</div>
@@ -168,12 +169,15 @@
 import vCta from '../../components/Cta.vue';
 import router from '../../router';
 import { getRouteAppId } from '../../mixins/getRouteAppId';
+import ErrorMessage from '../../components/ErrorMessage.vue';
+import * as errorMessage from '../../messages/errorMessages';
 
 export default {
   name: 'ContactApplicant',
   mixins: [ getRouteAppId ],
 	components: {
-    vCta
+    vCta,
+    ErrorMessage
   },
   data () {
     return {
@@ -185,8 +189,13 @@ export default {
       town_city: '',
       postcode: '',
       phone: '',
-      email: ''
+      email: '',
+      showErrorMessage: false,
+      errorMessages: undefined
     }
+  },
+  created () {
+    this.errorMessages = errorMessage;
   },
 	methods: {
     navigate() {
@@ -204,10 +213,12 @@ export default {
       payload.data.applicant.phone = this.phone;
       payload.data.applicant.email = this.email;
 
-      this.$store.dispatch('updateApplication', payload).then(() => {
-
-        router.push({ name: 'Declarations' });
-
+      this.$store.dispatch('updateApplication', payload).then((response) => {
+        if (response.error) {
+          this.showErrorMessage = true;
+        } else {
+          router.push({ name: 'Declarations' });
+        }
       });
       
     }
