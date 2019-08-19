@@ -34,7 +34,7 @@
 
     <error-message v-if="showErrorMessage && !loading" :message="errorMessages.PROPOSAL.GENERIC_ERROR"></error-message>
 
-		<v-cta name="Continue" :onClick="submit"></v-cta>
+		<v-cta name="Continue" :onClick="checkAnswers"></v-cta>
 	</div>
 </template>
 
@@ -45,6 +45,7 @@ import FreeDescription from '../../components/FreeDescription.vue';
 import { getRouteAppId } from '../../mixins/getRouteAppId';
 import ErrorMessage from '../../components/ErrorMessage.vue';
 import * as errorMessage from '../../messages/errorMessages';
+import Lib from '../../common/lib';
 
 
 export default {
@@ -58,6 +59,7 @@ export default {
   data () {
     return {
       selectedProposal: [],
+      existingProposal: [],
       proposals: [
         {
           id: 'original_house',
@@ -109,25 +111,39 @@ export default {
 		}
   },
 	methods: {
+    checkAnswers () {
+      var sameAnswers = Lib.arrayDiff(this.selectedProposal, this.existingProposal);
+
+      if (sameAnswers) {
+        this.updateNavigation();
+      } else {
+        this.submit();
+      }
+    },
     loadExistingAnswers () {
       if (this.application.data.proposal_extension.original_house) {
         this.selectedProposal.push('original_house');
+        this.existingProposal.push('original_house');
       }
 
       if (this.application.data.proposal_extension.incidental_buildings) {
         this.selectedProposal.push('incidental_buildings');
+        this.existingProposal.push('incidental_buildings');
       }
 
       if (this.application.data.proposal_extension.boundaries) {
         this.selectedProposal.push('boundaries');
+        this.existingProposal.push('boundaries');
       }
 
       if (this.application.data.proposal_extension.means_of_access) {
         this.selectedProposal.push('means_of_access');
+        this.existingProposal.push('means_of_access');
       }
 
       if (this.application.data.proposal_extension.parking) {
         this.selectedProposal.push('parking');
+        this.existingProposal.push('parking');
       }
    
 		},

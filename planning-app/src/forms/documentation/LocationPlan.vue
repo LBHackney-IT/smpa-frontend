@@ -125,29 +125,32 @@ export default {
       this.file = this.$refs.locationPlan.files[0];
     },
     submitFile() {
-
-      var docType = this.documentTypes.find(function(element) {
-        return element.name === 'Location plan';
-      });
-
-      let payload = {};
-
-      payload.document = this.file;
-      payload.document_size_id = this.size;
-      payload.application_id = this.applicationId;
-      payload.proposed = docType.id;
-
-      this.uploading = true;
-
-      this.$store.dispatch('uploadDocument', payload).then((response) => {
-        this.uploading = false;
-
-        if (response.error) {
-          this.showErrorMessage = true;
-        } else {
+        if (this.useMapDisplayed === 'Yes') {
           this.navigate();
-        }
-      })
+        } else {
+        var docType = this.documentTypes.find(function(element) {
+          return element.name === 'Location plan';
+        });
+
+        let payload = {};
+
+        payload.document = this.file;
+        payload.document_size_id = this.size;
+        payload.application_id = this.applicationId;
+        payload.proposed = docType.id;
+
+        this.uploading = true;
+
+        this.$store.dispatch('uploadDocument', payload).then((response) => {
+          this.uploading = false;
+
+          if (response.error) {
+            this.showErrorMessage = true;
+          } else {
+            this.navigate();
+          }
+        })
+      }
     },
     navigate() {
       if (this.isInConservationArea) {

@@ -60,6 +60,7 @@ export default {
   },
   created () {
     this.fetchData();
+    this.errorMessages = errorMessage;
   },
   watch: {
     '$route': 'fetchData'
@@ -73,9 +74,6 @@ export default {
       showErrorMessage: false,
       errorMessages: undefined
     }
-  },
-  created () {
-    this.errorMessages = errorMessage;
   },
 	methods: {
     fetchData () {

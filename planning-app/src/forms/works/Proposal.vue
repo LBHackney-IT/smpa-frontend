@@ -34,7 +34,7 @@
 
     <error-message v-if="showErrorMessage && !loading" :message="errorMessages.PROPOSAL.GENERIC_ERROR"></error-message>
 
-		<v-cta name="Continue" :onClick="submit"></v-cta>
+		<v-cta name="Continue" :onClick="checkAnswers"></v-cta>
 	</div>
 </template>
 
@@ -58,6 +58,7 @@ export default {
     return {
       question: 'About the works',
       selectedProposal: [],
+      existingProposal: [],
       proposals: [
         {
           id: 'proposal_extension',
@@ -91,10 +92,12 @@ export default {
     loadExistingAnswers () {
       if (this.application.data.proposal_extension) {
         this.selectedProposal.push('proposal_extension');
+        this.existingProposal.push('proposal_extension');
       }
 
       if (this.application.data.proposal_equipment) {
         this.selectedProposal.push('proposal_equipment');
+        this.existingProposal.push('proposal_equipment');
       }
 		},
     updateNavigation () {      
@@ -109,7 +112,21 @@ export default {
         router.push({ name: this.$store.state.state.proposalFlow[0].goTo, params: { applicationId: this.applicationId } });
       });
     },
+    checkAnswers () {
+      if (this.existingProposal.length === this.selectedProposal.length) {
+
+        if (this.existingProposal[0].id === this.selectedProposal[0].id) {
+          this.updateNavigation();
+
+        } else {
+          this.submit();
+        }
+      } else {
+        this.submit();
+      }
+    },
     submit() {
+
       if (this.selectedProposal.length === 2) {
         this.$store.dispatch('createBothProposals', { "application_id": this.applicationId }).then((response) => {
           if (response.error) {

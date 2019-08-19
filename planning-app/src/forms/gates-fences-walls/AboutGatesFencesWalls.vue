@@ -28,7 +28,7 @@
 
     <error-message v-if="showErrorMessage && !loading" :message="errorMessages.DECLARATION.GENERIC_ERROR"></error-message>
 
-		<v-cta name="Continue" :onClick="submit"></v-cta>
+		<v-cta name="Continue" :onClick="checkAnswers"></v-cta>
 	</div>
 </template>
 
@@ -40,7 +40,7 @@ import FreeDescription from '../../components/FreeDescription.vue';
 import { getRouteAppId } from '../../mixins/getRouteAppId';
 import ErrorMessage from '../../components/ErrorMessage.vue';
 import * as errorMessage from '../../messages/errorMessages';
-
+import Lib from '../../common/lib';
 
 export default {
   name: 'AboutGatesFencesWalls',
@@ -70,6 +70,25 @@ export default {
     '$route': 'fetchData'
   },
 	methods: {
+    checkAnswers () {
+
+      if (this.application.data.proposal_extension && this.application.data.proposal_extension.boundaries && this.application.data.proposal_extension.boundaries.gates_fences_walls && this.application.data.proposal_extension.boundaries.gates_fences_walls.works_type_ids) {
+        var sameAnswers = Lib.arrayDiff(this.selectedProposal, this.application.data.proposal_extension.boundaries.gates_fences_walls.works_type_ids);
+
+        if (sameAnswers) {
+          this.navigate();
+        } else {
+          this.submit();
+        }
+      } else {
+        this.submit();
+      }
+    },
+    loadExistingAnswers () {
+      if (this.application.data.proposal_extension.boundaries && this.application.data.proposal_extension.boundaries.gates_fences_walls) {
+        this.selectedProposal = this.application.data.proposal_extension.boundaries.gates_fences_walls.works_type_ids;
+      }
+		},
     fetchData () {
       this.selectedProposal = [];
       this.currentWorks = this.$route.params.currentLevelInfo;
@@ -128,6 +147,11 @@ export default {
     isInConservationArea () {
       return this.application.data.site_constraints.nb_conarea > 0;
     }
+  },
+  watch: {
+		application (newValue, oldValue) {
+			this.loadExistingAnswers();
+		}
 	}
 }
 </script>
