@@ -94,7 +94,7 @@
         }
 
         this.loading = true;
-        const api = "https://cors-anywhere.herokuapp.com/https://g6bw0g0ojk.execute-api.eu-west-2.amazonaws.com/staging/address/api/v1/addresses/";
+        const api = "https://ndws9fa08d.execute-api.eu-west-2.amazonaws.com/production/api/v1/addresses/";
         const token = process.env.VUE_APP_ADDRESSAPITOKEN;
         axios.get(api , { 
           headers: { 
