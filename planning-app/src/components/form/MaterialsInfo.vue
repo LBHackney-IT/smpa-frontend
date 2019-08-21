@@ -30,14 +30,14 @@ export default {
       type: String,
       required: true
     },
-    secondQuestion: {
+    existingAnswer: {
       type: String,
       required: true
     }
   },
   data () {
     return {
-      colourAndType: ''
+      colourAndType: this.existingAnswer
     }
   },
   methods: {

@@ -17,13 +17,13 @@
 
       <div class="govuk-radios govuk-radios--inline">
         <div class="govuk-radios__item">
-          <input class="govuk-radios__input" id="work-started-1" name="work-started" type="radio" value="not-applicable" v-model="material">
+          <input class="govuk-radios__input" id="work-started-1" name="work-started" type="radio" value="match-existing" v-model="material">
           <label class="govuk-label govuk-radios__label" for="work-started-1">
             This is not applicable
           </label>
         </div>
         <div class="govuk-radios__item">
-          <input class="govuk-radios__input" id="work-started-2" name="work-started" type="radio" value="match-existing" v-model="material">
+          <input class="govuk-radios__input" id="work-started-2" name="work-started" type="radio" value="not-applicable" v-model="material">
           <label class="govuk-label govuk-radios__label" for="work-started-2">
             Material and finish match the existing
           </label>
@@ -60,9 +60,7 @@
                 </label>
               </div>
 
-              <other-material v-if="materialIsChecked(option.id) && option.name === 'Other'" material="other" :secondQuestion="otherMaterialsDetailsQuestion" @clicked="onClickChild"></other-material>
-
-              <materials-info v-if="materialIsChecked(option.id) && option.name != 'Other'" v-bind:material="option.id" :secondQuestion="materialsDetailsQuestion" @clicked="onClickChild"></materials-info>
+              <materials-info v-if="materialIsChecked(option.id)" v-bind:material="option.id" :existingAnswer="existingProposedMaterial(option.id)" @clicked="onClickChild"></materials-info>
             </div>
           </div>
         </fieldset>
@@ -111,7 +109,35 @@ export default {
   created () {
     this.errorMessages = errorMessage;
   },
+  watch: {
+    application () {
+			this.loadExistingAnswers();
+		}
+  },
 	methods: {
+    existingProposedMaterial (id) {
+      if (this.application.data.proposal_extension.materials.roof && this.application.data.proposal_extension.materials.roof.proposals) {
+        const result = this.application.data.proposal_extension.materials.roof.proposals.find(function(material) {
+          return material.material_id === id;
+        });
+
+        return result ? result.colour_and_type : '';
+      }
+    },
+    loadExistingAnswers () {
+      if (this.application.data.proposal_extension.materials.roof) {
+        this.material = this.application.data.proposal_extension.materials.roof.matches_existing ? 'match-existing' : undefined;
+        this.material = this.application.data.proposal_extension.materials.roof.not_applicable ? 'not-applicable' : undefined;
+
+        if (this.application.data.proposal_extension.materials.roof.proposals && this.application.data.proposal_extension.materials.roof.proposals.length > 0) {
+          this.material = 'new-material';
+
+          this.application.data.proposal_extension.materials.roof.proposals.forEach((element) => {
+            this.checkedMaterials.push(element.material_id);
+          });
+        }
+      }
+		},
     navigate() {
       router.push({ name: 'MaterialsStep2' });
     },
@@ -125,7 +151,24 @@ export default {
       }
 
       if (this.material === 'new-material') {
-        currentMaterials.roof.proposals = this.dataToBeSent;
+        let proposedMaterials = [];
+
+        this.dataToBeSent.forEach((element) => {
+          proposedMaterials.push(element);
+        });
+
+        if (this.application.data.proposal_extension.materials.roof.proposals && this.application.data.proposal_extension.materials.roof.proposals.length > 0) {
+          this.checkedMaterials.forEach((element) => {
+            var materialFound = this.application.data.proposal_extension.materials.roof.proposals.find((el) => el.material_id === element);
+
+            if (materialFound) {
+              proposedMaterials.push({"colour_and_type": materialFound.colour_and_type, "material_id": materialFound.material_id });
+            }
+            
+          });
+        }
+
+        currentMaterials.roof.proposals = proposedMaterials;
  
       } else {
         currentMaterials.roof.matches_existing = this.material === 'match-existing' ? true : false;

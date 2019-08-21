@@ -84,7 +84,31 @@ export default {
   created () {
     this.errorMessages = errorMessage;
   },
+  watch: {
+    application () {
+			this.loadExistingAnswers();
+		}
+  },
 	methods: {
+    loadExistingAnswers () {
+      if (this.application.data.proposal_extension.materials && this.application.data.proposal_extension.materials.other) {
+
+        if (this.application.data.proposal_extension.materials.other.length > 0) {
+          this.otherMaterials = 'Yes';
+
+          this.fields = [];
+
+          this.application.data.proposal_extension.materials.other.forEach((element) => {
+            var fieldValue = {};
+
+            fieldValue.value = element;
+
+            this.fields.push(fieldValue);
+          });
+        }
+    
+      }
+		},
     addField: function () {
       this.fields.push({ value: '' });
     },

@@ -58,9 +58,7 @@
                 </label>
               </div>
 
-              <other-material v-if="materialIsChecked(option.id) && option.name === 'Other'" material="other" :secondQuestion="otherMaterialsDetailsQuestion" @clicked="onClickChild"></other-material>
-
-              <materials-info v-if="materialIsChecked(option.id) && option.name != 'Other'" v-bind:material="option.name" :secondQuestion="materialsDetailsQuestion" @clicked="onClickChild"></materials-info>
+              <materials-info v-if="materialIsChecked(option.id)" v-bind:material="option.id" :existingAnswer="existingProposedMaterial(option.id)" @clicked="onClickChild"></materials-info>
             </div>
           </div>
         </fieldset>
@@ -109,7 +107,42 @@ export default {
   created () {
     this.errorMessages = errorMessage;
   },
+  watch: {
+    application () {
+			this.loadExistingAnswers();
+		}
+  },
 	methods: {
+    existingProposedMaterial (id) {
+      if (this.application.data.proposal_extension.materials.doors && this.application.data.proposal_extension.materials.doors.proposals) {
+        const result = this.application.data.proposal_extension.materials.doors.proposals.find(function(material) {
+          return material.material_id === id;
+        });
+
+        return result ? result.colour_and_type : '';
+      } else {
+        return '';
+      }
+    },
+    loadExistingAnswers () {
+      if (this.application.data.proposal_extension.materials.doors) {
+        if (this.application.data.proposal_extension.materials.doors.matches_existing) {
+          this.material = 'match-existing';
+        }
+
+        if (this.application.data.proposal_extension.materials.doors.not_applicable) {
+          this.material = 'not-applicable';
+        }
+        
+        if (this.application.data.proposal_extension.materials.doors.proposals && this.application.data.proposal_extension.materials.doors.proposals.length > 0) {
+          this.material = 'new-material';
+
+          this.application.data.proposal_extension.materials.doors.proposals.forEach((element) => {
+            this.checkedMaterials.push(element.material_id);
+          });
+        }
+      }
+		},
     submit() {
       let payload;
 
@@ -120,7 +153,24 @@ export default {
       }
 
       if (this.material === 'new-material') {
-        currentMaterials.doors.proposals = this.dataToBeSent;
+        let proposedMaterials = [];
+
+        this.dataToBeSent.forEach((element) => {
+          proposedMaterials.push(element);
+        });
+
+        if (this.application.data.proposal_extension.materials.doors.proposals && this.application.data.proposal_extension.materials.doors.proposals.length > 0) {
+          this.checkedMaterials.forEach((element) => {
+            var materialFound = this.application.data.proposal_extension.materials.doors.proposals.find((el) => el.material_id === element);
+
+            if (materialFound) {
+              proposedMaterials.push({"colour_and_type": materialFound.colour_and_type, "material_id": materialFound.material_id });
+            }
+            
+          });
+        }
+
+        currentMaterials.doors.proposals = proposedMaterials;
  
       } else {
         currentMaterials.doors.matches_existing = this.material === 'match-existing' ? true : false;

@@ -107,14 +107,19 @@ export default {
     },
     submit() {
 
-      //todo delete materials via form if method of submitting materials has changed
       let payload = {
-        "materials": {
-          "definitions_in_documents": this.materials === 'definitions_in_documents' ? true : false,
-          "definitions_in_form": this.materials === 'definitions_in_form' ? true : false,
-          "definitions_to_follow": this.materials === 'definitions_to_follow' ? true : false
-        }
+        "materials": {}
       };
+
+      if (this.materials === 'definitions_in_form') {
+        if (this.application.data.proposal_extension.materials) {
+          payload.materials = this.application.data.proposal_extension.materials;
+        }
+      }
+
+      payload.materials.definitions_in_documents = this.materials === 'definitions_in_documents' ? true : false,
+      payload.materials.definitions_in_form = this.materials === 'definitions_in_form' ? true : false,
+      payload.materials.definitions_to_follow = this.materials === 'definitions_to_follow' ? true : false
 
       const extensionId = this.$store.getters.getExtensionId(this.applicationId);
 
