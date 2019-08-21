@@ -27,7 +27,7 @@
     
     <error-message v-if="showErrorMessage && !loading" :message="errorMessages.PARKING.GENERIC_ERROR"></error-message>
 
-		<v-cta name="Continue" :onClick="submit"></v-cta>
+		<v-cta name="Continue" :onClick="checkAnswers"></v-cta>
 	</div>
 </template>
 
@@ -65,9 +65,29 @@ export default {
     this.errorMessages = errorMessage;
   },
   watch: {
-    '$route': 'fetchData'
+    '$route': 'fetchData',
+    application () {
+			this.loadExistingAnswers();
+		}
   },
   methods: {
+    checkAnswers () {
+      if (this.application.data.proposal_extension.parking && this.application.data.proposal_extension.parking.parking_works_scope_id) {
+        if (this.typeOfAlteration === this.application.data.proposal_extension.parking.parking_works_scope_id) {
+          this.navigate();
+        } else {
+          this.submit();
+        }
+      } else {
+        this.submit();
+      }
+      
+    },
+    loadExistingAnswers () {
+      if (this.application.data.proposal_extension.parking && this.application.data.proposal_extension.parking.parking_works_scope_id) {
+        this.typeOfAlteration = this.application.data.proposal_extension.parking.parking_works_scope_id;
+      }
+		},
     fetchData () {
       this.currentWorks = this.$route.params.currentLevelInfo;
     },

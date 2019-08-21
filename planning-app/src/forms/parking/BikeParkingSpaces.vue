@@ -30,7 +30,7 @@
     
     <error-message v-if="showErrorMessage && !loading" :message="errorMessages.PARKING.GENERIC_ERROR"></error-message>
 
-		<v-cta name="Continue" :onClick="submit"></v-cta>
+		<v-cta name="Continue" :onClick="checkAnswers"></v-cta>
 	</div>
 </template>
 
@@ -53,7 +53,6 @@ export default {
 	},
 	data () {
     return {
-      alterationToAccess: '',
       typeOfAlteration: '',
       currentWorks: undefined,
       type: undefined,
@@ -68,9 +67,27 @@ export default {
     this.errorMessages = errorMessage;
   },
   watch: {
-    '$route': 'fetchData'
+    '$route': 'fetchData',
+    application () {
+			this.loadExistingAnswers();
+		}
   },
   methods: {
+    checkAnswers () {
+      if (this.application.data.proposal_extension.parking) {
+        if (this.current === this.application.data.proposal_extension.parking.current_bike_parking_spaces && this.total === this.application.data.proposal_extension.parking.planned_bike_parking_spaces) {
+          this.navigate();
+        } else {
+          this.submit();
+        }
+      }
+    },
+    loadExistingAnswers () {
+      if (this.application.data.proposal_extension.parking) {
+        this.current = this.application.data.proposal_extension.parking.current_bike_parking_spaces;
+        this.total = this.application.data.proposal_extension.parking.planned_bike_parking_spaces;
+      }
+		},
     fetchData () {
       this.currentWorks = this.$route.params.currentLevelInfo;
       this.type = this.$route.params.type;

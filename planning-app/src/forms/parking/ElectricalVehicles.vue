@@ -80,42 +80,63 @@ export default {
     this.errorMessages = errorMessage;
   },
   watch: {
-    '$route': 'fetchData'
+    '$route': 'fetchData',
+    application () {
+			this.loadExistingAnswers();
+		}
   },
   methods: {
+    checkAnswers () {
+      if (this.application.data.proposal_extension.parking) {
+        if (this.chargingPoints === this.application.data.proposal_extension.parking.new_ev_charging_points) {
+          this.navigate();
+        } else {
+          this.submit();
+        }
+      }
+      
+    },
+    loadExistingAnswers () {
+      if (this.application.data.proposal_extension.parking) {
+        this.electricalVehical = this.application.data.proposal_extension.parking.new_ev_charging_points ? "Yes" : "No"; 
+        this.chargingPoints = this.application.data.proposal_extension.parking.new_ev_charging_points;
+      }
+		},
     fetchData () {
       this.currentWorks = this.$route.params.currentLevelInfo;
     },
     submit() {
+
+
+      let currentData = this.application.data.proposal_extension.parking;
+
       if (this.electricalVehical === "Yes") {
-
-        let currentData = this.application.data.proposal_extension.parking;
-
         currentData.new_ev_charging_points = parseInt(this.chargingPoints);
-
-        let payload = {
-          parking: {}
-        };
-
-        payload.parking = currentData;
-
-        const extensionId = this.$store.getters.getExtensionId(this.applicationId);
-
-        this.$store.dispatch('updateExtensionProposal', { 
-          "application_id": this.applicationId, 
-          'selectedProposals': payload, 
-          "extension_id": extensionId 
-        }).then((response) => {
-          if (response.error) {
-            this.showErrorMessage = true;
-            return;
-          } else {
-            this.navigate();
-          }
-        })
       } else {
-        this.navigate();
+        currentData.new_ev_charging_points = 0;
       }
+
+      let payload = {
+        parking: {}
+      };
+
+      payload.parking = currentData;
+
+      const extensionId = this.$store.getters.getExtensionId(this.applicationId);
+
+      this.$store.dispatch('updateExtensionProposal', { 
+        "application_id": this.applicationId, 
+        'selectedProposals': payload, 
+        "extension_id": extensionId 
+      }).then((response) => {
+        if (response.error) {
+          this.showErrorMessage = true;
+          return;
+        } else {
+          this.navigate();
+        }
+      })
+   
     },
     navigate() {
       var routerParams = Navigate.calculateNavigation(this.$store.state.state.proposalFlow, this.currentWorks, 'Parking');

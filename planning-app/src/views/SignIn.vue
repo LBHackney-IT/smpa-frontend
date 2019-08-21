@@ -78,7 +78,7 @@
       signIn() {
 
         this.$store.dispatch('signIn', { "email": this.email, 'password': this.password }).then((response) => {
-          if (response && response.response && response.response.response.data.title) {
+          if (response && response.response && response.response.response && response.response.response.data.title) {
             this.error = true;
             this.errorMessage = response.response.response.data.title;
             return;

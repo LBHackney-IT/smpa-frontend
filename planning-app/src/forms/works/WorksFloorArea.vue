@@ -59,7 +59,7 @@
 
     <error-message v-if="showErrorMessage && !loading" :message="errorMessages.FLOOR_AREA.GENERIC_ERROR"></error-message>
 
-		<v-cta name="Continue" :onClick="submit"></v-cta>
+		<v-cta name="Continue" :onClick="checkAnswers"></v-cta>
 	</div>
 </template>
 
@@ -88,6 +88,11 @@ export default {
       errorMessages: undefined
     }
   },
+  watch: {
+    application () {
+			this.loadExistingAnswers();
+		}
+  },
   created () {
     this.errorMessages = errorMessage;
   },
@@ -95,6 +100,22 @@ export default {
     this.loadDefaultOptions();
   },
 	methods: {
+    checkAnswers () {
+      if (this.floorArea === this.application.data.proposal_extension.additional_floor_area && this.selectedOption === this.application.data.proposal_extension.additional_floor_area_units_id) {
+        this.navigate();
+      } else {
+        this.submit();
+      }
+    },
+    loadExistingAnswers () {
+      if (this.application.data.proposal_extension.additional_floor_area) {
+        this.floorArea = this.application.data.proposal_extension.additional_floor_area;
+      }
+
+      if (this.application.data.proposal_extension.additional_floor_area_units_id) {
+        this.selectedOption = this.application.data.proposal_extension.additional_floor_area_units_id;
+      }
+		},
     navigate() {
       router.push({ name: 'WorksData' });
     },
@@ -128,6 +149,12 @@ export default {
           this.navigate();
         }
       })
+    }
+  },
+  computed: {
+    application () {
+      let index = this.$store.state.state.applications.findIndex( application => application.data.id === this.applicationId );
+			return this.$store.state.state.applications[index];
     }
   }
 }

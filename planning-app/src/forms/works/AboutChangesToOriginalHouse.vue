@@ -77,6 +77,11 @@ export default {
           name: 'Below ground level basement works (including lightwells)'
         },
         {
+          id: 'roof',
+          value: 'roof',
+          name: 'Works to roof pitch (including roof extensions)'
+        },
+        {
           id: 'porch',
           value: 'porch',
           name: 'Porch'

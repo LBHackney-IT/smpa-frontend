@@ -42,7 +42,7 @@
 
     <error-message v-if="showErrorMessage && !loading" :message="errorMessages.PARKING.GENERIC_ERROR"></error-message>
 
-		<v-cta name="Continue" :onClick="submit"></v-cta>
+		<v-cta name="Continue" :onClick="checkAnswers"></v-cta>
 	</div>
 </template>
 
@@ -64,7 +64,6 @@ export default {
 	},
 	data () {
     return {
-      alterationToAccess: '',
       typeOfAlteration: '',
       type: undefined,
       currentWorks: undefined,
@@ -79,9 +78,27 @@ export default {
     this.errorMessages = errorMessage;
   },
   watch: {
-    '$route': 'fetchData'
+    '$route': 'fetchData',
+    application () {
+			this.loadExistingAnswers();
+		}
   },
   methods: {
+    checkAnswers () {
+      if (this.application.data.proposal_extension.parking) {
+        if (this.current === this.application.data.proposal_extension.parking.current_car_parking_spaces && this.total === this.application.data.proposal_extension.parking.planned_car_parking_spaces) {
+          this.navigate();
+        } else {
+          this.submit();
+        }
+      }
+    },
+    loadExistingAnswers () {
+      if (this.application.data.proposal_extension.parking) {
+        this.current = this.application.data.proposal_extension.parking.current_car_parking_spaces;
+        this.total = this.application.data.proposal_extension.parking.planned_car_parking_spaces;
+      }
+		},
     fetchData () {
       this.type = this.$route.params.type;
       this.currentWorks = this.$route.params.currentLevelInfo;
@@ -98,6 +115,8 @@ export default {
         router.push({ name: 'BikeParkingSpaces', params: { type: this.type, currentLevelInfo: this.currentWorks } });
 
       } else {
+
+        //todo send somewhere in case of page refresh
         return;
       }
     },

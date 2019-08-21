@@ -27,13 +27,6 @@
             </label>
           </div>
 
-          <!-- todo fix this if  -->
-   <!--        <div class="govuk-checkboxes__item" v-if="this.type === 'vehicle' || this.type === 'both'">
-            <input class="govuk-checkboxes__input" id="proposal-4" name="proposal" type="checkbox" value="Vehicle access" v-model="selectedProposal">
-            <label class="govuk-label govuk-checkboxes__label" for="proposal-4">
-              <strong>Dropped kerb and formation of vehicle access</strong>
-            </label>
-          </div> -->
         </div>
       </fieldset>
     </div>
@@ -41,7 +34,7 @@
 
     <error-message v-if="showErrorMessage && !loading" :message="errorMessages.ACCESS.GENERIC_ERROR"></error-message>
 
-		<v-cta name="Continue" :onClick="submit"></v-cta>
+		<v-cta name="Continue" :onClick="checkAnswers"></v-cta>
 	</div>
 </template>
 
@@ -53,6 +46,7 @@ import FreeDescription from '../../components/FreeDescription.vue';
 import { getRouteAppId } from '../../mixins/getRouteAppId';
 import ErrorMessage from '../../components/ErrorMessage.vue';
 import * as errorMessage from '../../messages/errorMessages';
+import Lib from '../../common/lib';
 
 export default {
   name: 'MoreAboutAccess',
@@ -65,6 +59,7 @@ export default {
   data () {
     return {
       selectedProposal: [],
+      existingProposal: [],
       type: undefined,
       typeOfAlteration: undefined,
       currentWorks: undefined,
@@ -81,9 +76,27 @@ export default {
     this.errorMessages = errorMessage;
   },
   watch: {
-    '$route': 'fetchData'
+    '$route': 'fetchData',
+    application () {
+			this.loadExistingAnswers();
+		}
   },
 	methods: {
+    checkAnswers () {
+      var sameAnswers = Lib.arrayDiff(this.selectedProposal, this.existingProposal);
+
+      if (sameAnswers) {
+        this.navigate();
+      } else {
+        this.submit();
+      }
+    },
+    loadExistingAnswers () {
+      if (this.application.data.proposal_extension.means_of_access.access_works_sub_type_ids) {
+        this.selectedProposal = this.application.data.proposal_extension.means_of_access.access_works_sub_type_ids;
+        this.existingProposal = this.application.data.proposal_extension.means_of_access.access_works_sub_type_ids;
+      }
+    },
     fetchData () {
       this.selectedProposal = [];
       this.type = this.$route.params.type;

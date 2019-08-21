@@ -29,7 +29,7 @@
 
     <error-message v-if="showErrorMessage && !loading" :message="errorMessages.ROOFS.GENERIC_ERROR"></error-message>
 
-		<v-cta name="Continue" :onClick="submit"></v-cta>
+		<v-cta name="Continue" :onClick="checkAnswers"></v-cta>
 	</div>
 </template>
 
@@ -41,6 +41,7 @@ import FreeDescription from '../../components/FreeDescription.vue';
 import { getRouteAppId } from '../../mixins/getRouteAppId';
 import ErrorMessage from '../../components/ErrorMessage.vue';
 import * as errorMessage from '../../messages/errorMessages';
+import Lib from '../../common/lib';
 
 export default {
   name: 'AboutRoofs',
@@ -53,6 +54,7 @@ export default {
   data () {
     return {
       selectedProposal: [],
+      existingProposal: [],
       defaultOptions: undefined,
       showErrorMessage: false,
       errorMessages: undefined
@@ -66,9 +68,27 @@ export default {
     this.errorMessages = errorMessage;
   },
   watch: {
-    '$route': 'fetchData'
+    '$route': 'fetchData',
+    application () {
+			this.loadExistingAnswers();
+		}
   },
 	methods: {
+    checkAnswers () {
+      var sameAnswers = Lib.arrayDiff(this.selectedProposal, this.existingProposal);
+
+      if (sameAnswers) {
+        this.navigate();
+      } else {
+        this.submit();
+      }
+    },
+    loadExistingAnswers () {
+      if (this.application.data.proposal_extension.original_house.roof) {
+        this.selectedProposal = this.application.data.proposal_extension.original_house.roof.works_type_ids;
+        this.existingProposal = this.application.data.proposal_extension.original_house.roof.works_type_ids;
+      }
+		},
     fetchData () {
       this.currentWorks = this.$route.params.currentLevelInfo;
     },

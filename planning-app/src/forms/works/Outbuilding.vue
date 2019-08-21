@@ -35,7 +35,7 @@
     </div>
     <free-description></free-description>
     
-    <error-message v-if="showErrorMessage && !loading" :message="errorMessages.OUTBUILDING.GENERIC_ERROR"></error-message>
+    <error-message v-if="showErrorMessage" :message="errorMessages.OUTBUILDING.GENERIC_ERROR"></error-message>
 
 		<v-cta name="Continue" :onClick="submit"></v-cta>
 	</div>
@@ -63,7 +63,10 @@ export default {
     this.errorMessages = errorMessage;
   },
   watch: {
-    '$route': 'fetchData'
+    '$route': 'fetchData',
+    application () {
+			this.loadExistingAnswers();
+		}
   },
   data () {
     return {
@@ -76,13 +79,25 @@ export default {
     }
   },
 	methods: {
+    loadExistingAnswers () {
+      if (this.application.data.proposal_extension.incidental_buildings) {
+        this.existingOutbuilding = this.application.data.proposal_extension.incidental_buildings.removal_or_demolition;
+        this.details = this.application.data.proposal_extension.incidental_buildings.details;
+      }
+		},
     fetchData () {
-      this.selectedProposal = [];
       this.currentWorks = this.$route.params.currentLevelInfo;
     },
     navigate() {
       var routerParams = Navigate.calculateNavigation(this.$store.state.state.proposalFlow, this.currentWorks, 'Outbuilding');
       router.push(routerParams);
+    },
+    checkAnswers () {
+      if (this.existingOutbuilding === this.application.data.proposal_extension.incidental_buildings.removal_or_demolition && this.details === this.application.data.proposal_extension.incidental_buildings.details) {
+        this.navigate();
+      } else {
+        this.submit();
+      }
     },
     submit() {
       let payload = {
@@ -102,9 +117,16 @@ export default {
           this.showErrorMessage = true;
           return;
         } else {
+          this.showErrorMessage = false;
           this.navigate();
         }
       })
+    }
+  },
+  computed: {
+    application () {
+      let index = this.$store.state.state.applications.findIndex( application => application.data.id === this.applicationId );
+			return this.$store.state.state.applications[index];
     }
   }
 }

@@ -28,13 +28,13 @@
 				</legend>
 				<div class="govuk-radios govuk-radios--inline">
 					<div class="govuk-radios__item">
-						<input class="govuk-radios__input" id="trees-boundary-1" name="trees-boundary" type="radio" value="Yes" v-model="treesInsideBoundary">
+						<input class="govuk-radios__input" id="trees-boundary-1" name="trees-boundary" type="radio" v-bind:value="true" v-model="treesInsideBoundary">
 						<label class="govuk-label govuk-radios__label" for="trees-boundary-1">
 							Yes
 						</label>
 					</div>
 					<div class="govuk-radios__item">
-						<input class="govuk-radios__input" id="trees-boundary-2" name="trees-boundary" type="radio" value="No" v-model="treesInsideBoundary">
+						<input class="govuk-radios__input" id="trees-boundary-2" name="trees-boundary" type="radio" v-bind:value="false" v-model="treesInsideBoundary">
 						<label class="govuk-label govuk-radios__label" for="trees-boundary-2">
 							No
 						</label>
@@ -57,13 +57,13 @@
 
 				<div class="govuk-radios govuk-radios--inline">
 					<div class="govuk-radios__item">
-						<input class="govuk-radios__input" id="trees-adjacent-1" name="trees-adjacent" type="radio" value="Yes" v-model="removedOrPruned">
+						<input class="govuk-radios__input" id="trees-adjacent-1" name="trees-adjacent" type="radio" v-bind:value="true" v-model="removedOrPruned">
 						<label class="govuk-label govuk-radios__label" for="trees-adjacent-1">
 							Yes
 						</label>
 					</div>
 					<div class="govuk-radios__item">
-						<input class="govuk-radios__input" id="trees-adjacent-2" name="trees-adjacent" type="radio" value="No" v-model="removedOrPruned">
+						<input class="govuk-radios__input" id="trees-adjacent-2" name="trees-adjacent" type="radio" v-bind:value="false" v-model="removedOrPruned">
 						<label class="govuk-label govuk-radios__label" for="trees-adjacent-2">
 							No
 						</label>
@@ -84,13 +84,13 @@
 
 				<div class="govuk-radios govuk-radios--inline">
 					<div class="govuk-radios__item">
-						<input class="govuk-radios__input" id="trees-adjacent-3" name="trees-adjacent3" type="radio" value="Yes" v-model="outsideBoundary">
+						<input class="govuk-radios__input" id="trees-adjacent-3" name="trees-adjacent3" type="radio" v-bind:value="true" v-model="outsideBoundary">
 						<label class="govuk-label govuk-radios__label" for="trees-adjacent-3">
 							Yes
 						</label>
 					</div>
 					<div class="govuk-radios__item">
-						<input class="govuk-radios__input" id="trees-adjacent-4" name="trees-adjacent4" type="radio" value="No" v-model="outsideBoundary">
+						<input class="govuk-radios__input" id="trees-adjacent-4" name="trees-adjacent4" type="radio" v-bind:value="false" v-model="outsideBoundary">
 						<label class="govuk-label govuk-radios__label" for="trees-adjacent-4">
 							No
 						</label>
@@ -132,13 +132,17 @@ export default {
 			showErrorMessage: false,
       errorMessages: undefined
     }
+	},
+	watch: {
+    application () {
+			this.loadExistingAnswers();
+		}
   },
   computed: {
     application () {
       let index = this.$store.state.state.applications.findIndex( application => application.data.id === this.applicationId );
 			return this.$store.state.state.applications[index];
     },
-    
     isInConservationArea () {
       return this.application.data.site_constraints.nb_conarea > 0;
 		},
@@ -153,15 +157,22 @@ export default {
 		}
   },
   methods: {
+		loadExistingAnswers () {
+      if (this.application.data.proposal_extension.trees) {
+				this.treesInsideBoundary = this.application.data.proposal_extension.trees.inside_boundry;
+      	this.removedOrPruned = this.application.data.proposal_extension.trees.removed_or_pruned;
+				this.outsideBoundary = this.application.data.proposal_extension.trees.outside_boundry;
+      }
+		},
     navigate() {
       router.push({ name: 'WhatMaterials' });
 		},
 		submit() {
       let payload = {
 				"trees": {
-					"inside_boundry": this.treesInsideBoundary === 'Yes' ? true : false,
-					"removed_or_pruned": this.removedOrPruned === 'Yes' ? true : false,
-					"outside_boundry": this.outsideBoundary === 'Yes' ? true : false
+					"inside_boundry": this.treesInsideBoundary,
+					"removed_or_pruned": this.removedOrPruned,
+					"outside_boundry": this.outsideBoundary
 				}
 			};
       const extensionId = this.$store.getters.getExtensionId(this.applicationId);

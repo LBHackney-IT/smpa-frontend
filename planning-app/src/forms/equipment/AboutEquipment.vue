@@ -34,7 +34,7 @@
     
     <error-message v-if="showErrorMessage && !loading" :message="errorMessages.EQUIPMENT.GENERIC_ERROR"></error-message>
 
-		<v-cta name="Continue" :onClick="navigate"></v-cta>
+		<v-cta name="Continue" :onClick="checkAnswers"></v-cta>
 	</div>
 </template>
 
@@ -45,6 +45,7 @@ import FreeDescription from '../../components/FreeDescription.vue';
 import { getRouteAppId } from '../../mixins/getRouteAppId';
 import ErrorMessage from '../../components/ErrorMessage.vue';
 import * as errorMessage from '../../messages/errorMessages';
+import Lib from '../../common/lib';
 
 export default {
   name: 'AboutEquipment',
@@ -59,6 +60,8 @@ export default {
       question: 'About the works',
       selectedGeneralProposal: [],
       selectedConservationAreaProposal: [],
+      existingGeneralProposal: [],
+      existingConservationAreaProposal: [],
       currentWorks: undefined,
       defaultGeneralOptions: undefined,
       defaultConservationAreaOptions: undefined,
@@ -74,9 +77,31 @@ export default {
     this.loadDefaultOptions();
   },
   watch: {
-    '$route': 'fetchData'
+    '$route': 'fetchData',
+    application () {
+			this.loadExistingAnswers();
+		}
   },
 	methods: {
+    checkAnswers () {
+      var sameAnswersGeneralEquipment = Lib.arrayDiff(this.selectedGeneralProposal, this.existingGeneralProposal);
+      var sameAnswersConservationEquipment = Lib.arrayDiff(this.selectedConservationAreaProposal, this.existingConservationAreaProposal);
+
+      if (sameAnswersGeneralEquipment && sameAnswersConservationEquipment) {
+        this.updateNavigation();
+      } else {
+        this.submit();
+      }
+    },
+    loadExistingAnswers () {
+      if (this.application.data.proposal_equipment) {
+        this.selectedGeneralProposal = this.application.data.proposal_equipment.equipment.equipment_type_ids;
+        this.selectedConservationAreaProposal = this.application.data.proposal_equipment.equipment.equipment_conservation_type_ids;
+
+        this.existingGeneralProposal = this.application.data.proposal_equipment.equipment.equipment_type_ids;
+        this.existingConservationAreaProposal = this.application.data.proposal_equipment.equipment.equipment_conservation_type_ids;
+      }
+		},
     loadDefaultOptions() {
       if (!this.isInConservationArea) {
         this.$store.dispatch('getDefaultData', 'equipment-works-types').then((response) => {
@@ -130,7 +155,7 @@ export default {
         router.push({ name: this.$store.state.state.proposalFlow[currentLevelInMap + 1].goTo[0], params: {currentLevelInfo: this.$store.state.state.proposalFlow[currentLevelInMap + 1], id: this.$store.state.state.proposalFlow[currentLevelInMap + 1].proposalId, origin: 'equipment' } });
       });
     },
-    navigate() {
+    submit() {
 
       const extensionId = this.$store.getters.getEquipmentId(this.applicationId);
 

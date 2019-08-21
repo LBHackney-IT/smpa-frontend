@@ -26,9 +26,9 @@
 			</fieldset>
 		</div>
 
-    <error-message v-if="showErrorMessage && !loading" :message="errorMessages.ACCESS.GENERIC_ERROR"></error-message>
+    <error-message v-if="showErrorMessage" :message="errorMessages.ACCESS.GENERIC_ERROR"></error-message>
 
-		<v-cta name="Continue" :onClick="submit"></v-cta>
+		<v-cta name="Continue" :onClick="checkAnswers"></v-cta>
 	</div>
 </template>
 
@@ -67,9 +67,27 @@ export default {
     this.errorMessages = errorMessage;
   },
   watch: {
-    '$route': 'fetchData'
+    '$route': 'fetchData',
+    application () {
+			this.loadExistingAnswers();
+		}
   },
   methods: {
+    checkAnswers () {
+      if (this.application.data.proposal_extension.means_of_access) {
+        if (this.typeOfAlteration === this.application.data.proposal_extension.means_of_access.access_works_scope_id) {
+          this.navigate();
+        } else {
+          this.submit();
+        }
+      }
+      
+    },
+    loadExistingAnswers () {
+      if (this.application.data.proposal_extension.means_of_access) {
+        this.typeOfAlteration = this.application.data.proposal_extension.means_of_access.access_works_scope_id;
+      }
+		},
     fetchData () {
       this.typeOfAlteration = undefined;
       this.currentWorks = this.$route.params.currentLevelInfo;
@@ -122,6 +140,12 @@ export default {
           this.navigate();
         }
       })
+    }
+  },
+  computed: {
+    application () {
+      let index = this.$store.state.state.applications.findIndex( application => application.data.id === this.applicationId );
+			return this.$store.state.state.applications[index];
     }
   }
 

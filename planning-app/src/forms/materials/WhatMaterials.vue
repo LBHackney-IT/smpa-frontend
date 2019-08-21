@@ -24,20 +24,20 @@
 
 				<div class="govuk-radios govuk-radios--inline">
 					<div class="govuk-radios__item">
-						<input class="govuk-radios__input" id="work-started-1" name="work-started" type="radio" value="Yes" v-model="materials">
+						<input class="govuk-radios__input" id="work-started-1" name="work-started" type="radio" value="definitions_in_documents" v-model="materials">
 						<label class="govuk-label govuk-radios__label" for="work-started-1">
 							You will define materials on supporting documentation
 						</label>
 					</div>
 					<div class="govuk-radios__item">
-						<input class="govuk-radios__input" id="work-started-2" name="work-started" type="radio" value="No" v-model="materials">
+						<input class="govuk-radios__input" id="work-started-2" name="work-started" type="radio" value="definitions_in_form" v-model="materials">
 						<label class="govuk-label govuk-radios__label" for="work-started-2">
 							You will define materials using this form
 						</label>
 					</div>
 
           <div class="govuk-radios__item">
-						<input class="govuk-radios__input" id="work-started-3" name="work-started" type="radio" value="dont-know" v-model="materials">
+						<input class="govuk-radios__input" id="work-started-3" name="work-started" type="radio" value="definitions_to_follow" v-model="materials">
 						<label class="govuk-label govuk-radios__label" for="work-started-3">
 							You don’t know yet and will submit an Approval of Conditions later
 						</label>
@@ -76,20 +76,43 @@ export default {
   created () {
     this.errorMessages = errorMessage;
   },
+  watch: {
+    application () {
+			this.loadExistingAnswers();
+		}
+  },
 	methods: {
+    loadExistingAnswers () {
+      if (this.application.data.proposal_extension.materials) {
+
+        if (this.application.data.proposal_extension.materials.definitions_in_documents) {
+          this.materials = 'definitions_in_documents';
+        }
+
+        if (this.application.data.proposal_extension.materials.definitions_in_form) {
+          this.materials = 'definitions_in_form';
+        }
+
+        if (this.application.data.proposal_extension.materials.definitions_to_follow) {
+          this.materials = 'definitions_to_follow';
+        }
+      }
+		},
     navigate() {
-      if (this.materials === 'Yes' || this.materials === 'dont-know') {
+      if (this.materials === 'definitions_in_documents' || this.materials === 'definitions_to_follow') {
         router.push({ name: 'SupportingDocumentation' });
       } else {
         router.push({ name: 'MaterialsStep1' });
       }
     },
     submit() {
+
+      //todo delete materials via form if method of submitting materials has changed
       let payload = {
         "materials": {
-          "definitions_in_documents": this.materials === 'Yes' ? true : false,
-          "definitions_in_form": this.materials === 'No' ? true : false,
-          "definitions_to_follow": this.materials === 'dont-know' ? true : false
+          "definitions_in_documents": this.materials === 'definitions_in_documents' ? true : false,
+          "definitions_in_form": this.materials === 'definitions_in_form' ? true : false,
+          "definitions_to_follow": this.materials === 'definitions_to_follow' ? true : false
         }
       };
 
@@ -103,6 +126,12 @@ export default {
           this.navigate();
         }
       })
+    }
+  },
+  computed: {
+    application () {
+      let index = this.$store.state.state.applications.findIndex( application => application.data.id === this.applicationId );
+			return this.$store.state.state.applications[index];
     }
   }
 }

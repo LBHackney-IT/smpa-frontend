@@ -29,7 +29,7 @@
 
     <error-message v-if="showErrorMessage && !loading" :message="errorMessages.BASEMENT.GENERIC_ERROR"></error-message>
 
-		<v-cta name="Continue" :onClick="submit"></v-cta>
+		<v-cta name="Continue" :onClick="checkAnswers"></v-cta>
 	</div>
 </template>
 
@@ -41,6 +41,7 @@ import FreeDescription from '../../components/FreeDescription.vue';
 import { getRouteAppId } from '../../mixins/getRouteAppId';
 import ErrorMessage from '../../components/ErrorMessage.vue';
 import * as errorMessage from '../../messages/errorMessages';
+import Lib from '../../common/lib';
 
 export default {
   name: 'AboutBasement',
@@ -53,6 +54,7 @@ export default {
   data () {
     return {
       selectedProposal: [],
+      existingProposal: [],
       currentWorks: undefined,
       defaultOptions: undefined,
       showErrorMessage: false,
@@ -67,9 +69,27 @@ export default {
     this.errorMessages = errorMessage;
   },
   watch: {
-    '$route': 'fetchData'
+    '$route': 'fetchData',
+    application () {
+			this.loadExistingAnswers();
+		}
   },
 	methods: {
+    checkAnswers () {
+      var sameAnswers = Lib.arrayDiff(this.selectedProposal, this.existingProposal);
+
+      if (sameAnswers) {
+        this.navigate();
+      } else {
+        this.submit();
+      }
+    },
+    loadExistingAnswers () {
+      if (this.application.data.proposal_extension.original_house.basement) {
+        this.selectedProposal = this.application.data.proposal_extension.original_house.basement.works_type_ids;
+        this.existingProposal = this.application.data.proposal_extension.original_house.basement.works_type_ids;
+      }
+		},
     fetchData () {
       this.currentWorks = this.$route.params.currentLevelInfo;
     },
@@ -106,6 +126,12 @@ export default {
         }
       })
     }
-  }
+  },
+  computed: {
+    application () {
+      let index = this.$store.state.state.applications.findIndex( application => application.data.id === this.applicationId );
+			return this.$store.state.state.applications[index];
+    }
+	}
 }
 </script>
