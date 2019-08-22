@@ -158,7 +158,7 @@ export default {
   },
   methods: {
 		loadExistingAnswers () {
-      if (this.application.data.proposal_extension.trees) {
+      if (this.application.data.proposal_extension && this.application.data.proposal_extension.trees) {
 				this.treesInsideBoundary = this.application.data.proposal_extension.trees.inside_boundry;
       	this.removedOrPruned = this.application.data.proposal_extension.trees.removed_or_pruned;
 				this.outsideBoundary = this.application.data.proposal_extension.trees.outside_boundry;
@@ -167,8 +167,9 @@ export default {
     navigate() {
       router.push({ name: 'WhatMaterials' });
 		},
-		submit() {
-      let payload = {
+
+		updateProposal() {
+			let payload = {
 				"trees": {
 					"inside_boundry": this.treesInsideBoundary,
 					"removed_or_pruned": this.removedOrPruned,
@@ -188,6 +189,20 @@ export default {
 					this.navigate();
 				}
       })
+		},
+		submit() {
+			if (this.application.data.proposal_extension) {
+				this.updateProposal();
+			} else {
+				this.$store.dispatch('createExtensionProposal', { "application_id": this.applicationId }).then((response) => {
+						if (response.error) {
+						this.showErrorMessage = true;
+						return;
+					} else {
+						this.updateProposal();
+					} 
+				})
+			}
     }
   }
 }
