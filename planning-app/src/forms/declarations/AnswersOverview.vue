@@ -262,7 +262,11 @@
             Other materials
           </dt>
           <dd class="govuk-summary-list__value">
-            <p v-if="this.application.data.proposal_extension && this.application.data.proposal_extension.materials && this.application.data.proposal_extension.materials.other">{{this.application.data.proposal_extension.materials.other}}</p>
+            <ul v-if="this.application.data.proposal_extension && this.application.data.proposal_extension.materials && this.application.data.proposal_extension.materials.other">
+              <li v-bind:key="other" v-for="other in this.application.data.proposal_extension.materials.other">
+                {{ other }}
+              </li>
+            </ul>
           </dd>
           <dd class="govuk-summary-list__actions">
             <router-link :to="{ name: 'WhatMaterials'}" class="govuk-link">

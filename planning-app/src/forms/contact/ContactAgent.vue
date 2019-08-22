@@ -127,7 +127,24 @@ export default {
   created () {
     this.errorMessages = errorMessage;
   },
+  watch: {
+    application () {
+			this.loadExistingAnswers();
+		}
+  },
 	methods: {
+    loadExistingAnswers () {
+      if (this.application.data.agent) {
+        this.full_name = this.application.data.agent.full_name;
+        this.company = this.application.data.agent.company;
+        this.address_line_1 = this.application.data.agent.address_line_1;
+        this.address_line_2 = this.application.data.agent.address_line_2;
+        this.town_city = this.application.data.agent.town_city;
+        this.postcode = this.application.data.agent.postcode;
+        this.phone = this.application.data.agent.phone;
+        this.email = this.application.data.agent.email;
+      }
+		},
     submit() {
       var payload = {};
       payload.id = this.applicationId;
@@ -151,6 +168,12 @@ export default {
         }
       });
     }
-  }
+  },
+  computed: {
+    application () {
+      let index = this.$store.state.state.applications.findIndex( application => application.data.id === this.applicationId );
+			return this.$store.state.state.applications[index];
+    }
+	}
 }
 </script>

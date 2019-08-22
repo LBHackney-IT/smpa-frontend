@@ -90,7 +90,22 @@ export default {
   created () {
     this.errorMessages = errorMessage;
   },
+  watch: {
+    application () {
+			this.loadExistingAnswers();
+		}
+  },
 	methods: {
+    loadExistingAnswers () {
+      if (this.application.data.declaration) {
+        this.typeOfInterest = this.application.data.declaration.id;
+      }
+      if (this.application.data.declaration_detail) {
+        this.name = this.application.data.declaration_detail.name;
+        this.role = this.application.data.declaration_detail.role;
+        this.relationshipDescription = this.application.data.declaration_detail.details;
+      }
+		},
     loadDefaultOptions() {
       this.$store.dispatch('getDefaultData', 'declarations').then((response) => {
         if (response.error) {
@@ -120,6 +135,12 @@ export default {
 			})
       
     }
-  }
+  },
+  computed: {
+    application () {
+      let index = this.$store.state.state.applications.findIndex( application => application.data.id === this.applicationId );
+			return this.$store.state.state.applications[index];
+    }
+	}
 }
 </script>

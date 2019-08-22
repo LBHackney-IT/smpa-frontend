@@ -66,7 +66,17 @@ export default {
   created () {
     this.errorMessages = errorMessage;
   },
+  watch: {
+    application () {
+			this.loadExistingAnswers();
+		}
+  },
 	methods: {
+    loadExistingAnswers () {
+      if (this.application.data.ownership_declaration) {
+        this.typeOfOwnership = this.application.data.ownership_type_id;
+      }
+		},
     loadDefaultOptions() {
       this.$store.dispatch('getDefaultData', 'ownership-types').then((response) => {
         this.defaultOptions = response.data;
@@ -92,6 +102,12 @@ export default {
         }
       });    
     }
-  }
+  },
+  computed: {
+    application () {
+      let index = this.$store.state.state.applications.findIndex( application => application.data.id === this.applicationId );
+			return this.$store.state.state.applications[index];
+    }
+	}
 }
 </script>

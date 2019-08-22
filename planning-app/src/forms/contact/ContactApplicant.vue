@@ -197,7 +197,24 @@ export default {
   created () {
     this.errorMessages = errorMessage;
   },
+  watch: {
+    application () {
+			this.loadExistingAnswers();
+		}
+  },
 	methods: {
+    loadExistingAnswers () {
+      if (this.application.data.applicant) {
+        this.full_name = this.application.data.applicant.full_name;
+        this.company = this.application.data.applicant.company;
+        this.address_line_1 = this.application.data.applicant.address_line_1;
+        this.address_line_2 = this.application.data.applicant.address_line_2;
+        this.town_city = this.application.data.applicant.town_city;
+        this.postcode = this.application.data.applicant.postcode;
+        this.phone = this.application.data.applicant.phone;
+        this.email = this.application.data.applicant.email;
+      }
+		},
     navigate() {
       var payload = {};
       payload.id = this.applicationId;
