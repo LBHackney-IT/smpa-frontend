@@ -28,24 +28,34 @@
         </div>
 
         <div class="govuk-inset-text" v-if="typeOfInterest === option.id && option.id !='e0bbf434-9c28-4fe8-b4ae-892b3e359479'">
-          <div class="govuk-form-group">
+          <div class="govuk-form-group" v-bind:class="{ 'govuk-form-group--error': missingName }" >
             <label class="govuk-label" v-bind:for="option.id + '-name'">
               Name
             </label>
+
+            <span id="event-name-error" class="govuk-error-message" v-if="missingName">
+              <span class="govuk-visually-hidden">Error:</span> Enter a name
+            </span>
             <input class="govuk-input" v-bind:id="option.id + '-name'" v-bind:name="option.id + '-name'" type="text" v-model="name">
           </div>
 
-          <div class="govuk-form-group">
+          <div class="govuk-form-group" v-bind:class="{ 'govuk-form-group--error': missingRole }">
             <label class="govuk-label" v-bind:for="option.id + '-role'">
               Role
             </label>
+            <span id="event-name-error" class="govuk-error-message" v-if="missingRole">
+              <span class="govuk-visually-hidden">Error:</span> Enter a role
+            </span>
             <input class="govuk-input" v-bind:id="option.id + '-role'" v-bind:name="option.id + '-role'" type="text" v-model="role">
           </div>
 
-          <div class="govuk-form-group">
+          <div class="govuk-form-group" v-bind:class="{ 'govuk-form-group--error': missingDetails }">
             <label class="govuk-label" v-bind:for="option.id + '-relationship'">
               Define relationship
             </label>
+            <span id="event-name-error" class="govuk-error-message" v-if="missingDetails">
+              <span class="govuk-visually-hidden">Error:</span> Enter details
+            </span>
             <textarea class="govuk-textarea" v-bind:id="option.id + '-relationship'" v-bind:name="option.id + '-relationship'" rows="5" aria-describedby="more-detail-hint" v-model="relationshipDescription"></textarea>
           </div>
         </div>
@@ -81,7 +91,10 @@ export default {
       relationshipDescription: undefined,
       typeOfInterest: undefined,
       showErrorMessage: false,
-      errorMessages: undefined
+      errorMessages: undefined,
+      missingName: false,
+      missingRole: false,
+      missingDetails: false
     }
   },
   beforeMount () {
@@ -114,18 +127,7 @@ export default {
         this.defaultOptions = response.data;
       });
     },
-    navigate() {
-      var payload = {};
-
-      payload.id = this.applicationId;
-      payload.data = {};
-      payload.data.declaration_id = this.typeOfInterest;
-      payload.data.declaration_detail = {
-        "name": this.name,
-        "role": this.role,
-        "details": this.relationshipDescription
-      };
-
+    submit(payload) {
       this.$store.dispatch('updateApplication', payload).then((response) => {
         if (response.error) {
           this.showErrorMessage = true;
@@ -133,6 +135,43 @@ export default {
           router.push({ name: 'DeclarationsOwnership' });
         }
 			})
+    },
+    navigate() {
+      var payload = {};
+
+      payload.id = this.applicationId;
+      payload.data = {};
+      payload.data.declaration_id = this.typeOfInterest;
+
+      //only generate declaration_detail if the answer is "any of the above"
+      if (this.typeOfInterest !== "e0bbf434-9c28-4fe8-b4ae-892b3e359479") {
+        if (!this.name || this.name.length === 0) {
+          this.missingName = true;
+          return;
+        } else if (!this.role || this.role.length === 0) {
+          this.missingName = false;
+          this.missingRole = true;
+          return;
+
+        } else if (!this.relationshipDescription || this.relationshipDescription.length === 0) {
+          this.missingRole = false;
+          this.missingDetails = true;
+          return;
+        } else {
+
+          this.missingDetails = false;
+
+          payload.data.declaration_detail = {
+            "name": this.name,
+            "role": this.role,
+            "details": this.relationshipDescription
+          };
+          this.submit(payload);
+        }        
+      } else {
+        payload.data.declaration_detail = {};
+        this.submit(payload);
+      }
       
     }
   },
