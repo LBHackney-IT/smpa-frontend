@@ -16,7 +16,7 @@
             <p v-if="!this.hasApplicantFullName">You did not provide this information.</p>
           </dd>
           <dd class="govuk-summary-list__actions">
-            <router-link :to="{ name: 'ApplicationContactApplicant'}"> 
+            <router-link :to="{ name: 'ApplicationContactApplicant'}">
               Change<span class="govuk-visually-hidden"> applicant name</span>
             </router-link>
           </dd>
@@ -31,7 +31,7 @@
           </dd>
           <dd class="govuk-summary-list__actions">
 
-              <router-link :to="{ name: 'ApplicationContact'}"> 
+              <router-link :to="{ name: 'ApplicationContact'}">
               Change<span class="govuk-visually-hidden"> name of agent</span>
               </router-link>
           </dd>
@@ -50,7 +50,7 @@
             <p v-if="!this.hasContactInformationAgent.hasAgent">{{this.hasContactInformationAgent.answer}}</p>
           </dd>
           <dd class="govuk-summary-list__actions">
-            <router-link :to="{ name: 'ApplicationContactAgent'}"> 
+            <router-link :to="{ name: 'ApplicationContactAgent'}">
               Change<span class="govuk-visually-hidden"> contact information</span>
             </router-link>
           </dd>
@@ -69,7 +69,7 @@
             <p v-if="!this.hasContactInformationApplicant.hasApplicant">{{this.hasContactInformationApplicant.answer}}</p>
           </dd>
           <dd class="govuk-summary-list__actions">
-            <router-link :to="{ name: 'ApplicationContactApplicant'}"> 
+            <router-link :to="{ name: 'ApplicationContactApplicant'}">
               Change<span class="govuk-visually-hidden"> contact details</span>
             </router-link>
           </dd>
@@ -91,7 +91,7 @@
           </dd>
 
           <dd class="govuk-summary-list__actions">
-            
+
           </dd>
         </div>
         <div class="govuk-summary-list__row">
@@ -276,15 +276,15 @@
         </div>
       </dl>
 
-      <h2 class="govuk-heading-l">Support documentation</h2>
+      <h2 class="govuk-heading-l">Supporting documentation</h2>
 
       <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row" v-for="file in this.application.data.document_files">
-    
+
           <dd class="govuk-summary-list__value">
             {{ file.original_name }}
           </dd>
-    
+
           <dd class="govuk-summary-list__actions">
             <router-link :to="{ name: 'SupportingDocumentation'}" class="govuk-link">
               Change<span class="govuk-visually-hidden"> files</span>
@@ -312,7 +312,7 @@
         </div>
       </dl>
 
-      <h2 class="govuk-heading-l">Ownerships Certificates and Agricultural Land Declaration</h2>
+      <h2 class="govuk-heading-l">Ownership Certificates and Agricultural Land Declaration</h2>
       <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row">
           <dt class="govuk-summary-list__key">
@@ -354,7 +354,7 @@ export default {
     vCta
   },
   methods: {
-    navigate() {  
+    navigate() {
       router.push({ name: 'Payment' });
     },
     containsKey(obj, key ) {
@@ -362,7 +362,7 @@ export default {
         return false;
       }
       var containsKey = Object.keys(obj).includes(key) ? true : false;
-      return containsKey; 
+      return containsKey;
     }
   },
   computed: {
@@ -454,8 +454,8 @@ export default {
     hasFloorAreaAdded () {
       let answer;
       if (this.hasProposalExtension) {
-        if (this.application.data.proposal_extension.additional_floor_area 
-        && this.application.data.proposal_extension.additional_floor_area_units 
+        if (this.application.data.proposal_extension.additional_floor_area
+        && this.application.data.proposal_extension.additional_floor_area_units
         && this.application.data.proposal_extension.additional_floor_area_units.name) {
           answer = this.application.data.proposal_extension.additional_floor_area + ' ' + this.application.data.proposal_extension.additional_floor_area_units.name;
           return answer;

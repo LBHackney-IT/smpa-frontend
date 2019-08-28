@@ -28,7 +28,7 @@
       </fieldset>
     </div>
     <free-description></free-description>
-    
+
     <error-message v-if="showErrorMessage && !loading" :message="errorMessages.CHANGES_TO_THE_ORIGINAL_HOUSE.GENERIC_ERROR"></error-message>
 
 		<v-cta name="Continue" :onClick="submit"></v-cta>
@@ -59,7 +59,7 @@ export default {
         {
           id: 'single_storey_extension',
           value: 'single_storey_extension',
-          name: 'Single storey extension (including conservatory)'
+          name: 'Single storey extension (including conservatories)'
         },
         {
           id: 'two_storey_extension',
@@ -152,7 +152,7 @@ export default {
 
       if (this.application.data.proposal_extension.original_house.cladding) {
         this.selectedProposal.push('cladding');
-      }   
+      }
 		},
     updateNavigation () {
       var navigationInfo = {
@@ -185,10 +185,10 @@ export default {
 
       const extensionId = this.$store.getters.getExtensionId(this.applicationId);
 
-      this.$store.dispatch('updateExtensionProposal', { 
-        "application_id": this.applicationId, 
-        "selectedProposals": payload, 
-        "extension_id": extensionId 
+      this.$store.dispatch('updateExtensionProposal', {
+        "application_id": this.applicationId,
+        "selectedProposals": payload,
+        "extension_id": extensionId
       }).then((response) => {
 
         if (response.error) {

@@ -10,6 +10,11 @@
         <li>Be clearly named</li>
       </ul>
 
+      <strong class="govuk-!-font-size-24">Personal data</strong>
+      <ul>
+        <li>Not include personal or sensitive data that you do not have consent to make public</li>
+      </ul>
+
       <strong class="govuk-!-font-size-24">Dimensions, materials, trees</strong>
       <ul>
         <li>Display key dimensions of the proposal</li>
@@ -27,7 +32,7 @@
       <strong class="govuk-!-font-size-24">File format and size</strong>
       <ul>
         <li>All files should be attached as PDF, JPG, DOC and XLS</li>
-        <li>CAD or TIF files are not accepted</li>
+        <li>CAD or TIFF files are not accepted</li>
         <li>Be less than 10MB</li>
       </ul>
 

@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<h1 class="govuk-heading-xl" v-if="loadingCheck">
-      We're verifying the payment.
+      We are verifying your payment.
 		</h1>
 
     <error-message v-if="showErrorMessage && !loading" :message="errorMessages.APPLICATION_SUBMISSION.GENERIC_ERROR"></error-message>
@@ -51,7 +51,7 @@ export default {
           submission.data = {
               "submitted": true
           };
-          
+
           this.$store.dispatch('submitApplication', submission).then((res) => {
             if (res.error) {
               this.loadingCheck = false;
@@ -68,4 +68,3 @@ export default {
   }
 }
 </script>
-

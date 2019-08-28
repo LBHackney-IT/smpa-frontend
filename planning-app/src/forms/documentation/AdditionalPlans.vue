@@ -1,7 +1,7 @@
 <template>
 	<div>
     <h2 class="govuk-heading-xl">Supporting documents</h2>
-    
+
     <div class="purpose-message govuk-body">
       <p class="govuk-!-font-weight-bold">All supporting documentation must:</p>
       <ul>
@@ -14,7 +14,7 @@
       </ul>
     </div>
 
-    <h4 class="govuk-heading-m">Uploading aditional documents</h4>
+    <h4 class="govuk-heading-m">Uploading additional documents</h4>
 
     <p>You must submit enough documentation to understand your proposal, including information about the existing property. </p>
 
@@ -54,8 +54,8 @@ You should include elevations for all sides of the proposal.</p>
         <span class="govuk-warning-text__assistive">Warning</span>
         You must upload single page documents only
       </strong>
-    </div> 
-    
+    </div>
+
     <p>
       Select what this document includes.
     </p>
@@ -183,7 +183,7 @@ export default {
         } else {
           this.additionalPlans.push(response.data);
         }
-        
+
       })
     },
     navigate() {
