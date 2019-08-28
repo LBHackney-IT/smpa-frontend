@@ -88,7 +88,8 @@ export const CHANGES_TO_THE_ORIGINAL_HOUSE = {
 }
 
 export const PROPOSAL = {
-  GENERIC_ERROR : 'There was an error. Try again. If the problem persists please contact us.'
+  GENERIC_ERROR : 'There was an error. Try again. If the problem persists please contact us.',
+  NO_CHOICE : 'You have to choose a type of work in order to continue.'
 }
 
 export const FREE_TEXT_FORM = {

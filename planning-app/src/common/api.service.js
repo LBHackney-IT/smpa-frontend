@@ -66,12 +66,8 @@ const ApiService = {
       .put(`${resource}`, params);
   },
 
-  delete(resource) {
-    return Vue.axios
-      .delete(resource)
-      .catch((error) => {
-        throw new Error(`ApiService ${error}`);
-      })
+  delete(resource, id) {
+    return Vue.axios.delete(`${resource}/${id}`);
   },
 
   getResource(resource, id) {
@@ -148,6 +144,11 @@ export const ExtensionProposalService = {
   update (payload, id) {
     ApiService.setHeader();
     return ApiService.update('extension-proposals', id, payload);
+  },
+
+  delete (id) {
+    ApiService.setHeader();
+    return ApiService.delete('extension-proposals', id);
   }
 }
 
@@ -160,6 +161,11 @@ export const EquipmentProposalService = {
   update (id, payload) {
     ApiService.setHeader();
     return ApiService.update('equipment-proposals', id, payload);
+  },
+
+  delete (id) {
+    ApiService.setHeader();
+    return ApiService.delete('equipment-proposals', id);
   }
 }
 

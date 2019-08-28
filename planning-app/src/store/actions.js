@@ -229,6 +229,26 @@ export function updateExtensionProposal ({commit}, data) {
 
 }
 
+export function deleteExtensionProposal ({commit}, application) {
+  return ExtensionProposalService
+    .delete(application)
+    .then( response => {
+      // commit('deleteProposal', {
+      //   'applicationId': application.application_id,
+      //   'data': response.data,
+      //   'type': 'extension'
+      // });
+
+      return response;
+    })
+    .catch(function (error) {
+      let errorResponse = {};
+      errorResponse.response = error;
+      errorResponse.error = true;
+      return errorResponse;
+    });
+}
+
 export function createEquipmentProposal ({commit}, application) {
   return EquipmentProposalService
     .post(application)
@@ -278,6 +298,26 @@ export function createBothProposals ({commit}, application) {
         'applicationId': application.application_id,
         'data': response
       });
+
+      return response;
+    })
+    .catch(function (error) {
+      let errorResponse = {};
+      errorResponse.response = error;
+      errorResponse.error = true;
+      return errorResponse;
+    });
+}
+
+export function deleteEquipmentProposal ({commit}, application) {
+  return EquipmentProposalService
+    .delete(application)
+    .then( response => {
+      // commit('deleteProposal', {
+      //   'applicationId': application.application_id,
+      //   'data': response.data,
+      //   'type': 'equipment'
+      // });
 
       return response;
     })

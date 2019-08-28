@@ -94,7 +94,7 @@ export default {
       }
     },
     loadExistingAnswers () {
-      if (this.application.data.proposal_equipment) {
+      if (this.application.data.proposal_equipment && this.application.data.proposal_equipment.equipment) {
         this.selectedGeneralProposal = this.application.data.proposal_equipment.equipment.equipment_type_ids;
         this.selectedConservationAreaProposal = this.application.data.proposal_equipment.equipment.equipment_conservation_type_ids;
 
@@ -108,7 +108,7 @@ export default {
           if (response.error) {
             return this.showErrorMessage = true;
           }
-          this.defaultOptions = response.data;
+          this.defaultGeneralOptions = response.data;
         });
       } else {
         const equipmentResources = {
@@ -132,7 +132,13 @@ export default {
     updateNavigation () {
 
       let defaultOptions = [];
-      defaultOptions = this.defaultGeneralOptions.concat(this.defaultConservationAreaOptions);
+
+      if (this.defaultConservationAreaOptions) {
+        defaultOptions = this.defaultGeneralOptions.concat(this.defaultConservationAreaOptions);
+      } else {
+        defaultOptions = this.defaultGeneralOptions;
+      }
+      
 
       this.$store.dispatch('generateProposalEquipment', defaultOptions);
 
