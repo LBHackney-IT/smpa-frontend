@@ -51,7 +51,15 @@ export default {
       currentWorks: {
         proposalName: ''
       },
-      defaultData: undefined
+      defaultData: undefined,
+      typesOfEquipments: [
+        "4b2aa4a1-e01e-49ff-aedc-ddd638695839", 
+        "510e6d41-168d-45e6-ad7e-329a578961d2", 
+        "9f9390fa-f175-4d7a-8599-48c40644f0c3",
+        "fa6f8957-a775-4dc0-adfc-4c3ddfd42698", 
+        "cc70f42f-dc59-4a03-bf7e-fbb2e7ff3b5b", 
+        "b36079c1-dc9f-4225-a94d-b7c54c83b86e"
+      ]
     }
   },
   beforeMount () {
@@ -66,13 +74,80 @@ export default {
   },
 	methods: {
     loadExistingAnswers () {
-      //todo: should beforehand if it is equipment or extension
+      let equipmentId = this.$route.params.id;
 
-      // if (this.application.data.proposal_equipment[this.$route.params.id]) {
+      //check if it is equipment
+      if (this.$route.params.origin === 'equipment' || this.typesOfEquipments.includes(this.$route.params.id)) {
 
-      // } else if (this.application.data.proposal_equipment[this.$route.params.id]) {
+        //check if it is normal equipments or conservation area equipments
+        if (this.application.data.proposal_equipment.equipment.equipment_type_ids.includes(this.$route.params.id)) {
 
-      // }
+          //render correct name of the equipment
+
+          this.application.data.proposal_equipment.equipment.equipment_types.forEach(function(equipment) {
+
+              if (equipment.id === equipmentId) {
+
+                this.currentWorks.proposalName = equipment.name;
+              }
+              
+          }, this);
+
+          //check if equipment already has some location saved
+          if (this.application.data.proposal_equipment.equipment.equipment_locations && this.application.data.proposal_equipment.equipment.equipment_locations.length > 0) {
+
+            //Go through each saved location and push it to be pre selected
+            this.application.data.proposal_equipment.equipment.equipment_locations.forEach(function(element) {
+
+              if (element.equipment_type_id === equipmentId) {
+
+                for (var i = 0, len = element.location_ids.length; i < len; i++) {
+                  this.selectedProposal.push(element.location_ids[i]);
+                }
+              }
+              
+            }, this);
+          }
+
+        } else if (this.application.data.proposal_equipment.equipment.equipment_conservation_type_ids.includes(this.$route.params.id)) {
+
+          //render correct name of the equipment
+
+          this.application.data.proposal_equipment.equipment.equipment_conservation_types.forEach(function(equipment) {
+
+              if (equipment.id === equipmentId) {
+
+                this.currentWorks.proposalName = equipment.name;
+              }
+              
+          }, this);
+
+          //check if equipment already has some location saved
+          if (this.application.data.proposal_equipment.equipment.equipment_conservation_locations && this.application.data.proposal_equipment.equipment.equipment_conservation_locations.length > 0) {
+            
+            this.application.data.proposal_equipment.equipment.equipment_conservation_locations.forEach(function(element) {
+
+              if (element.equipment_type_id === equipmentId) {
+
+                for (var i = 0, len = element.location_ids.length; i < len; i++) {
+                  this.selectedProposal.push(element.location_ids[i]);
+                }
+              }
+              
+            }, this);
+          }
+
+        } else {
+          //todo show error
+        }
+      } else {
+
+        //then it is an extension
+        
+        //get id from url
+        var proposalId = this.$route.params.currentLevelInfo.proposalId;
+
+      }
     },
     fetchData () {
       this.selectedProposal = [];
@@ -94,16 +169,7 @@ export default {
     navigate() {
       let payload = {};
 
-      var typesOfEquipments = [
-        "4b2aa4a1-e01e-49ff-aedc-ddd638695839", 
-        "510e6d41-168d-45e6-ad7e-329a578961d2", 
-        "9f9390fa-f175-4d7a-8599-48c40644f0c3",
-        "fa6f8957-a775-4dc0-adfc-4c3ddfd42698", 
-        "cc70f42f-dc59-4a03-bf7e-fbb2e7ff3b5b", 
-        "b36079c1-dc9f-4225-a94d-b7c54c83b86e"
-      ]
-
-      if (this.$route.params.origin === 'equipment' || typesOfEquipments.includes(this.$route.params.id)) {        
+      if (this.$route.params.origin === 'equipment' || this.typesOfEquipments.includes(this.$route.params.id)) {        
         const equipmentId = this.$store.getters.getEquipmentId(this.applicationId);
 
         payload = {
@@ -142,7 +208,9 @@ export default {
               "location_ids": this.selectedProposal,
               "equipment_type_id": this.$route.params.id
             };
+  
             payload.data.equipment.equipment_conservation_locations.push(workLocationPayload);
+
           } else {
             
             workLocationPayload = [
@@ -152,7 +220,7 @@ export default {
               }
             ];
 
-            payload.data.equipment.equipment_locations = workLocationPayload;
+            payload.data.equipment.equipment_conservation_locations = workLocationPayload;
           }
         } else {
           //todo show error
