@@ -74,10 +74,9 @@ export default {
   },
 	methods: {
     loadExistingAnswers () {
-      let equipmentId = this.$route.params.id;
-
       //check if it is equipment
       if (this.$route.params.origin === 'equipment' || this.typesOfEquipments.includes(this.$route.params.id)) {
+        let equipmentId = this.$route.params.id;
 
         //check if it is normal equipments or conservation area equipments
         if (this.application.data.proposal_equipment.equipment.equipment_type_ids.includes(this.$route.params.id)) {
@@ -143,10 +142,14 @@ export default {
       } else {
 
         //then it is an extension
-        
-        //get id from url
-        var proposalId = this.$route.params.currentLevelInfo.proposalId;
+        if (this.application.data.proposal_extension.original_house[this.currentWorks.proposalId].works_location_ids && this.application.data.proposal_extension.original_house[this.currentWorks.proposalId].works_location_ids.length > 0) {
 
+          var location_ids = this.application.data.proposal_extension.original_house[this.currentWorks.proposalId].works_location_ids;
+
+          for (var i = 0, len = location_ids.length; i < len; i++) {
+            this.selectedProposal.push(location_ids[i]);
+          }
+        }
       }
     },
     fetchData () {
