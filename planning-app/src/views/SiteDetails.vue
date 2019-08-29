@@ -135,7 +135,7 @@
           this.geoJson = response.data;
         })
         .catch(error => {
-          this.error = true;
+          this.showErrorMessage = true;
         })
         .finally(() => { 
           this.loading = false;
