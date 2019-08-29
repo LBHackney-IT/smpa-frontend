@@ -4,7 +4,7 @@
       We're verifying the payment.
 		</h1>
 
-    <error-message v-if="showErrorMessage && !loading" :message="errorMessages.APPLICATION_SUBMISSION.GENERIC_ERROR"></error-message>
+    <error-message v-if="showErrorMessage && !loading" :message="errorMessage"></error-message>
 
     <div class="govuk-panel govuk-panel--confirmation" v-if="this.payment && this.payment.status.name === 'Submitted'">
 			<h2 class="govuk-panel__title">
@@ -29,7 +29,8 @@ export default {
       loadingCheck: true,
       payment: undefined,
       showErrorMessage: false,
-      errorMessages: undefined
+      errorMessages: undefined,
+      errorMessage: undefined
     }
   },
   mounted () {
@@ -56,6 +57,13 @@ export default {
             if (res.error) {
               this.loadingCheck = false;
               this.showErrorMessage = true;
+
+              if (res && res.response && res.response.response && res.response.response.data &&  res.response.response.data.title) {
+								this.errorMessage = res.response.response.data.title;
+							} else {
+								this.errorMessage = errorMessages.APPLICATION_SUBMISSION.GENERIC_ERROR;
+							}
+              
               return;
             } else {
               this.loadingCheck = false;

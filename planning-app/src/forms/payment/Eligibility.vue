@@ -26,7 +26,7 @@
 			</fieldset>
 		</div>
 
-    <error-message v-if="showErrorMessage && !loading" :message="errorMessages.APPLICATION_SUBMISSION.GENERIC_ERROR"></error-message>
+    <error-message v-if="showErrorMessage && !loading" :message="errorMessage"></error-message>
 
 		<v-cta name="Continue" :onClick="navigate"></v-cta>
 	</div>
@@ -50,7 +50,8 @@ export default {
     return {
 			improveAccessibility: undefined,
 			showErrorMessage: false,
-      errorMessages: undefined
+			errorMessages: undefined,
+			errorMessage: undefined
     }
 	},
 	created () {
@@ -78,6 +79,11 @@ export default {
 
 						if (response.error) {
 							this.showErrorMessage = true;
+							if (response && response.response && response.response.response && response.response.response.data &&  response.response.response.data.title) {
+								this.errorMessage = response.response.response.data.title;
+							} else {
+								this.errorMessage = this.errorMessages.APPLICATION_SUBMISSION.GENERIC_ERROR;
+							}
 							return;
 						} else {
 							router.push({ name: 'PaymentSuccessful' });
