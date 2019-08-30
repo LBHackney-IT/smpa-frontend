@@ -168,23 +168,29 @@ export default {
       let payload = {};
 
       payload.document = this.file;
-      payload.document_size_id = this.size;
-      payload.application_id = this.applicationId;
-      payload.proposed = this.proposedFile.join();
-      payload.existing = this.existingFile.join();
+      if (payload.document === "") {
+        this.navigate();
+      } else {
+        payload.document_size_id = this.size;
+        payload.application_id = this.applicationId;
+        payload.proposed = this.proposedFile.join();
+        payload.existing = this.existingFile.join();
 
-      this.uploading = true;
+        this.uploading = true;
 
-      this.$store.dispatch('uploadDocument', payload).then((response) => {
-        this.uploading = false;
+        this.$store.dispatch('uploadDocument', payload).then((response) => {
+          this.uploading = false;
 
-        if (response.error) {
-          this.showErrorMessage = true;
-        } else {
-          this.additionalPlans.push(response.data);
-        }
-        
-      })
+          if (response.error) {
+            this.showErrorMessage = true;
+          } else {
+            this.additionalPlans.push(response.data);
+          }
+          
+        })
+
+      }
+
     },
     navigate() {
       router.push({ name: 'DocumentationDocsReview' });

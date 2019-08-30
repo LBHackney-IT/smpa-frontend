@@ -103,21 +103,27 @@ export default {
       let payload = {};
 
       payload.document = this.file;
-      payload.document_size_id = this.size;
-      payload.application_id = this.applicationId;
-      payload.proposed = docType.id;
 
-      this.uploading = true;
+      if (payload.document === "") {
+        this.navigate();
+      } else {
+        payload.document_size_id = this.size;
+        payload.application_id = this.applicationId;
+        payload.proposed = docType.id;
 
-      this.$store.dispatch('uploadDocument', payload).then((response) => {
-        this.uploading = false;
+        this.uploading = true;
 
-        if (response.error) {
-          this.showErrorMessage = true;
-        } else {
-          this.navigate();
-        }
-      })
+        this.$store.dispatch('uploadDocument', payload).then((response) => {
+          this.uploading = false;
+
+          if (response.error) {
+            this.showErrorMessage = true;
+          } else {
+            this.navigate();
+          }
+        })
+      }
+
     },
 
     navigate() {
