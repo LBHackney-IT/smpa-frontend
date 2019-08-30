@@ -20,14 +20,10 @@
         <label class="govuk-label" for="sort">
           Sort by
         </label>
-        <select class="govuk-select" id="sort" name="sort">
-          <option value="draft">Draft</option>
-          <option value="submitted">Submitted</option>
-          <option value="registered">Registered</option>
-          <option value="invalid">Invalid</option>
-          <option value="consultation">Consultation</option>
-          <option value="rejected">Rejected</option>
-          <option value="approved">Approved</option>
+        <select class="govuk-select" id="sort" name="sort" v-model="status">
+          <option value="All">All</option>
+          <option value="Draft">Draft</option>
+          <option value="Submitted">Submitted</option>
         </select>
       </div>
 
@@ -44,7 +40,7 @@
           </tr>
         </thead>
         <tbody class="govuk-table__body">
-          <tr class="govuk-table__row" v-for="(application, index) in this.applications" v-bind:key="index">
+          <tr class="govuk-table__row" v-for="(application, index) in this.filteredItems" v-bind:key="index">
             <td class="govuk-table__cell">{{application.reference}}</td>
             <td class="govuk-table__cell"><span v-if="application.site_address">{{ application.site_address.address_line_1 }}</span></td>
             <td class="govuk-table__cell">{{ generateDate(application.created_at) }}</td>
@@ -54,12 +50,7 @@
           </tr>
         </tbody>
       </table>
-
     </div>
-
-
-
-
   </div>
 </template>
 
@@ -72,7 +63,8 @@
       return {
         applications: [],
         loading: true,
-        error: false
+        error: false,
+        status: 'All'
       };
     },
     mounted() {
@@ -97,6 +89,32 @@
             this.loading = false;
           }
         });
+
+      }
+    },
+    computed: {
+      filteredItems() {
+
+        var filtered = this.applications;
+
+
+        if (this.status === 'Draft') {
+          filtered = this.applications.filter(item => {
+            if (item.status.name === this.status) {
+              return item;
+            }
+          })
+        }
+
+        if (this.status === 'Submitted') {
+          filtered = this.applications.filter(item => {
+            if (item.status.name === this.status) {
+              return item;
+            }
+          })
+        }
+
+        return filtered;
 
       }
     }
