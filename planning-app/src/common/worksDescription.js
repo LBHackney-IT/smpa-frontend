@@ -68,7 +68,6 @@ function generateWorkDescription (application) {
 
       store.dispatch('getDefaultData', 'access-works-scopes').then((response) => {
         accessWorksScopes = response.data;
-
         if (application.proposal_extension.means_of_access.access_works_scope_id) {
           var index = accessWorksScopes.findIndex((el) => el.id === application.proposal_extension.means_of_access.access_works_scope_id);
           selectedWorkScope = accessWorksScopes[index];
@@ -303,7 +302,7 @@ function generateWorkDescription (application) {
 
         let currentEquipment = application.proposal_equipment.equipment.equipment_locations.find((eq) => eq.equipment_type_id === equipment.id);
 
-        if (currentEquipment.locations) {
+        if (currentEquipment && currentEquipment.locations) {
           currentEquipment.locations.forEach((equipmentLocation, locationIndex) => {
             if (locationIndex + 1 === currentEquipment.locations.length) {
               currentEquipmentInfo += equipmentLocation.name + ' ';
@@ -325,7 +324,7 @@ function generateWorkDescription (application) {
 
         let currentEquipment = application.proposal_equipment.equipment.equipment_locations.find((eq) => eq.equipment_type_id === equipment.id);
 
-        if (currentEquipment.locations) {
+        if (currentEquipment && currentEquipment.locations) {
           currentEquipment.locations.forEach((equipmentLocation, locationIndex) => {
             if (locationIndex + 1 === currentEquipment.locations.length) {
               currentEquipmentInfo += equipmentLocation.name + ' ';
@@ -348,7 +347,7 @@ function generateWorkDescription (application) {
   } 
   
   if (!application.proposal_equipment && !application.proposal_equipment) {
-    worksDescription.push('You did not specifiy what are the works.');
+    worksDescription.push('You did not specifiy any equipment works.');
   }
 
   return worksDescription;

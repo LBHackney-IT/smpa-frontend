@@ -203,13 +203,15 @@
 
       <h2 class="govuk-heading-l">Materials</h2>
 
-      <dl class="govuk-summary-list">
+      <p>{{this.hasMaterials}}</p>
+
+      <dl class="govuk-summary-list" v-if="hasMaterials">
         <div class="govuk-summary-list__row">
           <dt class="govuk-summary-list__key">
             Walls cladding
           </dt>
           <dd class="govuk-summary-list__value">
-            {{this.hasMaterials}}
+            {{this.wallsMaterials}}
           </dd>
           <dd class="govuk-summary-list__actions">
             <router-link :to="{ name: 'WhatMaterials'}" class="govuk-link">
@@ -222,7 +224,7 @@
             Roof covering
           </dt>
           <dd class="govuk-summary-list__value">
-            {{this.hasMaterials}}
+            {{this.roofMaterials}}
           </dd>
           <dd class="govuk-summary-list__actions">
             <router-link :to="{ name: 'WhatMaterials'}" class="govuk-link">
@@ -235,7 +237,7 @@
             Windows
           </dt>
           <dd class="govuk-summary-list__value">
-            {{this.hasMaterials}}
+            {{this.windowsMaterials}}
           </dd>
           <dd class="govuk-summary-list__actions">
             <router-link :to="{ name: 'WhatMaterials'}" class="govuk-link">
@@ -248,7 +250,7 @@
             Doors
           </dt>
           <dd class="govuk-summary-list__value">
-            {{this.hasMaterials}}
+            {{this.doorsMaterials}}
           </dd>
           <dd class="govuk-summary-list__actions">
             <router-link :to="{ name: 'WhatMaterials'}" class="govuk-link">
@@ -471,7 +473,7 @@ export default {
     },
     hasTreesInsideBoundary () {
       if (this.hasProposalExtension && this.hasTreesInformation) {
-        let answer = this.application.data.proposal_extension.trees.inside_boundry ? "Yes" : "No";
+        let answer = this.application.data.proposal_extension.trees.inside_boundary ? "Yes" : "No";
         return answer;
       } else {
         return false;
@@ -479,7 +481,7 @@ export default {
     },
     hasTreesOutsideBoundary () {
       if (this.hasProposalExtension && this.hasTreesInformation) {
-        let answer = this.application.data.proposal_extension.trees.outside_boundry ? "Yes" : "No";
+        let answer = this.application.data.proposal_extension.trees.outside_boundary ? "Yes" : "No";
         return answer;
       } else {
         return false;
@@ -519,6 +521,106 @@ export default {
         }
       } else {
         return materials.answer = 'You did not provide this information.';
+      }
+    },
+    wallsMaterials() {
+      let materials = {};
+      if (this.hasProposalExtension) {
+        if (this.containsKey(this.application.data.proposal_extension, 'materials') && this.containsKey(this.application.data.proposal_extension.materials, 'walls')) {
+          if (this.application.data.proposal_extension.materials.walls.matches_existing) {
+            return 'You chose: materials match existing.'
+          }
+
+          if (this.application.data.proposal_extension.materials.walls.not_applicable) {
+            return 'You chose: not applicable.'
+          }
+
+          if (this.application.data.proposal_extension.materials.walls.proposals.length > 0) {
+
+            let wallsMaterial = "";
+
+            for (var i = 0; i < this.application.data.proposal_extension.materials.walls.proposals.length; i++) {
+              wallsMaterial = 'Material selected: ' + '. Colour and type: ' + this.application.data.proposal_extension.materials.walls.proposals[i].colour_and_type;
+            }
+
+            return wallsMaterial;
+          }
+        }
+      }
+    },
+    roofMaterials() {
+      let materials = {};
+      if (this.hasProposalExtension) {
+        if (this.containsKey(this.application.data.proposal_extension, 'materials') && this.containsKey(this.application.data.proposal_extension.materials, 'roof')) {
+          if (this.application.data.proposal_extension.materials.roof.matches_existing) {
+            return 'You chose: materials match existing.'
+          }
+
+          if (this.application.data.proposal_extension.materials.roof.not_applicable) {
+            return 'You chose: not applicable.'
+          }
+
+          if (this.application.data.proposal_extension.materials.roof.proposals.length > 0) {
+
+            let roofMaterial = "";
+
+            for (var i = 0; i < this.application.data.proposal_extension.materials.roof.proposals.length; i++) {
+              roofMaterial = 'Material selected: ' + '. Colour and type: ' + this.application.data.proposal_extension.materials.roof.proposals[i].colour_and_type;
+            }
+
+            return roofMaterial;
+          }
+        }
+      }
+    },
+    windowsMaterials() {
+      let materials = {};
+      if (this.hasProposalExtension) {
+        if (this.containsKey(this.application.data.proposal_extension, 'materials') && this.containsKey(this.application.data.proposal_extension.materials, 'windows')) {
+          if (this.application.data.proposal_extension.materials.windows.matches_existing) {
+            return 'You chose: materials match existing.'
+          }
+
+          if (this.application.data.proposal_extension.materials.windows.not_applicable) {
+            return 'You chose: not applicable.'
+          }
+
+          if (this.application.data.proposal_extension.materials.windows.proposals.length > 0) {
+
+            let windowsMaterial = "";
+
+            for (var i = 0; i < this.application.data.proposal_extension.materials.windows.proposals.length; i++) {
+              windowsMaterial = 'Material selected: ' + '. Colour and type: ' + this.application.data.proposal_extension.materials.windows.proposals[i].colour_and_type;
+            }
+
+            return windowsMaterial;
+          }
+        }
+      }
+    },
+    doorsMaterials() {
+      let materials = {};
+      if (this.hasProposalExtension) {
+        if (this.containsKey(this.application.data.proposal_extension, 'materials') && this.containsKey(this.application.data.proposal_extension.materials, 'doors')) {
+          if (this.application.data.proposal_extension.materials.doors.matches_existing) {
+            return 'You chose: materials match existing.'
+          }
+
+          if (this.application.data.proposal_extension.materials.doors.not_applicable) {
+            return 'You chose: not applicable.'
+          }
+
+          if (this.application.data.proposal_extension.materials.doors.proposals.length > 0) {
+
+            let doorsMaterial = "";
+
+            for (var i = 0; i < this.application.data.proposal_extension.materials.doors.proposals.length; i++) {
+              doorsMaterial = 'Material selected: ' + '. Colour and type: ' + this.application.data.proposal_extension.materials.doors.proposals[i].colour_and_type;
+            }
+
+            return doorsMaterial;
+          }
+        }
       }
     },
     hasOtherMaterials () {

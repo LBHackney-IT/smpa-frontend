@@ -151,7 +151,7 @@ export default {
             if (response.error) {
               this.showErrorMessage = true;
             } else {
-              
+              this.navigate();
             }
           })
         }
