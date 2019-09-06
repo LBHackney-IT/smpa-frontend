@@ -282,12 +282,15 @@
 
       <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row" v-for="file in this.application.data.document_files">
-    
           <dd class="govuk-summary-list__value">
             {{ file.original_name }}
           </dd>
     
           <dd class="govuk-summary-list__actions">
+            <button class="govuk-link" @click="downloadFile(file.id)">
+              Download<span class="govuk-visually-hidden"> file</span>
+            </button>
+
             <router-link :to="{ name: 'SupportingDocumentation'}" class="govuk-link">
               Change<span class="govuk-visually-hidden"> files</span>
             </router-link>
@@ -365,6 +368,13 @@ export default {
       }
       var containsKey = Object.keys(obj).includes(key) ? true : false;
       return containsKey; 
+    },
+    downloadFile(id) {
+      this.$store.dispatch('downloadDocument', id).then((response) => {
+        if (response.error) {
+          this.showErrorMessage = true;
+        }
+      })
     }
   },
   computed: {
@@ -540,7 +550,12 @@ export default {
             let wallsMaterial = "";
 
             for (var i = 0; i < this.application.data.proposal_extension.materials.walls.proposals.length; i++) {
-              wallsMaterial = 'Material selected: ' + '. Colour and type: ' + this.application.data.proposal_extension.materials.walls.proposals[i].colour_and_type;
+ 
+              if (this.application.data.proposal_extension.materials.walls.proposals[i].material) {
+                wallsMaterial = 'Material selected: ' + this.application.data.proposal_extension.materials.walls.proposals[i].material.name + '. Colour and type: ' + this.application.data.proposal_extension.materials.walls.proposals[i].colour_and_type;
+              } else {
+                wallsMaterial = 'Colour and type: ' + this.application.data.proposal_extension.materials.walls.proposals[i].colour_and_type;
+              }
             }
 
             return wallsMaterial;
@@ -565,7 +580,13 @@ export default {
             let roofMaterial = "";
 
             for (var i = 0; i < this.application.data.proposal_extension.materials.roof.proposals.length; i++) {
-              roofMaterial = 'Material selected: ' + '. Colour and type: ' + this.application.data.proposal_extension.materials.roof.proposals[i].colour_and_type;
+
+              if (this.application.data.proposal_extension.materials.roof.proposals[i].material) {
+                roofMaterial = 'Material selected: ' + this.application.data.proposal_extension.materials.roof.proposals[i].material.name + '. Colour and type: ' + this.application.data.proposal_extension.materials.roof.proposals[i].colour_and_type;
+              } else {
+                roofMaterial = 'Colour and type: ' + this.application.data.proposal_extension.materials.roof.proposals[i].colour_and_type;
+              }
+              
             }
 
             return roofMaterial;
@@ -590,7 +611,12 @@ export default {
             let windowsMaterial = "";
 
             for (var i = 0; i < this.application.data.proposal_extension.materials.windows.proposals.length; i++) {
-              windowsMaterial = 'Material selected: ' + '. Colour and type: ' + this.application.data.proposal_extension.materials.windows.proposals[i].colour_and_type;
+
+              if (this.application.data.proposal_extension.materials.windows.proposals[i].material) {
+                windowsMaterial = 'Material selected: ' + this.application.data.proposal_extension.materials.windows.proposals[i].material.name +  '. Colour and type: ' + this.application.data.proposal_extension.materials.windows.proposals[i].colour_and_type;
+              } else {
+                windowsMaterial = 'Colour and type: ' + this.application.data.proposal_extension.materials.windows.proposals[i].colour_and_type;
+              }
             }
 
             return windowsMaterial;
@@ -615,7 +641,11 @@ export default {
             let doorsMaterial = "";
 
             for (var i = 0; i < this.application.data.proposal_extension.materials.doors.proposals.length; i++) {
-              doorsMaterial = 'Material selected: ' + '. Colour and type: ' + this.application.data.proposal_extension.materials.doors.proposals[i].colour_and_type;
+              if (this.application.data.proposal_extension.materials.doors.proposals[i].material) {
+                doorsMaterial = 'Material selected: ' + this.application.data.proposal_extension.materials.doors.proposals[i].material.name + '. Colour and type: ' + this.application.data.proposal_extension.materials.doors.proposals[i].colour_and_type;
+              } else {
+                doorsMaterial = 'Colour and type: ' + this.application.data.proposal_extension.materials.doors.proposals[i].colour_and_type;
+              }
             }
 
             return doorsMaterial;

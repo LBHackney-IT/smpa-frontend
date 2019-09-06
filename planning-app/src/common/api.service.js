@@ -258,6 +258,13 @@ export const DocumentsService = {
 
     var resource = 'documents/' + data.id;
     return ApiService.delete(resource);
+  },
+
+  downloadDocument (id) {
+    ApiService.setHeader();
+
+    var resource = 'documents/' + id + '/download';
+    return ApiService.get(resource);
   }
 }
 

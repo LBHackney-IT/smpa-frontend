@@ -162,13 +162,16 @@ export default {
             var materialFound = this.application.data.proposal_extension.materials.roof.proposals.find((el) => el.material_id === element);
 
             if (materialFound) {
-              proposedMaterials.push({"colour_and_type": materialFound.colour_and_type, "material_id": materialFound.material_id });
+              proposedMaterials.push({"colour_and_type": materialFound.colour_and_type, "material_id": materialFound.material_id, "material": materialFound.material });
             }
             
           });
         }
 
         currentMaterials.roof.proposals = proposedMaterials;
+
+        currentMaterials.roof.matches_existing = false;
+        currentMaterials.roof.not_applicable = false;
  
       } else {
         currentMaterials.roof.matches_existing = this.material === 'match-existing' ? true : false;

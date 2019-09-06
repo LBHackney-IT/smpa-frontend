@@ -164,13 +164,15 @@ export default {
             var materialFound = this.application.data.proposal_extension.materials.doors.proposals.find((el) => el.material_id === element);
 
             if (materialFound) {
-              proposedMaterials.push({"colour_and_type": materialFound.colour_and_type, "material_id": materialFound.material_id });
+              proposedMaterials.push({"colour_and_type": materialFound.colour_and_type, "material_id": materialFound.material_id, "material": materialFound.name });
             }
             
           });
         }
 
         currentMaterials.doors.proposals = proposedMaterials;
+        currentMaterials.doors.matches_existing = false;
+        currentMaterials.doors.not_applicable = false;
  
       } else {
         currentMaterials.doors.matches_existing = this.material === 'match-existing' ? true : false;
