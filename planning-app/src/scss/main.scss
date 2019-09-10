@@ -111,3 +111,11 @@ body:not(:-moz-handler-blocked) fieldset {
     background: #00664F;
 
 }
+
+
+.task-overview-list__item {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #b1b4b6;
+    padding: 10px 0;
+}
