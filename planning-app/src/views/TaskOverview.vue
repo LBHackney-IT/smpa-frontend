@@ -102,11 +102,15 @@
   export default {
     mixins: [ getRouteAppId ],
     name: 'Overview',
-    components: {
-    },
-    methods: {
+    created () {
 
+      // Not the ideal fix, more info on this in the project's README
+      if (window.localStorage.getItem('signInRefresh')) {
+        window.localStorage.removeItem('signInRefresh');
+        window.location.reload();
+      }
     },
+
     computed: {
       //todo
       applicationAddress () {
@@ -154,11 +158,21 @@
       },
 
       siteIsInConservationArea () {
-        return this.application.data.site_constraints.nb_conarea > 0;
+        if (this.application && this.application.data && this.application.data.site_constraints && this.application.data.site_constraints.nb_conarea) {
+          return this.application.data.site_constraints.nb_conarea > 0;
+        } else {
+          return false;
+        }
+        
       },
 
       siteIsListedBuilding() {
-        return this.application.data.site_constraints.is_listed_building === "1";
+        if (this.application && this.application.data && this.application.data.site_constraints && this.application.data.site_constraints.is_listed_building) {
+          return this.application.data.site_constraints.is_listed_building === "1";
+        } else {
+          return false;
+        }
+        
       }
     }
   }

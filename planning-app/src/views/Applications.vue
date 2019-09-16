@@ -12,7 +12,12 @@
 <script>
   export default {
     name: 'Applications',
-    components: {
+    created() {
+      // Not the ideal fix, more info on this in the project's README
+      if (window.localStorage.getItem('signInRefresh')) {
+        window.localStorage.removeItem('signInRefresh');
+        window.location.reload();
+      }
     }
   }
 </script>

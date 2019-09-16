@@ -23,6 +23,15 @@
     methods: {
       signOut () {
         this.$store.dispatch('signOut').then(() => {
+
+          // Not the ideal fix, more info on this in the project's README
+          if (!window.localStorage.getItem('signOutRefresh')) {
+            window.localStorage.setItem('signOutRefresh', true);
+            window.location.reload();
+          } else {
+            window.localStorage.removeItem('signOutRefresh');
+          }
+          
         });
       }
     }

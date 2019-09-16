@@ -65,6 +65,11 @@
         }
       },
       navigate () {
+        
+        if (!window.localStorage.getItem('signInRefresh')) {
+          window.localStorage.setItem('signInRefresh', true);
+        }
+
         if (this.source === 'constraints-finder' && this.application) {
           this.$store.dispatch('createApplication', this.application).then((response) => {
             router.push({ name: 'ApplicationTaskOverview', params: { applicationId: response.data.id } });

@@ -43,16 +43,7 @@ export default {
   },
   computed: {
     isUserAuthenticated() {
-      console.log('inside computed');
       return this.$store.state.state.isAuthenticated;
-    }
-  },
-  watch: {
-    isUserAuthenticated (newValue, oldValue){
-      console.log('new value:', newValue, 'old value:', oldValue);
-    },
-    'this.$store.state.state.isAuthenticated': function () {
-      console.log('WATCHED', this.$store.state.state.isAuthenticated);
     }
   }
 }

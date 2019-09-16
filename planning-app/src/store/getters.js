@@ -23,6 +23,5 @@ export function getExistingApplication (state, applicationId) {
 }
 
 export function isLoggedIn (state) {
-  console.log('here', state.state.isAuthenticated);
   return state.state.isAuthenticated;
 }
