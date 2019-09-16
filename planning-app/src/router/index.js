@@ -140,7 +140,6 @@ export default new Router({
         }, //redirect to page that lists all applications associated with the signed in user
         { 
           path: ':applicationId', 
-          name:'ApplicationTaskOverview', 
           component: ApplicationOverview,
           children: [
             { 
@@ -259,7 +258,6 @@ export default new Router({
               component: Materials,
               children: [
                 { path: '', name: 'WhatMaterials', component: WhatMaterials },
-                { path: 'steps', name: 'WhatMaterials', component: WhatMaterials },
                 { path: 'steps/1', name: 'MaterialsStep1', component: MaterialsStepOne },
                 { path: 'steps/2', name: 'MaterialsStep2', component: MaterialsStepTwo },
                 { path: 'steps/3', name: 'MaterialsStep3', component: MaterialsStepThree },
@@ -340,8 +338,19 @@ export default new Router({
     },
     {
       path: '/account',
-      name: 'AccountOverview',
       component: AccountOverview,
+      beforeEnter: (to, from, next) => {
+        //if signed in
+        if (!!JwtService.getToken()) {
+          next();
+        } else {
+          //if not signed in
+          next({
+            path: '/sign-in',
+            query: { redirect: to.fullPath }
+          })
+        }  
+      },
       children: [
         { 
           path: '', 
@@ -357,14 +366,8 @@ export default new Router({
     },
     {
       path: '/accounts',
-      name: 'AccountsActions',
       component: AccountsActions,
       children: [
-        { 
-          path: '', 
-          name: 'AccountsActions', 
-          component: AccountsActions 
-        },
         { 
           path: 'verify/:token', 
           name: 'VerifyAccount', 
