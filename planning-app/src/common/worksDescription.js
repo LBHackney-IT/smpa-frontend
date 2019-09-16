@@ -292,57 +292,62 @@ function generateWorkDescription (application) {
   }
   
   if (application.proposal_equipment) {
-    if (application.proposal_equipment.equipment.equipment_conservation_types) {
 
-      let listOfEquipments = [];
+    if (application.proposal_equipment.equipment) {
 
-      application.proposal_equipment.equipment.equipment_conservation_types.forEach((equipment) => {
+    
+      if (application.proposal_equipment.equipment.equipment_conservation_types) {
 
-        let currentEquipmentInfo = '';
+        let listOfEquipments = [];
 
-        let currentEquipment = application.proposal_equipment.equipment.equipment_locations.find((eq) => eq.equipment_type_id === equipment.id);
+        application.proposal_equipment.equipment.equipment_conservation_types.forEach((equipment) => {
 
-        if (currentEquipment && currentEquipment.locations) {
-          currentEquipment.locations.forEach((equipmentLocation, locationIndex) => {
-            if (locationIndex + 1 === currentEquipment.locations.length) {
-              currentEquipmentInfo += equipmentLocation.name + ' ';
-            } else {
-              currentEquipmentInfo += equipmentLocation.name + ', ';
-            }
-          });
-        }
+          let currentEquipmentInfo = '';
 
-        currentEquipmentInfo += equipment.name;
+          let currentEquipment = application.proposal_equipment.equipment.equipment_conservation_locations.find((eq) => eq.equipment_type_id === equipment.id);
 
-        listOfEquipments.push(currentEquipmentInfo);
+          if (currentEquipment && currentEquipment.locations) {
+            currentEquipment.locations.forEach((equipmentLocation, locationIndex) => {
+              if (locationIndex + 1 === currentEquipment.locations.length) {
+                currentEquipmentInfo += equipmentLocation.name + ' ';
+              } else {
+                currentEquipmentInfo += equipmentLocation.name + ', ';
+              }
+            });
+          }
 
-      });
+          currentEquipmentInfo += equipment.name;
 
-      application.proposal_equipment.equipment.equipment_types.forEach((equipment) => {
+          listOfEquipments.push(currentEquipmentInfo);
 
-        let currentEquipmentInfo = '';
+        });
 
-        let currentEquipment = application.proposal_equipment.equipment.equipment_locations.find((eq) => eq.equipment_type_id === equipment.id);
+        application.proposal_equipment.equipment.equipment_types.forEach((equipment) => {
 
-        if (currentEquipment && currentEquipment.locations) {
-          currentEquipment.locations.forEach((equipmentLocation, locationIndex) => {
-            if (locationIndex + 1 === currentEquipment.locations.length) {
-              currentEquipmentInfo += equipmentLocation.name + ' ';
-            } else {
-              currentEquipmentInfo += equipmentLocation.name + ', ';
-            }
-          });
-        }
+          let currentEquipmentInfo = '';
 
-        currentEquipmentInfo += equipment.name;
+          let currentEquipment = application.proposal_equipment.equipment.equipment_locations.find((eq) => eq.equipment_type_id === equipment.id);
 
-        listOfEquipments.push(currentEquipmentInfo);
+          if (currentEquipment && currentEquipment.locations) {
+            currentEquipment.locations.forEach((equipmentLocation, locationIndex) => {
+              if (locationIndex + 1 === currentEquipment.locations.length) {
+                currentEquipmentInfo += equipmentLocation.name + ' ';
+              } else {
+                currentEquipmentInfo += equipmentLocation.name + ', ';
+              }
+            });
+          }
 
-      });
+          currentEquipmentInfo += equipment.name;
 
-      listOfEquipments.forEach((equipment) => {
-        worksDescription.push(equipment);
-      });
+          listOfEquipments.push(currentEquipmentInfo);
+
+        });
+
+        listOfEquipments.forEach((equipment) => {
+          worksDescription.push(equipment);
+        });
+      }
     }
   } 
   

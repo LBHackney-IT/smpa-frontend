@@ -269,6 +269,8 @@
                 {{ other }}
               </li>
             </ul>
+
+            <p v-if="this.application.data.proposal_extension && this.application.data.proposal_extension.materials && !this.application.data.proposal_extension.materials.other">{{this.hasOtherMaterials}}</p>
           </dd>
           <dd class="govuk-summary-list__actions">
             <router-link :to="{ name: 'WhatMaterials'}" class="govuk-link">
@@ -351,6 +353,7 @@ import vCta from '../../components/Cta.vue';
 import router from '../../router';
 import { getRouteAppId } from '../../mixins/getRouteAppId';
 import GenerateWorks from '../../common/worksDescription';
+import FileSaver from 'file-saver';
 
 export default {
   name: 'AnswersOverview',
@@ -371,8 +374,13 @@ export default {
     },
     downloadFile(id) {
       this.$store.dispatch('downloadDocument', id).then((response) => {
+
         if (response.error) {
           this.showErrorMessage = true;
+
+        } else {
+          var blob = new Blob([ response.data ], {type: response.headers["content-type"]});
+          FileSaver.saveAs(blob, "file");
         }
       })
     }
@@ -537,6 +545,13 @@ export default {
       let materials = {};
       if (this.hasProposalExtension) {
         if (this.containsKey(this.application.data.proposal_extension, 'materials') && this.containsKey(this.application.data.proposal_extension.materials, 'walls')) {
+
+          if (this.application.data.proposal_extension.materials.definitions_in_documents) {
+            return "You chose to define materials on supporting documentation.";
+          } else if (this.application.data.proposal_extension.materials.to_follow) {
+            return "You don’t know yet and will submit an Approval of Conditions later";
+          }
+          
           if (this.application.data.proposal_extension.materials.walls.matches_existing) {
             return 'You chose: materials match existing.'
           }
@@ -567,6 +582,13 @@ export default {
       let materials = {};
       if (this.hasProposalExtension) {
         if (this.containsKey(this.application.data.proposal_extension, 'materials') && this.containsKey(this.application.data.proposal_extension.materials, 'roof')) {
+
+          if (this.application.data.proposal_extension.materials.definitions_in_documents) {
+            return "You chose to define materials on supporting documentation.";
+          } else if (this.application.data.proposal_extension.materials.to_follow) {
+            return "You don’t know yet and will submit an Approval of Conditions later";
+          }
+
           if (this.application.data.proposal_extension.materials.roof.matches_existing) {
             return 'You chose: materials match existing.'
           }
@@ -598,6 +620,15 @@ export default {
       let materials = {};
       if (this.hasProposalExtension) {
         if (this.containsKey(this.application.data.proposal_extension, 'materials') && this.containsKey(this.application.data.proposal_extension.materials, 'windows')) {
+
+          if (this.application.data.proposal_extension.materials.definitions_in_documents) {
+            return "You chose to define materials on supporting documentation.";
+          } else if (this.application.data.proposal_extension.materials.to_follow) {
+            return "You don’t know yet and will submit an Approval of Conditions later";
+          }
+          
+
+
           if (this.application.data.proposal_extension.materials.windows.matches_existing) {
             return 'You chose: materials match existing.'
           }
@@ -628,6 +659,15 @@ export default {
       let materials = {};
       if (this.hasProposalExtension) {
         if (this.containsKey(this.application.data.proposal_extension, 'materials') && this.containsKey(this.application.data.proposal_extension.materials, 'doors')) {
+
+          if (this.application.data.proposal_extension.materials.definitions_in_documents) {
+            return "You chose to define materials on supporting documentation.";
+          } else if (this.application.data.proposal_extension.materials.to_follow) {
+            return "You don’t know yet and will submit an Approval of Conditions later";
+          }
+          
+
+
           if (this.application.data.proposal_extension.materials.doors.matches_existing) {
             return 'You chose: materials match existing.'
           }
@@ -670,6 +710,8 @@ export default {
       } else {
         return materials.answer = 'You did not provide this information.';
       }
+
+      return materials;
     },
     worksDescription () {
       return GenerateWorks.generateWorkDescription(this.application.data);
