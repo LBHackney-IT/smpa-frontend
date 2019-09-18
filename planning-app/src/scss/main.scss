@@ -87,11 +87,6 @@ body:not(:-moz-handler-blocked) fieldset {
     }
 }
 
-//overide header colour
-.govuk-header__container {
-    border-bottom: 10px solid #00664F;
-}
-
 .purpose-message {
     background-color: #E6F2FA;
     padding: 10px;
@@ -118,4 +113,78 @@ body:not(:-moz-handler-blocked) fieldset {
     justify-content: space-between;
     border-bottom: 1px solid #b1b4b6;
     padding: 10px 0;
+}
+
+.govuk-footer {
+    background: #00513f;
+    color: #fff;
+
+    .govuk-footer__link:link {
+        color: #fff;
+    }
+}
+
+//header works
+
+//remove header border
+.govuk-header__container {
+    border-bottom: 0;
+    margin-bottom: 0;
+}
+
+//increase height to accomodate hackney brand lines
+.govuk-header {
+    border-bottom: 20px solid #ffffff; 
+}
+
+.hackney-logo {
+    width: 200px;
+}
+
+.hackney-brand__lines {
+    width: 100%;
+    float: left;
+    background: #fff;
+    height: 21px;
+    position: relative;
+
+    .hackney-brand__lines--DarkGreen {
+        background-color: #00664f;
+        width: 100%;
+        height: 4px;
+        float: left;
+        position: absolute;
+        top: 6px;
+    }
+
+    .hackney-brand__lines--GreenLine {
+        background-color: #00b341;
+        width: 100%;
+        height: 3px;
+        float: left;
+        position: absolute;
+        top: 13px;
+    }
+
+    .hackney-brand__lines--LightGreen {
+        background-color: #84bd00;
+        width: 100%;
+        height: 2px;
+        float: left;
+        position: absolute;
+        top: 19px;
+    }
+}
+
+//change buttons colour to hackney branding
+.govuk-button {
+    background-color: #00664f;
+}
+
+.govuk-button:hover {
+    background-color: #00513f;
+}
+
+.govuk-tag {
+    background-color: #00664f;
 }
