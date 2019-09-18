@@ -17,7 +17,7 @@
 
         <div class="govuk-checkboxes">
           
-          <div class="govuk-checkboxes__item" v-bind:key="option.id" v-for="option in this.defaultData">
+          <div class="govuk-checkboxes__item" v-bind:key="option.id" v-for="option in this.defaultData" v-if="handleOptionWithExtension(option.id)">
             <input class="govuk-checkboxes__input" id="proposal-1" name="proposal" type="checkbox" v-bind:value="option.id" v-model="selectedProposal">
             <label class="govuk-label govuk-checkboxes__label" for="proposal-1">
               <strong>{{option.name}}</strong>
@@ -49,7 +49,7 @@ export default {
     return {
       selectedProposal: [],
       currentWorks: {
-        proposalName: ''
+        proposalName: 'work'
       },
       defaultData: undefined,
       typesOfEquipments: [
@@ -86,8 +86,9 @@ export default {
           this.application.data.proposal_equipment.equipment.equipment_types.forEach(function(equipment) {
 
               if (equipment.id === equipmentId) {
-
-                this.currentWorks.proposalName = equipment.name;
+                this.currentWorks = {
+                  proposalName: equipment.name
+                }
               }
               
           }, this);
@@ -116,7 +117,9 @@ export default {
 
               if (equipment.id === equipmentId) {
 
-                this.currentWorks.proposalName = equipment.name;
+                this.currentWorks = {
+                  proposalName: equipment.name
+                }
               }
               
           }, this);
@@ -165,7 +168,13 @@ export default {
         var currentLevelInMap = proposalFlow.findIndex(function(element) {
           return element.proposalId === id;
         });
-        this.currentWorks = proposalFlow[currentLevelInMap + 1];
+
+
+        //this.currentWorks = proposalFlow[currentLevelInMap + 1];
+   
+        this.currentWorks = proposalFlow[currentLevelInMap];
+
+        console.log('this.currentworks', this.currentWorks);
       }
 
     },
@@ -232,7 +241,8 @@ export default {
         const extensionId = this.$store.getters.getExtensionId(this.applicationId);
         
         //get id from url
-        var proposalId = this.$route.params.currentLevelInfo.proposalId;
+
+        var proposalId = this.currentWorks.proposalId;
       
         payload = {
           'data': this.application.data.proposal_extension,
@@ -274,6 +284,20 @@ export default {
       this.$store.dispatch('getDefaultData', 'works-locations').then((response) => {
         this.defaultData = response.data;
       })
+    },
+    handleOptionWithExtension(id) {
+      var rearSideWrapAround = '9dc99f40-ac1d-421e-a408-c253d7ead671';
+
+      //the option "Rear / side wrap-around" should only appear in extensions
+      if (id === rearSideWrapAround ) {
+        if (this.currentWorks.proposalId === 'single_storey_extension' || this.currentWorks.proposalId === 'two_storey_extension' || this.currentWorks.proposalId === 'part_single_part_two_storey_extension') {
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        return true;
+      }
     }
   },
   computed: {
@@ -281,7 +305,7 @@ export default {
 			let index = this.$store.state.state.applications.findIndex( application => application.data.id === this.applicationId );
 
 			return this.$store.state.state.applications[index];
-		}
+    }
   }
 }
 </script>

@@ -141,12 +141,21 @@
 				</div>
 			</div>
 
-			<v-text-area 
-				label="Describe what you have already done" 
-				v-model="workDetails" 
-				name="more-detail" 
-				:isRequired="hasWorkStarted">
-			</v-text-area>
+			<div class="govuk-form-group">
+				<label class="govuk-label" for="more-detail">
+					Please describe the works.
+				</label>
+				<textarea 
+					class="govuk-textarea" 
+					id="more-detail" 
+					name="more-detail" 
+					rows="5" 
+					value="content" 
+					:required="hasWorkStarted"
+					v-model="workDetails">
+				</textarea>
+			</div>
+
 		</div>
 
 		<div v-if="error" class="govuk-inset-text govuk-inset-text--error ">
@@ -202,16 +211,16 @@ export default {
 			if (this.application.data.date_works_completed) {
 				var dateWorksCompleted = new Date(this.application.data.date_works_completed);
 
-				this.dayWorkFinished = dateWorksCompleted.getDay();
-				this.monthWorkFinished = dateWorksCompleted.getMonth();
+				this.dayWorkFinished = dateWorksCompleted.getDate();
+				this.monthWorkFinished = dateWorksCompleted.getMonth() + 1;
 				this.yearWorkFinished = dateWorksCompleted.getFullYear();
 			}
 
 			if (this.application.data.date_works_started) {
 				var dateWorksStarted = new Date(this.application.data.date_works_started);
 
-				this.dayWorkStarted = dateWorksStarted.getDay();
-				this.monthWorkStarted = dateWorksStarted.getMonth();
+				this.dayWorkStarted = dateWorksStarted.getDate();
+				this.monthWorkStarted = dateWorksStarted.getMonth() + 1;
 				this.yearWorkStarted = dateWorksStarted.getFullYear();
 			}
 		},
