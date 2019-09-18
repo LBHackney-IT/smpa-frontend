@@ -12,8 +12,7 @@
             Applicant name
           </dt>
           <dd class="govuk-summary-list__value">
-            <p v-if="this.hasApplicantFullName">{{this.applicantFullName}}</p>
-            <p v-if="!this.hasApplicantFullName">You did not provide this information.</p>
+            <p>{{this.applicantFullName}}</p>
           </dd>
           <dd class="govuk-summary-list__actions">
             <router-link :to="{ name: 'ApplicationContactApplicant'}"> 
@@ -66,7 +65,7 @@
             <p v-if="this.hasContactInformationApplicant.hasApplicant">{{this.hasContactInformationApplicant.postcode}}</p>
             <p v-if="this.hasContactInformationApplicant.hasApplicant">{{this.hasContactInformationApplicant.email}}</p>
             <p v-if="this.hasContactInformationApplicant.hasApplicant">{{this.hasContactInformationApplicant.phone}}</p>
-            <p v-if="!this.hasContactInformationApplicant.hasApplicant">{{this.hasContactInformationApplicant.answer}}</p>
+            <p v-if="!this.hasContactInformationApplicant.hasApplicant">{{this.hasContactInformationApplicant.answer}} here</p>
           </dd>
           <dd class="govuk-summary-list__actions">
             <router-link :to="{ name: 'ApplicationContactApplicant'}"> 
@@ -95,6 +94,19 @@
             
           </dd>
         </div>
+        <div class="govuk-summary-list__row" v-if="this.application.data.free_text_description">
+          <dt class="govuk-summary-list__key">
+            Free text form description
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{this.application.data.free_text_description}}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <router-link :to="{ name: 'FreeTextForm'}" class="govuk-link">
+              Change<span class="govuk-visually-hidden"> free text form description</span>
+            </router-link>
+          </dd>
+        </div>
         <div class="govuk-summary-list__row">
           <dt class="govuk-summary-list__key">
             Description
@@ -107,9 +119,9 @@
             </ul>
           </dd>
           <dd class="govuk-summary-list__actions">
-            <a class="govuk-link" href="#">
+            <router-link :to="{ name: 'Proposal'}" class="govuk-link">
               Change<span class="govuk-visually-hidden"> works</span>
-            </a>
+            </router-link>
           </dd>
         </div>
         <div class="govuk-summary-list__row">
@@ -265,13 +277,13 @@
             Other materials
           </dt>
           <dd class="govuk-summary-list__value">
-            <ul v-if="this.application.data.proposal_extension && this.application.data.proposal_extension.materials && this.application.data.proposal_extension.materials.other">
+            <ul v-if="this.hasOtherMaterials">
               <li v-bind:key="other" v-for="other in this.application.data.proposal_extension.materials.other">
                 {{ other }}
               </li>
             </ul>
 
-            <p v-if="this.application.data.proposal_extension && this.application.data.proposal_extension.materials && !this.application.data.proposal_extension.materials.other">{{this.hasOtherMaterials}}</p>
+            <p v-if="!this.hasOtherMaterials">You did not provide any other materials.</p>
           </dd>
           <dd class="govuk-summary-list__actions">
             <router-link :to="{ name: 'WhatMaterials'}" class="govuk-link">
@@ -431,12 +443,11 @@ export default {
       let index = this.$store.state.state.applications.findIndex( application => application.data.id === this.applicationId );
       return this.$store.state.state.applications[index];
     },
-    hasApplicantFullName () {
-      return this.containsKey(this.application.data.applicant, 'full_name');
-    },
     applicantFullName () {
-      if (this.hasApplicantFullName) {
-        return this.application.data.applicant.full_name;
+      if (this.application.data.applicant) {
+        return this.application.data.applicant.full_name.length > 0 ? this.application.data.applicant.full_name : 'You did not provide full name.'
+      } else {
+        return 'You did not provide applicant details.'
       }
     },
     hasAgentFullName () {
@@ -451,12 +462,12 @@ export default {
       let contact = {};
       if (this.application.data.agent) {
         contact.hasAgent = true;
-        contact.address_line_1 = this.application.data.agent.address_line_1 ? this.application.data.agent.address_line_1 : 'You did not provide address line 1';
-        contact.address_line_2 = this.application.data.agent.address_line_2 ? this.application.data.agent.address_line_2 : 'You did not provide address line 2';
-        contact.town_city = this.application.data.agent.town_city ? this.application.data.agent.town_city : 'You did not provide town and/or city';
-        contact.postcode = this.application.data.agent.postcode ? this.application.data.agent.postcode : 'You did not provide postcode';
-        contact.email = this.application.data.agent.email ? this.application.data.agent.email : 'You did not provide an email address';
-        contact.phone = this.application.data.agent.phone ? this.application.data.agent.phone : 'You did not provide a phone number';
+        contact.address_line_1 = this.application.data.agent.address_line_1.length > 0 ? this.application.data.agent.address_line_1 : 'You did not provide address line 1';
+        contact.address_line_2 = this.application.data.agent.address_line_2.length > 0 ? this.application.data.agent.address_line_2 : 'You did not provide address line 2';
+        contact.town_city = this.application.data.agent.town_city.length > 0 ? this.application.data.agent.town_city : 'You did not provide town and/or city';
+        contact.postcode = this.application.data.agent.postcode.length > 0 ? this.application.data.agent.postcode : 'You did not provide postcode';
+        contact.email = this.application.data.agent.email.length > 0 ? this.application.data.agent.email : 'You did not provide an email address';
+        contact.phone = this.application.data.agent.phone.length > 0 ? this.application.data.agent.phone : 'You did not provide a phone number';
         return contact;
       } else {
         contact.hasAgent = false;
@@ -468,12 +479,12 @@ export default {
       let contact = {};
       if (this.application.data.applicant) {
         contact.hasApplicant = true;
-        contact.address_line_1 = this.application.data.applicant.address_line_1 ? this.application.data.applicant.address_line_1 : 'You did not provide address line 1';
-        contact.address_line_2 = this.application.data.applicant.address_line_2 ? this.application.data.applicant.address_line_2 : 'You did not provide address line 2';
-        contact.town_city = this.application.data.applicant.town_city ? this.application.data.applicant.town_city : 'You did not provide town and/or city';
-        contact.postcode = this.application.data.applicant.postcode ? this.application.data.applicant.postcode : 'You did not provide postcode';
-        contact.email = this.application.data.applicant.email ? this.application.data.applicant.email : 'You did not provide an email address';
-        contact.phone = this.application.data.applicant.phone ? this.application.data.applicant.phone : 'You did not provide a phone number';
+        contact.address_line_1 = this.application.data.applicant.address_line_1.length > 0 ? this.application.data.applicant.address_line_1 : 'You did not provide address line 1';
+        contact.address_line_2 = this.application.data.applicant.address_line_2.length > 0 ? this.application.data.applicant.address_line_2 : 'You did not provide address line 2';
+        contact.town_city = this.application.data.applicant.town_city.length > 0 ? this.application.data.applicant.town_city : 'You did not provide town and/or city';
+        contact.postcode = this.application.data.applicant.postcode.length > 0 ? this.application.data.applicant.postcode : 'You did not provide postcode';
+        contact.email = this.application.data.applicant.email.length > 0 ? this.application.data.applicant.email : 'You did not provide an email address';
+        contact.phone = this.application.data.applicant.phone.length > 0 ? this.application.data.applicant.phone : 'You did not provide a phone number';
         return contact;
       } else {
         contact.hasApplicant = false;
@@ -600,7 +611,7 @@ export default {
             return 'You chose: not applicable.'
           }
 
-          if (this.application.data.proposal_extension.materials.walls.proposals.length > 0) {
+          if (this.application.data.proposal_extension.materials.walls.proposals && this.application.data.proposal_extension.materials.walls.proposals.length > 0) {
 
             let wallsMaterial = "";
 
@@ -614,6 +625,8 @@ export default {
             }
 
             return wallsMaterial;
+          } else {
+            return 'No selections were made regarding the materials of the walls. ';
           }
         }
       }
@@ -636,7 +649,7 @@ export default {
             return 'You chose: not applicable.'
           }
 
-          if (this.application.data.proposal_extension.materials.roof.proposals.length > 0) {
+          if (this.application.data.proposal_extension.materials.roof.proposals && this.application.data.proposal_extension.materials.roof.proposals.length > 0) {
 
             let roofMaterial = "";
 
@@ -651,6 +664,8 @@ export default {
             }
 
             return roofMaterial;
+          } else {
+            return 'No selections were made regarding the materials of the roof. ';
           }
         }
       }
@@ -675,7 +690,7 @@ export default {
             return 'You chose: not applicable.'
           }
 
-          if (this.application.data.proposal_extension.materials.windows.proposals.length > 0) {
+          if (this.application.data.proposal_extension.materials.windows.proposals && this.application.data.proposal_extension.materials.windows.proposals.length > 0) {
 
             let windowsMaterial = "";
 
@@ -689,6 +704,8 @@ export default {
             }
 
             return windowsMaterial;
+          } else {
+            return 'No selections were made regarding the materials of the windows. ';
           }
         }
       }
@@ -713,7 +730,7 @@ export default {
             return 'You chose: not applicable.'
           }
 
-          if (this.application.data.proposal_extension.materials.doors.proposals.length > 0) {
+          if (this.application.data.proposal_extension.materials.doors.proposals && this.application.data.proposal_extension.materials.doors.proposals.length > 0) {
 
             let doorsMaterial = "";
 
@@ -726,26 +743,21 @@ export default {
             }
 
             return doorsMaterial;
+          } else {
+            return 'No selections were made regarding the materials of the doors. ';
           }
         }
       }
     },
     hasOtherMaterials () {
-      let materials = {};
-      if (this.hasProposalExtension) {
-        if (this.containsKey(this.application.data.proposal_extension, 'materials')) {
-
-          if (this.application.data.proposal_extension.materials.other) {
-            return materials.answer = "";
-          } else {
-            return materials.answer = 'You did not provide this information.';
-          }
-
+      if (this.application.data.proposal_extension && this.application.data.proposal_extension.materials && this.application.data.proposal_extension.materials.other) {
+        if (this.application.data.proposal_extension.materials.other.length === 1 && this.application.data.proposal_extension.materials.other[0] === "") {
+          return false;
         } else {
-          return materials.answer = 'You did not provide this information.';
+          return true;
         }
       } else {
-        return materials.answer = 'You did not provide this information.';
+        return false;
       }
     },
     worksDescription () {

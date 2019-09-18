@@ -5,6 +5,17 @@ function generateWorkDescription (application) {
 
   if (application.proposal_extension) {
 
+    if (
+      !application.proposal_extension.boundaries && 
+      !application.proposal_extension.incidental_buildings && 
+      !application.proposal_extension.means_of_access && 
+      !application.proposal_extension.parking &&
+      !application.proposal_extension.new_double_bedrooms &&
+      !application.proposal_extension.new_single_bedrooms &&
+      !application.proposal_extension.original_house) {
+        worksDescription.push('You did not specifiy any extension works.');
+      }
+
     if (application.proposal_extension.boundaries) {
       if (application.proposal_extension.boundaries.gates_fences_walls) {
         
@@ -290,6 +301,7 @@ function generateWorkDescription (application) {
 
     }
   }
+
   
   if (application.proposal_equipment) {
 

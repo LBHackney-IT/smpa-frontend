@@ -159,9 +159,9 @@ export default {
   methods: {
 		loadExistingAnswers () {
       if (this.application.data.proposal_extension && this.application.data.proposal_extension.trees) {
-				this.treesInsideBoundary = this.application.data.proposal_extension.trees.inside_boundry;
+				this.treesInsideBoundary = this.application.data.proposal_extension.trees.inside_boundary;
       	this.removedOrPruned = this.application.data.proposal_extension.trees.removed_or_pruned;
-				this.outsideBoundary = this.application.data.proposal_extension.trees.outside_boundry;
+				this.outsideBoundary = this.application.data.proposal_extension.trees.outside_boundary;
       }
 		},
     navigate() {
@@ -171,9 +171,9 @@ export default {
 		updateProposal() {
 			let payload = {
 				"trees": {
-					"inside_boundry": this.treesInsideBoundary,
+					"inside_boundary": this.treesInsideBoundary,
 					"removed_or_pruned": this.removedOrPruned,
-					"outside_boundry": this.outsideBoundary
+					"outside_boundary": this.outsideBoundary
 				}
 			};
       const extensionId = this.$store.getters.getExtensionId(this.applicationId);

@@ -158,7 +158,12 @@ export default {
           return element.proposalId === 'proposal_equipment';
         });
 
-        router.push({ name: this.$store.state.state.proposalFlow[currentLevelInMap + 1].goTo[0], params: {currentLevelInfo: this.$store.state.state.proposalFlow[currentLevelInMap + 1], id: this.$store.state.state.proposalFlow[currentLevelInMap + 1].proposalId, origin: 'equipment' } });
+        router.push({ 
+          name: this.$store.state.state.proposalFlow[currentLevelInMap + 1].goTo[0], 
+          params: {currentLevelInfo: this.$store.state.state.proposalFlow[currentLevelInMap + 1], 
+          id: this.$store.state.state.proposalFlow[currentLevelInMap + 1].proposalId, 
+          origin: 'equipment' } 
+        });
       });
     },
     submit() {
@@ -175,7 +180,6 @@ export default {
       }
       
       this.$store.dispatch('updateEquipmentProposal', payload).then((response) => {
-        console.log('done and navigating', response);
         if (response.error) {
           return this.showErrorMessage = true;
         } else {

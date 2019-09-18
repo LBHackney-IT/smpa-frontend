@@ -71,8 +71,8 @@
         }
 
         if (this.source === 'constraints-finder' && this.application) {
-          this.$store.dispatch('createApplication', this.application).then((response) => {
-            router.push({ name: 'ApplicationTaskOverview', params: { applicationId: response.data.id } });
+          this.$store.dispatch('generateApplication', this.application).then((response) => {
+            router.push({ name: 'ApplicationTaskOverview', params: { applicationId: response.data.application_id } });
           })
         } else if (this.$route.query.redirect) {
           router.push({ path: this.$route.query.redirect });
