@@ -64,8 +64,7 @@ export default {
       payload.data = {};
       payload.data.reduction_eligible = this.improveAccessibility === 'Yes' ? true : false;
 
-      this.$store.dispatch('updateApplication', payload).then((res) => {
-
+      this.$store.dispatch('updateApplication', payload).then(() => {
 				if (this.improveAccessibility === 'Yes') {
 
 					let submission = {};

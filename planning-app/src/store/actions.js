@@ -122,7 +122,7 @@ export function getApplication ({commit}, id) {
   return ApplicationsService
   .get(id)
   .then( response => {
-    console.log('------GET APPLICATION', response.data);
+    // console.log('------GET APPLICATION', response.data);
     commit('getApplication', response.data);
     return response;
   })
@@ -138,7 +138,7 @@ export function updateApplication ({commit}, data) {
   return ApplicationsService
   .update(data.id, data.data)
   .then( response => {
-    console.log('-----application updated', response);
+    // console.log('-----application updated', response);
     commit('updateApplication', response.data);
     return response;
   })
@@ -170,7 +170,7 @@ export function updateFlow ({commit}, data) {
 
 export function submitFlow ({commit}, data) {
   return this.dispatch(data.action, data).then(() => {
-    console.log('the flow was updated-------', this.state);
+    // console.log('the flow was updated-------', this.state);
 
     let patch = {};
     patch.id = data.application_id;
@@ -273,7 +273,7 @@ export function updateEquipmentProposal ({commit}, data) {
   return EquipmentProposalService
     .update(data.id, data.equipment )
     .then( response => {
-      console.log('Update equipment proposal----', response);
+      // console.log('Update equipment proposal----', response);
       commit('updateProposal', {
         'applicationId': response.data.application_id,
         'data': response.data,
@@ -482,7 +482,7 @@ export function createPayment ({commit}, data) {
   return PaymentsService
     .createPayment(data)
     .then( response => {
-      console.log('PAYMENT CREATED---------', response);
+      // console.log('PAYMENT CREATED---------', response);
       return response;
     })
     .catch(function (error) {
@@ -497,7 +497,7 @@ export function checkPayment ({commit}, data) {
   return PaymentsService
     .checkPayment(data)
     .then( response => {
-      console.log('PAYMENT checked---------', response);
+      // console.log('PAYMENT checked---------', response);
       return response;
     })
     .catch(function (error) {
@@ -512,7 +512,7 @@ export function createAccount ({commit}, data) {
   return AccountService
     .createAccount(data)
     .then( response => {
-      console.log('account creation---------', response);
+      // console.log('account creation---------', response);
       return response;
     })
     .catch(function (error) {
@@ -542,7 +542,7 @@ export function resetPasswordRequest ({commit}, data) {
   return AccountService
     .resetPasswordRequest(data)
     .then( response => {
-      console.log('reset password request---------', response);
+      // console.log('reset password request---------', response);
       return response;
     })
     .catch(function (error) {
@@ -557,7 +557,7 @@ export function resetPassword ({commit}, data) {
   return AccountService
     .resetPassword(data)
     .then( response => {
-      console.log('reset password request---------', response);
+      // console.log('reset password request---------', response);
       return response;
     })
     .catch(function (error) {
@@ -572,7 +572,7 @@ export function submitApplication ({commit}, data) {
   return ApplicationsService
   .submitApplication(data.id, data.data)
   .then( response => {
-    console.log('-----application submitted', response);
+    // console.log('-----application submitted', response);
     return response;
   })
   .catch(function (error) {

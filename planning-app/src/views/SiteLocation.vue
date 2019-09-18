@@ -73,7 +73,6 @@
 <script>
   import { getRouteAppId } from '../mixins/getRouteAppId';
   import vMap from '../components/Map.vue';
-  import vCta from '../components/Cta.vue';
 
   export default {
     mixins: [ getRouteAppId ],

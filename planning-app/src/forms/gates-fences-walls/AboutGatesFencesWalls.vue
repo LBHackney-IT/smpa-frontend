@@ -67,7 +67,10 @@ export default {
     this.loadDefaultOptions();
   },
   watch: {
-    '$route': 'fetchData'
+    '$route': 'fetchData',
+    application () {
+			this.loadExistingAnswers();
+		}
   },
 	methods: {
     checkAnswers () {
@@ -147,11 +150,6 @@ export default {
     isInConservationArea () {
       return this.application.data.site_constraints.nb_conarea > 0;
     }
-  },
-  watch: {
-		application (newValue, oldValue) {
-			this.loadExistingAnswers();
-		}
-	}
+  }
 }
 </script>

@@ -61,7 +61,7 @@ export default {
               if (res && res.response && res.response.response && res.response.response.data &&  res.response.response.data.title) {
 								this.errorMessage = res.response.response.data.title;
 							} else {
-								this.errorMessage = errorMessages.APPLICATION_SUBMISSION.GENERIC_ERROR;
+								this.errorMessage = this.errorMessages.APPLICATION_SUBMISSION.GENERIC_ERROR;
 							}
               
               return;

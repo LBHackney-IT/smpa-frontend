@@ -85,7 +85,6 @@
 </template>
 
 <script>
-import L from 'leaflet';
 import vCta from '../../components/Cta.vue';
 import vMap from '../../components/Map.vue';
 import router from '../../router';
@@ -138,7 +137,7 @@ export default {
           payload.data.location_plan_confirmed = true;
 
           this.$store.dispatch('updateApplication', payload).then((response) => {
-            debugger;
+            
             if (response.error) {
               this.showErrorMessage = true;
             } else {
@@ -194,8 +193,6 @@ export default {
     },
 
     siteGeoJson () {
-      console.log('here', this.application.data.site_address.siteGeoJson);
-
       return this.application.data.site_address.siteGeoJson;
     }
 	}

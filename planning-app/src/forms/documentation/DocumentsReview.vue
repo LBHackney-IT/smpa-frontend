@@ -83,7 +83,7 @@ export default {
     }
   },
   watch: {
-		application (newValue, oldValue) {
+		application () {
       this.documentsUploaded = this.application.data.document_files;
 		}
 	}

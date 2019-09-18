@@ -8,7 +8,7 @@
 				<label class="govuk-label govuk-!-font-weight-bold" for="postcode">
 					Enter postcode
 				</label>
-				<input class="govuk-input govuk-!-width-one-quarter govuk-radios--inline govuk-!-margin-right-5" id="postcode" name="postcode" type="text" v-model="postcode" v-on:input="reset">
+				<input class="govuk-input govuk-!-width-one-quarter govuk-radios--inline govuk-!-margin-right-5" id="postcode" name="postcode" type="text" v-model="postcode" v-on:input="reset" v-on:keyup.13="getPostcode">
         <v-cta name="Find address" :onClick="getPostcode"></v-cta>
 
         <div v-if="error && !loading" class="govuk-inset-text govuk-inset-text--error ">

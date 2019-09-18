@@ -1,18 +1,21 @@
 export default {
   calculateNavigation (proposalFlow, currentWorks, currentLevel) {
 
-    console.log('proposalFlow', proposalFlow);
-    console.log('currentWorks', currentWorks);
-    console.log('currentLevel', currentLevel);
+    // console.log('proposalFlow', proposalFlow);
+    // console.log('currentWorks', currentWorks);
+    // console.log('currentLevel', currentLevel);
 
     //find currentLevel in the current proposal
+
+    let currentWorkIndexInFlow;
+
     if (currentWorks.goTo) {
       var currentLevelIndex = currentWorks.goTo.findIndex(function(element) {
         return element === currentLevel;
       });
     } else {
 
-      var currentWorkIndexInFlow = proposalFlow.findIndex(element => 
+      currentWorkIndexInFlow = proposalFlow.findIndex(element => 
         element.proposalName === currentWorks.proposalName
       );
 
@@ -31,7 +34,7 @@ export default {
     } else {
       //check if it is the last item inside current flow.
 
-      var currentWorkIndexInFlow = proposalFlow.findIndex(element => 
+      currentWorkIndexInFlow = proposalFlow.findIndex(element => 
         element.proposalId ===currentWorks.proposalId
       );
 

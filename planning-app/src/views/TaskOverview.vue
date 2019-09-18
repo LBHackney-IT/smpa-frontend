@@ -23,69 +23,101 @@
       </li>
 
       <!-- Starting the works -->
-      <li class="task-overview-list__item"><router-link :to="{ name: 'WorkStart'}" class="govuk-link">Starting the works</router-link></li>
+      <li class="task-overview-list__item" v-if="!applicationSubmitted"><router-link :to="{ name: 'WorkStart'}" class="govuk-link">Starting the works</router-link></li>
+      <li class="task-overview-list__item" v-if="applicationSubmitted">Starting the works</li>
 
       <!-- Create proposal -->
-      <li class="task-overview-list__item" v-if="worksStartCompleted"><router-link :to="{ name: 'Proposal'}" class="govuk-link">Describe the proposed works</router-link></li>
+      <li class="task-overview-list__item" v-if="worksStartCompleted && !applicationSubmitted"><router-link :to="{ name: 'Proposal'}" class="govuk-link">Describe the proposed works</router-link></li>
       
-      <li class="task-overview-list__item" v-if="!worksStartCompleted">
+      <li class="task-overview-list__item" v-if="!worksStartCompleted && !applicationSubmitted">
         <span>Describe the proposed works</span>
         <strong class="govuk-tag app-task-list__task-blocked">Can't start yet</strong>
       </li>
 
+      <li class="task-overview-list__item" v-if="applicationSubmitted">Describe the proposed works</li>
+      
+
       <!-- Trees -->
-      <li class="task-overview-list__item" v-if="proposalChosen">
+      <li class="task-overview-list__item" v-if="proposalChosen && !applicationSubmitted">
         <router-link :to="{ name: 'Trees'}" class="govuk-link">Describe the surroundings: Trees</router-link>
       </li>
 
-      <li class="task-overview-list__item" v-if="!proposalChosen">
+      <li class="task-overview-list__item" v-if="applicationSubmitted">
+        Describe the surroundings: Trees
+      </li>
+
+      <li class="task-overview-list__item" v-if="!proposalChosen && !applicationSubmitted">
         <span>Describe the surroundings: Trees</span>
         <strong class="govuk-tag app-task-list__task-blocked">Can't start yet</strong>
       </li>
 
       <!-- Materials -->
-      <li class="task-overview-list__item" v-if="treesCompleted">
+      <li class="task-overview-list__item" v-if="treesCompleted && !applicationSubmitted">
         <router-link :to="{ name: 'WhatMaterials'}" class="govuk-link">Define materials</router-link>
       </li>
 
-      <li class="task-overview-list__item" v-if="!treesCompleted">
+      <li class="task-overview-list__item" v-if="!treesCompleted && !applicationSubmitted">
         <span>Define materials</span>
         <strong class="govuk-tag app-task-list__task-blocked">Can't start yet</strong>
+      </li>
+
+      <li class="task-overview-list__item" v-if="applicationSubmitted">
+        Define materials
       </li>
     </ul>
 
     <h2 class="govuk-heading-l">2. Supporting documentation</h2>
 
     <ul class="govuk-list">
-      <li class="task-overview-list__item">
+      <li class="task-overview-list__item" v-if="!applicationSubmitted">
         <router-link :to="{ name: 'DocumentationLocation', params: { applicationId: this.applicationId }}" class="govuk-link">Add a location plan</router-link>
       </li>
 
-      <li class="task-overview-list__item" v-if="siteIsInConservationArea">
+      <li class="task-overview-list__item" v-if="applicationSubmitted">
+        Add a location plan
+      </li>
+
+      <li class="task-overview-list__item" v-if="siteIsInConservationArea && !applicationSubmitted">
         <router-link :to="{ name: 'DocumentationDesignAccessStatement'}" class="govuk-link">Add a Design and Access statement</router-link>
       </li>
 
-      <li class="task-overview-list__item" v-if="siteIsListedBuilding">
+      <li class="task-overview-list__item" v-if="applicationSubmitted">
+        Add a Design and Access statement
+      </li>
+
+      <li class="task-overview-list__item" v-if="siteIsListedBuilding && !applicationSubmitted">
         <router-link :to="{ name: 'DocumentationHeritageStatement'}" class="govuk-link">Add a Heritage statement</router-link>
       </li>
 
-      <li class="task-overview-list__item">
+      <li class="task-overview-list__item" v-if="applicationSubmitted">
+        Add a Heritage statement
+      </li>
+
+      <li class="task-overview-list__item" v-if="!applicationSubmitted">
         <router-link :to="{ name: 'DocumentationAdditionalPlans'}" class="govuk-link">Add additional plans</router-link>
+      </li>
+
+      <li class="task-overview-list__item" v-if="applicationSubmitted">
+        Add additional plans
       </li>
     </ul>
 
     <h2 class="govuk-heading-l">3. Declarations</h2>
 
     <ul class="govuk-list">
-      <li class="task-overview-list__item"><router-link :to="{ name: 'DeclarationOfInterest'}" class="govuk-link">Declaration of interest</router-link></li>
-      <li class="task-overview-list__item"><router-link :to="{ name: 'DeclarationsOwnership'}" class="govuk-link">Ownership Certificate Declaration</router-link></li>
+      <li class="task-overview-list__item" v-if="!applicationSubmitted"><router-link :to="{ name: 'DeclarationOfInterest'}" class="govuk-link">Declaration of interest</router-link></li>
+      <li class="task-overview-list__item" v-if="!applicationSubmitted"><router-link :to="{ name: 'DeclarationsOwnership'}" class="govuk-link">Ownership Certificate Declaration</router-link></li>
+
+      <li class="task-overview-list__item" v-if="applicationSubmitted">Declaration of interest</li>
+      <li class="task-overview-list__item" v-if="applicationSubmitted">Ownership Certificate Declaration</li>
     </ul>
 
 
     <h2 class="govuk-heading-l">4. Contact details</h2>
 
     <ul class="govuk-list">
-      <li class="task-overview-list__item"><router-link :to="{ name: 'ApplicationContact'}" class="govuk-link">Agent and/or applicant details</router-link></li>      
+      <li class="task-overview-list__item" v-if="!applicationSubmitted"><router-link :to="{ name: 'ApplicationContact'}" class="govuk-link">Agent and/or applicant details</router-link></li>  
+      <li class="task-overview-list__item" v-if="applicationSubmitted">Agent and/or applicant details</li>      
     </ul>
 
     <h2 class="govuk-heading-l">5. Pay and submit</h2>

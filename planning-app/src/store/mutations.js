@@ -36,7 +36,7 @@ export function getApplication (state, data) {
     }
     
   }
-  console.log('------AFTER GET APPLICATON FLOW', state.state.proposalFlow);
+  // console.log('------AFTER GET APPLICATON FLOW', state.state.proposalFlow);
 }
 
 export function addProposal (state, data) {
@@ -78,7 +78,7 @@ export function updateProposal (state, data) {
       state.state.applications[position].data.proposal_equipment = merged;
     }
 
-    console.log('final state', state.state.applications[position]);
+    // console.log('final state', state.state.applications[position]);
   }
 }
 
@@ -117,7 +117,7 @@ export function createFirstFlow (state, data) {
 
   state.state.proposalFlow = firstFlow;
 
-  console.log('------CREATED FLOW', state.state.proposalFlow);
+  // console.log('------CREATED FLOW', state.state.proposalFlow);
 }
 
 export function updateFlow (state, data) {
@@ -177,7 +177,7 @@ export function updateFlow (state, data) {
     state.state.proposalFlow.splice(currentLevelPosition + 1 + i, 0, flow[i]);
   }
 
-  console.log('------UPDATED FLOW', state.state.proposalFlow);
+  // console.log('------UPDATED FLOW', state.state.proposalFlow);
 
   return state.state.proposalFlow;
 }

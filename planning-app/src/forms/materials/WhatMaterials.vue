@@ -14,8 +14,8 @@
       <fieldset class="govuk-fieldset" aria-describedby="materials-hint">
         <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
           <h4 class="govuk-heading-s">
-					  How would you like to describe proposed materials to be used for the works?
-				  </h4>
+            How would you like to describe proposed materials to be used for the works?
+          </h4>
         </legend>
 
         <span id="proposal-hint" class="govuk-hint">
