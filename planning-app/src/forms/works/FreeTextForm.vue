@@ -51,6 +51,12 @@ export default {
     this.errorMessages = errorMessage;
   },
 	methods: {
+    loadExistingAnswers () {
+      if (this.application.data.free_text_description) {
+        this.description = this.application.data.free_text_description;
+      }
+
+    },
     submit() {
 
       var payload = {};
@@ -68,6 +74,18 @@ export default {
         }
       });
     }
-  }
+  },
+  computed: {
+		application () {
+			let index = this.$store.state.state.applications.findIndex( application => application.data.id === this.applicationId );
+
+			return this.$store.state.state.applications[index];
+		}
+	},
+	watch: {
+		application () {
+			this.loadExistingAnswers();
+		}
+	}
 }
 </script>
