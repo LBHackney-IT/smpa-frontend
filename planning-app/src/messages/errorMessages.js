@@ -1,11 +1,11 @@
 export const RESET_PASSWORD = {
-  SAME_EMAIL : 'The confirmation email is not matching the email provided above.',
+  SAME_EMAIL : 'The email confirmation does not match the email provided above.',
   SAME_PASSWORDS : 'The passwords must be the same.',
   WRONG_LENGTH : 'Your password must have at least 8 characters.'
 }
 
 export const CREATE_ACCOUNT = {
-  SAME_EMAIL : 'The confirmation email is not matching the email provided above.',
+  SAME_EMAIL : 'The email confirmation does not match the email provided above.',
   SAME_PASSWORDS : 'The passwords must be the same.',
   WRONG_LENGTH : 'Your password must have at least 8 characters.',
   GENERIC_ERROR : 'There has been an error. Try again later or contact us.'
