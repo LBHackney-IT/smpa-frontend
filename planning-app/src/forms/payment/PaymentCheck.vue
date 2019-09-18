@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<h1 class="govuk-heading-xl" v-if="loadingCheck">
-      We're verifying the payment.
+      We are verifying your payment.
 		</h1>
 
     <error-message v-if="showErrorMessage && !loading" :message="errorMessage"></error-message>

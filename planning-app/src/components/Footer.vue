@@ -7,17 +7,12 @@
             <ul class="govuk-footer__inline-list">
             <li class="govuk-footer__inline-list-item">
                 <a class="govuk-footer__link" href="#1">
-                Help
+                Get help
                 </a>
             </li>
             <li class="govuk-footer__inline-list-item">
-                <a class="govuk-footer__link" href="#2">
-                Cookies
-                </a>
-            </li>
-            <li class="govuk-footer__inline-list-item">
-                <a class="govuk-footer__link" href="#3">
-                Contact
+                <a class="govuk-footer__link" href="https://www3.hackney.gov.uk/planning-privacy">
+                Privacy
                 </a>
             </li>
             <li class="govuk-footer__inline-list-item">

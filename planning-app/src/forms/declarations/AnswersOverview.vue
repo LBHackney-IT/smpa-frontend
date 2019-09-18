@@ -293,7 +293,7 @@
         </div>
       </dl>
 
-      <h2 class="govuk-heading-l">Support documentation</h2>
+      <h2 class="govuk-heading-l">Supporting documentation</h2>
 
       <dl class="govuk-summary-list" v-if="this.application.data.document_files.length > 0">
         <div class="govuk-summary-list__row" v-bind:key="file.id" v-for="file in this.application.data.document_files">
@@ -346,7 +346,7 @@
         </div>
       </dl>
 
-      <h2 class="govuk-heading-l">Ownerships Certificates and Agricultural Land Declaration</h2>
+      <h2 class="govuk-heading-l">Ownership Certificates and Agricultural Land Declaration</h2>
       <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row">
           <dt class="govuk-summary-list__key">

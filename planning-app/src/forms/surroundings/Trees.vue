@@ -15,7 +15,7 @@
         </span>
       </summary>
       <div class="govuk-details__text">
-        <img class="location" src="../../assets/img/trees_explanation.png" alt="How to measure trees" />
+        <img class="location" src="../../assets/img/trees_explanation.png" alt="How to measure trees. Step 1. Measure the diameter of the tree at 1.5 metres up from the ground. Step 2. If the tree's diameter is greater than 75mm or 7.5cm at this height. Step 3. Measure the distance of each tree from the perimeter of your works." />
       </div>
     </details>
 

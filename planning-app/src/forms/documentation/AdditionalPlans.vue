@@ -14,7 +14,7 @@
       </ul>
     </div>
 
-    <h4 class="govuk-heading-m">Uploading aditional documents</h4>
+    <h4 class="govuk-heading-m">Uploading additional documents</h4>
 
     <p>You must submit enough documentation to understand your proposal, including information about the existing property. </p>
 

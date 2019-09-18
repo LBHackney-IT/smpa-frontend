@@ -17,7 +17,7 @@
     <p>We receive a large volume of applications so please bear with us while we review your application. Your application will now move through two stages of processing.</p>
 
 		<h3 class="govuk-heading-m">1. Validation</h3>
-		<p>We will first determine if your application can be validated. This means we assess to see if you have submitted all the information we need to make a decision. If there is something missing you will have an opportunity to submit additional information/documents. We will contact you if this is required. Once your application has been validated you will be notified.</p>
+		<p>We will first determine if your application can be validated. This means we assess to see if you have submitted all the information we need to make a decision. If there is something missing you will have an opportunity to submit additional information / documents. We will contact you if this is required. Once your application has been validated you will be notified.</p>
 
 		<h3 class="govuk-heading-m">2. Review</h3>
 		<p>At this point we have 8 weeks to review your application and reach a decision. A planning officer will be assigned to your application. They will be in touch if they have questions or require further information. During this period we will conduct a period of consultation.</p>

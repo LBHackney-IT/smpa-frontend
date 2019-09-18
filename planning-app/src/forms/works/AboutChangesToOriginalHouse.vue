@@ -59,7 +59,7 @@ export default {
         {
           id: 'single_storey_extension',
           value: 'single_storey_extension',
-          name: 'Single storey extension (including conservatory)'
+          name: 'Single storey extension (including conservatories)'
         },
         {
           id: 'two_storey_extension',
