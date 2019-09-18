@@ -9,6 +9,7 @@ Vue.use(Router);
 import PlanningApplicationSteps from '../views/PlanningApplicationSteps.vue';
 import SiteSearch from '../views/SiteSearch.vue';
 import SiteDetails from '../views/SiteDetails.vue';
+import SiteLocation from '../views/SiteLocation.vue';
 import SignIn from '../views/SignIn.vue';
 import SignOut from '../views/SignOut.vue';
 import ResetPasswordRequest from '../views/ResetPasswordRequest.vue';
@@ -156,6 +157,11 @@ export default new Router({
               path: 'form-overview', 
               name:'FormOverview', 
               component: AnswersOverview 
+            },
+            { 
+              path: 'site-location', 
+              name:'SiteLocation', 
+              component: SiteLocation 
             },
             { 
               path: 'work-start', 

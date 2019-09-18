@@ -19,7 +19,7 @@
 
       <!-- Location of the works -->
       <li class="task-overview-list__item">
-        <span class="app-task-list__task-name"><a class="govuk-link" href="#">Location of the works</a></span>
+        <span class="app-task-list__task-name"><router-link :to="{ name: 'SiteLocation'}" class="govuk-link">Location of the works</router-link></span>
       </li>
 
       <!-- Starting the works -->

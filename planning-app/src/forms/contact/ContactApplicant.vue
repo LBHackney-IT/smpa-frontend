@@ -213,6 +213,7 @@ export default {
         this.postcode = this.application.data.applicant.postcode;
         this.phone = this.application.data.applicant.phone;
         this.email = this.application.data.applicant.email;
+        this.contactApplicant = this.application.data.contact_applicant ? 'Yes' : 'No';
       }
 		},
     navigate() {
@@ -229,6 +230,10 @@ export default {
       payload.data.applicant.postcode = this.postcode;
       payload.data.applicant.phone = this.phone;
       payload.data.applicant.email = this.email;
+
+      if (this.contactApplicant === 'Yes') {
+        payload.data.contact_applicant = true;
+      }
 
       this.$store.dispatch('updateApplication', payload).then((response) => {
         if (response.error) {

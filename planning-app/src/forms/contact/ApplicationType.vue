@@ -24,7 +24,7 @@
       </fieldset>
     </div>
 
-    <error-message v-if="showErrorMessage && !loading" :message="errorMessages.UPDATE_APPLICATION.GENERIC_ERROR"></error-message>
+    <error-message v-if="showErrorMessage && !loading" message="Select one option."></error-message>
     <v-cta name="Continue" :onClick="navigate"></v-cta>
   </div>
 </template>

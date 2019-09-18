@@ -12,10 +12,8 @@
         You are required to upload a new location plan if your proposal affects the site boundary or there are significant changes to the layout of the site.
       </strong>
     </div>
-    <!-- <warning-message :message="locationPlanMessage" v-bind:typeAlert="false"></warning-message> -->
 
     <p class=" govuk-!-font-size-19">This is the location plan we currently hold about the selected address:</p>
-
 
     <v-map v-if="this.application" :geoJson="this.application.data.site_address.siteGeoJson"></v-map>
 
@@ -120,13 +118,33 @@ export default {
   created () {
     this.errorMessages = errorMessage;
   },
+  watch: {
+    application () {
+			this.loadExistingAnswers();
+		}
+  },
 	methods: {
+    loadExistingAnswers () {
+      this.useMapDisplayed = this.application.data.location_plan_confirmed ? 'Yes' : 'No';
+		},
     handleFileUpload(){
       this.file = this.$refs.locationPlan.files[0];
     },
     submitFile() {
         if (this.useMapDisplayed === 'Yes') {
-          this.navigate();
+          var payload = {};
+          payload.id = this.applicationId;
+          payload.data = {};
+          payload.data.location_plan_confirmed = true;
+
+          this.$store.dispatch('updateApplication', payload).then((response) => {
+            debugger;
+            if (response.error) {
+              this.showErrorMessage = true;
+            } else {
+              this.navigate();
+            }
+          })
         } else {
         var docType = this.documentTypes.find(function(element) {
           return element.name === 'Location plan';
