@@ -6,9 +6,21 @@ export default {
     console.log('currentLevel', currentLevel);
 
     //find currentLevel in the current proposal
-    var currentLevelIndex = currentWorks.goTo.findIndex(function(element) {
-      return element === currentLevel;
-    });
+    if (currentWorks.goTo) {
+      var currentLevelIndex = currentWorks.goTo.findIndex(function(element) {
+        return element === currentLevel;
+      });
+    } else {
+
+      var currentWorkIndexInFlow = proposalFlow.findIndex(element => 
+        element.proposalName === currentWorks.proposalName
+      );
+
+      if (currentWorkIndexInFlow > -1) {
+        currentWorks = proposalFlow[currentWorkIndexInFlow];
+      }
+    }
+
 
     // if (currentWorks.goTo.length > 1 && currentWorks.goTo.length < currentLevelIndex + 1) {
       

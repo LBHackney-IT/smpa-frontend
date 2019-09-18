@@ -24,7 +24,19 @@ export function getApplication (state, data) {
 
   if (position === -1) {
     state.state.applications.push(application);
+
+    if (state.state.applications[0].data.proposalFlow) {
+      state.state.proposalFlow = JSON.parse(state.state.applications[0].data.proposalFlow);
+    } 
+
+  } else {
+
+    if (state.state.applications[position].data.proposalFlow) {
+      state.state.proposalFlow = JSON.parse(state.state.applications[position].data.proposalFlow);
+    }
+    
   }
+  console.log('------AFTER GET APPLICATON FLOW', state.state.proposalFlow);
 }
 
 export function addProposal (state, data) {
@@ -109,18 +121,17 @@ export function createFirstFlow (state, data) {
 }
 
 export function updateFlow (state, data) {
-  //todo check if selected proposal already exists
-  data.selectedProposal.forEach(function(element, index) {
-    state.state.proposalFlow.forEach(function(el) {
 
-      if (element === el.proposalId) {
-        data.selectedProposal.splice(index, 1);
-      }
-    });
-  });
+  let newProposal = [];
 
-  if (data.selectedProposal.length === 0) {
-    return;
+  //check if selected proposals already exist in the proposal flow
+
+  for (var i = 0; i < data.selectedProposal.length; i++) {
+    var proposalExists = state.state.proposalFlow.findIndex(x => x.proposalId === data.selectedProposal[i]);
+
+    if (proposalExists < 0) {
+      newProposal.push(data.selectedProposal[i]);
+    }
   }
 
   var mapKeys = Object.keys(state.state.proposalMap);
@@ -131,21 +142,41 @@ export function updateFlow (state, data) {
 
   var listOfOptions = state.state.proposalMap[currentLevelInMap];
 
+  var currentLevelPosition = state.state.proposalFlow.findIndex(x => x.proposalId === currentLevelInMap);
+  
   let flow = [];
 
-  data.selectedProposal.forEach(function(element) {
-    var selectedProposal = listOfOptions.find(function(option) {
-      return option.proposalId === element;
+  //adding new proposals
+  if (newProposal.length > 0) {
+
+    newProposal.forEach(function(element, index) {
+      state.state.proposalFlow.forEach(function(el) {
+  
+        if (element === el.proposalId) {
+          newProposal.splice(index, 1);
+        }
+      });
+    });
+  
+    newProposal.forEach(function(element) {
+      var selectedProposal = listOfOptions.find(function(option) {
+        return option.proposalId === element;
+      });
+  
+      flow.push(selectedProposal);
     });
 
-    flow.push(selectedProposal);
-  });
+  }
 
-  var currentLevelPosition = state.state.proposalFlow.findIndex(x => x.proposalId === currentLevelInMap);
+  //if proposal is being removed 
+
+  
+
 
   for (let i = 0; i < flow.length; i++) { 
     state.state.proposalFlow.splice(currentLevelPosition + 1 + i, 0, flow[i]);
   }
+
   console.log('------UPDATED FLOW', state.state.proposalFlow);
 
   return state.state.proposalFlow;
@@ -160,7 +191,6 @@ export function signIn (state, data) {
   state.state.user = data;
   Vue.set(state.state, 'isAuthenticated', true);
   JwtService.saveToken(state.state.user.jwt);
-  console.log('state after signing in-------', state.state.isAuthenticated);
 }
 
 export function addDocumentTypes (state, data) {
@@ -179,8 +209,6 @@ export function signOut (state) {
   state.state.applications = [];
   state.state.proposalFlow = [];
   Vue.set(state.state, 'isAuthenticated', false);
-
-  console.log('after sign out', state.state.isAuthenticated);
 }
 
 export function addSiteAddress (state, data) {

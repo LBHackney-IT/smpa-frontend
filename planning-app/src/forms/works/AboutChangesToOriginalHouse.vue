@@ -165,8 +165,20 @@ export default {
         var currentLevelInMap = this.$store.state.state.proposalFlow.findIndex(function(element) {
           return element.proposalId === 'original_house';
         });
+
         var currentLevelInfo = this.$store.state.state.proposalFlow[currentLevelInMap + 1];
-        router.push({ name: this.$store.state.state.proposalFlow[currentLevelInMap + 1].goTo[0], params: {currentLevelInfo }});
+
+        var destinationId = this.$store.state.state.proposalFlow[currentLevelInMap + 1].proposalId;
+        var destinationName = this.$store.state.state.proposalFlow[currentLevelInMap + 1].goTo[0];
+
+        router.push({ 
+          name: destinationName, 
+          params: { 
+            currentLevelInfo,
+            id: destinationId
+          }
+          
+        });
       });
     },
     submit() {

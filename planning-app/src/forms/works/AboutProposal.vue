@@ -148,6 +148,14 @@ export default {
    
 		},
     updateNavigation () {
+
+      // let toBeRemoved = [];
+
+      // if (this.existingProposal.length > 0) {
+      //   let difference = this.existingProposal.filter(x => !this.selectedProposal.includes(x));
+      //   console.log('--------THE DIFFERENCE', difference);
+      // }
+
       var navigationInfo = {
         currentLevel: 'proposal_extension',
         selectedProposal: this.selectedProposal,

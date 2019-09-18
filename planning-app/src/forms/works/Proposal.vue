@@ -130,11 +130,24 @@ export default {
           } else {
             this.updateApplication(false);
           }
+        } else if (this.existingProposal.length < this.selectedProposal.length) {
+          this.addExtraProposal();
         } else {
           this.updateApplication(true);
         }
       }
 
+    },
+    addExtraProposal() {
+
+      //if proposal equipment already exists, submit a new proposal extension
+      if (this.application.data.proposal_equipment) {
+        this.createExtensionProposal();
+        
+      } else {
+        // submit proposal extension
+        this.createEquipmentProposal(); 
+      }
     },
     updateApplication(shouldNavigate) {
       let proposalId;
@@ -166,6 +179,28 @@ export default {
       });    
 
     },
+    createEquipmentProposal() {
+      this.$store.dispatch('createEquipmentProposal', { "application_id": this.applicationId }).then((response) => {
+        if (response.error) {
+          this.showErrorMessage = true;
+          this.currentErrorMessage = this.errorMessages.PROPOSAL.GENERIC_ERROR;
+          return;
+        } else {
+          this.updateNavigation();
+        } 
+      })
+    },
+    createExtensionProposal() {
+      this.$store.dispatch('createExtensionProposal', { "application_id": this.applicationId }).then((response) => {
+        if (response.error) {
+          this.showErrorMessage = true;
+          this.currentErrorMessage = this.errorMessages.PROPOSAL.GENERIC_ERROR;
+          return;
+        } else {
+          this.updateNavigation();
+        } 
+      })
+    },
     submit() {
       if (this.selectedProposal.length === 2) {
 
@@ -180,28 +215,11 @@ export default {
         })
 
       } else if (this.selectedProposal[0] === 'proposal_extension') {
-
-        this.$store.dispatch('createExtensionProposal', { "application_id": this.applicationId }).then((response) => {
-           if (response.error) {
-            this.showErrorMessage = true;
-            this.currentErrorMessage = this.errorMessages.PROPOSAL.GENERIC_ERROR;
-            return;
-          } else {
-            this.updateNavigation();
-          } 
-        })
+        this.createExtensionProposal();
+        
       } else {
         // would then be "proposal_equipment"
-
-        this.$store.dispatch('createEquipmentProposal', { "application_id": this.applicationId }).then((response) => {
-          if (response.error) {
-            this.showErrorMessage = true;
-            this.currentErrorMessage = this.errorMessages.PROPOSAL.GENERIC_ERROR;
-            return;
-          } else {
-            this.updateNavigation();
-          } 
-        })
+        this.createEquipmentProposal();   
       }
     }
   },
