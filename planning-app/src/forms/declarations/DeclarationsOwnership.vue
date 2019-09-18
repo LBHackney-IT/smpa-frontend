@@ -31,7 +31,7 @@
       </div>
     </fieldset>
 
-    <error-message v-if="showErrorMessage && !loading" :message="errorMessages.DECLARATION.GENERIC_ERROR"></error-message>
+    <error-message v-if="showErrorMessage" :message="errorMessage"></error-message>
 
     <v-cta name="Continue" :onClick="navigate"></v-cta>
   </div>
@@ -56,7 +56,8 @@ export default {
       defaultOptions: undefined,
       typeOfOwnership: '',
       showErrorMessage: false,
-      errorMessages: undefined
+      errorMessages: undefined,
+      errorMessage: undefined
 
     }
   },
@@ -83,24 +84,32 @@ export default {
       });
     },
     navigate() {
-      var payload = {};
-      payload.id = this.applicationId;
-      payload.data = {};
-      payload.data.ownership_type_id = this.typeOfOwnership;
+      if (this.typeOfOwnership) {
+        this.showErrorMessage = false;
+        var payload = {};
+        payload.id = this.applicationId;
+        payload.data = {};
+        payload.data.ownership_type_id = this.typeOfOwnership;
 
-      this.$store.dispatch('updateApplication', payload).then((response) => {
+        this.$store.dispatch('updateApplication', payload).then((response) => {
 
-        if (response.error) {
-          this.showErrorMessage = true;
-        } else {
-          router.push({ 
-            name: 'OwnershipCertificateDeclaration', 
-            params: { 
-              doesApplicantOwnTheLand: this.typeOfOwnership 
-            } 
-          });
-        }
-      });    
+          if (response.error) {
+            this.showErrorMessage = true;
+            this.errorMessage = this.errorMessages.DECLARATION.GENERIC_ERROR;
+          } else {
+            router.push({ 
+              name: 'OwnershipCertificateDeclaration', 
+              params: { 
+                doesApplicantOwnTheLand: this.typeOfOwnership 
+              } 
+            });
+          }
+        });  
+      } else {
+        this.showErrorMessage = true;
+        this.errorMessage = "You must select an option."
+      }
+  
     }
   },
   computed: {

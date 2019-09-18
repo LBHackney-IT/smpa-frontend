@@ -1,10 +1,11 @@
 <template>
   <div>
-    <div class="purpose-message govuk-body" v-if="applicationAddress">
-      <p>Application type and site location are based entirely on the selections you have made. <a class="govuk-link" href="">Change</a></p>
-      <span>{{applicationAddress.buildingNumber}}<br>
-      {{applicationAddress.street}}<br>
-      {{applicationAddress.postcode}}</span> 
+    <div class="purpose-message govuk-body" v-if="siteAddress">
+      <p>Application type and site location are based entirely on the selections you have made. In order to change the address you must create a new application. <a class="govuk-link" href="/">Change site address</a>.</p>
+      <span>{{siteAddress.address_line_1}}<br>
+      {{siteAddress.address_line_2}}<br>
+      {{siteAddress.address_line_3}}<br>
+      {{siteAddress.postcode}} {{siteAddress.town_city}}</span> 
     </div>
     <h1 class="govuk-heading-xl">Application overview</h1>
 
@@ -91,7 +92,9 @@
 
     <ul class="govuk-list">
       <li class="task-overview-list__item"><router-link :to="{ name: 'FormOverview'}" class="govuk-link">Preview answers</router-link></li>
-      <li class="task-overview-list__item"><router-link :to="{ name: 'Eligibility'}" class="govuk-link">Check eligibility and pay</router-link></li>
+
+      <li class="task-overview-list__item" v-if="!applicationSubmitted"><router-link :to="{ name: 'Eligibility'}" class="govuk-link">Check eligibility and pay</router-link></li>
+      <li class="task-overview-list__item" v-if="applicationSubmitted">This application has been submitted.</li>
       <!-- <li class="task-overview-list__item"><router-link :to="{ name: 'Pay'}" class="govuk-link">Payment</router-link></li> -->
     </ul>
   </div>
@@ -112,11 +115,8 @@
     },
 
     computed: {
-      //todo
-      applicationAddress () {
-        const applications = this.$store.state.state.applications;
-        const result = applications.find( application => application.data.id === this.applicationId );
-        return result.selectedAddress;
+      siteAddress () {
+        return this.application.data.site_address;
       },
 
       application () {
@@ -173,6 +173,14 @@
           return false;
         }
         
+      },
+
+      applicationSubmitted() {
+        if (this.application.data.status.name === "Submitted") {
+          return true;
+        } else {
+          return false;
+        }
       }
     }
   }

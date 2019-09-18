@@ -211,10 +211,10 @@ function generateWorkDescription (application) {
       }
 
       if (application.proposal_extension.original_house.roof) {
-        if (application.proposal_extension.original_house.porch.works_locations.length > 0) {
+        if (application.proposal_extension.original_house.roof.works_locations.length > 0) {
 
           let roof_locations = '';
-          application.proposal_extension.original_house.porch.works_locations.forEach((location) => {
+          application.proposal_extension.original_house.roof.works_locations.forEach((location) => {
             roof_locations += location.name + ' ';
           });
 
@@ -304,19 +304,26 @@ function generateWorkDescription (application) {
 
           let currentEquipmentInfo = '';
 
-          let currentEquipment = application.proposal_equipment.equipment.equipment_conservation_locations.find((eq) => eq.equipment_type_id === equipment.id);
+          if (application.proposal_equipment.equipment.equipment_conservation_locations) {
+            let currentEquipment = application.proposal_equipment.equipment.equipment_conservation_locations.find((eq) => eq.equipment_type_id === equipment.id);
 
-          if (currentEquipment && currentEquipment.locations) {
-            currentEquipment.locations.forEach((equipmentLocation, locationIndex) => {
-              if (locationIndex + 1 === currentEquipment.locations.length) {
-                currentEquipmentInfo += equipmentLocation.name + ' ';
-              } else {
-                currentEquipmentInfo += equipmentLocation.name + ', ';
-              }
-            });
+            if (currentEquipment && currentEquipment.locations) {
+              currentEquipment.locations.forEach((equipmentLocation, locationIndex) => {
+                if (locationIndex + 1 === currentEquipment.locations.length) {
+                  currentEquipmentInfo += equipmentLocation.name + ' ';
+                } else {
+                  currentEquipmentInfo += equipmentLocation.name + ', ';
+                }
+              });
+            }
+
+            currentEquipmentInfo += equipment.name;
+
+          } else {
+            currentEquipmentInfo += 'You did not provide the location of the works related to an equipment in a conservation area.';
           }
 
-          currentEquipmentInfo += equipment.name;
+          
 
           listOfEquipments.push(currentEquipmentInfo);
 
@@ -326,19 +333,25 @@ function generateWorkDescription (application) {
 
           let currentEquipmentInfo = '';
 
-          let currentEquipment = application.proposal_equipment.equipment.equipment_locations.find((eq) => eq.equipment_type_id === equipment.id);
+          if (application.proposal_equipment.equipment.equipment_locations) {
+            let currentEquipment = application.proposal_equipment.equipment.equipment_locations.find((eq) => eq.equipment_type_id === equipment.id);
 
-          if (currentEquipment && currentEquipment.locations) {
-            currentEquipment.locations.forEach((equipmentLocation, locationIndex) => {
-              if (locationIndex + 1 === currentEquipment.locations.length) {
-                currentEquipmentInfo += equipmentLocation.name + ' ';
-              } else {
-                currentEquipmentInfo += equipmentLocation.name + ', ';
-              }
-            });
+            if (currentEquipment && currentEquipment.locations) {
+              currentEquipment.locations.forEach((equipmentLocation, locationIndex) => {
+                if (locationIndex + 1 === currentEquipment.locations.length) {
+                  currentEquipmentInfo += equipmentLocation.name + ' ';
+                } else {
+                  currentEquipmentInfo += equipmentLocation.name + ', ';
+                }
+              });
+            }
+  
+            currentEquipmentInfo += equipment.name;
+          } else {
+            currentEquipmentInfo += 'You did not provide the location of the works related to an equipment.';
           }
 
-          currentEquipmentInfo += equipment.name;
+
 
           listOfEquipments.push(currentEquipmentInfo);
 

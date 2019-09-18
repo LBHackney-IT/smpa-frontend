@@ -88,6 +88,7 @@
             <p v-if="this.application.data.site_address && this.application.data.site_address.address_line_2">{{this.application.data.site_address.address_line_2}}</p>
             <p v-if="this.application.data.site_address && this.application.data.site_address.town_city">{{this.application.data.site_address.town_city}}</p>
             <p v-if="this.application.data.site_address && this.application.data.site_address.postcode">{{this.application.data.site_address.postcode}}</p>
+            <p v-if="!this.application.data.site_address">There isn't an address associated with this application.</p>
           </dd>
 
           <dd class="govuk-summary-list__actions">
@@ -100,7 +101,7 @@
           </dt>
           <dd class="govuk-summary-list__value">
             <ul>
-              <li v-for="work in this.worksDescription">
+              <li v-bind:key="work" v-for="work in this.worksDescription">
                 {{ work }}
               </li>
             </ul>
@@ -282,8 +283,8 @@
 
       <h2 class="govuk-heading-l">Support documentation</h2>
 
-      <dl class="govuk-summary-list">
-        <div class="govuk-summary-list__row" v-for="file in this.application.data.document_files">
+      <dl class="govuk-summary-list" v-if="this.application.data.document_files.length > 0">
+        <div class="govuk-summary-list__row" v-bind:key="file.id" v-for="file in this.application.data.document_files">
           <dd class="govuk-summary-list__value">
             {{ file.original_name }}
           </dd>
@@ -293,6 +294,20 @@
               Download<span class="govuk-visually-hidden"> file</span>
             </button>
 
+            <router-link :to="{ name: 'SupportingDocumentation'}" class="govuk-link">
+              Change<span class="govuk-visually-hidden"> files</span>
+            </router-link>
+          </dd>
+        </div>
+      </dl>
+
+      <dl class="govuk-summary-list" v-if="this.application.data.document_files.length === 0">
+        <div class="govuk-summary-list__row">
+          <dd class="govuk-summary-list__value">
+            No documentation uploaded.
+          </dd>
+    
+          <dd class="govuk-summary-list__actions">
             <router-link :to="{ name: 'SupportingDocumentation'}" class="govuk-link">
               Change<span class="govuk-visually-hidden"> files</span>
             </router-link>
@@ -330,20 +345,32 @@
             <p v-if="!this.hasOwnershipDeclaration">You did not provide this information.</p>
           </dd>
           <dd class="govuk-summary-list__actions">
-            <a class="govuk-link" href="#">
-              Change<span class="govuk-visually-hidden"> name of agent</span>
-            </a>
+            <router-link :to="{ name: 'DeclarationsOwnership'}" class="govuk-link">
+              Change<span class="govuk-visually-hidden"> declaration of ownership.</span>
+            </router-link>
           </dd>
         </div>
       </dl>
 
     </div>
 
-    <h3 class="govuk-heading-m">Now submit your application</h3>
+    <div v-if="!applicationSubmitted">
+      
+      <h3 class="govuk-heading-m">Now submit your application</h3>
 
-    <p>By submitting this application you are confirming that, to the best of your knowledge, the details you are providing are correct.</p>
+      <p>By submitting this application you are confirming that, to the best of your knowledge, the details you are providing are correct.</p>
 
-    <v-cta name="Confirm" :onClick="navigate"></v-cta>
+      <v-cta name="Confirm" :onClick="navigate"></v-cta>
+
+    </div>
+
+    <div v-if="applicationSubmitted">
+      
+      <h3 class="govuk-heading-m">This application has already been submitted.</h3>
+
+    </div>
+
+
 
   </div>
 </template>
@@ -540,7 +567,7 @@ export default {
 
           if (this.application.data.proposal_extension.materials.definitions_in_documents) {
             return materials.answer = "You chose to define materials on supporting documentation.";
-          } else if (this.application.data.proposal_extension.materials.to_follow) {
+          } else if (this.application.data.proposal_extension.materials.definitions_to_follow) {
             return materials.answer = "You don’t know yet and will submit an Approval of Conditions later";
           } else if (this.application.data.proposal_extension.materials.definitions_in_form) {
             return materials.answer = "You chose to define materials in the form";
@@ -561,7 +588,7 @@ export default {
 
           if (this.application.data.proposal_extension.materials.definitions_in_documents) {
             return "You chose to define materials on supporting documentation.";
-          } else if (this.application.data.proposal_extension.materials.to_follow) {
+          } else if (this.application.data.proposal_extension.materials.definitions_to_follow) {
             return "You don’t know yet and will submit an Approval of Conditions later";
           }
           
@@ -597,7 +624,7 @@ export default {
 
           if (this.application.data.proposal_extension.materials.definitions_in_documents) {
             return "You chose to define materials on supporting documentation.";
-          } else if (this.application.data.proposal_extension.materials.to_follow) {
+          } else if (this.application.data.proposal_extension.materials.definitions_to_follow) {
             return "You don’t know yet and will submit an Approval of Conditions later";
           }
 
@@ -634,7 +661,7 @@ export default {
 
           if (this.application.data.proposal_extension.materials.definitions_in_documents) {
             return "You chose to define materials on supporting documentation.";
-          } else if (this.application.data.proposal_extension.materials.to_follow) {
+          } else if (this.application.data.proposal_extension.materials.definitions_to_follow) {
             return "You don’t know yet and will submit an Approval of Conditions later";
           }
           
@@ -672,7 +699,7 @@ export default {
 
           if (this.application.data.proposal_extension.materials.definitions_in_documents) {
             return "You chose to define materials on supporting documentation.";
-          } else if (this.application.data.proposal_extension.materials.to_follow) {
+          } else if (this.application.data.proposal_extension.materials.definitions_to_follow) {
             return "You don’t know yet and will submit an Approval of Conditions later";
           }
           
@@ -723,6 +750,15 @@ export default {
     },
     worksDescription () {
       return GenerateWorks.generateWorkDescription(this.application.data);
+    },
+
+    applicationSubmitted() {
+
+      if (this.application.data.status.name === "Submitted") {
+        return true;
+      } else {
+        return false;
+      }
     }
   }
 }
