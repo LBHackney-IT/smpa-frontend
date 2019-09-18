@@ -39,7 +39,7 @@ function generateWorkDescription (application) {
 
     if (application.proposal_extension.incidental_buildings) {
 
-      if (application.proposal_extension.incidental_buildings.outbuilding.works_locations.length > 0) {
+      if (application.proposal_extension.incidental_buildings.outbuilding && application.proposal_extension.incidental_buildings.outbuilding.works_locations.length > 0) {
 
         let outbuilding_locations = '';
         application.proposal_extension.incidental_buildings.outbuilding.works_locations.forEach((location) => {
@@ -52,7 +52,7 @@ function generateWorkDescription (application) {
         worksDescription.push('Extension or alteration to any other building. You did not provide the location of the works for the extension or alteration to any other building.');
       }
 
-      var removal_or_demolition = application.proposal_extension.incidental_buildings.outbuilding.removal_or_demolition ? 'The work includes the removal or demolition of any existing outbuilding. ' : 'The work does not include the removal or demolition of any existing outbuilding. ';
+      var removal_or_demolition = application.proposal_extension.incidental_buildings.removal_or_demolition ? 'The work includes the removal or demolition of any existing outbuilding. ' : 'The work does not include the removal or demolition of any existing outbuilding. ';
 
       worksDescription.push(removal_or_demolition);
 

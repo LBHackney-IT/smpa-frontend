@@ -353,7 +353,6 @@ import vCta from '../../components/Cta.vue';
 import router from '../../router';
 import { getRouteAppId } from '../../mixins/getRouteAppId';
 import GenerateWorks from '../../common/worksDescription';
-import FileSaver from 'file-saver';
 
 export default {
   name: 'AnswersOverview',
@@ -374,13 +373,28 @@ export default {
     },
     downloadFile(id) {
       this.$store.dispatch('downloadDocument', id).then((response) => {
-
         if (response.error) {
           this.showErrorMessage = true;
-
         } else {
-          var blob = new Blob([ response.data ], {type: response.headers["content-type"]});
-          FileSaver.saveAs(blob, "file");
+          const url = window.URL.createObjectURL(new Blob([response.data]));
+          const link = document.createElement('a');
+          link.href = url;
+
+          let fileName;
+
+          if (response.headers["content-type"] === 'application/pdf') {
+            fileName = id + '.pdf';
+          } else if (response.headers["content-type"] === 'application/msword') {
+            fileName = id + '.doc';
+          } else if (response.headers["content-type"] === 'image/jpeg') {
+            fileName = id + '.jpg';
+          } else if (response.headers["content-type"] === 'application/vnd.ms-excel') {
+            fileName = id + '.xls';
+          }
+
+          link.setAttribute('download', fileName);
+          document.body.appendChild(link);
+          link.click();
         }
       })
     }
@@ -491,7 +505,7 @@ export default {
     },
     hasTreesInsideBoundary () {
       if (this.hasProposalExtension && this.hasTreesInformation) {
-        let answer = this.application.data.proposal_extension.trees.inside_boundary ? "Yes" : "No";
+        let answer = this.application.data.proposal_extension.trees && this.application.data.proposal_extension.trees.inside_boundary ? "Yes" : "No";
         return answer;
       } else {
         return false;
@@ -499,7 +513,7 @@ export default {
     },
     hasTreesOutsideBoundary () {
       if (this.hasProposalExtension && this.hasTreesInformation) {
-        let answer = this.application.data.proposal_extension.trees.outside_boundary ? "Yes" : "No";
+        let answer = this.application.data.proposal_extension.trees && this.application.data.proposal_extension.trees.outside_boundary ? "Yes" : "No";
         return answer;
       } else {
         return false;
@@ -507,7 +521,7 @@ export default {
     },
     hasTreesPrunedOrRemoved () {
       if (this.hasProposalExtension && this.hasTreesInformation) {
-        let answer = this.application.data.proposal_extension.trees.removed_or_pruned ? "Yes" : "No";
+        let answer = this.application.data.proposal_extension.trees && this.application.data.proposal_extension.trees.removed_or_pruned ? "Yes" : "No";
         return answer;
       } else {
         return false;
@@ -522,7 +536,7 @@ export default {
     hasMaterials () {
       let materials = {};
       if (this.hasProposalExtension) {
-        if (this.containsKey(this.application.data.proposal_extension, 'materials')) {
+        if (this.application.data.proposal_extension.materials) {
 
           if (this.application.data.proposal_extension.materials.definitions_in_documents) {
             return materials.answer = "You chose to define materials on supporting documentation.";
@@ -542,7 +556,6 @@ export default {
       }
     },
     wallsMaterials() {
-      let materials = {};
       if (this.hasProposalExtension) {
         if (this.containsKey(this.application.data.proposal_extension, 'materials') && this.containsKey(this.application.data.proposal_extension.materials, 'walls')) {
 
@@ -579,7 +592,6 @@ export default {
       }
     },
     roofMaterials() {
-      let materials = {};
       if (this.hasProposalExtension) {
         if (this.containsKey(this.application.data.proposal_extension, 'materials') && this.containsKey(this.application.data.proposal_extension.materials, 'roof')) {
 
@@ -617,7 +629,6 @@ export default {
       }
     },
     windowsMaterials() {
-      let materials = {};
       if (this.hasProposalExtension) {
         if (this.containsKey(this.application.data.proposal_extension, 'materials') && this.containsKey(this.application.data.proposal_extension.materials, 'windows')) {
 
@@ -656,7 +667,6 @@ export default {
       }
     },
     doorsMaterials() {
-      let materials = {};
       if (this.hasProposalExtension) {
         if (this.containsKey(this.application.data.proposal_extension, 'materials') && this.containsKey(this.application.data.proposal_extension.materials, 'doors')) {
 
@@ -710,8 +720,6 @@ export default {
       } else {
         return materials.answer = 'You did not provide this information.';
       }
-
-      return materials;
     },
     worksDescription () {
       return GenerateWorks.generateWorkDescription(this.application.data);

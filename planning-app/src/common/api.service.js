@@ -80,6 +80,10 @@ const ApiService = {
 
   updateWithCustomResource(resource, params) {
     return Vue.axios.patch(`${resource}`, params);
+  },
+
+  getWithParameters(resource, params) {
+    return Vue.axios.get(`${resource}`, params);
   }
 }
 
@@ -250,21 +254,23 @@ export const DocumentsService = {
   deleteDocument (data) {
     ApiService.setAuthorization();
 
-    const config = {
-      headers: {
-          'content-type': undefined
-      }
-    };
+    // const config = {
+    //   headers: {
+    //       'content-type': undefined
+    //   }
+    // };
 
     var resource = 'documents/' + data.id;
     return ApiService.delete(resource);
   },
 
   downloadDocument (id) {
-    ApiService.setHeader();
-
+    ApiService.setAuthorization();
+    
     var resource = 'documents/' + id + '/download';
-    return ApiService.get(resource);
+    return ApiService.getWithParameters(resource, {
+      responseType: 'blob'
+    });
   }
 }
 

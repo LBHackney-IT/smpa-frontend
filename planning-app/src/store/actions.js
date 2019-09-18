@@ -451,11 +451,9 @@ export function uploadDocument ({commit}, payload) {
 }
 
 export function downloadDocument ({commit}, id) {
-  debugger;
   return DocumentsService
     .downloadDocument(id)
     .then( response => {
-      console.log('response', response);
       return response;
     })
     .catch(function (error) {
