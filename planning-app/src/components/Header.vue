@@ -20,6 +20,11 @@
                 Account
               </a>
             </li>
+            <li class="govuk-header__navigation-item" v-if="!this.isUserAuthenticated">
+              <a class="govuk-header__link" href="/sign-in">
+                Sign in
+              </a>
+            </li>
             <li class="govuk-header__navigation-item" v-if="this.isUserAuthenticated">
               <a class="govuk-header__link" href="/sign-out">
                 Sign out

@@ -17,13 +17,13 @@
 
       <div class="govuk-radios govuk-radios--inline">
         <div class="govuk-radios__item">
-          <input class="govuk-radios__input" id="work-started-1" name="work-started" type="radio" value="match-existing" v-model="material">
+          <input class="govuk-radios__input" id="work-started-1" name="work-started" type="radio" value="not-applicable" v-model="material">
           <label class="govuk-label govuk-radios__label" for="work-started-1">
             This is not applicable
           </label>
         </div>
         <div class="govuk-radios__item">
-          <input class="govuk-radios__input" id="work-started-2" name="work-started" type="radio" value="not-applicable" v-model="material">
+          <input class="govuk-radios__input" id="work-started-2" name="work-started" type="radio" value="match-existing" v-model="material">
           <label class="govuk-label govuk-radios__label" for="work-started-2">
             Material and finish match the existing
           </label>
@@ -53,7 +53,7 @@
 
           <div class="govuk-checkboxes">
             <div class="vertical-checkboxes" v-bind:key="option.id" v-for="option in this.defaultOptions">
-              <div class="govuk-checkboxes__item">
+              <div class="govuk-checkboxes__item govuk-!-margin-bottom-3">
                 <input class="govuk-checkboxes__input" v-bind:id="option.id" v-bind:name="option.name" type="checkbox" v-bind:value="option.id" v-model="checkedMaterials" >
                 <label class="govuk-label govuk-checkboxes__label" v-bind:for="option.id">
                   {{option.name}}
@@ -126,9 +126,14 @@ export default {
     },
     loadExistingAnswers () {
       if (this.application.data.proposal_extension.materials.roof) {
-        this.material = this.application.data.proposal_extension.materials.roof.matches_existing ? 'match-existing' : undefined;
-        this.material = this.application.data.proposal_extension.materials.roof.not_applicable ? 'not-applicable' : undefined;
+        if (this.application.data.proposal_extension.materials.roof.matches_existing) {
+          this.material = 'match-existing';
+        }
 
+        if (this.application.data.proposal_extension.materials.roof.not_applicable) {
+          this.material = 'not-applicable';
+        }
+     
         if (this.application.data.proposal_extension.materials.roof.proposals && this.application.data.proposal_extension.materials.roof.proposals.length > 0) {
           this.material = 'new-material';
 

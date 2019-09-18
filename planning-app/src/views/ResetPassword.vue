@@ -9,7 +9,7 @@
         <label class="govuk-label" for="password">
           New password
         </label>
-        <input class="govuk-input govuk-!-width-two-thirds" id="password" name="password" type="password" spellcheck="false" v-model="password">
+        <input class="govuk-input govuk-!-width-two-thirds" id="password" name="password" type="password" spellcheck="false" v-model="password" v-on:keyup.13="resetPassword">
       </div>
 
       <div class="govuk-form-group">
@@ -21,7 +21,16 @@
           <span class="govuk-visually-hidden">Error:</span> {{ errorMessage }}
         </span>
 
-        <input class="govuk-input govuk-!-width-two-thirds" v-bind:class="{ 'govuk-input--error': showErrorMessage }" id="password-confirm" name="password-confirm" type="password" spellcheck="false" v-model="passwordConfirmation" v-bind:aria-describedby="{'email-error': showErrorMessage}">
+        <input 
+          class="govuk-input govuk-!-width-two-thirds" 
+          v-bind:class="{ 'govuk-input--error': showErrorMessage }" 
+          id="password-confirm" 
+          name="password-confirm" 
+          type="password" 
+          spellcheck="false" 
+          v-model="passwordConfirmation" 
+          v-bind:aria-describedby="{'email-error': showErrorMessage}" 
+          v-on:keyup.13="resetPassword">
       </div>
 
       <v-cta name="Reset password" :onClick="resetPassword"></v-cta><br>

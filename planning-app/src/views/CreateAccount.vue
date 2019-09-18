@@ -16,7 +16,7 @@
             <span class="govuk-visually-hidden">Error:</span> {{ responseError }}
           </span>
 
-          <input class="govuk-input govuk-!-width-two-thirds" id="email" name="email" type="email" autocomplete="email" spellcheck="false" v-model="email">
+          <input class="govuk-input govuk-!-width-two-thirds govuk-!-margin-bottom-7" id="email" name="email" type="email" autocomplete="email" spellcheck="false" v-model="email">
  
           <label class="govuk-label" for="email-confirm">
             Confirm your email address
@@ -42,7 +42,7 @@
             Password
           </label>
           <input class="govuk-input govuk-!-width-two-thirds" id="password" name="password" :type="passwordFieldType" spellcheck="false" v-model="password"><br>
-          <button class="govuk-link govuk-!-margin-top-5" v-on:click="togglePasswordView">
+          <button class="govuk-link govuk-!-margin-top-5 govuk-!-margin-bottom-7" v-on:click="togglePasswordView">
             <span v-if="passwordFieldType === 'password'">Show</span><span v-if="passwordFieldType === 'text'">Hide</span> password
           </button>
 

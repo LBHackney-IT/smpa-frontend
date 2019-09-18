@@ -48,7 +48,7 @@
           <label class="govuk-label govuk-!-width-one-third" for="one-quarter">
             Additional floor area
           </label>
-          <input class="govuk-input govuk-!-width-one-quarter" id="one-quarter" name="one-quarter" type="number" v-model="floorArea"> 
+          <input class="govuk-input govuk-!-width-one-quarter govuk-!-margin-right-2" id="one-quarter" name="one-quarter" type="number" v-model="floorArea"> 
           
           <select class="govuk-select" id="sort" name="sort" v-model="selectedOption">
             <option v-bind:value="option.id" v-bind:key="option.id" v-for="option in this.defaultOptions">{{option.name}}</option>

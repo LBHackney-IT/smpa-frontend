@@ -20,7 +20,16 @@
         <span id="email-error" class="govuk-error-message" v-if="showErrorMessage">
           <span class="govuk-visually-hidden">Error:</span> {{ errorMessages.RESET_PASSWORD.SAME_EMAIL }}
         </span>
-        <input class="govuk-input govuk-!-width-two-thirds" v-bind:class="{ 'govuk-input--error': showErrorMessage }" id="email-confirm" name="email-confirm" type="email" spellcheck="false" v-model="emailConfirmation" v-bind:aria-describedby="{'email-error': showErrorMessage}">
+        <input 
+          class="govuk-input govuk-!-width-two-thirds" 
+          v-bind:class="{ 'govuk-input--error': showErrorMessage }" 
+          id="email-confirm" 
+          name="email-confirm" 
+          type="email" 
+          spellcheck="false" 
+          v-model="emailConfirmation" 
+          v-bind:aria-describedby="{'email-error': showErrorMessage}" 
+          v-on:keyup.13="reset">
       </div>
 
       <v-cta name="Email me the link" :onClick="reset"></v-cta><br>

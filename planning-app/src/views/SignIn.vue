@@ -14,11 +14,11 @@
         <label class="govuk-label" for="email">
           Email address
         </label>
-        <input class="govuk-input govuk-!-width-two-thirds" id="email" name="email" type="email" autocomplete="email" spellcheck="false" v-model="email">
+        <input class="govuk-input govuk-!-width-two-thirds govuk-!-margin-bottom-7" id="email" name="email" type="email" autocomplete="email" spellcheck="false" v-model="email" v-on:keyup.13="signIn">
         <label class="govuk-label" for="password">
           Password
         </label>
-        <input class="govuk-input govuk-!-width-two-thirds" id="password" name="password" type="password" autocomplete="password" spellcheck="false" v-model="password">
+        <input class="govuk-input govuk-!-width-two-thirds" id="password" name="password" type="password" autocomplete="password" spellcheck="false" v-model="password" v-on:keyup.13="signIn">
       </div>
 
       <v-cta name="Sign in" :onClick="signIn"></v-cta><br>

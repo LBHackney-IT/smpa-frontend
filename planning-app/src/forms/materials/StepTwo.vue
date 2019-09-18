@@ -53,7 +53,7 @@
 
           <div class="govuk-checkboxes">
             <div class="vertical-checkboxes" v-bind:key="option.id" v-for="option in this.defaultOptions">
-              <div class="govuk-checkboxes__item">
+              <div class="govuk-checkboxes__item govuk-!-margin-bottom-3">
                 <input class="govuk-checkboxes__input" v-bind:id="option.id" v-bind:name="option.name" type="checkbox" v-bind:value="option.id" v-model="checkedMaterials" >
                 <label class="govuk-label govuk-checkboxes__label" v-bind:for="option.id">
                   {{option.name}}
