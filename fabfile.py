@@ -30,8 +30,8 @@ def prod():
         'skipped': 0,
     }
     env.cdn = CDN
-    env.cdn['aws_bucket'] = 'smpa.hactar.is'
-    env.cdn['aws_sitename'] = 'smpa.hactar.is'
+    env.cdn['aws_bucket'] = 'smpa-frontend-production'
+    env.cdn['aws_sitename'] = 'smpa-frontend-production'
     env.TAG = 'production'
 
 

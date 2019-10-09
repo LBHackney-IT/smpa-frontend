@@ -1,3 +1,5 @@
 .env
 .venv/**/*
 *.pyc
+deploy_production.log
+deploy_staging.log
