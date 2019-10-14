@@ -27,7 +27,7 @@ export default {
 
     // if (currentWorks.goTo.length > 1 && currentWorks.goTo.length < currentLevelIndex + 1) {
       
-    if (currentWorks.goTo.length > 1 && currentWorks.goTo.length > currentLevelIndex + 1) {
+    if (currentWorks.goTo && currentWorks.goTo.length > 1 && currentWorks.goTo.length > currentLevelIndex + 1) {
       
       return { name: currentWorks.goTo[currentLevelIndex + 1], params: {currentLevelInfo: currentWorks }};
 

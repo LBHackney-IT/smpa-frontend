@@ -204,8 +204,22 @@ export default {
 	},
 	methods: {
 		loadExistingAnswers () {
-			this.workStarted = this.application.data.works_started ? this.application.data.works_started : undefined;
-			this.workCompleted = this.application.data.works_completed ? this.application.data.works_completed  : undefined;
+			if (this.application.data.works_started === true) {
+				this.workStarted = true;
+			} else if (this.application.data.works_started === false) {
+				this.workStarted = false;
+			} else {
+				this.workStarted = this.application.data.works_started;
+			}
+
+			if (this.application.data.works_completed === true) {
+				this.workCompleted = true;
+			} else if (this.application.data.works_completed === false) {
+				this.workCompleted = false;
+			} else {
+				this.workCompleted = this.application.data.works_completed;
+			}
+
 			this.workDetails = this.application.data.works_description;
 
 			if (this.application.data.date_works_completed) {
