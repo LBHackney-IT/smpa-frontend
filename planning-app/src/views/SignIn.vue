@@ -70,6 +70,12 @@
           window.localStorage.setItem('signInRefresh', true);
         }
 
+        this.$ga.event({
+          eventCategory: 'Account',
+          eventAction: 'Login',
+          eventLabel: 'Success'
+        });
+
         if (this.source === 'constraints-finder' && this.application) {
           this.$store.dispatch('generateApplication', this.application).then((response) => {
             router.push({ name: 'ApplicationTaskOverview', params: { applicationId: response.data.application_id } });

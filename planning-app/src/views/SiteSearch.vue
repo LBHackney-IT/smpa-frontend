@@ -6,7 +6,7 @@
 
 			<div class="govuk-form-group" v-if="!hasResults && !loading">
 				<label class="govuk-label govuk-!-font-weight-bold" for="postcode">
-					Enter postcode
+					Enter postcode:
 				</label>
 				<input class="govuk-input govuk-!-width-one-quarter govuk-radios--inline govuk-!-margin-right-5" id="postcode" name="postcode" type="text" v-model="postcode" v-on:input="reset" v-on:keyup.13="getPostcode">
         <v-cta name="Find address" :onClick="getPostcode"></v-cta>
@@ -46,6 +46,7 @@
           </select>
         </div>
         <v-cta name="Continue" :onClick="navigate"></v-cta>
+        
       </div>
     
     </div>
@@ -92,7 +93,6 @@
           this.errorMessage = 'Postcode is empty. Please try again.';
           return;  
         }
-
         this.loading = true;
         const api = "https://ndws9fa08d.execute-api.eu-west-2.amazonaws.com/production/api/v1/addresses/";
         const token = process.env.VUE_APP_ADDRESSAPITOKEN;
@@ -118,7 +118,7 @@
           this.errorMessage = 'There has been an error. Please try again.';
         })
         .finally(() => { 
-          this.loading = false
+          this.loading = false;
         })
       },
 			navigate() {

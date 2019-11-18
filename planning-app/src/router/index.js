@@ -3,6 +3,7 @@ import Router from 'vue-router';
 import JwtService from '@/common/jwt.service';
 import store from '@/store/index';
 
+
 Vue.use(Router);
 
 
@@ -206,7 +207,12 @@ export default new Router({
             { 
               path: 'free-text-form', 
               name:'FreeTextForm', 
-              component: FreeTextForm 
+              component: FreeTextForm ,
+              beforeEnter: (to, from, next) => {
+                next({
+                  query: { previousPath: from.fullPath }
+                })
+              },
             },
             { 
               path: 'description-of-the-works', 

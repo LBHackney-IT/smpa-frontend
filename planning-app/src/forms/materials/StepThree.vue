@@ -162,7 +162,7 @@ export default {
             var materialFound = this.application.data.proposal_extension.materials.windows.proposals.find((el) => el.material_id === element);
 
             if (materialFound) {
-              proposedMaterials.push({"colour_and_type": materialFound.colour_and_type, "material_id": materialFound.material_id, "material": materialFound.name });
+              proposedMaterials.push({"colour_and_type": materialFound.colour_and_type, "material_id": materialFound.material_id, "material": materialFound.material });
             }
             
           });
@@ -182,6 +182,15 @@ export default {
       };
 
       const extensionId = this.$store.getters.getExtensionId(this.applicationId);
+
+      var otherMaterialChecked = currentMaterials.windows.proposals.find((el) => el.material_id === '454d35e4-3f46-4569-901f-ec732129e750');
+      if (otherMaterialChecked) {
+        this.$ga.event({
+          eventCategory: 'OtherMaterials',
+          eventAction: 'Selected',
+          eventLabel: 'Windows: ' + otherMaterialChecked.colour_and_type
+        });
+      }
 
       this.$store.dispatch('updateExtensionProposal', 
         { 

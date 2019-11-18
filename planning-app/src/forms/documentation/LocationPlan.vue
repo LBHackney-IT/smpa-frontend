@@ -66,8 +66,8 @@
     <v-cta name="Continue" :onClick="submitFile"></v-cta>
     <br>
 
-    <router-link v-if="isInConservationArea" :to="{ name: 'DocumentationDesignAccessStatement' }">Continue without adding a file</router-link>
-    <router-link v-if="!isInConservationArea" :to="{ name: 'DocumentationAdditionalPlans' }">Continue without adding a file</router-link>
+    <button v-on:click="continueWithoutAddingAFile">Continue without adding a file</button>
+
     
     <br><br><br><br><br><br>
     
@@ -123,6 +123,19 @@ export default {
 		}
   },
 	methods: {
+    continueWithoutAddingAFile () {
+      this.$ga.event({
+        eventCategory: 'LocationPlan',
+        eventAction: 'Selected',
+        eventLabel: 'Continue without file'
+      });
+
+      if (this.isInConservationArea) {
+        router.push({ name: 'DocumentationDesignAccessStatement' });
+      } else {
+        router.push({ name: 'DocumentationAdditionalPlans' });
+      }
+    },
     loadExistingAnswers () {
       this.useMapDisplayed = this.application.data.location_plan_confirmed ? 'Yes' : 'No';
 		},
@@ -141,6 +154,11 @@ export default {
             if (response.error) {
               this.showErrorMessage = true;
             } else {
+              this.$ga.event({
+                eventCategory: 'LocationPlan',
+                eventAction: 'Selected',
+                eventLabel: 'Reflects'
+              });
               this.navigate();
             }
           })
@@ -152,6 +170,12 @@ export default {
         let payload = {};
 
         payload.document = this.file;
+
+        this.$ga.event({
+          eventCategory: 'LocationPlan',
+          eventAction: 'Selected',
+          eventLabel: 'Upload'
+        });
 
         if (payload.document === "") {
           this.navigate();

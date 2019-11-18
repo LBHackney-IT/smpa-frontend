@@ -30,19 +30,27 @@ const ApiService = {
 
   setFormData () {
     Vue.axios.defaults.headers.common['Content-Type'] = 'multipart/form-data';
+    Vue.axios.defaults.headers.common['x-api-key'] = process.env.VUE_APP_XAPIKEY;
   },
 
   setFormUrlencoded () {
     Vue.axios.defaults.headers.common['Content-Type'] = 'application/x-www-form-urlencoded';
+    Vue.axios.defaults.headers.common['x-api-key'] = process.env.VUE_APP_XAPIKEY;
   },
 
   setAuthorization () {
     Vue.axios.defaults.headers.common['Authorization'] = `jwt ${JwtService.getToken()}`;
+    Vue.axios.defaults.headers.common['x-api-key'] = process.env.VUE_APP_XAPIKEY;
   },
 
   setHeader () {
     Vue.axios.defaults.headers.common['Content-Type'] = 'application/json; charset=UTF-8';
     Vue.axios.defaults.headers.common['Authorization'] = `jwt ${JwtService.getToken()}`;
+    Vue.axios.defaults.headers.common['x-api-key'] = process.env.VUE_APP_XAPIKEY;
+  },
+
+  setXApiKey () {
+    Vue.axios.defaults.headers.common['x-api-key'] = process.env.VUE_APP_XAPIKEY;
   },
 
   get(resource) {
@@ -92,6 +100,7 @@ export default ApiService;
 export const AuthService = {
   post (payload) {
     ApiService.setFormUrlencoded();
+    ApiService.setXApiKey();
     return ApiService.post('auth', qs.stringify(payload));
   }
 }

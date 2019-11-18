@@ -166,7 +166,7 @@ export default {
             var materialFound = this.application.data.proposal_extension.materials.walls.proposals.find((el) => el.material_id === element);
 
             if (materialFound) {
-              proposedMaterials.push({"colour_and_type": materialFound.colour_and_type, "material_id": materialFound.material_id, "material": materialFound.name });
+              proposedMaterials.push({"colour_and_type": materialFound.colour_and_type, "material_id": materialFound.material_id, "material": materialFound.material });
             }
             
           });
@@ -186,6 +186,15 @@ export default {
       };
 
       const extensionId = this.$store.getters.getExtensionId(this.applicationId);
+
+      var otherMaterialChecked = currentMaterials.walls.proposals.find((el) => el.material_id === '981e7a28-1ad0-4bd3-8f64-757484589a53');
+      if (otherMaterialChecked) {
+        this.$ga.event({
+          eventCategory: 'OtherMaterials',
+          eventAction: 'Selected',
+          eventLabel: 'Walls: ' + otherMaterialChecked.colour_and_type
+        });
+      }
 
       this.$store.dispatch('updateExtensionProposal', { 
         "application_id": this.applicationId, 

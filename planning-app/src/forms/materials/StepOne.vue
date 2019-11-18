@@ -189,6 +189,15 @@ export default {
 
       const extensionId = this.$store.getters.getExtensionId(this.applicationId);
 
+      var otherMaterialChecked = currentMaterials.roof.proposals.find((el) => el.material_id === '586e27ee-4bb3-4ce2-b918-f951ef3a77af');
+      if (otherMaterialChecked) {
+        this.$ga.event({
+          eventCategory: 'OtherMaterials',
+          eventAction: 'Selected',
+          eventLabel: 'Roof: ' + otherMaterialChecked.colour_and_type
+        });
+      }
+
       this.$store.dispatch('updateExtensionProposal', 
         { 
           "application_id": this.applicationId, 

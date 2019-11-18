@@ -128,6 +128,28 @@ export default {
           this.showErrorMessage = true;
           return;
         } else {
+
+          let eventLabel;
+
+          if (this.materials === 'definitions_in_documents') {
+            eventLabel = 'Documentation';
+
+          } else if (this.materials === 'definitions_to_follow') {
+            eventLabel = 'Later';
+
+          } else if (this.materials === 'definitions_in_form') {
+            eventLabel = 'Form';
+
+          } else {
+            eventLabel = 'undefined';
+          }
+
+          this.$ga.event({
+            eventCategory: 'MaterialsChoice',
+            eventAction: 'Selected',
+            eventLabel: eventLabel
+          });
+
           this.navigate();
         }
       })

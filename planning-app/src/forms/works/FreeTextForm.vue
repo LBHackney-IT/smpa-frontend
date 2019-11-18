@@ -65,6 +65,20 @@ export default {
 
       payload.data.free_text_description = this.description;
 
+      let previousPath;
+
+      if (this.$route.query && this.$route.query.previousPath) {
+        previousPath = this.$route.query.previousPath;
+      } else {
+        previousPath = 'direct';
+      }
+      
+      this.$ga.event({
+        eventCategory: 'FreeText',
+        eventAction: 'Used',
+        eventLabel: previousPath
+      })
+
       this.$store.dispatch('updateApplication', payload).then((response) => {
         if (response.error) {
           this.showErrorMessage = true;
