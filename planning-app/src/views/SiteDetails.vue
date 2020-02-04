@@ -218,6 +218,10 @@
       
         map.addLayer(layer_BLPU);
 
+        if (map.getZoom() >= 18){
+          map.addLayer(attribution_info);
+        }
+
         map.on('zoomend', function() {
           if (map.getZoom() >= 18){
             map.addLayer(attribution_info);
