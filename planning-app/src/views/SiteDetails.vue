@@ -148,19 +148,27 @@
           zoomControl: true, 
           maxZoom:20, 
           minZoom:1
-        });  
+        });
+
+        var currentYear = new Date().getFullYear();
 
         var Mapbox_Basemap = L.tileLayer('https://api.mapbox.com/styles/v1/hackneygis/cjk8lmw5r9mlz2sohv2n6xnfq/tiles/256/{z}/{x}/{y}?access_token={accessToken}', {
           maxZoom: 18,
           opacity: 1.0,
-          attribution: 'Contains OS data © Crown copyright and database right (2018) - Licensed under the Open Government Licence',
+          attribution: 'Contains OS data © Crown copyright and database right ('+ currentYear +') - Licensed under the Open Government Licence',
           accessToken: 'pk.eyJ1IjoiaGFja25leWdpcyIsImEiOiJjajh2ZGRiMDMxMzc5MndwbHBmaGtjYTAyIn0.G75YwN8Zgr8gqDJoV8XMFw'
         }).addTo(map);
 
         map.addLayer(Mapbox_Basemap);
 
+        var attribution_info = L.tileLayer("https://map.hackney.gov.uk/geoserver/wms", {
+          attribution: 'OS 100019635',
+          minZoom: 18,
+          maxZoom: 18
+        });
+
         var overlay_OSMM_light_1 = L.tileLayer.wms("https://map.hackney.gov.uk/geoserver/wms", {
-          layers: 'osmm:OSMM_outdoor',
+          layers: 'osmm:OSMM_outdoor_leaflet',
           format: 'image/png',
           uppercase: true,
           transparent: true,
@@ -210,50 +218,14 @@
       
         map.addLayer(layer_BLPU);
 
-        var treesOrdersPointsLayers = L.tileLayer.wms('https://map.hackney.gov.uk/geoserver/wms/', {
-            layers: 'lbhdesign:Tree Preservation Orders Points',
-            transparent: true,
-            format: 'image/png',
-            maxZoom: 20
+        map.on('zoomend', function() {
+          if (map.getZoom() >= 18){
+            map.addLayer(attribution_info);
+          }
+          else {
+            map.removeLayer(attribution_info);
+          }
         });
-
-        map.addLayer(treesOrdersPointsLayers);
-
-        var treesOrdersPointsAreas = L.tileLayer.wms('https://map.hackney.gov.uk/geoserver/wms/', {
-            layers: 'lbhdesign:Tree Preservation Orders Areas',
-            transparent: true,
-            format: 'image/png',
-            maxZoom: 20
-        });
-
-        map.addLayer(treesOrdersPointsAreas);
-
-        var conservationAreas = L.tileLayer.wms('https://map.hackney.gov.uk/geoserver/wms/', {
-            layers: 'lbhdesign:PLA Conservation Area',
-            transparent: true,
-            format: 'image/png',
-            maxZoom: 20
-        });
-
-        map.addLayer(conservationAreas);
-
-        var locallyListedBuildings = L.tileLayer.wms('https://map.hackney.gov.uk/geoserver/wms/', {
-            layers: 'lbhdesign:Locally Listed Building',
-            transparent: true,
-            format: 'image/png',
-            maxZoom: 20
-        });
-
-        map.addLayer(locallyListedBuildings);
-
-        var statuaryListedBuildings = L.tileLayer.wms('https://map.hackney.gov.uk/geoserver/wms/', {
-            layers: 'lbhdesign:Statutory Listed Buildings',
-            transparent: true,
-            format: 'image/png',
-            maxZoom: 20
-        });
-
-        map.addLayer(statuaryListedBuildings);
       },
       
       navigate() {
