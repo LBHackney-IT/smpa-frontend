@@ -2,9 +2,14 @@ $govuk-global-styles: true;
 
 $govuk-assets-path: '../../node_modules/govuk-frontend/govuk/assets/';
 
+$govuk-font-family: Arial, sans-serif;
+$govuk-font-family-nta: Arial, sans-serif;
+$govuk-font-family-gds-transport: Arial, sans-serif;
+
 @import "../../node_modules/govuk-frontend/govuk/all";
 @import "steps";
 @import "modal";
+
 
 
 body {
